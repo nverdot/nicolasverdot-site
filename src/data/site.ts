@@ -20,6 +20,5 @@ export const SITE = {
   social: {
     linkedin: '',
   },
-  // TODO: crée une clé sur https://web3forms.com et colle-la ici
-  web3formsAccessKey: 'YOUR_WEB3FORMS_ACCESS_KEY',
+  web3formsAccessKey: '5c2935cf-fa46-4d0c-a5ae-4b6299ed5ca1',
 };
