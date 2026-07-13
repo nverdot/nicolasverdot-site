@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../data/site';
+
+const offers = [
+  {
+    title: 'Coaching individuel',
+    description:
+      "Un accompagnement personnalisé pour les dirigeants, managers et professionnels en transition. Nous travaillons sur vos objectifs concrets : prise de poste, gestion du stress, leadership, décisions clés.",
+    format: 'Séances individuelles, en présentiel ou à distance',
+  },
+  {
+    title: 'Formation',
+    description:
+      "Des modules de formation sur mesure pour développer les compétences de vos équipes : communication, gestion des conflits, leadership, intelligence collective.",
+    format: 'Sessions collectives, demi-journée à plusieurs jours',
+  },
+  {
+    title: "Facilitation d'ateliers",
+    description:
+      "L'animation de temps collectifs structurés — séminaires, ateliers de co-construction, résolution de problèmes — pour aligner vos équipes et accélérer vos décisions.",
+    format: "Ateliers d'équipe, séminaires, journées de cohésion",
+  },
+];
+---
+
+<Layout
+  title={`Offre — ${SITE.name}`}
+  description="Coaching individuel, formation et facilitation d'ateliers : découvrez les trois formats d'accompagnement proposés sur la Côte d'Azur."
+  path="/offre/"
+>
+  <section class="offer-hero">
+    <h1>Mon offre</h1>
+    <p class="lead">
+      Trois formats d'accompagnement, adaptables selon vos besoins et ceux de votre organisation.
+    </p>
+  </section>
+
+  <section class="offer-list">
+    {offers.map((offer) => (
+      <article class="offer-card">
+        <h2>{offer.title}</h2>
+        <p>{offer.description}</p>
+        <p class="format"><strong>Format :</strong> {offer.format}</p>
+      </article>
+    ))}
+  </section>
+
+  <section class="offer-cta">
+    <h2>Un projet en tête ?</h2>
+    <p>Parlons-en pour définir ensemble le format le plus adapté à votre situation.</p>
+    <a href="/contact/" class="btn">Me contacter</a>
+  </section>
+</Layout>
+
+<style>
+  .offer-hero {
+    padding-top: 3rem;
+    max-width: 680px;
+  }
+  .lead {
+    color: #444;
+    font-size: 1.05rem;
+  }
+  .offer-list {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .offer-card {
+    background: #f7f7f5;
+    border-radius: 10px;
+    padding: 1.75rem;
+  }
+  .offer-card h2 {
+    margin-top: 0;
+  }
+  .format {
+    color: #555;
+    font-size: 0.9rem;
+  }
+  .offer-cta {
+    text-align: center;
+    background: #eef4f2;
+    border-radius: 12px;
+    padding: 2.5rem 1.5rem;
+  }
+</style>

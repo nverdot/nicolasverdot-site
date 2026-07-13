@@ -1,0 +1,77 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { SITE } from '../../data/site';
+import { CITIES } from '../../data/cities';
+
+export function getStaticPaths() {
+  return CITIES.map((city) => ({
+    params: { city: city.slug },
+    props: { city },
+  }));
+}
+
+const { city } = Astro.props;
+const path = `/secteurs/${city.slug}/`;
+---
+
+<Layout
+  title={`Coaching & formation à ${city.name} — ${SITE.name}`}
+  description={city.intro}
+  path={path}
+>
+  <section class="city-hero">
+    <h1>Coaching, formation & facilitation à {city.name}</h1>
+    <p class="lead">{city.intro}</p>
+  </section>
+
+  <section class="city-body">
+    {city.body.map((paragraph) => (
+      <p>{paragraph}</p>
+    ))}
+  </section>
+
+  <section class="city-cta">
+    <h2>Envie d'échanger sur votre projet à {city.name} ?</h2>
+    <a href="/contact/" class="btn">Prendre contact</a>
+  </section>
+
+  <section class="other-cities">
+    <h2>Autres zones d'intervention</h2>
+    <ul>
+      {CITIES.filter((c) => c.slug !== city.slug).map((c) => (
+        <li><a href={`/secteurs/${c.slug}/`}>{c.name}</a></li>
+      ))}
+    </ul>
+  </section>
+</Layout>
+
+<style>
+  .city-hero {
+    padding-top: 3rem;
+    max-width: 720px;
+  }
+  .lead {
+    color: #444;
+    font-size: 1.05rem;
+  }
+  .city-body {
+    max-width: 720px;
+  }
+  .city-cta {
+    background: #eef4f2;
+    border-radius: 12px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+  }
+  .other-cities ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    padding: 0;
+  }
+  .other-cities a {
+    color: #0a5c4a;
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

@@ -1,0 +1,126 @@
+---
+import { SITE } from '../data/site';
+
+const navItems = [
+  { href: '/', label: 'Accueil' },
+  { href: '/offre/', label: 'Offre' },
+  { href: '/secteurs/nice/', label: 'Nice' },
+  { href: '/secteurs/cannes/', label: 'Cannes' },
+  { href: '/secteurs/antibes/', label: 'Antibes' },
+  { href: '/secteurs/monaco/', label: 'Monaco' },
+  { href: '/contact/', label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">{SITE.name}</a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Ouvrir le menu">
+      <span></span>
+    </label>
+    <nav class="main-nav">
+      <ul>
+        {navItems.map((item) => (
+          <li>
+            <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid #e5e5e5;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-weight: 700;
+    font-size: 1.15rem;
+    text-decoration: none;
+    color: #1a1a1a;
+    letter-spacing: 0.02em;
+  }
+  .main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.75rem;
+    margin: 0;
+    padding: 0;
+  }
+  .main-nav a {
+    text-decoration: none;
+    color: #333;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  .main-nav a[aria-current='page'] {
+    color: #0a5c4a;
+    border-bottom: 2px solid #0a5c4a;
+    padding-bottom: 2px;
+  }
+  .nav-toggle,
+  .nav-toggle-label {
+    display: none;
+  }
+
+  @media (max-width: 720px) {
+    .nav-toggle-label {
+      display: flex;
+      cursor: pointer;
+      width: 28px;
+      height: 22px;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .nav-toggle-label span,
+    .nav-toggle-label::before,
+    .nav-toggle-label::after {
+      content: '';
+      display: block;
+      height: 2px;
+      background: #1a1a1a;
+      border-radius: 1px;
+    }
+    .main-nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-bottom: 1px solid #e5e5e5;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+    }
+    .main-nav ul {
+      flex-direction: column;
+      gap: 0;
+      padding: 0.5rem 1.5rem 1rem;
+    }
+    .main-nav li {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .nav-toggle:checked ~ .main-nav {
+      max-height: 400px;
+    }
+  }
+</style>

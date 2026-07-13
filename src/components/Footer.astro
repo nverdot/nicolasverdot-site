@@ -1,0 +1,68 @@
+---
+import { SITE } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-name">{SITE.name}</p>
+      <p class="footer-tagline">{SITE.tagline}</p>
+    </div>
+    <div class="footer-contact">
+      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      <a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a>
+    </div>
+    <div class="footer-areas">
+      <p>Intervient à {SITE.areasServed.join(', ')}</p>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; {year} {SITE.name}. Tous droits réservés.</p>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid #e5e5e5;
+    background: #f7f7f5;
+    margin-top: 4rem;
+    padding: 2.5rem 1.5rem 1.5rem;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-between;
+  }
+  .footer-name {
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+  }
+  .footer-tagline {
+    margin: 0;
+    color: #555;
+    font-size: 0.9rem;
+  }
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .footer-contact a {
+    color: #0a5c4a;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .footer-areas p {
+    margin: 0;
+    color: #555;
+    font-size: 0.9rem;
+  }
+  .footer-copy {
+    max-width: 1100px;
+    margin: 2rem auto 0;
+    font-size: 0.8rem;
+    color: #888;
+  }
+</style>

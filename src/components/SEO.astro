@@ -1,0 +1,58 @@
+---
+import { SITE } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+}
+
+const { title, description, path, image = '/og-image.svg' } = Astro.props;
+const canonicalURL = new URL(path, SITE.url).toString();
+const ogImageURL = new URL(image, SITE.url).toString();
+
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: SITE.name,
+  description: 'Coaching professionnel, formation et facilitation d\'ateliers sur la Côte d\'Azur.',
+  url: SITE.url,
+  email: SITE.email,
+  telephone: SITE.phone,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: SITE.address.city,
+    postalCode: SITE.address.postalCode,
+    addressRegion: SITE.address.region,
+    addressCountry: SITE.address.country,
+  },
+  areaServed: SITE.areasServed.map((city) => ({
+    '@type': 'City',
+    name: city,
+  })),
+  sameAs: [SITE.social.linkedin].filter(Boolean),
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:locale" content="fr_FR" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL} />
+
+<!-- schema.org LocalBusiness -->
+<script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />

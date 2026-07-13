@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../data/site';
+---
+
+<Layout
+  title={`${SITE.name} — Coaching, formation & facilitation sur la Côte d'Azur`}
+  description="Coaching professionnel, formation et facilitation d'ateliers à Nice, Cannes, Antibes et Monaco. Accompagnement sur mesure pour individus et équipes."
+  path="/"
+>
+  <section class="hero">
+    <h1>Coaching, formation & facilitation sur la Côte d'Azur</h1>
+    <p class="lead">
+      J'accompagne dirigeants, équipes et organisations à Nice, Cannes, Antibes et Monaco
+      pour clarifier leurs enjeux, développer leurs compétences et faire avancer leurs projets
+      collectifs.
+    </p>
+    <a href="/contact/" class="btn">Prendre contact</a>
+  </section>
+
+  <section class="pillars">
+    <h2>Trois façons de travailler ensemble</h2>
+    <div class="pillar-grid">
+      <article>
+        <h3>Coaching individuel</h3>
+        <p>Un espace confidentiel pour prendre du recul, clarifier vos objectifs et lever vos freins.</p>
+      </article>
+      <article>
+        <h3>Formation</h3>
+        <p>Des formats concrets pour développer les compétences clés de vos équipes.</p>
+      </article>
+      <article>
+        <h3>Facilitation d'ateliers</h3>
+        <p>Des temps collectifs structurés pour décider, aligner et avancer ensemble.</p>
+      </article>
+    </div>
+    <a href="/offre/">Découvrir l'offre en détail →</a>
+  </section>
+
+  <section class="areas">
+    <h2>Zones d'intervention</h2>
+    <ul class="area-list">
+      <li><a href="/secteurs/nice/">Nice</a></li>
+      <li><a href="/secteurs/cannes/">Cannes</a></li>
+      <li><a href="/secteurs/antibes/">Antibes</a></li>
+      <li><a href="/secteurs/monaco/">Monaco</a></li>
+    </ul>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    padding-top: 4rem;
+    max-width: 720px;
+  }
+  .hero h1 {
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+  }
+  .lead {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 1.75rem;
+  }
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  .pillar-grid article {
+    background: #f7f7f5;
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+  .pillar-grid h3 {
+    margin-top: 0;
+  }
+  .area-list {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+  .area-list a {
+    text-decoration: none;
+    font-weight: 600;
+    color: #0a5c4a;
+  }
+</style>
