@@ -22,6 +22,19 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>
+      // Applique le thème mémorisé avant le premier rendu, pour éviter un flash
+      // de la mauvaise couleur. Sans préférence enregistrée, le CSS suit
+      // automatiquement les réglages système (prefers-color-scheme).
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.documentElement.setAttribute('data-theme', stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <meta name="robots" content={isTestDeployment ? 'noindex, nofollow' : 'index, follow'} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

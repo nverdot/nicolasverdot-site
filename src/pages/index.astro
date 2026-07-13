@@ -177,22 +177,54 @@ const clients = [
   }
 
   .whispers {
-    background: var(--color-white);
+    background: var(--color-surface);
   }
   .verbatim-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-6);
+    gap: var(--space-8) var(--space-6);
     margin-top: var(--space-8);
   }
   .verbatim-grid blockquote {
+    position: relative;
     margin: 0;
-    padding: var(--space-6);
+    padding: var(--space-8) var(--space-6) var(--space-6);
     background: var(--color-cream);
-    border-left: 3px solid var(--color-orange);
+    border: 2.5px solid var(--color-navy);
     border-radius: var(--radius-md);
+    box-shadow: var(--shadow-brut);
     font-style: italic;
-    color: #333;
+    color: var(--color-muted);
+    transition: transform var(--duration-standard) var(--ease-standard), box-shadow var(--duration-standard) var(--ease-standard);
+  }
+  .verbatim-grid blockquote:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--color-navy);
+  }
+  .verbatim-grid blockquote::before {
+    content: '\201C';
+    position: absolute;
+    top: -0.2em;
+    left: var(--space-4);
+    font-family: var(--font-display);
+    font-style: normal;
+    font-weight: 900;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--color-orange);
+  }
+  .verbatim-grid blockquote::after {
+    content: '';
+    position: absolute;
+    left: 28px;
+    bottom: -12px;
+    width: 22px;
+    height: 22px;
+    background: var(--color-cream);
+    border-right: 2.5px solid var(--color-navy);
+    border-bottom: 2.5px solid var(--color-navy);
+    border-radius: 0 0 4px 0;
+    transform: rotate(45deg);
   }
 
   .friction-grid {
@@ -202,7 +234,7 @@ const clients = [
     margin: var(--space-8) 0;
   }
   .friction-card {
-    background: var(--color-white);
+    background: var(--color-surface);
     padding: var(--space-6);
   }
   .friction-number {
@@ -219,10 +251,10 @@ const clients = [
   .friction-card p {
     margin: 0;
     font-size: var(--text-sm);
-    color: #444;
+    color: var(--color-muted);
   }
   .friction-outcome {
-    background: var(--color-navy);
+    background: var(--color-ink-solid);
     color: var(--color-white);
     padding: var(--space-6);
     border-radius: var(--radius-md);
@@ -237,7 +269,7 @@ const clients = [
   .complementary-label {
     margin: var(--space-8) 0 var(--space-3);
     font-size: var(--text-sm);
-    color: #555;
+    color: var(--color-muted);
   }
   .complementary-tags {
     display: flex;
@@ -254,7 +286,7 @@ const clients = [
   }
 
   .profile {
-    background: var(--color-white);
+    background: var(--color-surface);
   }
   .profile-grid {
     display: grid;
@@ -271,7 +303,7 @@ const clients = [
   .profile-photo p {
     margin-top: var(--space-3);
     font-size: var(--text-sm);
-    color: #666;
+    color: var(--color-faint);
     text-align: center;
   }
   .profile-lead {
@@ -301,7 +333,7 @@ const clients = [
   }
   .profile-points span {
     font-size: var(--text-sm);
-    color: #555;
+    color: var(--color-muted);
   }
   .profile-link {
     font-weight: 600;
