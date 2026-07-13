@@ -1,21 +1,18 @@
 // Configuration centrale du site — modifie ces valeurs avec tes vraies coordonnées.
 export const SITE = {
-  name: 'BY Nicolas Verdot',
-  tagline: 'Coaching, formation & facilitation',
+  name: 'by Nicolas Verdot',
+  baseline: 'Leader facilitateur · Coach · Formateur',
+  tagline: 'Révéler le meilleur de votre collectif.',
   url: 'https://nicolasverdot.com',
   email: 'contact@nicolasverdot.com',
   phone: '+33770058522',
   phoneDisplay: '07 70 05 85 22',
-  // TODO: adresse ou ville de base (utilisée dans le schema.org LocalBusiness)
+  // TODO: confirmer si ce lien de prise de RDV est toujours d'actualité
+  bookingUrl: 'https://zcal.co/nicolas-verdot/30minutes',
   address: {
-    streetAddress: '',
-    city: 'Nice',
-    postalCode: '06000',
-    region: 'Provence-Alpes-Côte d\'Azur',
+    region: "Provence-Alpes-Côte d'Azur",
     country: 'FR',
   },
-  // Zones géographiques couvertes (utilisées pour areaServed et les pages locales)
-  areasServed: ['Nice', 'Cannes', 'Antibes', 'Monaco'],
   social: {
     linkedin: '',
   },

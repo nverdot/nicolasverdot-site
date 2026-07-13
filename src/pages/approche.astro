@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import CTABlock from '../components/CTABlock.astro';
+
+const tools = [
+  'Facilitation', 'Intelligence collective', 'Technology of Participation', 'ORID',
+  'Consensus Workshop', 'World Café', 'Open Space', 'Facilitation graphique',
+  'Sketchnoting', 'Management visuel', 'Coaching', 'Théorie polyvagale',
+  'Design pédagogique', 'Rétrospectives', 'Ateliers de vision',
+];
+
+const shifts = [
+  "de réunions longues à des conversations utiles",
+  "de décisions floues à des choix partagés",
+  "de participants passifs à des personnes engagées",
+  "d'idées dispersées à une vision commune",
+  "d'un plan théorique à une dynamique d'action",
+  "d'une transformation subie à une transformation construite",
+];
+---
+
+<Layout
+  title="Mon approche — by Nicolas Verdot"
+  description="Découvrez l'approche de Nicolas Verdot : donner à voir, faire participer, décider, agir et apprendre pour permettre aux collectifs de donner le meilleur d'eux-mêmes."
+  path="/approche/"
+>
+  <section class="intro">
+    <div class="container prose">
+      <h1>Créer les conditions pour révéler le meilleur du collectif.</h1>
+      <p>Les réponses sont souvent déjà présentes dans le collectif. Le problème, c'est qu'elles restent parfois dispersées, silencieuses, invisibles ou enfermées dans des conversations qui ne vont pas au bout.</p>
+      <p>Mon rôle consiste à concevoir le cadre qui permet aux idées de circuler, aux points de vue de se rencontrer, aux décisions d'émerger et à l'action de devenir possible.</p>
+    </div>
+  </section>
+
+  <section class="not-thinking">
+    <div class="container prose">
+      <h2>Je ne suis pas là pour penser à la place du groupe.</h2>
+      <p>Vous êtes les experts de votre métier. Vous connaissez votre contexte, vos contraintes, vos clients, vos bénéficiaires, vos usagers et vos équipes.</p>
+      <p>Je n'interviens pas pour imposer une réponse toute faite. J'interviens comme architecte du cadre : je conçois la manière dont le collectif va se parler, réfléchir, décider et avancer.</p>
+    </div>
+  </section>
+
+  <section class="process">
+    <div class="container">
+      <h2 class="prose">Une approche en cinq leviers</h2>
+      <ProcessSteps />
+    </div>
+  </section>
+
+  <section class="tools">
+    <div class="container prose">
+      <h2>Des outils au service du résultat</h2>
+      <p>Selon votre besoin, je peux mobiliser :</p>
+      <ul class="tool-list">
+        {tools.map((tool) => <li>{tool}</li>)}
+      </ul>
+      <p>Mais les outils ne sont jamais le sujet principal. Le vrai sujet est toujours : <strong>qu'est-ce que le collectif doit réussir à faire ensemble ?</strong></p>
+    </div>
+  </section>
+
+  <section class="shifts">
+    <div class="container prose">
+      <h2>Ce que cette approche change</h2>
+      <p>Elle permet de passer :</p>
+      <ul>
+        {shifts.map((shift) => <li>{shift}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="context">
+    <div class="container prose">
+      <h2>Une approche adaptée à votre contexte</h2>
+      <p>Chaque collectif est différent. Une équipe de direction ne fonctionne pas comme une association de terrain. Une mairie ne fonctionne pas comme une startup.</p>
+      <p>C'est pourquoi je ne propose pas de déroulé standard. Je conçois chaque intervention à partir de votre contexte, de vos enjeux, des personnes présentes, du temps disponible, des résultats attendus et de l'énergie réelle du groupe.</p>
+    </div>
+  </section>
+
+  <CTABlock
+    title="Et si le collectif portait déjà une partie de la réponse ?"
+    subtitle="Parlons de votre contexte et des conditions à créer pour faire émerger le meilleur de votre collectif."
+  />
+</Layout>
+
+<style>
+  .not-thinking,
+  .tools {
+    background: var(--color-white);
+  }
+  .tool-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-4);
+  }
+  .tool-list li {
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-sm);
+  }
+</style>

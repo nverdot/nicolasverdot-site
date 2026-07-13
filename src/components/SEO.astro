@@ -16,21 +16,20 @@ const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
   name: SITE.name,
-  description: 'Coaching professionnel, formation et facilitation d\'ateliers sur la Côte d\'Azur.',
+  description:
+    "Facilitation, séminaires, coaching et formations pour révéler le meilleur des collectifs : entreprises, associations, collectivités et organismes de formation.",
   url: SITE.url,
   email: SITE.email,
   telephone: SITE.phone,
   address: {
     '@type': 'PostalAddress',
-    addressLocality: SITE.address.city,
-    postalCode: SITE.address.postalCode,
     addressRegion: SITE.address.region,
     addressCountry: SITE.address.country,
   },
-  areaServed: SITE.areasServed.map((city) => ({
-    '@type': 'City',
-    name: city,
-  })),
+  areaServed: {
+    '@type': 'Country',
+    name: 'France',
+  },
   sameAs: [SITE.social.linkedin].filter(Boolean),
 };
 ---

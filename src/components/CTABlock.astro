@@ -1,0 +1,54 @@
+---
+import { SITE } from '../data/site';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<section class="cta-block">
+  <div class="container cta-inner">
+    <h2>{title}</h2>
+    {subtitle && <p class="prose">{subtitle}</p>}
+    <div class="cta-actions">
+      <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Prendre rendez-vous</a>
+      <a href="/contact/" class="btn-outline">Envoyer un message</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-block {
+    background: var(--color-navy);
+    color: var(--color-white);
+  }
+  .cta-inner {
+    text-align: center;
+  }
+  .cta-block h2 {
+    color: var(--color-white);
+  }
+  .cta-block p {
+    color: #c7d6de;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cta-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: var(--space-6);
+  }
+  .cta-block .btn-outline {
+    color: var(--color-white);
+    border-color: var(--color-white);
+  }
+  .cta-block .btn-outline:hover {
+    background: var(--color-white);
+    color: var(--color-navy);
+  }
+</style>

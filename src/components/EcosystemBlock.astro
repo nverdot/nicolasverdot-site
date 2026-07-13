@@ -1,0 +1,45 @@
+---
+interface Props {
+  variant?: 'compact' | 'full';
+}
+
+const { variant = 'full' } = Astro.props;
+
+const items = [
+  { title: 'Décoincés du Crayon', text: 'Une académie, un sommet et une communauté dédiée à la pensée visuelle et à la facilitation graphique.' },
+  { title: "Facilit'ON", text: 'Une communauté de facilitateurs et facilitatrices engagés dans le développement des pratiques collaboratives.' },
+  { title: 'ICA International', text: "L'association mondiale de facilitation." },
+  { title: 'ICA Bénin & Côte d\'Ivoire', text: 'Transmission des pratiques participatives et développement des capacités locales.' },
+  { title: 'Ambassadeur Neuland', text: 'Partenaire de la marque de référence en facilitation visuelle.' },
+];
+
+const displayItems = variant === 'compact' ? items.slice(0, 4) : items;
+---
+
+<div class:list={['ecosystem', variant]}>
+  {
+    displayItems.map((item) => (
+      <div class="ecosystem-item">
+        <h3>{item.title}</h3>
+        <p>{item.text}</p>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .ecosystem {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-6);
+  }
+  .ecosystem-item h3 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-2);
+  }
+  .ecosystem-item p {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: #444;
+  }
+</style>

@@ -1,91 +1,127 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { SITE } from '../data/site';
+import HeroRotator from '../components/HeroRotator.astro';
+import IconCardGrid from '../components/IconCardGrid.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import OfferCard from '../components/OfferCard.astro';
+import EcosystemBlock from '../components/EcosystemBlock.astro';
+import CTABlock from '../components/CTABlock.astro';
+
+const problems = [
+  { title: 'Les mêmes discussions reviennent', text: 'Les sujets reviennent sans jamais vraiment se clore.' },
+  { title: 'Les priorités changent sans cesse', text: "Quand tout semble prioritaire, plus rien ne l'est vraiment." },
+  { title: 'Les transformations avancent lentement', text: "L'enthousiasme du départ perd de son élan en cours de route." },
+  { title: "Les réunions consomment de l'énergie", text: 'Elles se multiplient sans toujours produire les résultats attendus.' },
+  { title: 'Les idées restent théoriques', text: "Beaucoup d'idées, peu de mouvement réel." },
+];
+
+const offers = [
+  { icon: '◎', title: 'Séminaires & Ateliers', text: 'Faire équipe autour de ce qui compte vraiment : vision stratégique, cohésion, feuille de route, lancement de projet.' },
+  { icon: '◌', title: 'Facilitation de collectifs', text: 'Concevoir et animer des conversations qui produisent des résultats : World Café, Open Space, ORID, Consensus Workshop.' },
+  { icon: '✎', title: 'Facilitation graphique', text: 'Donner à voir les idées pour accélérer la compréhension, la mémorisation et l\'engagement.' },
+  { icon: '◇', title: 'IA & transformation humaine', text: "Faire de l'IA un levier collectif : identifier les bons usages et lancer des expérimentations utiles." },
+  { icon: '☼', title: 'Mentorat Leader Facilitateur', text: "Développer sa capacité à engager, fédérer et mettre en mouvement un collectif." },
+  { icon: '◈', title: 'Coaching', text: 'Prendre du recul pour mieux avancer : leadership, posture, décision.' },
+  { icon: '◉', title: 'Formations', text: 'Développer les compétences qui permettent aux collectifs de progresser durablement.' },
+];
+
+const audiences = [
+  { title: 'Entreprises', text: 'PME, ETI, grands groupes, directions métiers, équipes projet, CODIR.' },
+  { title: 'Associations', text: 'Associations employeuses, fédérations, réseaux, collectifs de bénévoles.' },
+  { title: 'Collectivités', text: 'Mairies, acteurs territoriaux, services publics, démarches participatives.' },
+  { title: 'Organismes de formation', text: 'Formateurs, responsables pédagogiques, écoles.' },
+  { title: 'Communautés', text: 'Réseaux professionnels, communautés de pratiques, collectifs d\'acteurs.' },
+];
 ---
 
 <Layout
-  title={`${SITE.name} — Coaching, formation & facilitation sur la Côte d'Azur`}
-  description="Coaching professionnel, formation et facilitation d'ateliers à Nice, Cannes, Antibes et Monaco. Accompagnement sur mesure pour individus et équipes."
+  title="by Nicolas Verdot — Révéler le meilleur de votre collectif"
+  description="J'aide les leaders à créer les conditions qui permettent à leur collectif de donner le meilleur de lui-même : séminaires, facilitation, facilitation graphique, coaching et formations."
   path="/"
 >
-  <section class="hero">
-    <h1>Coaching, formation & facilitation sur la Côte d'Azur</h1>
-    <p class="lead">
-      J'accompagne dirigeants, équipes et organisations à Nice, Cannes, Antibes et Monaco
-      pour clarifier leurs enjeux, développer leurs compétences et faire avancer leurs projets
-      collectifs.
-    </p>
-    <a href="/contact/" class="btn">Prendre contact</a>
-  </section>
+  <HeroRotator />
 
-  <section class="pillars">
-    <h2>Trois façons de travailler ensemble</h2>
-    <div class="pillar-grid">
-      <article>
-        <h3>Coaching individuel</h3>
-        <p>Un espace confidentiel pour prendre du recul, clarifier vos objectifs et lever vos freins.</p>
-      </article>
-      <article>
-        <h3>Formation</h3>
-        <p>Des formats concrets pour développer les compétences clés de vos équipes.</p>
-      </article>
-      <article>
-        <h3>Facilitation d'ateliers</h3>
-        <p>Des temps collectifs structurés pour décider, aligner et avancer ensemble.</p>
-      </article>
+  <section class="problem">
+    <div class="container">
+      <h2 class="prose">Votre collectif dispose probablement de plus de potentiel que vous ne l'imaginez.</h2>
+      <p class="prose">Pourtant, dans de nombreuses organisations, les mêmes difficultés reviennent — et lorsque les priorités deviennent floues, l'énergie du collectif se disperse.</p>
+      <IconCardGrid cards={problems} />
     </div>
-    <a href="/offre/">Découvrir l'offre en détail →</a>
   </section>
 
-  <section class="areas">
-    <h2>Zones d'intervention</h2>
-    <ul class="area-list">
-      <li><a href="/secteurs/nice/">Nice</a></li>
-      <li><a href="/secteurs/cannes/">Cannes</a></li>
-      <li><a href="/secteurs/antibes/">Antibes</a></li>
-      <li><a href="/secteurs/monaco/">Monaco</a></li>
-    </ul>
+  <section class="mission">
+    <div class="container prose">
+      <h2>Mon métier : créer les conditions qui permettent au collectif de donner le meilleur de lui-même.</h2>
+      <p>Je ne viens pas avec des réponses toutes faites. Je ne suis pas expert de votre métier — vous l'êtes déjà. En revanche, je suis expert des dynamiques collectives.</p>
+      <p>J'aide les leaders à concevoir les espaces, les conversations et les expériences qui permettent aux personnes de mieux se comprendre, mieux décider et mieux agir ensemble.</p>
+    </div>
   </section>
+
+  <section class="process">
+    <div class="container">
+      <h2 class="prose">Une approche en cinq étapes</h2>
+      <ProcessSteps />
+    </div>
+  </section>
+
+  <section class="offers" id="accompagnements">
+    <div class="container">
+      <h2 class="prose">Comment puis-je vous aider ?</h2>
+      <div class="offer-grid">
+        {offers.map((offer) => <OfferCard icon={offer.icon} title={offer.title} text={offer.text} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="audiences">
+    <div class="container">
+      <h2 class="prose">Ce n'est pas réservé aux grandes entreprises.</h2>
+      <p class="prose">J'accompagne les leaders qui font vivre des collectifs, quel que soit leur terrain d'action.</p>
+      <IconCardGrid cards={audiences} columns={3} />
+    </div>
+  </section>
+
+  <section class="team">
+    <div class="container prose">
+      <h2>Une équipe à la taille de vos enjeux</h2>
+      <p>Je suis votre interlocuteur privilégié tout au long de la mission. Lorsque les enjeux le nécessitent, je mobilise un réseau de partenaires de confiance — facilitateurs, facilitateurs graphiques, coachs, designers pédagogiques, experts métier.</p>
+      <p>Vous bénéficiez ainsi d'un accompagnement sur mesure, d'une relation de proximité et d'une capacité d'intervention adaptée à votre contexte.</p>
+    </div>
+  </section>
+
+  <section class="ecosystem">
+    <div class="container">
+      <h2 class="prose">Contribuer à un monde plus participatif</h2>
+      <p class="prose">Au-delà des missions clients, je contribue activement au développement des pratiques de facilitation et d'intelligence collective.</p>
+      <EcosystemBlock variant="compact" />
+    </div>
+  </section>
+
+  <section class="trust">
+    <div class="container prose">
+      <p>Depuis plus de 10 ans, j'accompagne des leaders, des équipes et des organisations dans leurs transformations — auprès de grands groupes, de PME, d'associations, de collectivités et d'organismes de formation.</p>
+      <p><strong>Comment créer les conditions qui permettront au collectif de donner le meilleur de lui-même ?</strong> C'est cette question qui guide chacune de mes interventions.</p>
+      <a href="/a-propos/">Découvrir mon parcours →</a>
+    </div>
+  </section>
+
+  <CTABlock
+    title="Et si nous révélions ensemble le meilleur de votre collectif ?"
+    subtitle="Parlons de vos défis, de vos ambitions et des prochaines étapes."
+  />
 </Layout>
 
 <style>
-  .hero {
-    padding-top: 4rem;
-    max-width: 720px;
+  .problem,
+  .audiences {
+    background: var(--color-white);
   }
-  .hero h1 {
-    font-size: 2.25rem;
-    margin-bottom: 1rem;
-  }
-  .lead {
-    font-size: 1.1rem;
-    color: #444;
-    margin-bottom: 1.75rem;
-  }
-  .pillar-grid {
+  .offer-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin: 2rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-6);
   }
-  .pillar-grid article {
-    background: #f7f7f5;
-    border-radius: 10px;
-    padding: 1.5rem;
-  }
-  .pillar-grid h3 {
-    margin-top: 0;
-  }
-  .area-list {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
-    padding: 0;
-    flex-wrap: wrap;
-  }
-  .area-list a {
-    text-decoration: none;
-    font-weight: 600;
-    color: #0a5c4a;
+  .team {
+    background: var(--color-white);
   }
 </style>

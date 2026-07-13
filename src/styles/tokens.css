@@ -1,0 +1,45 @@
+:root {
+  --color-navy: #123044;
+  --color-navy-ink: #0d2433;
+  --color-orange: #f28c28;
+  --color-orange-ink: #d97a1c;
+  --color-green: #6faf7a;
+  --color-cream: #f8f4ec;
+  --color-ink: #1f1f1f;
+  --color-white: #ffffff;
+  --color-border: #e4dcc9;
+
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-script: 'Caveat', cursive;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: clamp(2.25rem, 4vw + 1rem, 3.25rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  --container-max: 1180px;
+  --prose-max: 720px;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(18, 48, 68, 0.06);
+  --shadow-md: 0 8px 24px rgba(18, 48, 68, 0.08);
+}

@@ -1,0 +1,129 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import portrait from '../assets/nicolas-portrait.png';
+import EcosystemBlock from '../components/EcosystemBlock.astro';
+import CTABlock from '../components/CTABlock.astro';
+
+const beliefs = [
+  'Je crois que les personnes ont besoin de comprendre pour s\'engager.',
+  'Je crois que les collectifs ont plus de potentiel qu\'ils ne l\'imaginent.',
+  'Je crois que les meilleures décisions émergent rarement dans des réunions descendantes.',
+  'Je crois que la participation n\'est pas une perte de temps.',
+  'Je crois que donner à voir aide à mieux penser.',
+  'Et je crois qu\'un leader ne doit pas tout porter seul.',
+];
+---
+
+<Layout
+  title="À propos — by Nicolas Verdot"
+  description="Découvrez le parcours de Nicolas Verdot : coach agile, facilitateur, facilitateur graphique, formateur, fondateur de Décoincés du Crayon et contributeur ICA."
+  path="/a-propos/"
+>
+  <section class="intro">
+    <div class="container intro-inner">
+      <div class="prose">
+        <h1>J'aide les leaders à révéler le meilleur de leur collectif.</h1>
+        <p>Depuis plus de 10 ans, j'accompagne des leaders, des équipes et des organisations à mieux collaborer, décider et agir ensemble — auprès de grands groupes, de PME, d'associations, de collectivités, d'organismes de formation et de communautés professionnelles.</p>
+        <p><strong>Comment créer les conditions qui permettront au collectif de donner le meilleur de lui-même ?</strong> C'est cette question qui guide mon travail.</p>
+      </div>
+      <Image src={portrait} alt="Portrait de Nicolas Verdot" width={420} height={520} class="portrait" />
+    </div>
+  </section>
+
+  <section class="path">
+    <div class="container prose">
+      <h2>Mon parcours</h2>
+      <p>Je viens à l'origine du monde informatique. J'ai été développeur, puis coach agile, facilitateur, formateur, manager, facilitateur graphique et accompagnateur de transformations.</p>
+      <p>Pendant plus de 10 ans, j'ai accompagné des organisations sur des sujets de collaboration, d'agilité, de management visuel, de facilitation, de formation et de transformation — auprès de grands groupes, de PME, d'associations, de collectivités et d'organismes de formation.</p>
+      <p>Ce parcours m'a appris une chose simple : les transformations ne se jouent pas uniquement dans les méthodes. Elles se jouent dans la manière dont les personnes se parlent, se comprennent, décident et agissent ensemble.</p>
+    </div>
+  </section>
+
+  <section class="craft">
+    <div class="container prose">
+      <h2>Ce que je fais vraiment</h2>
+      <p>Je ne viens pas avec des réponses toutes faites. Je conçois le cadre qui permet au collectif de trouver les siennes.</p>
+      <p>Mon expertise n'est pas de connaître votre métier mieux que vous. Mon expertise est de concevoir la manière dont votre collectif va pouvoir réfléchir, décider et avancer.</p>
+    </div>
+  </section>
+
+  <section class="engagements">
+    <div class="container">
+      <h2 class="prose">Mes engagements pour un monde plus participatif</h2>
+      <p class="prose">Au-delà des missions clients, je contribue au développement des pratiques de facilitation et d'intelligence collective.</p>
+      <EcosystemBlock variant="full" />
+    </div>
+  </section>
+
+  <section class="personal">
+    <div class="container prose">
+      <h2>Une touche personnelle</h2>
+      <p>Je suis aussi moniteur de plongée. Ce n'est pas un détail anecdotique : la plongée m'a appris des choses essentielles sur la posture, la sécurité, l'attention, la respiration, le cadre et la confiance.</p>
+      <p>Sous l'eau, comme dans un collectif, la qualité du cadre change tout. Quand le cadre est clair, les personnes peuvent explorer avec plus de confiance.</p>
+    </div>
+  </section>
+
+  <section class="beliefs">
+    <div class="container prose">
+      <h2>Ce que je défends</h2>
+      <ul class="belief-list">
+        {beliefs.map((belief) => <li>{belief}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <CTABlock
+    title="Envie d'en parler ?"
+    subtitle="Si vous sentez qu'un de vos collectifs pourrait gagner en clarté, en énergie ou en mouvement, parlons-en."
+  />
+</Layout>
+
+<style>
+  .intro-inner {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+    padding-top: var(--space-8);
+  }
+  .portrait {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+  .path,
+  .engagements,
+  .beliefs {
+    background: var(--color-white);
+  }
+  .belief-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .belief-list li {
+    padding-left: var(--space-6);
+    position: relative;
+  }
+  .belief-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--color-orange);
+  }
+
+  @media (max-width: 800px) {
+    .intro-inner {
+      grid-template-columns: 1fr;
+    }
+    .portrait {
+      max-width: 280px;
+      margin: 0 auto;
+    }
+  }
+</style>

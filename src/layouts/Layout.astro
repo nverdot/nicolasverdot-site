@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SEO from '../components/SEO.astro';
+import '../styles/global.css';
 
 interface Props {
   title: string;
@@ -19,6 +20,12 @@ const { title, description, path } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="robots" content="index, follow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Caveat:wght@600&display=swap"
+      rel="stylesheet"
+    />
     <SEO title={title} description={description} path={path} />
   </head>
   <body>
@@ -29,44 +36,3 @@ const { title, description, path } = Astro.props;
     <Footer />
   </body>
 </html>
-
-<style is:global>
-  :root {
-    color-scheme: light;
-  }
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    color: #1a1a1a;
-    line-height: 1.6;
-  }
-  main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-  h1, h2, h3 {
-    line-height: 1.25;
-  }
-  a {
-    color: inherit;
-  }
-  .btn {
-    display: inline-block;
-    background: #0a5c4a;
-    color: #fff;
-    text-decoration: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
-    font-weight: 600;
-  }
-  .btn:hover {
-    background: #084a3c;
-  }
-  section {
-    padding: 3rem 0;
-  }
-</style>

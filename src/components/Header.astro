@@ -1,13 +1,20 @@
 ---
 import { SITE } from '../data/site';
 
+const offers = [
+  'Séminaires & Ateliers',
+  'Facilitation de collectifs',
+  'Facilitation graphique',
+  'IA & transformation humaine',
+  'Mentorat Leader Facilitateur',
+  'Coaching',
+  'Formations',
+];
+
 const navItems = [
   { href: '/', label: 'Accueil' },
-  { href: '/offre/', label: 'Offre' },
-  { href: '/secteurs/nice/', label: 'Nice' },
-  { href: '/secteurs/cannes/', label: 'Cannes' },
-  { href: '/secteurs/antibes/', label: 'Antibes' },
-  { href: '/secteurs/monaco/', label: 'Monaco' },
+  { href: '/approche/', label: 'Approche' },
+  { href: '/a-propos/', label: 'À propos' },
   { href: '/contact/', label: 'Contact' },
 ];
 
@@ -15,73 +22,143 @@ const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
-  <div class="header-inner">
-    <a href="/" class="logo">{SITE.name}</a>
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <span class="logo-script">by</span> <span class="logo-caps">NICOLAS VERDOT</span>
+    </a>
     <input type="checkbox" id="nav-toggle" class="nav-toggle" />
     <label for="nav-toggle" class="nav-toggle-label" aria-label="Ouvrir le menu">
       <span></span>
     </label>
     <nav class="main-nav">
       <ul>
-        {navItems.map((item) => (
-          <li>
-            <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
-              {item.label}
-            </a>
-          </li>
-        ))}
+        <li><a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>Accueil</a></li>
+        <li>
+          <details class="dropdown">
+            <summary>Accompagnements</summary>
+            <ul class="dropdown-menu">
+              {offers.map((offer) => (
+                <li><a href="/#accompagnements">{offer}</a></li>
+              ))}
+            </ul>
+          </details>
+        </li>
+        <li><a href="/approche/" aria-current={currentPath === '/approche/' ? 'page' : undefined}>Approche</a></li>
+        <li><a href="/a-propos/" aria-current={currentPath === '/a-propos/' ? 'page' : undefined}>À propos</a></li>
+        <li><a href="/contact/" aria-current={currentPath === '/contact/' ? 'page' : undefined}>Contact</a></li>
       </ul>
+      <a href={SITE.bookingUrl} class="btn header-cta" target="_blank" rel="noopener">Prendre rendez-vous</a>
     </nav>
   </div>
 </header>
 
 <style>
   .site-header {
-    border-bottom: 1px solid #e5e5e5;
-    background: #fff;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-cream);
     position: sticky;
     top: 0;
     z-index: 50;
   }
   .header-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 1rem 1.5rem;
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
   .logo {
-    font-weight: 700;
-    font-size: 1.15rem;
     text-decoration: none;
-    color: #1a1a1a;
-    letter-spacing: 0.02em;
+    white-space: nowrap;
   }
-  .main-nav ul {
+  .logo-script {
+    font-family: var(--font-script);
+    color: var(--color-orange);
+    font-size: 1.6rem;
+  }
+  .logo-caps {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-navy);
+    letter-spacing: 0.03em;
+    font-size: 1.05rem;
+  }
+  .main-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .main-nav > ul {
     list-style: none;
     display: flex;
-    gap: 1.75rem;
+    align-items: center;
+    gap: var(--space-4);
     margin: 0;
     padding: 0;
   }
-  .main-nav a {
+  .main-nav > ul > li > a {
     text-decoration: none;
-    color: #333;
-    font-size: 0.95rem;
+    color: var(--color-ink);
+    font-size: 0.9rem;
     font-weight: 500;
+    white-space: nowrap;
   }
   .main-nav a[aria-current='page'] {
-    color: #0a5c4a;
-    border-bottom: 2px solid #0a5c4a;
-    padding-bottom: 2px;
+    color: var(--color-orange);
   }
+  .header-cta {
+    white-space: nowrap;
+  }
+
+  .dropdown {
+    position: relative;
+  }
+  .dropdown summary {
+    list-style: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+  .dropdown summary::-webkit-details-marker {
+    display: none;
+  }
+  .dropdown summary::after {
+    content: ' ▾';
+    font-size: 0.7em;
+  }
+  .dropdown-menu {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-2) 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    min-width: 240px;
+  }
+  .dropdown-menu li a {
+    display: block;
+    padding: var(--space-2) var(--space-4);
+    text-decoration: none;
+    color: var(--color-ink);
+    font-size: 0.9rem;
+  }
+  .dropdown-menu li a:hover {
+    background: var(--color-cream);
+    color: var(--color-orange-ink);
+  }
+
   .nav-toggle,
   .nav-toggle-label {
     display: none;
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: 1000px) {
     .nav-toggle-label {
       display: flex;
       cursor: pointer;
@@ -96,7 +173,7 @@ const currentPath = Astro.url.pathname;
       content: '';
       display: block;
       height: 2px;
-      background: #1a1a1a;
+      background: var(--color-navy);
       border-radius: 1px;
     }
     .main-nav {
@@ -104,23 +181,36 @@ const currentPath = Astro.url.pathname;
       top: 100%;
       left: 0;
       right: 0;
-      background: #fff;
-      border-bottom: 1px solid #e5e5e5;
+      background: var(--color-cream);
+      border-bottom: 1px solid var(--color-border);
+      flex-direction: column;
+      align-items: stretch;
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.25s ease;
     }
-    .main-nav ul {
+    .main-nav > ul {
       flex-direction: column;
+      align-items: stretch;
       gap: 0;
-      padding: 0.5rem 1.5rem 1rem;
+      padding: var(--space-2) var(--space-6) var(--space-4);
     }
-    .main-nav li {
-      padding: 0.6rem 0;
-      border-bottom: 1px solid #f0f0f0;
+    .main-nav > ul > li {
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .dropdown-menu {
+      position: static;
+      border: none;
+      box-shadow: none;
+      padding-left: var(--space-4);
+    }
+    .header-cta {
+      margin: 0 var(--space-6) var(--space-4);
+      text-align: center;
     }
     .nav-toggle:checked ~ .main-nav {
-      max-height: 400px;
+      max-height: 600px;
     }
   }
 </style>

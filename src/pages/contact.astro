@@ -2,38 +2,79 @@
 import Layout from '../layouts/Layout.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { SITE } from '../data/site';
+
+const reasons = [
+  'concevoir et animer un séminaire',
+  'faciliter un atelier stratégique',
+  'accompagner un CODIR',
+  'animer une démarche participative',
+  'réaliser une captation graphique',
+  'former vos équipes',
+  'accompagner des managers',
+  'structurer une démarche d\'intelligence collective',
+];
+
+const prepQuestions = [
+  'Qui est concerné ?',
+  'Quel est le défi ?',
+  "Qu'est-ce qui bloque ou patine ?",
+  'Qu\'aimeriez-vous que les participants ressentent à la fin ?',
+  'Quelle décision ou action doit émerger ?',
+  'Quel est le calendrier ?',
+  'Combien de personnes sont concernées ?',
+];
 ---
 
 <Layout
   title={`Contact — ${SITE.name}`}
-  description="Contactez BY Nicolas Verdot pour un accompagnement en coaching, formation ou facilitation d'ateliers sur la Côte d'Azur."
+  description="Contactez Nicolas Verdot pour parler de vos séminaires, ateliers, formations, accompagnements, captations graphiques ou projets d'intelligence collective."
   path="/contact/"
 >
   <section class="contact-hero">
-    <h1>Contact</h1>
-    <p class="lead">
-      Une question, un projet ? Écrivez-moi via le formulaire ci-dessous, ou directement par
-      email ou téléphone.
-    </p>
+    <div class="container prose">
+      <h1>Parlons de votre collectif.</h1>
+      <p class="lead">
+        Vous préparez un séminaire, une transformation, une démarche participative, une conférence,
+        une formation ou un accompagnement de leaders ? Expliquez-moi simplement ce que vous avez en tête.
+      </p>
+    </div>
   </section>
 
-  <section class="contact-grid">
-    <div>
-      <ContactForm />
+  <section class="contact-grid-section">
+    <div class="container contact-grid">
+      <div>
+        <ContactForm />
+      </div>
+      <aside class="contact-info">
+        <h2>Coordonnées</h2>
+        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+        <p><a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a></p>
+        <p><a href={SITE.bookingUrl} target="_blank" rel="noopener">Prendre rendez-vous en ligne →</a></p>
+        <p class="response-time">Je réponds généralement sous 48 heures ouvrées.</p>
+
+        <h2>Vous pouvez me contacter pour</h2>
+        <ul>
+          {reasons.map((reason) => <li>{reason}</li>)}
+        </ul>
+      </aside>
     </div>
-    <aside class="contact-info">
-      <h2>Coordonnées</h2>
-      <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
-      <p><a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a></p>
-      <p>Zones d'intervention : {SITE.areasServed.join(', ')}</p>
-    </aside>
+  </section>
+
+  <section class="prep">
+    <div class="container prose">
+      <h2>Avant notre échange</h2>
+      <p>Pour préparer la discussion, vous pouvez déjà réfléchir à :</p>
+      <ul>
+        {prepQuestions.map((q) => <li>{q}</li>)}
+      </ul>
+      <p>Pas besoin d'avoir toutes les réponses — c'est justement le point de départ de notre conversation.</p>
+    </div>
   </section>
 </Layout>
 
 <style>
   .contact-hero {
-    padding-top: 3rem;
-    max-width: 680px;
+    padding-bottom: 0;
   }
   .lead {
     color: #444;
@@ -41,24 +82,32 @@ import { SITE } from '../data/site';
   .contact-grid {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-    gap: 3rem;
+    gap: var(--space-12);
     align-items: start;
   }
   .contact-info {
-    background: #f7f7f5;
-    border-radius: 10px;
-    padding: 1.75rem;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
   }
   .contact-info h2 {
-    margin-top: 0;
-    font-size: 1.1rem;
+    font-size: var(--text-lg);
   }
   .contact-info a {
-    color: #0a5c4a;
+    color: var(--color-navy);
     text-decoration: none;
+    font-weight: 600;
+  }
+  .response-time {
+    font-size: var(--text-sm);
+    color: #666;
+  }
+  .prep {
+    background: var(--color-white);
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: 800px) {
     .contact-grid {
       grid-template-columns: 1fr;
     }
