@@ -1,7 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#123044" />
-  <text x="60" y="290" font-family="Georgia, serif" font-size="40" font-style="italic" fill="#F28C28">by</text>
-  <text x="150" y="290" font-family="Segoe UI, sans-serif" font-size="60" font-weight="700" fill="#ffffff">NICOLAS VERDOT</text>
-  <text x="60" y="360" font-family="Segoe UI, sans-serif" font-size="34" fill="#F8F4EC">Révéler le meilleur de votre collectif.</text>
-  <text x="60" y="410" font-family="Segoe UI, sans-serif" font-size="24" fill="#c7d6de">Séminaires · Facilitation · Coaching · Formations</text>
+  <rect width="1200" height="630" fill="#fbf7ee" />
+  <text x="60" y="270" font-family="Georgia, serif" font-size="44" font-style="italic" fill="#e8b923">by</text>
+  <text x="155" y="270" font-family="Arial, sans-serif" font-size="56" font-weight="800" fill="#17140f">NICOLAS VERDOT</text>
+  <text x="60" y="350" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#17140f">Du collectif qui discute au collectif</text>
+  <text x="60" y="400" font-family="Georgia, serif" font-style="italic" font-size="38" fill="#17140f">qui agit vraiment.</text>
+  <rect x="60" y="440" width="530" height="4" fill="#e8b923" />
+  <text x="60" y="490" font-family="Arial, sans-serif" font-size="24" fill="#4a4a4a">Séminaires · Facilitation · Coaching · Formations</text>
 </svg>

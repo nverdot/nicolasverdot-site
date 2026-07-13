@@ -1,16 +1,19 @@
 :root {
-  --color-navy: #123044;
-  --color-navy-ink: #0d2433;
-  --color-orange: #f28c28;
-  --color-orange-ink: #d97a1c;
-  --color-green: #6faf7a;
-  --color-cream: #f8f4ec;
-  --color-ink: #1f1f1f;
+  /* Noms historiques conservés (--color-navy, --color-green...) mais valeurs
+     recalibrées sur la nouvelle palette blanc / jaune moutarde / noir / rouge. */
+  --color-navy: #17140f;
+  --color-navy-ink: #000000;
+  --color-orange: #e8b923;
+  --color-orange-ink: #c79a16;
+  --color-green: #d64545;
+  --color-cream: #fbf7ee;
+  --color-ink: #1a1a1a;
   --color-white: #ffffff;
-  --color-border: #e4dcc9;
+  --color-border: #ece3cf;
 
   --font-body: 'Instrument Sans', system-ui, -apple-system, sans-serif;
   --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-accent: 'Instrument Serif', Georgia, serif;
   --font-script: 'Caveat', cursive;
 
   --text-xs: 0.8125rem;
@@ -40,6 +43,6 @@
   --radius-lg: 16px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(18, 48, 68, 0.06);
-  --shadow-md: 0 8px 24px rgba(18, 48, 68, 0.08);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
