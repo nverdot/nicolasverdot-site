@@ -1,128 +1,295 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import HeroRotator from '../components/HeroRotator.astro';
-import IconCardGrid from '../components/IconCardGrid.astro';
-import ProcessSteps from '../components/ProcessSteps.astro';
+import Hero from '../components/Hero.astro';
 import OfferCard from '../components/OfferCard.astro';
-import EcosystemBlock from '../components/EcosystemBlock.astro';
 import CTABlock from '../components/CTABlock.astro';
+import { Image } from 'astro:assets';
+import action from '../assets/nicolas-action.jpeg';
 import { withBase } from '../utils/url';
 
-const problems = [
-  { title: 'Les mêmes discussions reviennent', text: 'Les sujets reviennent sans jamais vraiment se clore.' },
-  { title: 'Les priorités changent sans cesse', text: "Quand tout semble prioritaire, plus rien ne l'est vraiment." },
-  { title: 'Les transformations avancent lentement', text: "L'enthousiasme du départ perd de son élan en cours de route." },
-  { title: "Les réunions consomment de l'énergie", text: 'Elles se multiplient sans toujours produire les résultats attendus.' },
-  { title: 'Les idées restent théoriques', text: "Beaucoup d'idées, peu de mouvement réel." },
+const verbatims = [
+  'Encore une transformation qui devient la priorité numéro 1 de toutes les priorités numéro 1.',
+  "On a déjà fait trois ateliers. On sait ce qu'il faudrait faire. Maintenant, quelqu'un décide ?",
+  'On appelle ça co-construction, mais les décisions importantes sont déjà prises.',
+  "Tout le monde dit oui en réunion. Dans les couloirs, plus personne n'y croit vraiment.",
+  'On sort avec des post-it partout. Lundi, personne ne sait quoi faire.',
+  "On nous demande d'embarquer les équipes, mais le sens change toutes les deux semaines.",
+];
+
+const frictions = [
+  { title: 'Beaucoup de réunions, peu de décisions', text: 'Les échanges avancent, puis les mêmes sujets reviennent au point de départ.' },
+  { title: 'Toujours les mêmes voix', text: "Quelques personnes portent la parole, pendant que d'autres restent spectateurs." },
+  { title: 'Des priorités qui se dispersent', text: 'Tout semble important, donc rien ne devient vraiment clair, partagé et actionnable.' },
+  { title: 'Un élan qui retombe', text: "Le séminaire crée de l'énergie, mais le passage à l'action se dilue après quelques jours." },
 ];
 
 const offers = [
   { icon: '◎', title: 'Séminaires & Ateliers', text: 'Faire équipe autour de ce qui compte vraiment : vision stratégique, cohésion, feuille de route, lancement de projet.' },
   { icon: '◌', title: 'Facilitation de collectifs', text: 'Concevoir et animer des conversations qui produisent des résultats : World Café, Open Space, ORID, Consensus Workshop.' },
-  { icon: '✎', title: 'Facilitation graphique', text: 'Donner à voir les idées pour accélérer la compréhension, la mémorisation et l\'engagement.' },
+  { icon: '✎', title: 'Facilitation graphique', text: "Donner à voir les idées pour accélérer la compréhension, la mémorisation et l'engagement." },
   { icon: '◇', title: 'IA & transformation humaine', text: "Faire de l'IA un levier collectif : identifier les bons usages et lancer des expérimentations utiles." },
-  { icon: '☼', title: 'Mentorat Leader Facilitateur', text: "Développer sa capacité à engager, fédérer et mettre en mouvement un collectif." },
+  { icon: '☼', title: 'Mentorat Leader Facilitateur', text: 'Développer sa capacité à engager, fédérer et mettre en mouvement un collectif.' },
   { icon: '◈', title: 'Coaching', text: 'Prendre du recul pour mieux avancer : leadership, posture, décision.' },
   { icon: '◉', title: 'Formations', text: 'Développer les compétences qui permettent aux collectifs de progresser durablement.' },
 ];
 
-const audiences = [
-  { title: 'Entreprises', text: 'PME, ETI, grands groupes, directions métiers, équipes projet, CODIR.' },
-  { title: 'Associations', text: 'Associations employeuses, fédérations, réseaux, collectifs de bénévoles.' },
-  { title: 'Collectivités', text: 'Mairies, acteurs territoriaux, services publics, démarches participatives.' },
-  { title: 'Organismes de formation', text: 'Formateurs, responsables pédagogiques, écoles.' },
-  { title: 'Communautés', text: 'Réseaux professionnels, communautés de pratiques, collectifs d\'acteurs.' },
+const profilePoints = [
+  { title: "Redonner de l'énergie", text: 'Des pratiques collectives qui remettent les personnes dans le jeu.' },
+  { title: 'Rendre le sens visible', text: 'Des supports visuels pour clarifier ce qui se joue et ce qui compte.' },
+  { title: 'Passer au faire', text: "Un cadre d'autonomie pour avancer sans que tout repose sur le leader." },
+];
+
+const audiences = ['Associations', 'PME', 'Grandes entreprises', 'Collectivités', 'Réseaux'];
+
+const clients = [
+  'Air France', 'Louis Vuitton', 'PwC', 'MG2Mix', 'Ressource SI', 'Mairie de Valbonne',
+  'JCI Monaco', 'URSSAF', "Commune d'Angers", 'CAF Rhône-Alpes', 'CEC', 'Fibois Sud',
+  'Osan We', 'IA2P', 'MediaSchool',
 ];
 ---
 
 <Layout
-  title="by Nicolas Verdot — Révéler le meilleur de votre collectif"
-  description="J'aide les leaders à créer les conditions qui permettent à leur collectif de donner le meilleur de lui-même : séminaires, facilitation, facilitation graphique, coaching et formations."
+  title="by Nicolas Verdot — Du collectif qui discute au collectif qui agit vraiment"
+  description="Facilitation, séminaires, facilitation graphique, coaching, IA et formations pour aider les collectifs à clarifier, décider et passer à l'action."
   path="/"
 >
-  <HeroRotator />
+  <Hero />
 
-  <section class="problem">
+  <section class="whispers">
     <div class="container">
-      <h2 class="prose">Votre collectif dispose probablement de plus de potentiel que vous ne l'imaginez.</h2>
-      <p class="prose">Pourtant, dans de nombreuses organisations, les mêmes difficultés reviennent — et lorsque les priorités deviennent floues, l'énergie du collectif se disperse.</p>
-      <IconCardGrid cards={problems} />
+      <p class="eyebrow">Ce que les équipes pensent tout bas</p>
+      <h2 class="prose">Les phrases qu'on entend dans les couloirs, jamais en réunion.</h2>
+      <div class="verbatim-grid">
+        {verbatims.map((v) => <blockquote>{v}</blockquote>)}
+      </div>
     </div>
   </section>
 
-  <section class="mission">
-    <div class="container prose">
-      <h2>Mon métier : créer les conditions qui permettent au collectif de donner le meilleur de lui-même.</h2>
-      <p>Je ne viens pas avec des réponses toutes faites. Je ne suis pas expert de votre métier — vous l'êtes déjà. En revanche, je suis expert des dynamiques collectives.</p>
-      <p>J'aide les leaders à concevoir les espaces, les conversations et les expériences qui permettent aux personnes de mieux se comprendre, mieux décider et mieux agir ensemble.</p>
-    </div>
-  </section>
-
-  <section class="process">
+  <section class="frictions" id="interventions">
     <div class="container">
-      <h2 class="prose">Une approche en cinq étapes</h2>
-      <ProcessSteps />
+      <p class="eyebrow">Là où j'interviens</p>
+      <h2 class="prose">Vous ne manquez pas d'idées. Il vous manque une posture, des techniques, un cadre.</h2>
+      <p class="prose">De quoi créer les conditions du passage à l'action. Voici les quatre blocages que je dénoue le plus souvent.</p>
+      <div class="friction-grid">
+        {frictions.map((f, i) => (
+          <article class="friction-card">
+            <span class="friction-number">{String(i + 1).padStart(2, '0')}</span>
+            <strong>{f.title}</strong>
+            <p>{f.text}</p>
+          </article>
+        ))}
+      </div>
+      <p class="friction-outcome"><strong>Mon rôle :</strong> tenir le cadre, rendre visible ce qui compte, faire contribuer les bonnes personnes, aider à décider et transformer l'énergie collective en prochaines actions assumées.</p>
     </div>
   </section>
 
   <section class="offers" id="accompagnements">
     <div class="container">
-      <h2 class="prose">Comment puis-je vous aider ?</h2>
+      <p class="eyebrow">Ce que je propose, concrètement</p>
+      <h2 class="prose">Des temps collectifs qui produisent autre chose que des slides et de bonnes intentions.</h2>
+      <p class="prose">Je ne viens pas avec des réponses toutes faites. Je conçois et j'anime le cadre qui permet à vos équipes de clarifier, contribuer, décider et repartir avec une suite réelle.</p>
       <div class="offer-grid">
         {offers.map((offer) => <OfferCard icon={offer.icon} title={offer.title} text={offer.text} />)}
       </div>
     </div>
   </section>
 
-  <section class="audiences">
-    <div class="container">
-      <h2 class="prose">Ce n'est pas réservé aux grandes entreprises.</h2>
-      <p class="prose">J'accompagne les leaders qui font vivre des collectifs, quel que soit leur terrain d'action.</p>
-      <IconCardGrid cards={audiences} columns={3} />
-    </div>
-  </section>
-
-  <section class="team">
-    <div class="container prose">
-      <h2>Une équipe à la taille de vos enjeux</h2>
-      <p>Je suis votre interlocuteur privilégié tout au long de la mission. Lorsque les enjeux le nécessitent, je mobilise un réseau de partenaires de confiance — facilitateurs, facilitateurs graphiques, coachs, designers pédagogiques, experts métier.</p>
-      <p>Vous bénéficiez ainsi d'un accompagnement sur mesure, d'une relation de proximité et d'une capacité d'intervention adaptée à votre contexte.</p>
-    </div>
-  </section>
-
-  <section class="ecosystem">
-    <div class="container">
-      <h2 class="prose">Contribuer à un monde plus participatif</h2>
-      <p class="prose">Au-delà des missions clients, je contribue activement au développement des pratiques de facilitation et d'intelligence collective.</p>
-      <EcosystemBlock variant="compact" />
+  <section class="profile">
+    <div class="container profile-grid">
+      <div class="profile-photo">
+        <Image src={action} alt="Nicolas Verdot en action pendant une captation graphique" width={480} height={560} />
+        <p>Plus de 12 ans sur le terrain, au contact des collectifs.</p>
+      </div>
+      <div class="profile-copy">
+        <p class="eyebrow">Qui je suis</p>
+        <h2>Je suis Nicolas Verdot.</h2>
+        <p class="profile-lead">Mon métier : booster les leaders et les équipes pour redonner du sens, de l'énergie et un cadre d'autonomie pour faire.</p>
+        <p>Depuis plus de 12 ans, j'interviens aussi bien auprès d'associations que de PME, de collectivités ou de très grandes entreprises. Mon sujet n'est pas la taille de l'organisation : c'est le collectif au moment où il doit se parler, décider et agir.</p>
+        <div class="audience-tags">
+          {audiences.map((a) => <span>{a}</span>)}
+        </div>
+        <div class="profile-points">
+          {profilePoints.map((p) => (
+            <article>
+              <strong>{p.title}</strong>
+              <span>{p.text}</span>
+            </article>
+          ))}
+        </div>
+        <a href={withBase('/a-propos/')} class="profile-link">Découvrir mon parcours →</a>
+      </div>
     </div>
   </section>
 
   <section class="trust">
-    <div class="container prose">
-      <p>Depuis plus de 10 ans, j'accompagne des leaders, des équipes et des organisations dans leurs transformations — auprès de grands groupes, de PME, d'associations, de collectivités et d'organismes de formation.</p>
-      <p><strong>Comment créer les conditions qui permettront au collectif de donner le meilleur de lui-même ?</strong> C'est cette question qui guide chacune de mes interventions.</p>
-      <a href={withBase('/a-propos/')}>Découvrir mon parcours →</a>
+    <div class="container">
+      <p class="eyebrow center">Ils m'ont déjà fait confiance</p>
+      <h2 class="prose center">Des contextes différents, un même enjeu : faire avancer le collectif.</h2>
+      <div class="client-list">
+        {clients.map((c) => <span>{c}</span>)}
+      </div>
     </div>
   </section>
 
   <CTABlock
-    title="Et si nous révélions ensemble le meilleur de votre collectif ?"
-    subtitle="Parlons de vos défis, de vos ambitions et des prochaines étapes."
+    title="30 minutes pour comprendre votre contexte et voir si je peux vous aider."
+    subtitle="Réservez un échange pour clarifier votre besoin, votre projet ou votre prochain temps collectif. On identifie ensemble ce qui bloque ou ce qui doit émerger."
   />
 </Layout>
 
 <style>
-  .problem,
-  .audiences {
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-orange-ink);
+    margin-bottom: var(--space-2);
+  }
+  .eyebrow.center {
+    text-align: center;
+  }
+  .prose.center {
+    max-width: var(--prose-max);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .whispers {
     background: var(--color-white);
   }
+  .verbatim-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-8);
+  }
+  .verbatim-grid blockquote {
+    margin: 0;
+    padding: var(--space-6);
+    background: var(--color-cream);
+    border-left: 3px solid var(--color-orange);
+    border-radius: var(--radius-md);
+    font-style: italic;
+    color: #333;
+  }
+
+  .friction-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-6);
+    margin: var(--space-8) 0;
+  }
+  .friction-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+  }
+  .friction-number {
+    display: block;
+    font-family: var(--font-display);
+    color: var(--color-border);
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-2);
+  }
+  .friction-card strong {
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+  .friction-card p {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: #444;
+  }
+  .friction-outcome {
+    background: var(--color-navy);
+    color: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+  }
+
   .offer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: var(--space-6);
+    margin-top: var(--space-8);
   }
-  .team {
+
+  .profile {
     background: var(--color-white);
+  }
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+  .profile-photo img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+  .profile-photo p {
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    color: #666;
+    text-align: center;
+  }
+  .profile-lead {
+    font-size: var(--text-lg);
+  }
+  .audience-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-4) 0 var(--space-6);
+  }
+  .audience-tags span {
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-sm);
+  }
+  .profile-points {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+  .profile-points strong {
+    display: block;
+    color: var(--color-navy);
+  }
+  .profile-points span {
+    font-size: var(--text-sm);
+    color: #555;
+  }
+  .profile-link {
+    font-weight: 600;
+    color: var(--color-navy);
+    text-decoration: none;
+  }
+
+  .client-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4) var(--space-8);
+    margin-top: var(--space-8);
+  }
+  .client-list span {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-navy);
+    opacity: 0.75;
+  }
+
+  @media (max-width: 800px) {
+    .profile-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
