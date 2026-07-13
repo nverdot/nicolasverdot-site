@@ -3,10 +3,9 @@ export const SITE = {
   name: 'BY Nicolas Verdot',
   tagline: 'Coaching, formation & facilitation',
   url: 'https://nicolasverdot.com',
-  // TODO: remplace par ton email et ton téléphone réels
   email: 'contact@nicolasverdot.com',
-  phone: '+33600000000',
-  phoneDisplay: '06 00 00 00 00',
+  phone: '+33770058522',
+  phoneDisplay: '07 70 05 85 22',
   // TODO: adresse ou ville de base (utilisée dans le schema.org LocalBusiness)
   address: {
     streetAddress: '',
