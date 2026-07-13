@@ -10,7 +10,8 @@ interface Props {
 const { title, subtitle } = Astro.props;
 ---
 
-<section class="cta-block">
+<section class="cta-block" data-reveal>
+  <div class="cta-aura" aria-hidden="true"></div>
   <div class="container cta-inner">
     <h2>{title}</h2>
     {subtitle && <p class="prose">{subtitle}</p>}
@@ -23,10 +24,21 @@ const { title, subtitle } = Astro.props;
 
 <style>
   .cta-block {
+    position: relative;
     background: var(--color-navy);
     color: var(--color-white);
+    overflow: hidden;
+  }
+  .cta-aura {
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(circle at 30% 30%, rgba(232, 185, 35, 0.25), transparent 55%);
+    background-size: 140% 140%;
+    animation: aura-drift 14s ease-in-out infinite;
+    pointer-events: none;
   }
   .cta-inner {
+    position: relative;
     text-align: center;
   }
   .cta-block h2 {
@@ -47,6 +59,7 @@ const { title, subtitle } = Astro.props;
   .cta-block .btn-outline {
     color: var(--color-white);
     border-color: var(--color-white);
+    background: transparent;
   }
   .cta-block .btn-outline:hover {
     background: var(--color-white);

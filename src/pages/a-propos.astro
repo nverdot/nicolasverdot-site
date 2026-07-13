@@ -27,11 +27,14 @@ const beliefs = [
         <p>Depuis plus de 10 ans, j'accompagne des leaders, des équipes et des organisations à mieux collaborer, décider et agir ensemble — auprès de grands groupes, de PME, d'associations, de collectivités, d'organismes de formation et de communautés professionnelles.</p>
         <p><strong>Comment créer les conditions qui permettront au collectif de donner le meilleur de lui-même ?</strong> C'est cette question qui guide mon travail.</p>
       </div>
-      <Image src={portrait} alt="Portrait de Nicolas Verdot" width={420} height={520} class="portrait" />
+      <div class="portrait-frame">
+        <Image src={portrait} alt="Portrait de Nicolas Verdot" width={420} height={520} class="portrait" />
+        <div class="hero-grain" aria-hidden="true"></div>
+      </div>
     </div>
   </section>
 
-  <section class="path">
+  <section class="path" data-reveal>
     <div class="container prose">
       <h2>Mon parcours</h2>
       <p>Je viens à l'origine du monde informatique. J'ai été développeur, puis coach agile, facilitateur, formateur, manager, facilitateur graphique et accompagnateur de transformations.</p>
@@ -40,7 +43,7 @@ const beliefs = [
     </div>
   </section>
 
-  <section class="craft">
+  <section class="craft" data-reveal>
     <div class="container prose">
       <h2>Ce que je fais vraiment</h2>
       <p>Je ne viens pas avec des réponses toutes faites. Je conçois le cadre qui permet au collectif de trouver les siennes.</p>
@@ -48,7 +51,7 @@ const beliefs = [
     </div>
   </section>
 
-  <section class="engagements">
+  <section class="engagements" data-reveal>
     <div class="container">
       <h2 class="prose">Mes engagements pour un monde plus participatif</h2>
       <p class="prose">Au-delà des missions clients, je contribue au développement des pratiques de facilitation et d'intelligence collective.</p>
@@ -56,7 +59,7 @@ const beliefs = [
     </div>
   </section>
 
-  <section class="personal">
+  <section class="personal" data-reveal>
     <div class="container prose">
       <h2>Une touche personnelle</h2>
       <p>Je suis aussi moniteur de plongée. Ce n'est pas un détail anecdotique : la plongée m'a appris des choses essentielles sur la posture, la sécurité, l'attention, la respiration, le cadre et la confiance.</p>
@@ -64,7 +67,7 @@ const beliefs = [
     </div>
   </section>
 
-  <section class="beliefs">
+  <section class="beliefs" data-reveal>
     <div class="container prose">
       <h2>Ce que je défends</h2>
       <ul class="belief-list">
@@ -87,11 +90,25 @@ const beliefs = [
     align-items: center;
     padding-top: var(--space-8);
   }
+  .portrait-frame {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
   .portrait {
+    display: block;
     width: 100%;
     height: auto;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+  }
+  .hero-grain {
+    position: absolute;
+    inset: -10%;
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain-drift 8s steps(6) infinite;
   }
   .path,
   .engagements,
@@ -121,7 +138,7 @@ const beliefs = [
     .intro-inner {
       grid-template-columns: 1fr;
     }
-    .portrait {
+    .portrait-frame {
       max-width: 280px;
       margin: 0 auto;
     }

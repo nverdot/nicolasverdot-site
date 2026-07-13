@@ -20,7 +20,9 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  line-height: 1.15;
+  font-weight: 900;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.08;
   color: var(--color-navy);
   margin: 0 0 var(--space-4);
 }
@@ -65,7 +67,7 @@ section {
   color: var(--color-navy);
   text-decoration: none;
   padding: 0.85rem 1.75rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -73,7 +75,7 @@ section {
   border: 2px solid var(--color-navy);
   cursor: pointer;
   font-family: var(--font-body);
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition: background var(--duration-standard) var(--ease-standard), transform var(--duration-standard) var(--ease-standard);
 }
 
 .btn:hover {
@@ -87,14 +89,14 @@ section {
   color: var(--color-navy);
   text-decoration: none;
   padding: 0.85rem 1.75rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   font-size: var(--text-sm);
   font-family: var(--font-body);
   border: 2px solid var(--color-navy);
-  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  transition: background var(--duration-standard) var(--ease-standard), color var(--duration-standard) var(--ease-standard), transform var(--duration-standard) var(--ease-standard);
 }
 
 .btn-outline:hover {
@@ -103,8 +105,98 @@ section {
   transform: translateY(-1px);
 }
 
-.accent-italic {
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-weight: 400;
+.btn-glass {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.accent-script {
+  font-family: var(--font-script);
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Cartes "neo-brutalist" : bordure nette + ombre décalée façon sticker. */
+.card-brut {
+  border: 2.5px solid var(--color-navy);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-brut);
+  transition: transform var(--duration-standard) var(--ease-standard), box-shadow var(--duration-standard) var(--ease-standard);
+}
+
+.card-brut:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--color-navy);
+}
+
+/* Reveal au scroll */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s var(--ease-standard), transform 0.6s var(--ease-standard);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes drift-wiggle {
+  0%,
+  100% {
+    transform: rotate(-2.5deg);
+  }
+  50% {
+    transform: rotate(2.5deg);
+  }
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes grain-drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-2%, 2%);
+  }
+  50% {
+    transform: translate(2%, -1%);
+  }
+  75% {
+    transform: translate(-1%, -2%);
+  }
+}
+
+@keyframes aura-drift {
+  0%,
+  100% {
+    background-position: 20% 30%;
+  }
+  50% {
+    background-position: 80% 60%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

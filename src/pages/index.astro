@@ -55,7 +55,7 @@ const clients = [
 >
   <Hero />
 
-  <section class="whispers">
+  <section class="whispers" data-reveal>
     <div class="container">
       <p class="eyebrow">Ce que les équipes pensent tout bas</p>
       <h2 class="prose">Les phrases qu'on entend dans les couloirs, jamais en réunion.</h2>
@@ -65,14 +65,14 @@ const clients = [
     </div>
   </section>
 
-  <section class="frictions" id="interventions">
+  <section class="frictions" id="interventions" data-reveal>
     <div class="container">
       <p class="eyebrow">Là où j'interviens</p>
       <h2 class="prose">Vous ne manquez pas d'idées. Il vous manque une posture, des techniques, un cadre.</h2>
       <p class="prose">De quoi créer les conditions du passage à l'action. Voici les quatre blocages que je dénoue le plus souvent.</p>
       <div class="friction-grid">
         {frictions.map((f, i) => (
-          <article class="friction-card">
+          <article class="friction-card card-brut">
             <span class="friction-number">{String(i + 1).padStart(2, '0')}</span>
             <strong>{f.title}</strong>
             <p>{f.text}</p>
@@ -83,7 +83,7 @@ const clients = [
     </div>
   </section>
 
-  <section class="offers" id="accompagnements">
+  <section class="offers" id="accompagnements" data-reveal>
     <div class="container">
       <p class="eyebrow">Ce que je propose, concrètement</p>
       <h2 class="prose">Des temps collectifs qui produisent autre chose que des slides et de bonnes intentions.</h2>
@@ -94,7 +94,7 @@ const clients = [
     </div>
   </section>
 
-  <section class="profile">
+  <section class="profile" data-reveal>
     <div class="container profile-grid">
       <div class="profile-photo">
         <Image src={action} alt="Nicolas Verdot en action pendant une captation graphique" width={480} height={560} />
@@ -121,12 +121,15 @@ const clients = [
     </div>
   </section>
 
-  <section class="trust">
+  <section class="trust" data-reveal>
     <div class="container">
       <p class="eyebrow center">Ils m'ont déjà fait confiance</p>
       <h2 class="prose center">Des contextes différents, un même enjeu : faire avancer le collectif.</h2>
-      <div class="client-list">
+    </div>
+    <div class="client-marquee">
+      <div class="client-marquee-track">
         {clients.map((c) => <span>{c}</span>)}
+        {clients.map((c) => <span aria-hidden="true">{c}</span>)}
       </div>
     </div>
   </section>
@@ -183,8 +186,6 @@ const clients = [
   }
   .friction-card {
     background: var(--color-white);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
     padding: var(--space-6);
   }
   .friction-number {
@@ -273,18 +274,28 @@ const clients = [
     text-decoration: none;
   }
 
-  .client-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-4) var(--space-8);
+  .client-marquee {
     margin-top: var(--space-8);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   }
-  .client-list span {
+  .client-marquee-track {
+    display: flex;
+    width: max-content;
+    gap: var(--space-12);
+    animation: marquee-scroll 28s linear infinite;
+  }
+  .client-marquee:hover .client-marquee-track {
+    animation-play-state: paused;
+  }
+  .client-marquee-track span {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
+    font-size: var(--text-lg);
     color: var(--color-navy);
-    opacity: 0.75;
+    opacity: 0.7;
+    white-space: nowrap;
   }
 
   @media (max-width: 800px) {

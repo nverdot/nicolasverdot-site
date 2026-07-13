@@ -6,14 +6,13 @@
   --color-orange: #e8b923;
   --color-orange-ink: #c79a16;
   --color-green: #d64545;
-  --color-cream: #fbf7ee;
-  --color-ink: #1a1a1a;
+  --color-cream: #fbfaf6;
+  --color-ink: #161514;
   --color-white: #ffffff;
   --color-border: #ece3cf;
 
-  --font-body: 'Instrument Sans', system-ui, -apple-system, sans-serif;
-  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
-  --font-accent: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif;
   --font-script: 'Caveat', cursive;
 
   --text-xs: 0.8125rem;
@@ -24,6 +23,8 @@
   --text-2xl: 1.75rem;
   --text-3xl: 2.25rem;
   --text-4xl: clamp(2.25rem, 4vw + 1rem, 3.25rem);
+
+  --tracking-tight: -0.04em;
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -45,4 +46,8 @@
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --shadow-brut: 4px 4px 0 var(--color-navy);
+
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-standard: 0.3s;
 }

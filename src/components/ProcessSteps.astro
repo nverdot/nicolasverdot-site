@@ -11,7 +11,7 @@ const steps = [
 <ol class="process-steps">
   {
     steps.map((step, i) => (
-      <li class="step">
+      <li class="step card-brut">
         <span class="step-number">{i + 1}</span>
         <span class="step-icon" aria-hidden="true">{step.icon}</span>
         <h3>{step.title}</h3>
@@ -33,9 +33,7 @@ const steps = [
   .step {
     position: relative;
     background: var(--color-white);
-    border-radius: var(--radius-md);
     padding: var(--space-6) var(--space-4);
-    border: 1px solid var(--color-border);
   }
   .step-number {
     position: absolute;
