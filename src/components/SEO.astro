@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../data/site';
+import { withBase } from '../utils/url';
 
 interface Props {
   title: string;
@@ -9,8 +10,8 @@ interface Props {
 }
 
 const { title, description, path, image = '/og-image.svg' } = Astro.props;
-const canonicalURL = new URL(path, SITE.url).toString();
-const ogImageURL = new URL(image, SITE.url).toString();
+const canonicalURL = new URL(withBase(path), SITE.url).toString();
+const ogImageURL = new URL(withBase(image), SITE.url).toString();
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',

@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/url';
+
 interface Props {
   icon: string;
   title: string;
@@ -6,7 +8,7 @@ interface Props {
   href?: string;
 }
 
-const { icon, title, text, href = '/contact/' } = Astro.props;
+const { icon, title, text, href = withBase('/contact/') } = Astro.props;
 ---
 
 <a href={href} class="offer-card">

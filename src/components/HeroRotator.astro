@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import heroImage from '../assets/hero-facilitation-workshop.png';
 import { SITE } from '../data/site';
+import { withBase } from '../utils/url';
 
 const variants = [
   {
@@ -34,7 +35,7 @@ const variants = [
       <p class="prose" id="hero-text">{variants[0].text}</p>
       <div class="hero-actions">
         <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Prendre rendez-vous</a>
-        <a href="/approche/" class="btn-outline">Découvrir mon approche</a>
+        <a href={withBase('/approche/')} class="btn-outline">Découvrir mon approche</a>
       </div>
     </div>
     <div class="hero-image">

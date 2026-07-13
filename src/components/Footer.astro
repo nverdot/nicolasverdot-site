@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../data/site';
+import { withBase } from '../utils/url';
 const year = new Date().getFullYear();
 ---
 
@@ -14,9 +15,9 @@ const year = new Date().getFullYear();
       <a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a>
     </div>
     <nav class="footer-nav">
-      <a href="/approche/">Approche</a>
-      <a href="/a-propos/">À propos</a>
-      <a href="/contact/">Contact</a>
+      <a href={withBase('/approche/')}>Approche</a>
+      <a href={withBase('/a-propos/')}>À propos</a>
+      <a href={withBase('/contact/')}>Contact</a>
     </nav>
   </div>
   <p class="footer-copy container">&copy; {year} Nicolas Verdot. Tous droits réservés.</p>

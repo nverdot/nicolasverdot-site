@@ -6,6 +6,7 @@ import ProcessSteps from '../components/ProcessSteps.astro';
 import OfferCard from '../components/OfferCard.astro';
 import EcosystemBlock from '../components/EcosystemBlock.astro';
 import CTABlock from '../components/CTABlock.astro';
+import { withBase } from '../utils/url';
 
 const problems = [
   { title: 'Les mêmes discussions reviennent', text: 'Les sujets reviennent sans jamais vraiment se clore.' },
@@ -101,7 +102,7 @@ const audiences = [
     <div class="container prose">
       <p>Depuis plus de 10 ans, j'accompagne des leaders, des équipes et des organisations dans leurs transformations — auprès de grands groupes, de PME, d'associations, de collectivités et d'organismes de formation.</p>
       <p><strong>Comment créer les conditions qui permettront au collectif de donner le meilleur de lui-même ?</strong> C'est cette question qui guide chacune de mes interventions.</p>
-      <a href="/a-propos/">Découvrir mon parcours →</a>
+      <a href={withBase('/a-propos/')}>Découvrir mon parcours →</a>
     </div>
   </section>
 

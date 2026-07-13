@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../data/site';
+import { withBase } from '../utils/url';
 
 interface Props {
   title: string;
@@ -15,7 +16,7 @@ const { title, subtitle } = Astro.props;
     {subtitle && <p class="prose">{subtitle}</p>}
     <div class="cta-actions">
       <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Prendre rendez-vous</a>
-      <a href="/contact/" class="btn-outline">Envoyer un message</a>
+      <a href={withBase('/contact/')} class="btn-outline">Envoyer un message</a>
     </div>
   </div>
 </section>

@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../data/site';
+import { withBase } from '../utils/url';
 
 const offers = [
   'Séminaires & Ateliers',
@@ -18,12 +19,13 @@ const navItems = [
   { href: '/contact/', label: 'Contact' },
 ];
 
-const currentPath = Astro.url.pathname;
+// Normalise Astro.url.pathname pour comparer sans se soucier du préfixe /TESTSITENV/.
+const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="/" class="logo">
+    <a href={withBase('/')} class="logo">
       <span class="logo-script">by</span> <span class="logo-caps">NICOLAS VERDOT</span>
     </a>
     <input type="checkbox" id="nav-toggle" class="nav-toggle" />
@@ -32,20 +34,20 @@ const currentPath = Astro.url.pathname;
     </label>
     <nav class="main-nav">
       <ul>
-        <li><a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>Accueil</a></li>
+        <li><a href={withBase('/')} aria-current={currentPath === '/' ? 'page' : undefined}>Accueil</a></li>
         <li>
           <details class="dropdown">
             <summary>Accompagnements</summary>
             <ul class="dropdown-menu">
               {offers.map((offer) => (
-                <li><a href="/#accompagnements">{offer}</a></li>
+                <li><a href={withBase('/#accompagnements')}>{offer}</a></li>
               ))}
             </ul>
           </details>
         </li>
-        <li><a href="/approche/" aria-current={currentPath === '/approche/' ? 'page' : undefined}>Approche</a></li>
-        <li><a href="/a-propos/" aria-current={currentPath === '/a-propos/' ? 'page' : undefined}>À propos</a></li>
-        <li><a href="/contact/" aria-current={currentPath === '/contact/' ? 'page' : undefined}>Contact</a></li>
+        <li><a href={withBase('/approche/')} aria-current={currentPath === '/approche/' ? 'page' : undefined}>Approche</a></li>
+        <li><a href={withBase('/a-propos/')} aria-current={currentPath === '/a-propos/' ? 'page' : undefined}>À propos</a></li>
+        <li><a href={withBase('/contact/')} aria-current={currentPath === '/contact/' ? 'page' : undefined}>Contact</a></li>
       </ul>
       <a href={SITE.bookingUrl} class="btn header-cta" target="_blank" rel="noopener">Prendre rendez-vous</a>
     </nav>
