@@ -24,13 +24,26 @@ const frictions = [
 ];
 
 const offers = [
-  { icon: '◎', title: 'Séminaires & Ateliers', text: 'Faire équipe autour de ce qui compte vraiment : vision stratégique, cohésion, feuille de route, lancement de projet.' },
-  { icon: '◌', title: 'Facilitation de collectifs', text: 'Concevoir et animer des conversations qui produisent des résultats : World Café, Open Space, ORID, Consensus Workshop.' },
-  { icon: '✎', title: 'Facilitation graphique', text: "Donner à voir les idées pour accélérer la compréhension, la mémorisation et l'engagement." },
-  { icon: '◇', title: 'IA & transformation humaine', text: "Faire de l'IA un levier collectif : identifier les bons usages et lancer des expérimentations utiles." },
-  { icon: '☼', title: 'Mentorat Leader Facilitateur', text: 'Développer sa capacité à engager, fédérer et mettre en mouvement un collectif.' },
-  { icon: '◈', title: 'Coaching', text: 'Prendre du recul pour mieux avancer : leadership, posture, décision.' },
-  { icon: '◉', title: 'Formations', text: 'Développer les compétences qui permettent aux collectifs de progresser durablement.' },
+  {
+    icon: '◆',
+    title: 'Décider ensemble',
+    text: "Transformer un sujet complexe en décisions claires, comprises et assumées collectivement — quand les discussions tournent en rond et que les priorités restent floues.",
+  },
+  {
+    icon: '◎',
+    title: "Aligner l'équipe",
+    text: 'Créer une direction commune et remettre le collectif en mouvement autour de priorités réellement partagées — l\'offre centrale, pour les séminaires qui doivent produire plus qu\'un bon souvenir.',
+  },
+  {
+    icon: '⟳',
+    title: 'Installer une dynamique durable',
+    text: "Passer d'un moment d'alignement à une nouvelle manière de travailler, de décider et de responsabiliser les équipes, dans la durée.",
+  },
+];
+
+const complementaryOffers = [
+  'Diagnostic Leader Ancré', 'Mentorat Leader', "Conception d'événements",
+  'Facilitation graphique', 'Formation professionnelle', 'Décoincés du Crayon',
 ];
 
 const profilePoints = [
@@ -90,6 +103,10 @@ const clients = [
       <p class="prose">Je ne viens pas avec des réponses toutes faites. Je conçois et j'anime le cadre qui permet à vos équipes de clarifier, contribuer, décider et repartir avec une suite réelle.</p>
       <div class="offer-grid">
         {offers.map((offer) => <OfferCard icon={offer.icon} title={offer.title} text={offer.text} />)}
+      </div>
+      <p class="complementary-label">Selon votre situation, ces offres peuvent aussi s'y ajouter :</p>
+      <div class="complementary-tags">
+        {complementaryOffers.map((c) => <span>{c}</span>)}
       </div>
     </div>
   </section>
@@ -213,9 +230,27 @@ const clients = [
 
   .offer-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: var(--space-6);
     margin-top: var(--space-8);
+  }
+  .complementary-label {
+    margin: var(--space-8) 0 var(--space-3);
+    font-size: var(--text-sm);
+    color: #555;
+  }
+  .complementary-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .complementary-tags span {
+    background: var(--color-cream);
+    border: 1.5px solid var(--color-navy);
+    border-radius: var(--radius-pill);
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 600;
   }
 
   .profile {
