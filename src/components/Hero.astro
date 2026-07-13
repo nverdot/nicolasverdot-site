@@ -4,6 +4,34 @@ import portrait from '../assets/nicolas-portrait.png';
 import action from '../assets/nicolas-action.jpeg';
 import { SITE } from '../data/site';
 import { withBase } from '../utils/url';
+
+const variants = [
+  {
+    main: 'Du collectif qui discute au collectif qui agit',
+    accent: 'vraiment.',
+    lead: "Vous ne manquez pas d'idées. Il manque souvent la posture, les techniques et le cadre pour transformer les discussions, les priorités et les tensions en décisions utiles et en actions réelles.",
+  },
+  {
+    main: 'Clarifier. Décider.',
+    accent: 'Faire avancer.',
+    lead: "J'aide les leaders et les équipes à transformer leurs sujets complexes en décisions claires et en actions concrètes.",
+  },
+  {
+    main: 'Les réponses sont souvent déjà dans',
+    accent: 'la salle.',
+    lead: 'Encore faut-il créer les conditions pour les faire émerger.',
+  },
+  {
+    main: 'Quand tout semble prioritaire,',
+    accent: "plus rien ne l'est.",
+    lead: 'Retrouvez une vision commune, des priorités partagées et l\'énergie pour avancer.',
+  },
+  {
+    main: 'Donner à voir ce qui compte',
+    accent: 'vraiment.',
+    lead: "Parce qu'un collectif avance mieux lorsqu'il partage une même compréhension.",
+  },
+];
 ---
 
 <section class="hero" aria-labelledby="hero-title">
@@ -11,11 +39,14 @@ import { withBase } from '../utils/url';
     <div class="hero-copy">
       <p class="eyebrow">Leader facilitateur pour collectifs en mouvement</p>
       <h1 id="hero-title">
-        Du collectif qui discute au <span class="hero-pen">collectif qui agit<svg class="ink-underline" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path d="M6 20 C 120 8, 250 6, 360 14 S 540 26, 594 12" /></svg></span> <span class="accent-script">vraiment.</span>
+        <span id="hero-main">{variants[0].main}</span>
+        {' '}
+        <span class="accent-wrap">
+          <span class="accent-script" id="hero-accent">{variants[0].accent}</span>
+          <svg class="ink-underline" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path d="M6 20 C 120 8, 250 6, 360 14 S 540 26, 594 12" /></svg>
+        </span>
       </h1>
-      <p class="hero-lead">
-        Vous ne manquez pas d'idées. Il manque souvent la posture, les techniques et le cadre pour transformer les discussions, les priorités et les tensions en décisions utiles et en actions réelles.
-      </p>
+      <p class="hero-lead" id="hero-lead">{variants[0].lead}</p>
       <div class="editorial-beats" aria-label="Ma méthode">
         <span class="is-teal">Clarifier</span>
         <span class="is-red">Décider</span>
@@ -43,6 +74,28 @@ import { withBase } from '../utils/url';
   </div>
 </section>
 
+<script define:vars={{ variants }}>
+  const mainEl = document.getElementById('hero-main');
+  const accentEl = document.getElementById('hero-accent');
+  const leadEl = document.getElementById('hero-lead');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduceMotion && mainEl && accentEl && leadEl && variants.length > 1) {
+    let index = 0;
+    setInterval(() => {
+      index = (index + 1) % variants.length;
+      const group = [mainEl, accentEl, leadEl];
+      group.forEach((el) => (el.style.opacity = '0'));
+      setTimeout(() => {
+        mainEl.textContent = variants[index].main;
+        accentEl.textContent = variants[index].accent;
+        leadEl.textContent = variants[index].lead;
+        group.forEach((el) => (el.style.opacity = '1'));
+      }, 300);
+    }, 5500);
+  }
+</script>
+
 <style>
   .hero {
     padding-top: var(--space-16);
@@ -64,7 +117,12 @@ import { withBase } from '../utils/url';
   .hero-copy h1 {
     margin-bottom: var(--space-4);
   }
-  .hero-pen {
+  #hero-main,
+  #hero-accent,
+  #hero-lead {
+    transition: opacity 0.3s ease;
+  }
+  .accent-wrap {
     position: relative;
     display: inline-block;
   }
@@ -85,8 +143,10 @@ import { withBase } from '../utils/url';
     letter-spacing: 0;
   }
   .hero-lead {
+    display: block;
     font-size: var(--text-lg);
     color: #333;
+    min-height: 3.4em;
   }
   .editorial-beats {
     display: flex;

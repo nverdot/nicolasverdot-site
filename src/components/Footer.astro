@@ -5,70 +5,124 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <div class="container footer-inner">
-    <div>
-      <p class="footer-name">by <strong>Nicolas Verdot</strong></p>
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href={withBase('/')} class="logo">
+        <span class="logo-script">by</span> <span class="logo-caps">NICOLAS VERDOT</span>
+      </a>
       <p class="footer-tagline">{SITE.baseline}</p>
+      <p class="footer-mission">Créer les conditions qui permettent au collectif de donner le meilleur de lui-même.</p>
     </div>
-    <div class="footer-contact">
+
+    <div class="footer-col">
+      <h2>Offres</h2>
+      <a href={withBase('/#accompagnements')}>Décider ensemble</a>
+      <a href={withBase('/#accompagnements')}>Aligner l'équipe</a>
+      <a href={withBase('/#accompagnements')}>Installer une dynamique durable</a>
+    </div>
+
+    <div class="footer-col">
+      <h2>Ressources</h2>
+      <a href={withBase('/blog/')}>Blog</a>
+      <a href={withBase('/approche/')}>Approche</a>
+      <a href={withBase('/a-propos/')}>À propos</a>
+    </div>
+
+    <div class="footer-col">
+      <h2>Contact</h2>
+      <a href={SITE.bookingUrl} target="_blank" rel="noopener">Prendre rendez-vous</a>
       <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
       <a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a>
     </div>
-    <nav class="footer-nav">
-      <a href={withBase('/approche/')}>Approche</a>
-      <a href={withBase('/a-propos/')}>À propos</a>
-      <a href={withBase('/contact/')}>Contact</a>
-    </nav>
   </div>
-  <p class="footer-copy container">&copy; {year} Nicolas Verdot. Tous droits réservés.</p>
+
+  <div class="container footer-bottom">
+    <span>&copy; {year} Nicolas Verdot. Tous droits réservés.</span>
+    <span class="footer-legal">Mentions légales · Confidentialité · Accessibilité : à venir</span>
+  </div>
 </footer>
 
 <style>
   .site-footer {
-    border-top: 1px solid var(--color-border);
+    border-top: 2.5px solid var(--color-navy);
     background: var(--color-white);
     margin-top: var(--space-24);
     padding: var(--space-12) 0 var(--space-6);
   }
-  .footer-inner {
-    display: flex;
-    flex-wrap: wrap;
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
     gap: var(--space-8);
-    justify-content: space-between;
   }
-  .footer-name {
-    font-weight: 400;
-    margin: 0 0 var(--space-1);
+  .logo {
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: var(--space-2);
+  }
+  .logo-script {
+    font-family: var(--font-script);
+    color: var(--color-orange-ink);
+    font-size: 1.4rem;
+  }
+  .logo-caps {
+    font-family: var(--font-display);
+    font-weight: 900;
     color: var(--color-navy);
+    letter-spacing: -0.02em;
+    font-size: 1rem;
   }
   .footer-tagline {
-    margin: 0;
-    color: #555;
-    font-size: var(--text-sm);
-  }
-  .footer-contact {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-  }
-  .footer-contact a {
+    margin: 0 0 var(--space-2);
     color: var(--color-navy);
-    text-decoration: none;
+    font-weight: 600;
     font-size: var(--text-sm);
   }
-  .footer-nav {
+  .footer-mission {
+    margin: 0;
+    color: #666;
+    font-size: var(--text-sm);
+    max-width: 32ch;
+  }
+  .footer-col h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-navy);
+    margin: 0 0 var(--space-3);
+  }
+  .footer-col {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
   }
-  .footer-nav a {
+  .footer-col a {
     color: #555;
     text-decoration: none;
     font-size: var(--text-sm);
+    padding: var(--space-1) 0;
   }
-  .footer-copy {
-    margin: var(--space-8) auto 0;
+  .footer-col a:hover {
+    color: var(--color-orange-ink);
+  }
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    justify-content: space-between;
+    margin-top: var(--space-12);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
     font-size: var(--text-xs);
     color: #999;
+  }
+
+  @media (max-width: 800px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer-brand {
+      grid-column: 1 / -1;
+      margin-bottom: var(--space-4);
+    }
   }
 </style>

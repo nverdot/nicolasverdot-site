@@ -1,0 +1,95 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { withBase } from '../../utils/url';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles', ({ data }) => !data.draft);
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+}
+
+const { article } = Astro.props;
+const { Content } = await article.render();
+const dateFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Layout
+  title={`${article.data.title} — by Nicolas Verdot`}
+  description={article.data.description}
+  path={`/blog/${article.slug}/`}
+>
+  <article class="post">
+    <div class="container prose">
+      <a href={withBase('/blog/')} class="back-link">← Tous les articles</a>
+      <span class="article-pillar">{article.data.pillar}</span>
+      <h1>{article.data.title}</h1>
+      <p class="post-meta">Publié le {dateFormatter.format(article.data.publishDate)} — Nicolas Verdot</p>
+      <div class="post-content">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <CTABlock
+    title="Un sujet précis à traiter avec votre équipe ?"
+    subtitle="Parlons de votre situation pour voir quel format serait le plus utile."
+  />
+</Layout>
+
+<style>
+  .post {
+    padding-top: var(--space-8);
+  }
+  .back-link {
+    display: inline-block;
+    margin-bottom: var(--space-6);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-navy);
+    text-decoration: none;
+  }
+  .article-pillar {
+    display: inline-block;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-orange-ink);
+    margin-bottom: var(--space-3);
+  }
+  .post-meta {
+    color: #888;
+    font-size: var(--text-sm);
+  }
+  .post-content {
+    margin-top: var(--space-8);
+    line-height: 1.75;
+  }
+  .post-content :global(h2) {
+    font-size: var(--text-2xl);
+    margin-top: var(--space-8);
+  }
+  .post-content :global(ul) {
+    padding-left: var(--space-6);
+  }
+  .post-content :global(li) {
+    margin-bottom: var(--space-2);
+  }
+  .post-content :global(a) {
+    color: var(--color-orange-ink);
+    font-weight: 600;
+  }
+  .post-content :global(hr) {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: var(--space-8) 0;
+  }
+</style>
