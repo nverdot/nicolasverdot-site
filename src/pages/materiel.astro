@@ -3,70 +3,112 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
+import { kits, bikabloKit } from '../data/materiel';
 
-const criteria = [
-  { i: '1', title: 'Une encre qui tient la distance', text: "Un marqueur qui sèche au milieu d'un atelier de trois heures n'est pas une option." },
-  { i: '2', title: 'Des supports qui résistent', text: 'Le rendu final doit tenir dans le temps : transport, affichage, numérisation, réutilisation.' },
-  { i: '3', title: 'Du matériel pensé pour durer', text: 'Je privilégie des outils réutilisables et de qualité plutôt que du matériel jetable.' },
+const whyChecks = [
+  { i: '1', title: 'Se décharger mentalement', text: "Tout est là, à sa place, prêt à être utilisé. Je n'ai pas à y penser — je reste pleinement présent à l'humain et à la dynamique du collectif." },
+  { i: '2', title: 'Une posture qui se voit', text: 'Arriver avec une valise de feutres bien rangée, cohérente et pensée pour l\'usage crée immédiatement un cadre professionnel et rassurant.' },
+  { i: '3', title: 'Des outils alignés avec mes valeurs', text: 'Robustes, durables, rechargeables — conçus pour durer et être transmis, pas pour être jetés.' },
 ];
 ---
 
 <Layout
-  title="Matériel & recommandations — by Nicolas Verdot"
-  description="Le matériel utilisé pour la facilitation graphique et la capture graphique : pourquoi il compte, l'engagement éco-responsable et le partenariat avec Neuland."
+  title="Guide du matériel facilitation graphique — by Nicolas Verdot"
+  description="Le matériel Neuland que j'utilise et recommande, par usage : sketchnote, formation et atelier, capture graphique. Sélection d'ambassadeur, testée sur le terrain depuis 15 ans."
   path="/materiel/"
 >
   <PageHero
     eyebrow="Matériel & recommandations"
-    title="Le matériel derrière la facilitation graphique"
-    summary="La qualité d'une capture graphique ne tient pas qu'au trait : elle dépend aussi du matériel utilisé pour la produire, dans la durée et dans de bonnes conditions."
-    pills={['Ambassadeur Neuland', 'Démarche éco-responsable']}
+    title="Le matériel que j'utilise (et pourquoi)"
+    summary="Cela fait plus de 15 ans que je travaille avec du matériel Neuland. Voici ma sélection complète, testée sur le terrain, organisée par usage : sketchnote, formation & atelier, capture graphique."
+    pills={['Ambassadeur Neuland', 'Démarche éco-responsable', 'Testé sur le terrain']}
   />
 
   <section class="section" data-reveal>
     <div class="container split">
       <div>
-        <p class="eyebrow">Pourquoi ça compte</p>
-        <h2>Le matériel n'est pas un détail</h2>
-        <p class="hero-copy">Pendant un atelier ou un événement en direct, il n'y a pas de seconde prise. Un marqueur qui rend mal, un support qui gondole ou un outil numérique qui plante au mauvais moment abîment le travail autant qu'une mauvaise écoute. Le choix du matériel fait partie de la préparation, au même titre que le brief ou le déroulé.</p>
+        <p class="eyebrow">Une relation de confiance construite dans la durée</p>
+        <h2>Plus de 15 ans avec Neuland</h2>
+        <p class="hero-copy">Ils m'accompagnent depuis mes débuts et ont évolué avec ma pratique, mes contextes d'intervention et mon exigence professionnelle. En <strong>2026</strong>, j'ai la chance de rejoindre les <strong>Ambassadeurs Neuland</strong>. C'est une fierté, mais surtout la reconnaissance d'une relation construite dans le temps, basée sur l'usage réel, le terrain et un alignement profond de valeurs.</p>
         <div class="checks">
-          {criteria.map((c) => (
+          {whyChecks.map((c) => (
             <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
           ))}
         </div>
       </div>
       <div class="quote">
-        <blockquote>Un bon facilitateur graphique se prépare aussi sur le matériel — pas seulement sur le fond.</blockquote>
+        <blockquote>J'ai encore, dans ma boîte à feutres, des marqueurs de plus de 10 ans. Et ils fonctionnent toujours.</blockquote>
+        <cite>Nicolas Verdot — Ambassadeur Neuland</cite>
       </div>
     </div>
   </section>
 
   <section class="section alt" data-reveal>
     <div class="container prose">
-      <p class="eyebrow">Partenariat</p>
-      <h2>Ambassadeur Neuland</h2>
-      <p>Je suis ambassadeur de la marque Neuland, référence reconnue dans le matériel de facilitation visuelle. C'est un choix cohérent avec la manière dont je travaille : des outils fiables, pensés spécifiquement pour la facilitation graphique et la pensée visuelle, plutôt que du matériel de bureau détourné de son usage.</p>
+      <p class="eyebrow">L'allié silencieux</p>
+      <h2>Le matériel n'est jamais un détail</h2>
+      <p>Avoir le bon matériel, bien pensé et bien organisé, me permet de me décharger mentalement de tout ce qui est technique et logistique. Cette sécurité me permet de rester pleinement présent à l'humain, à la dynamique du collectif et à ce qui se joue dans l'instant. Moins d'énergie dépensée sur la logistique, plus d'attention disponible pour l'écoute, l'observation et l'action.</p>
+      <p>Quand le matériel est bien conçu, il devient un <strong>allié silencieux</strong> : il sécurise le cadre, réduit la charge mentale et permet de se concentrer sur l'essentiel — l'humain, la relation et l'action collective. Promouvoir des produits éco-responsables fait pleinement sens pour moi : c'est cohérent avec la manière dont j'accompagne les leaders et les équipes — dans la durée, avec attention, responsabilité et impact.</p>
     </div>
   </section>
 
   <section class="section" data-reveal>
-    <div class="container prose">
-      <p class="eyebrow">Engagement</p>
-      <h2>Une démarche éco-responsable</h2>
-      <p>Je privilégie du matériel durable, réutilisable et pensé pour limiter le gaspillage plutôt que des outils à usage unique. Ce n'est pas un argument marketing : c'est une manière de choisir mon matériel qui va de pair avec la longévité recherchée pour chaque fresque produite — un support conçu pour durer mérite des outils conçus pour durer.</p>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Trois boîtes à outils</p>
+          <h2>Ma sélection, par usage</h2>
+        </div>
+        <p>Chaque kit correspond à un contexte réel d'intervention. Les liens renvoient directement vers la boutique Neuland.</p>
+      </div>
+      <nav class="kit-nav" aria-label="Aller à une boîte à outils">
+        {kits.map((k) => (
+          <a class="filter-btn" href={`#${k.id}`}>{k.label}</a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  {kits.map((kit, ki) => (
+    <section class={`section${ki % 2 === 0 ? ' alt' : ''}`} id={kit.id} data-reveal>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Boîte à outils</p>
+            <h2>{kit.title.replace('Boîte à outils — ', '')}</h2>
+          </div>
+          <p>{kit.intro}</p>
+        </div>
+        <div class="product-grid">
+          {kit.products.map((product) => (
+            <article class="product-card">
+              <h3>{product.name}</h3>
+              <p>{product.desc}</p>
+              <a class="card-link" href={product.url} target="_blank" rel="sponsored noopener">Voir le produit</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="panel">
+        <p class="eyebrow">Bibliothèque d'icônes</p>
+        <h2>En manque d'inspiration ?</h2>
+        <p class="muted">Pour enrichir votre vocabulaire visuel, je recommande principalement le <strong>{bikabloKit.name}</strong> : des centaines d'icônes prêtes à être reproduites, pensées pour la facilitation graphique.</p>
+        <a class="btn" href={bikabloKit.url} target="_blank" rel="sponsored noopener">Découvrir le kit Bikablo</a>
+      </div>
     </div>
   </section>
 
   <section class="section alt" data-reveal>
-    <div class="container">
-      <div class="panel">
-        <p class="eyebrow">Recommandations</p>
-        <h2>Ce que je recommande, par catégorie</h2>
-        <p class="muted"><strong>Marqueurs</strong> — une encre stable qui ne pâlit pas et ne sèche pas en cours de session, avec des recharges plutôt que du jetable.</p>
-        <p class="muted"><strong>Supports</strong> — du papier ou des surfaces adaptées au format de l'événement, pensés pour être transportés, affichés puis numérisés sans perte de qualité.</p>
-        <p class="muted"><strong>Outils numériques</strong> — une tablette graphique pour les captures digitales, la diffusion en direct et le partage à distance quand le présentiel n'est pas possible.</p>
-        <a class="btn" href={withBase('/contact/')}>Une question sur le matériel ou une intervention ?</a>
-      </div>
+    <div class="container prose">
+      <p class="eyebrow">À noter</p>
+      <h2>Transparence</h2>
+      <p>En tant qu'ambassadeur Neuland, j'utilise ces outils professionnels dans mes formations en ligne, mes ateliers en présentiel et dans mon travail au quotidien. Les liens de cette page redirigent directement vers la boutique Neuland.com.</p>
+      <p class="fine"><em>Les liens présents sur cette page sont des liens affiliés, sans coût supplémentaire pour vous. Je perçois une petite commission sur les achats effectués via ces liens. Cela ne change en rien mon intérêt personnel pour cette marque, que j'utilise depuis des années.</em></p>
     </div>
   </section>
 
@@ -82,5 +124,47 @@ const criteria = [
   }
   .panel .btn {
     margin-top: var(--space-4);
+  }
+  .kit-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+  .product-card h3 {
+    font-size: var(--text-base);
+    margin: 0;
+  }
+  .product-card p {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    flex-grow: 1;
+  }
+  .product-card .card-link {
+    margin-top: var(--space-2);
+  }
+  @media (max-width: 900px) {
+    .product-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 560px) {
+    .product-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 </style>

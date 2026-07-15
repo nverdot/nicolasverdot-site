@@ -77,17 +77,27 @@ const variants = [
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (!reduceMotion && mainEl && accentEl && leadEl && variants.length > 1) {
+    // Un seul tour complet puis arrêt (WCAG 2.2.2) ; pause tant que le
+    // pointeur est sur le texte, pour ne jamais couper une lecture en cours.
     let index = 0;
-    setInterval(() => {
-      index = (index + 1) % variants.length;
+    let paused = false;
+    const copy = mainEl.closest('.hero-copy');
+    copy?.addEventListener('mouseenter', () => (paused = true));
+    copy?.addEventListener('mouseleave', () => (paused = false));
+    const timer = setInterval(() => {
+      if (paused) return;
+      index += 1;
+      const stopAfter = index >= variants.length;
+      const v = variants[index % variants.length];
       const group = [mainEl, accentEl, leadEl];
       group.forEach((el) => (el.style.opacity = '0'));
       setTimeout(() => {
-        mainEl.textContent = variants[index].main;
-        accentEl.textContent = variants[index].accent;
-        leadEl.textContent = variants[index].lead;
+        mainEl.textContent = v.main;
+        accentEl.textContent = v.accent;
+        leadEl.textContent = v.lead;
         group.forEach((el) => (el.style.opacity = '1'));
       }, 300);
+      if (stopAfter) clearInterval(timer);
     }, 5500);
   }
 </script>
@@ -209,9 +219,10 @@ const variants = [
     .hero-grid {
       grid-template-columns: 1fr;
     }
+    /* Sur mobile, le message d'abord : le premier écran doit dire ce que
+       fait Nicolas avant de montrer son visage. */
     .hero-photo {
-      order: -1;
-      margin-bottom: var(--space-8);
+      margin-top: var(--space-8);
     }
     .hero-photo :global(.hero-photo-action) {
       display: none;

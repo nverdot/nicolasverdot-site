@@ -48,6 +48,11 @@ const { conversations } = Astro.props;
   .chat-carousel-slide {
     display: none;
   }
+  /* Sans JS (ou avant son exécution), la première conversation reste visible :
+     pas de section vide, pas de saut de mise en page quand le script démarre. */
+  .chat-carousel:not(.is-ready) .chat-carousel-slide:first-child {
+    display: block;
+  }
   .chat-carousel-slide.is-active {
     display: block;
     animation: chat-slide-in 0.4s ease;
@@ -183,6 +188,12 @@ const { conversations } = Astro.props;
     const dots = Array.from(carousel.querySelectorAll<HTMLElement>('[data-dot]'));
     const total = slides.length;
     let index = 0;
+
+    // Stabilise la mise en page dès l'init : le premier slide (post-mélange)
+    // est affiché immédiatement, l'observer ne fera que lancer la lecture.
+    carousel.classList.add('is-ready');
+    slides[0]?.classList.add('is-active');
+    dots[0]?.classList.add('is-active');
     let started = false;
     let pendingAdvance: ReturnType<typeof setTimeout> | null = null;
 

@@ -1,10 +1,12 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import ChatCarousel from '../components/ChatCarousel.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
 import { conversations } from '../data/conversations';
+import action from '../assets/nicolas-action.jpeg';
 
 const offers = [
   {
@@ -85,6 +87,37 @@ const clients = [
 >
   <Hero />
 
+  <section class="trust" data-reveal>
+    <div class="container">
+      <p class="eyebrow center">Ils m'ont déjà fait confiance</p>
+    </div>
+    <div class="client-marquee">
+      <div class="client-marquee-track">
+        {[...clients, ...clients].map((c, i) => (
+          <span class="client-item" aria-hidden={i >= clients.length ? 'true' : undefined}>
+            {c.logo ? <img src={withBase(c.logo)} alt={c.name} loading="lazy" /> : <span class="client-text">{c.name}</span>}
+          </span>
+        ))}
+      </div>
+    </div>
+    <div class="container">
+      <ul class="authority" aria-label="Repères de confiance">
+        <li><a href={withBase('/facilitation-graphique/')}>Fondateur du Sommet des Décoincés du Crayon</a></li>
+        <li><a href={withBase('/materiel/')}>Ambassadeur Neuland</a></li>
+        <li><a href={withBase('/facilitation-graphique/')}>Un réseau national de facilitateurs mobilisable</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="whispers" data-reveal>
+    <div class="container">
+      <p class="eyebrow">Ce qui se dit vraiment</p>
+      <h2 class="prose">Ce que les équipes se disent réellement entre elles.</h2>
+      <p class="prose whispers-lead">Jamais en réunion. Toujours juste après, entre deux portes ou dans un message privé. Si ces conversations vous rappellent quelque chose, la suite est pour vous.</p>
+      <ChatCarousel conversations={conversations} />
+    </div>
+  </section>
+
   <section class="offers" id="accompagnements" data-reveal>
     <div class="container">
       <div class="section-head">
@@ -108,15 +141,6 @@ const clients = [
     </div>
   </section>
 
-  <section class="whispers" data-reveal>
-    <div class="container">
-      <p class="eyebrow">Ce qui se dit vraiment</p>
-      <h2 class="prose">Ce que les équipes se disent réellement entre elles.</h2>
-      <p class="prose whispers-lead">Jamais en réunion. Toujours juste après, entre deux portes ou dans un message privé.</p>
-      <ChatCarousel conversations={conversations} />
-    </div>
-  </section>
-
   <section class="section alt" data-reveal>
     <div class="container split">
       <div>
@@ -136,7 +160,7 @@ const clients = [
     </div>
   </section>
 
-  <section class="section alt" data-reveal>
+  <section class="section" data-reveal>
     <div class="container split">
       <div>
         <p class="eyebrow">Qui suis-je ?</p>
@@ -151,9 +175,8 @@ const clients = [
           <a class="btn" href={withBase('/a-propos/')}>Découvrir ma vision et mon approche</a>
         </div>
       </div>
-      <div class="quote">
-        <blockquote>Je ne cherche pas à faire participer tout le monde à tout. Je cherche à donner à chacun une place utile dans un processus clair.</blockquote>
-        <cite>Nicolas Verdot</cite>
+      <div class="split-photo">
+        <Image src={action} alt="Nicolas Verdot en pleine facilitation graphique" width={480} height={360} />
       </div>
     </div>
   </section>
@@ -194,23 +217,7 @@ const clients = [
           </article>
         ))}
       </div>
-      <p class="complementary-label">Et aussi : {complementaryMore.join(' · ')}.</p>
-    </div>
-  </section>
-
-  <section class="trust" data-reveal>
-    <div class="container">
-      <p class="eyebrow center">Ils m'ont déjà fait confiance</p>
-      <h2 class="prose center">Des contextes différents, un même enjeu : faire avancer le collectif.</h2>
-    </div>
-    <div class="client-marquee">
-      <div class="client-marquee-track">
-        {[...clients, ...clients].map((c, i) => (
-          <span class="client-item" aria-hidden={i >= clients.length ? 'true' : undefined}>
-            {c.logo ? <img src={withBase(c.logo)} alt={c.name} loading="lazy" /> : <span class="client-text">{c.name}</span>}
-          </span>
-        ))}
-      </div>
+      <p class="complementary-label">Et aussi : {complementaryMore.join(' · ')}. Curieux de la pensée visuelle ? <a href={withBase('/facilitation-graphique/')}>Découvrez ce qu'est la facilitation graphique</a>.</p>
     </div>
   </section>
 
@@ -237,6 +244,37 @@ const clients = [
   .whispers {
     background: var(--color-surface);
   }
+
+  .authority {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2) var(--space-4);
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    font-size: var(--text-sm);
+  }
+  .authority li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .authority li + li::before {
+    content: '·';
+    color: var(--color-orange);
+    font-weight: 900;
+  }
+  .authority a {
+    color: var(--color-muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color var(--duration-standard) var(--ease-standard), border-color var(--duration-standard) var(--ease-standard);
+  }
+  .authority a:hover {
+    color: var(--color-ink);
+    border-color: var(--color-orange);
+  }
   .whispers-lead {
     color: var(--color-muted);
     margin-top: var(--space-2);
@@ -246,6 +284,10 @@ const clients = [
     margin: var(--space-6) 0 0;
     font-size: var(--text-sm);
     color: var(--color-muted);
+  }
+  .complementary-label a {
+    color: var(--color-blue);
+    font-weight: 600;
   }
 
   .client-marquee {
