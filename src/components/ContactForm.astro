@@ -2,7 +2,7 @@
 import { SITE } from '../data/site';
 ---
 
-<form id="contact-form" class="contact-form">
+<form id="contact-form" class="contact-form form-grid">
   <input type="hidden" name="access_key" value={SITE.web3formsAccessKey} />
   <input type="hidden" name="subject" value="Nouveau message depuis nicolasverdot.com" />
   <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" />
@@ -17,26 +17,23 @@ import { SITE } from '../data/site';
     <input type="email" id="email" name="email" required />
   </div>
 
-  <div class="field">
+  <div class="field full">
     <label for="phone">Téléphone (facultatif)</label>
     <input type="tel" id="phone" name="phone" />
   </div>
 
-  <div class="field">
+  <div class="field full">
     <label for="message">Message</label>
     <textarea id="message" name="message" rows="5" required></textarea>
   </div>
 
-  <button type="submit" class="btn">Envoyer</button>
-  <p id="form-status" role="status" aria-live="polite"></p>
+  <button type="submit" class="btn full">Envoyer</button>
+  <p id="form-status" class="fine full" role="status" aria-live="polite"></p>
 </form>
 
 <style>
   .contact-form {
-    max-width: 560px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-4);
   }
   .field {
     display: flex;
@@ -60,7 +57,6 @@ import { SITE } from '../data/site';
     display: none;
   }
   #form-status {
-    font-size: 0.9rem;
     min-height: 1.2em;
   }
   #form-status[data-state='success'] {

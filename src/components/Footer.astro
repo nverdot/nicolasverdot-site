@@ -16,6 +16,7 @@ const year = new Date().getFullYear();
 
     <div class="footer-col">
       <h2>Offres</h2>
+      <a href={withBase('/offres/')}>Toutes les offres</a>
       <a href={withBase('/offres/decider-ensemble/')}>Décider ensemble</a>
       <a href={withBase('/offres/aligner-equipe/')}>Aligner l'équipe</a>
       <a href={withBase('/offres/dynamique-durable/')}>Installer une dynamique durable</a>
@@ -44,8 +45,8 @@ const year = new Date().getFullYear();
 
 <style>
   .site-footer {
-    border-top: 1px solid var(--color-panel-border);
-    background: var(--color-surface);
+    background: var(--color-ink-solid);
+    color: var(--color-white);
     margin-top: var(--space-24);
     padding: var(--space-12) 0 var(--space-6);
   }
@@ -67,19 +68,19 @@ const year = new Date().getFullYear();
   .logo-caps {
     font-family: var(--font-display);
     font-weight: 900;
-    color: var(--color-navy);
+    color: var(--color-white);
     letter-spacing: -0.02em;
     font-size: 1rem;
   }
   .footer-tagline {
     margin: 0 0 var(--space-2);
-    color: var(--color-navy);
+    color: var(--color-white);
     font-weight: 600;
     font-size: var(--text-sm);
   }
   .footer-mission {
     margin: 0;
-    color: var(--color-faint);
+    color: #c6d0df;
     font-size: var(--text-sm);
     max-width: 32ch;
   }
@@ -88,7 +89,7 @@ const year = new Date().getFullYear();
     font-size: var(--text-sm);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--color-navy);
+    color: var(--color-orange);
     margin: 0 0 var(--space-3);
   }
   .footer-col {
@@ -96,13 +97,13 @@ const year = new Date().getFullYear();
     flex-direction: column;
   }
   .footer-col a {
-    color: var(--color-muted);
+    color: #c6d0df;
     text-decoration: none;
     font-size: var(--text-sm);
     padding: var(--space-1) 0;
   }
   .footer-col a:hover {
-    color: var(--color-navy);
+    color: var(--color-white);
   }
   .footer-bottom {
     display: flex;
@@ -111,9 +112,9 @@ const year = new Date().getFullYear();
     justify-content: space-between;
     margin-top: var(--space-12);
     padding-top: var(--space-6);
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
     font-size: var(--text-xs);
-    color: var(--color-faint);
+    color: #95a4bb;
   }
 
   @media (max-width: 800px) {

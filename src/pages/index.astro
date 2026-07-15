@@ -1,10 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import OfferCard from '../components/OfferCard.astro';
 import CTABlock from '../components/CTABlock.astro';
-import { Image } from 'astro:assets';
-import action from '../assets/nicolas-action.jpeg';
 import { withBase } from '../utils/url';
 
 const verbatims = [
@@ -16,46 +13,57 @@ const verbatims = [
   "On nous demande d'embarquer les équipes, mais le sens change toutes les deux semaines.",
 ];
 
-const frictions = [
-  { title: 'Beaucoup de réunions, peu de décisions', text: 'Les échanges avancent, puis les mêmes sujets reviennent au point de départ.' },
-  { title: 'Toujours les mêmes voix', text: "Quelques personnes portent la parole, pendant que d'autres restent spectateurs." },
-  { title: 'Des priorités qui se dispersent', text: 'Tout semble important, donc rien ne devient vraiment clair, partagé et actionnable.' },
-  { title: 'Un élan qui retombe', text: "Le séminaire crée de l'énergie, mais le passage à l'action se dilue après quelques jours." },
-];
-
 const offers = [
   {
-    icon: '◆',
+    num: '01 · Décision',
     title: 'Décider ensemble',
-    text: "Transformer un sujet complexe en décisions claires, comprises et assumées collectivement — quand les discussions tournent en rond et que les priorités restent floues.",
+    text: 'Pour sortir des discussions qui tournent en rond et transformer un sujet complexe en décision claire.',
     href: withBase('/offres/decider-ensemble/'),
+    ribbon: false,
   },
   {
-    icon: '◎',
+    num: "02 · Alignement",
     title: "Aligner l'équipe",
-    text: 'Créer une direction commune et remettre le collectif en mouvement autour de priorités réellement partagées — l\'offre centrale, pour les séminaires qui doivent produire plus qu\'un bon souvenir.',
+    text: 'Pour créer une direction commune, traiter les divergences et remettre le collectif en mouvement.',
     href: withBase('/offres/aligner-equipe/'),
+    ribbon: true,
   },
   {
-    icon: '⟳',
+    num: '03 · Fonctionnement',
     title: 'Installer une dynamique durable',
-    text: "Passer d'un moment d'alignement à une nouvelle manière de travailler, de décider et de responsabiliser les équipes, dans la durée.",
+    text: "Pour faire évoluer la prise de décision, les responsabilités, les rituels et l'autonomie dans le temps.",
     href: withBase('/offres/dynamique-durable/'),
+    ribbon: false,
   },
 ];
 
-const complementaryOffers = [
-  'Diagnostic Leader Ancré', 'Mentorat Leader', "Conception d'événements",
-  'Facilitation graphique', 'Formation professionnelle', 'Décoincés du Crayon',
+const doChecks = [
+  { i: '1', title: "Cadrer l'enjeu", text: 'Que faut-il comprendre, traiter ou décider ?' },
+  { i: '2', title: 'Concevoir le processus', text: 'Qui contribue, à quel moment, avec quelles limites ?' },
+  { i: '3', title: 'Faciliter et rendre visible', text: 'Faire émerger, structurer, arbitrer et garder une trace.' },
+  { i: '4', title: 'Préparer la suite', text: 'Responsables, décisions, feuille de route et suivi.' },
 ];
 
-const profilePoints = [
-  { title: "Redonner de l'énergie", text: 'Des pratiques collectives qui remettent les personnes dans le jeu.' },
-  { title: 'Rendre le sens visible', text: 'Des supports visuels pour clarifier ce qui se joue et ce qui compte.' },
-  { title: 'Passer au faire', text: "Un cadre d'autonomie pour avancer sans que tout repose sur le leader." },
+const whoChecks = [
+  { i: 'V', title: 'Une vision', text: 'Des organisations où les personnes savent ce qui compte et dans quel cadre agir.' },
+  { i: 'M', title: 'Une mission', text: 'Concevoir de meilleures conversations pour produire de meilleures décisions.' },
+  { i: 'A', title: 'Une approche', text: 'Partir du résultat attendu avant de choisir les méthodes et les outils.' },
 ];
 
-const audiences = ['Associations', 'PME', 'Grandes entreprises', 'Collectivités', 'Réseaux'];
+const method = [
+  { title: 'Donner à voir', text: 'Clarifier les enjeux et rendre visibles les idées, les défis et les opportunités.' },
+  { title: 'Faire participer', text: "Faire émerger l'intelligence collective et créer les conditions de l'engagement." },
+  { title: 'Décider', text: 'Transformer les échanges en choix concrets. Prioriser. Aligner les énergies.' },
+  { title: 'Agir', text: 'Passer des intentions aux actions et construire un plan réaliste et mobilisateur.' },
+  { title: 'Apprendre', text: 'Observer, ajuster et progresser ensemble.' },
+];
+
+const complementary = [
+  { num: 'Visuel', title: 'Facilitation graphique', text: 'Donner à voir les idées, décisions et parcours d’un collectif.' },
+  { num: 'Leadership', title: 'Diagnostic Leader Ancré', text: 'Prendre du recul, poser un cadre et ne plus tout porter seul.' },
+  { num: 'Formation', title: 'Formation professionnelle', text: 'Transmettre les techniques de facilitation et de pensée visuelle.' },
+];
+const complementaryMore = ['Mentorat Leader', "Conception d'événements", 'Décoincés du Crayon'];
 
 const clients = [
   { name: 'Air France KLM', logo: '/logos/air-france-klm.png' },
@@ -74,6 +82,8 @@ const clients = [
   { name: 'IA2P' },
   { name: 'MediaSchool' },
 ];
+
+const proofNames = ['Air France KLM', 'Louis Vuitton', 'PwC', 'URSSAF', 'JCI Monaco'];
 ---
 
 <Layout
@@ -82,6 +92,36 @@ const clients = [
   path="/"
 >
   <Hero />
+
+  <section class="proofbar">
+    <div class="container proofgrid">
+      <strong>Expériences auprès de</strong>
+      {proofNames.map((name) => <span>{name}</span>)}
+    </div>
+  </section>
+
+  <section class="offers" id="accompagnements" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Trois portes d'entrée</p>
+          <h2>Par quel sujet commencer ?</h2>
+        </div>
+        <p>Le site ne présente pas un catalogue de compétences. Il vous aide à reconnaître la situation que vous vivez, à vous situer grâce à un diagnostic et à comprendre ce que vous pouvez obtenir.</p>
+      </div>
+      <div class="cards">
+        {offers.map((offer) => (
+          <article class="card">
+            {offer.ribbon && <div class="ribbon">CŒUR D'OFFRE</div>}
+            <div class="num">{offer.num}</div>
+            <h3>{offer.title}</h3>
+            <p>{offer.text}</p>
+            <a class="card-link" href={offer.href}>Explorer l'offre et faire le test</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <section class="whispers" data-reveal>
     <div class="container">
@@ -93,63 +133,84 @@ const clients = [
     </div>
   </section>
 
-  <section class="frictions" id="interventions" data-reveal>
+  <section class="section alt" data-reveal>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Ce que je fais réellement</p>
+        <h2>Je ne viens pas seulement animer une salle.</h2>
+        <p class="hero-copy">Le travail commence avant : clarifier l'intention, comprendre le système, identifier le niveau réel de participation et concevoir la conversation qui permettra d'obtenir un résultat exploitable.</p>
+        <div class="checks">
+          {doChecks.map((c) => (
+            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
+          ))}
+        </div>
+      </div>
+      <div class="quote">
+        <blockquote>Un bon séminaire ne se mesure pas au nombre de post-it. Il se mesure à ce qui devient plus clair après.</blockquote>
+        <cite>Nicolas Verdot — Facilitateur, coach et formateur</cite>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Qui suis-je ?</p>
+        <h2>Un facilitateur qui relie structure, collectif et pensée visuelle.</h2>
+        <p class="hero-copy">Ancien développeur, coach agile, facilitateur, formateur et moniteur de plongée, j'ai construit une approche qui combine clarté, responsabilité, participation utile et mise en action.</p>
+        <div class="checks">
+          {whoChecks.map((c) => (
+            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
+          ))}
+        </div>
+        <div class="actions">
+          <a class="btn" href={withBase('/a-propos/')}>Découvrir ma vision et mon approche</a>
+        </div>
+      </div>
+      <div class="quote">
+        <blockquote>Je ne cherche pas à faire participer tout le monde à tout. Je cherche à donner à chacun une place utile dans un processus clair.</blockquote>
+        <cite>Nicolas Verdot</cite>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" data-reveal>
     <div class="container">
-      <p class="eyebrow">Là où j'interviens</p>
-      <h2 class="prose">Vous ne manquez pas d'idées. Il vous manque une posture, des techniques, un cadre.</h2>
-      <p class="prose">De quoi créer les conditions du passage à l'action. Voici les quatre blocages que je dénoue le plus souvent.</p>
-      <div class="friction-grid">
-        {frictions.map((f, i) => (
-          <article class="friction-card panel">
-            <span class="friction-number">{String(i + 1).padStart(2, '0')}</span>
-            <strong>{f.title}</strong>
-            <p>{f.text}</p>
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">La méthode</p>
+          <h2>Un processus simple, jamais simpliste.</h2>
+        </div>
+        <p>Les méthodes changent selon le contexte. Les étapes, elles, restent lisibles.</p>
+      </div>
+      <div class="method">
+        {method.map((m, i) => (
+          <div class="step"><b>{String(i + 1).padStart(2, '0')}</b>{m.title} — {m.text}</div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Autres façons de travailler ensemble</p>
+          <h2>Autour du cœur de métier</h2>
+        </div>
+        <p>Des offres complémentaires sans brouiller le positionnement principal.</p>
+      </div>
+      <div class="cards">
+        {complementary.map((c) => (
+          <article class="card">
+            <div class="num">{c.num}</div>
+            <h3>{c.title}</h3>
+            <p>{c.text}</p>
+            <a class="card-link" href={withBase('/contact/')}>Découvrir</a>
           </article>
         ))}
       </div>
-      <p class="friction-outcome"><strong>Mon rôle :</strong> tenir le cadre, rendre visible ce qui compte, faire contribuer les bonnes personnes, aider à décider et transformer l'énergie collective en prochaines actions assumées.</p>
-    </div>
-  </section>
-
-  <section class="offers" id="accompagnements" data-reveal>
-    <div class="container">
-      <p class="eyebrow">Ce que je propose, concrètement</p>
-      <h2 class="prose">Des temps collectifs qui produisent autre chose que des slides et de bonnes intentions.</h2>
-      <p class="prose">Je ne viens pas avec des réponses toutes faites. Je conçois et j'anime le cadre qui permet à vos équipes de clarifier, contribuer, décider et repartir avec une suite réelle.</p>
-      <div class="offer-grid">
-        {offers.map((offer) => <OfferCard icon={offer.icon} title={offer.title} text={offer.text} href={offer.href} />)}
-      </div>
-      <p class="complementary-label">Selon votre situation, ces offres peuvent aussi s'y ajouter :</p>
-      <div class="complementary-tags">
-        {complementaryOffers.map((c) => <span>{c}</span>)}
-      </div>
-    </div>
-  </section>
-
-  <section class="profile" data-reveal>
-    <div class="container profile-grid">
-      <div class="profile-photo">
-        <Image src={action} alt="Nicolas Verdot en action pendant une captation graphique" width={480} height={560} />
-        <p>Plus de 12 ans sur le terrain, au contact des collectifs.</p>
-      </div>
-      <div class="profile-copy">
-        <p class="eyebrow">Qui je suis</p>
-        <h2>Je suis Nicolas Verdot.</h2>
-        <p class="profile-lead">Mon métier : booster les leaders et les équipes pour redonner du sens, de l'énergie et un cadre d'autonomie pour faire.</p>
-        <p>Depuis plus de 12 ans, j'interviens aussi bien auprès d'associations que de PME, de collectivités ou de très grandes entreprises. Mon sujet n'est pas la taille de l'organisation : c'est le collectif au moment où il doit se parler, décider et agir.</p>
-        <div class="audience-tags">
-          {audiences.map((a) => <span>{a}</span>)}
-        </div>
-        <div class="profile-points">
-          {profilePoints.map((p) => (
-            <article>
-              <strong>{p.title}</strong>
-              <span>{p.text}</span>
-            </article>
-          ))}
-        </div>
-        <a href={withBase('/a-propos/')} class="profile-link">Découvrir mon parcours →</a>
-      </div>
+      <p class="complementary-label">Et aussi : {complementaryMore.join(' · ')}.</p>
     </div>
   </section>
 
@@ -170,8 +231,9 @@ const clients = [
   </section>
 
   <CTABlock
-    title="30 minutes pour comprendre votre contexte et voir si je peux vous aider."
-    subtitle="Réservez un échange pour clarifier votre besoin, votre projet ou votre prochain temps collectif. On identifie ensemble ce qui bloque ou ce qui doit émerger."
+    eyebrow="Un sujet à débloquer ?"
+    title="Commençons par la situation réelle."
+    subtitle="Un premier échange permet de comprendre l'enjeu, le niveau de décision et de vérifier si mon intervention est pertinente."
   />
 </Layout>
 
@@ -201,12 +263,10 @@ const clients = [
     position: relative;
     margin: 0;
     padding: var(--space-8) var(--space-6) var(--space-6);
-    background: var(--color-panel);
-    border: 1px solid var(--color-panel-border);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
     font-style: italic;
     color: var(--color-muted);
     transition: transform var(--duration-standard) var(--ease-standard), box-shadow var(--duration-standard) var(--ease-standard);
@@ -234,124 +294,17 @@ const clients = [
     bottom: -10px;
     width: 20px;
     height: 20px;
-    background: var(--color-panel);
-    border-right: 1px solid var(--color-panel-border);
-    border-bottom: 1px solid var(--color-panel-border);
+    background: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
     border-radius: 0 0 6px 0;
     transform: rotate(45deg);
   }
 
-  .friction-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: var(--space-6);
-    margin: var(--space-8) 0;
-  }
-  .friction-card {
-    padding: var(--space-6);
-  }
-  .friction-number {
-    display: block;
-    font-family: var(--font-display);
-    color: var(--color-border);
-    font-size: var(--text-xl);
-    margin-bottom: var(--space-2);
-  }
-  .friction-card strong {
-    display: block;
-    margin-bottom: var(--space-2);
-  }
-  .friction-card p {
-    margin: 0;
-    font-size: var(--text-sm);
-    color: var(--color-muted);
-  }
-  .friction-outcome {
-    background: var(--color-blue-strong);
-    color: var(--color-white);
-    padding: var(--space-6);
-    border-radius: var(--radius-md);
-  }
-
-  .offer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-6);
-    margin-top: var(--space-8);
-  }
   .complementary-label {
-    margin: var(--space-8) 0 var(--space-3);
+    margin: var(--space-6) 0 0;
     font-size: var(--text-sm);
     color: var(--color-muted);
-  }
-  .complementary-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-  .complementary-tags span {
-    background: var(--color-panel);
-    border: 1px solid var(--color-panel-border);
-    border-radius: var(--radius-pill);
-    padding: var(--space-1) var(--space-3);
-    font-size: var(--text-sm);
-    font-weight: 600;
-  }
-
-  .profile {
-    background: var(--color-surface);
-  }
-  .profile-grid {
-    display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: var(--space-12);
-    align-items: center;
-  }
-  .profile-photo img {
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-  }
-  .profile-photo p {
-    margin-top: var(--space-3);
-    font-size: var(--text-sm);
-    color: var(--color-faint);
-    text-align: center;
-  }
-  .profile-lead {
-    font-size: var(--text-lg);
-  }
-  .audience-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: var(--space-4) 0 var(--space-6);
-  }
-  .audience-tags span {
-    background: var(--color-cream);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    padding: var(--space-1) var(--space-3);
-    font-size: var(--text-sm);
-  }
-  .profile-points {
-    display: grid;
-    gap: var(--space-4);
-    margin-bottom: var(--space-6);
-  }
-  .profile-points strong {
-    display: block;
-    color: var(--color-navy);
-  }
-  .profile-points span {
-    font-size: var(--text-sm);
-    color: var(--color-muted);
-  }
-  .profile-link {
-    font-weight: 600;
-    color: var(--color-navy);
-    text-decoration: none;
   }
 
   .client-marquee {
@@ -399,11 +352,5 @@ const clients = [
     color: var(--color-navy);
     opacity: 0.7;
     white-space: nowrap;
-  }
-
-  @media (max-width: 800px) {
-    .profile-grid {
-      grid-template-columns: 1fr;
-    }
   }
 </style>

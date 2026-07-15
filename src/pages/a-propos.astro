@@ -1,105 +1,142 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Image } from 'astro:assets';
-import portrait from '../assets/nicolas-portrait.png';
+import PageHero from '../components/PageHero.astro';
 import EcosystemBlock from '../components/EcosystemBlock.astro';
 import CTABlock from '../components/CTABlock.astro';
+import { Image } from 'astro:assets';
+import portrait from '../assets/nicolas-portrait.png';
 
-const beliefs = [
-  'Je crois que les personnes ont besoin de comprendre pour s\'engager.',
-  'Je crois que les collectifs ont plus de potentiel qu\'ils ne l\'imaginent.',
-  'Je crois que les meilleures décisions émergent rarement dans des réunions descendantes.',
-  'Je crois que la participation n\'est pas une perte de temps.',
-  'Je crois que donner à voir aide à mieux penser.',
-  'Et je crois qu\'un leader ne doit pas tout porter seul.',
+const aboutFacts = [
+  { label: 'Posture', text: 'Facilitateur, coach et formateur' },
+  { label: 'Expérience', text: "Plus de 10 ans auprès d'équipes et d'organisations" },
+  { label: 'Différence', text: 'Associer structure, collectif et pensée visuelle' },
+  { label: 'Ancrage', text: 'Nice et Côte d\'Azur, interventions en France' },
+];
+
+const convictions = [
+  { title: 'Le collectif ne remplace pas la responsabilité.', text: "Faire participer ne veut pas dire demander son avis à tout le monde sur tout." },
+  { title: "L'autonomie a besoin d'un cadre.", text: 'Une équipe agit mieux lorsqu\'elle sait ce qu\'elle peut décider et dans quelles limites.' },
+  { title: 'La forme influence le fond.', text: 'Le rythme, la qualité des questions et la manière de restituer changent la qualité de la réflexion.' },
 ];
 ---
 
 <Layout
-  title="À propos — by Nicolas Verdot"
-  description="Découvrez le parcours de Nicolas Verdot : coach agile, facilitateur, facilitateur graphique, formateur, fondateur de Décoincés du Crayon et contributeur ICA."
+  title="Qui suis-je — by Nicolas Verdot"
+  description="Découvrez Nicolas Verdot : coach agile, facilitateur, facilitateur graphique et formateur. Sa vision, sa mission et son parcours au service des collectifs."
   path="/a-propos/"
 >
-  <section class="intro">
-    <div class="container intro-inner">
-      <div class="prose">
-        <h1>J'aide les leaders à révéler le meilleur de leur collectif.</h1>
-        <p>Depuis plus de 10 ans, j'accompagne des leaders, des équipes et des organisations à mieux collaborer, décider et agir ensemble — auprès de grands groupes, de PME, d'associations, de collectivités, d'organismes de formation et de communautés professionnelles.</p>
-        <p><strong>Comment créer les conditions qui permettront au collectif de donner le meilleur de lui-même ?</strong> C'est cette question qui guide mon travail.</p>
-      </div>
-      <div class="portrait-frame">
+  <PageHero
+    eyebrow="Qui suis-je ?"
+    title="J'aide les collectifs à voir plus clair pour mieux agir."
+    summary="Ancien développeur, coach agile, facilitateur, formateur, facilitateur graphique et moniteur de plongée : un parcours qui relie structure, observation, sécurité, transmission et mise en mouvement."
+  />
+
+  <section class="section" data-reveal>
+    <div class="container split">
+      <div class="portrait-block">
         <Image src={portrait} alt="Portrait de Nicolas Verdot" width={420} height={520} class="portrait" />
         <div class="hero-grain" aria-hidden="true"></div>
+        <p class="bubble">Je ne viens pas plaquer une méthode. Je cherche ce qui doit devenir plus clair pour que les personnes puissent agir.</p>
+      </div>
+
+      <div>
+        <p class="eyebrow">Nicolas Verdot</p>
+        <h2>Une posture directe, simple et ancrée dans le terrain.</h2>
+        <p class="hero-copy">Je viens à l'origine du monde informatique. J'ai été développeur, puis coach agile, facilitateur, formateur, manager, facilitateur graphique et accompagnateur de transformations.</p>
+
+        <p class="bio-statement">Aujourd'hui, je travaille à l'endroit où se croisent la stratégie, la décision, la participation, le leadership et le fonctionnement réel des équipes.</p>
+
+        <p>Mon rôle n'est pas de rendre une réunion plus sympathique. Il consiste à clarifier ce que le collectif doit comprendre, traiter ou décider, puis à concevoir le processus qui lui permettra d'y parvenir.</p>
+
+        <div class="about-facts">
+          {aboutFacts.map((f) => (
+            <div class="about-fact"><strong>{f.label}</strong>{f.text}</div>
+          ))}
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="path" data-reveal>
-    <div class="container prose">
-      <h2>Mon parcours</h2>
-      <p>Je viens à l'origine du monde informatique. J'ai été développeur, puis coach agile, facilitateur, formateur, manager, facilitateur graphique et accompagnateur de transformations.</p>
-      <p>Pendant plus de 10 ans, j'ai accompagné des organisations sur des sujets de collaboration, d'agilité, de management visuel, de facilitation, de formation et de transformation — auprès de grands groupes, de PME, d'associations, de collectivités et d'organismes de formation.</p>
-      <p>Ce parcours m'a appris une chose simple : les transformations ne se jouent pas uniquement dans les méthodes. Elles se jouent dans la manière dont les personnes se parlent, se comprennent, décident et agissent ensemble.</p>
-    </div>
-  </section>
-
-  <section class="craft" data-reveal>
-    <div class="container prose">
-      <h2>Ce que je fais vraiment</h2>
-      <p>Je ne viens pas avec des réponses toutes faites. Je conçois le cadre qui permet au collectif de trouver les siennes.</p>
-      <p>Mon expertise n'est pas de connaître votre métier mieux que vous. Mon expertise est de concevoir la manière dont votre collectif va pouvoir réfléchir, décider et avancer.</p>
-    </div>
-  </section>
-
-  <section class="engagements" data-reveal>
+  <section class="section alt" data-reveal>
     <div class="container">
-      <h2 class="prose">Mes engagements pour un monde plus participatif</h2>
-      <p class="prose">Au-delà des missions clients, je contribue au développement des pratiques de facilitation et d'intelligence collective.</p>
+      <div class="identity-grid">
+        <article class="identity-card">
+          <p class="identity-label">Vision</p>
+          <h2>Des organisations où les personnes savent ce qui compte.</h2>
+          <p>Je crois à des organisations dans lesquelles la direction est compréhensible, les responsabilités sont explicites et les personnes disposent d'un cadre suffisamment clair pour contribuer et agir avec autonomie.</p>
+          <p>Une organisation plus humaine n'est pas une organisation sans contraintes ni décisions difficiles. C'est une organisation qui rend les règles du jeu visibles et traite les désaccords avec maturité.</p>
+        </article>
+
+        <article class="identity-card mission">
+          <p class="identity-label">Mission</p>
+          <h2>Concevoir de meilleures conversations pour produire de meilleures décisions.</h2>
+          <p>J'aide les leaders et les équipes à clarifier une situation, construire une compréhension commune, arbitrer et transformer les échanges en engagements concrets.</p>
+          <p>Selon le besoin, cela passe par un atelier, un séminaire, une formation, un accompagnement dans la durée ou un travail individuel avec le leader.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Convictions</p>
+          <h2>Ce qui guide mes interventions</h2>
+        </div>
+      </div>
+      <div class="cards">
+        {convictions.map((c) => (
+          <article class="card">
+            <h3>{c.title}</h3>
+            <p>{c.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Une touche personnelle</p>
+      <h2>Ce que la plongée m'a appris</h2>
+      <div class="article-callout">
+        <p>Je suis aussi moniteur de plongée. Ce n'est pas un détail anecdotique : la plongée m'a appris des choses essentielles sur la posture, la sécurité, l'attention, la respiration, le cadre et la confiance.</p>
+        <p>Sous l'eau, comme dans un collectif, la qualité du cadre change tout. Quand le cadre est clair, les personnes peuvent explorer avec plus de confiance.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Engagements</p>
+          <h2>Contribuer à un monde plus participatif</h2>
+        </div>
+        <p>Au-delà des missions clients, je contribue au développement des pratiques de facilitation et d'intelligence collective.</p>
+      </div>
       <EcosystemBlock variant="full" />
     </div>
   </section>
 
-  <section class="personal" data-reveal>
-    <div class="container prose">
-      <h2>Une touche personnelle</h2>
-      <p>Je suis aussi moniteur de plongée. Ce n'est pas un détail anecdotique : la plongée m'a appris des choses essentielles sur la posture, la sécurité, l'attention, la respiration, le cadre et la confiance.</p>
-      <p>Sous l'eau, comme dans un collectif, la qualité du cadre change tout. Quand le cadre est clair, les personnes peuvent explorer avec plus de confiance.</p>
-    </div>
-  </section>
-
-  <section class="beliefs" data-reveal>
-    <div class="container prose">
-      <h2>Ce que je défends</h2>
-      <ul class="belief-list">
-        {beliefs.map((belief) => <li>{belief}</li>)}
-      </ul>
-    </div>
-  </section>
-
   <CTABlock
-    title="Envie d'en parler ?"
-    subtitle="Si vous sentez qu'un de vos collectifs pourrait gagner en clarté, en énergie ou en mouvement, parlons-en."
+    eyebrow="Travailler ensemble"
+    title="Vous n'avez pas besoin de choisir la méthode."
+    subtitle="Présentez-moi la situation, le résultat attendu et les personnes concernées. Nous identifierons ensemble le bon niveau d'intervention."
   />
 </Layout>
 
 <style>
-  .intro-inner {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: var(--space-12);
-    align-items: center;
-    padding-top: var(--space-8);
-  }
-  .portrait-frame {
+  .portrait-block {
     position: relative;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
   }
-  .portrait {
+  .portrait-block :global(.portrait) {
     display: block;
     width: 100%;
     height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
   }
   .hero-grain {
     position: absolute;
@@ -109,38 +146,28 @@ const beliefs = [
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     animation: grain-drift 8s steps(6) infinite;
+    border-radius: var(--radius-lg);
   }
-  .path,
-  .engagements,
-  .beliefs {
-    background: var(--color-surface);
-  }
-  .belief-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-  .belief-list li {
-    padding-left: var(--space-6);
-    position: relative;
-  }
-  .belief-list li::before {
-    content: '—';
+  .bubble {
     position: absolute;
-    left: 0;
-    color: var(--color-orange);
+    left: var(--space-4);
+    top: var(--space-4);
+    max-width: 260px;
+    background: var(--color-white);
+    color: var(--color-ink-solid);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    margin: 0;
+    box-shadow: var(--shadow-md);
+    transform: rotate(-2deg);
   }
 
   @media (max-width: 800px) {
-    .intro-inner {
-      grid-template-columns: 1fr;
-    }
-    .portrait-frame {
-      max-width: 280px;
-      margin: 0 auto;
+    .bubble {
+      position: static;
+      transform: none;
+      margin-top: var(--space-4);
     }
   }
 </style>

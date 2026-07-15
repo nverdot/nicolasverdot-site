@@ -2,12 +2,6 @@
 import { SITE } from '../data/site';
 import { withBase } from '../utils/url';
 
-const offers = [
-  { title: 'Décider ensemble', slug: 'decider-ensemble' },
-  { title: "Aligner l'équipe", slug: 'aligner-equipe' },
-  { title: 'Installer une dynamique durable', slug: 'dynamique-durable' },
-];
-
 // Normalise Astro.url.pathname pour comparer sans se soucier du préfixe /TESTSITENV/.
 const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
 ---
@@ -33,16 +27,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     <nav class="main-nav">
       <ul>
         <li><a href={withBase('/')} aria-current={currentPath === '/' ? 'page' : undefined}>Accueil</a></li>
-        <li>
-          <details class="dropdown">
-            <summary>Accompagnements</summary>
-            <ul class="dropdown-menu">
-              {offers.map((offer) => (
-                <li><a href={withBase(`/offres/${offer.slug}/`)}>{offer.title}</a></li>
-              ))}
-            </ul>
-          </details>
-        </li>
+        <li><a href={withBase('/offres/')} aria-current={currentPath.startsWith('/offres/') ? 'page' : undefined}>Offres</a></li>
         <li><a href={withBase('/approche/')} aria-current={currentPath === '/approche/' ? 'page' : undefined}>Approche</a></li>
         <li><a href={withBase('/blog/')} aria-current={currentPath.startsWith('/blog/') ? 'page' : undefined}>Blog</a></li>
         <li><a href={withBase('/a-propos/')} aria-current={currentPath === '/a-propos/' ? 'page' : undefined}>À propos</a></li>
@@ -55,8 +40,8 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
 
 <style>
   .site-header {
-    border-bottom: 1px solid var(--color-panel-border);
-    background: var(--color-panel);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     position: sticky;
@@ -129,59 +114,6 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     white-space: nowrap;
   }
 
-  .dropdown {
-    position: relative;
-  }
-  .dropdown summary {
-    list-style: none;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-ink);
-    white-space: nowrap;
-    padding: 0.5em 1em;
-    border-radius: var(--radius-pill);
-    transition: background var(--duration-standard) var(--ease-standard), color var(--duration-standard) var(--ease-standard);
-  }
-  .dropdown summary:hover {
-    background: var(--color-blue-soft);
-    color: var(--color-navy);
-  }
-  .dropdown summary::-webkit-details-marker {
-    display: none;
-  }
-  .dropdown summary::after {
-    content: ' ▾';
-    font-size: 0.7em;
-  }
-  .dropdown-menu {
-    list-style: none;
-    margin: 0;
-    padding: var(--space-2) 0;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: var(--color-panel);
-    border: 1px solid var(--color-panel-border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    min-width: 240px;
-  }
-  .dropdown-menu li a {
-    display: block;
-    padding: var(--space-2) var(--space-4);
-    text-decoration: none;
-    color: var(--color-ink);
-    font-size: 0.9rem;
-  }
-  .dropdown-menu li a:hover {
-    background: var(--color-blue-soft);
-    color: var(--color-navy);
-  }
-
   .nav-toggle,
   .nav-toggle-label {
     display: none;
@@ -210,8 +142,8 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
       top: 100%;
       left: 0;
       right: 0;
-      background: var(--color-panel);
-      border-bottom: 1px solid var(--color-panel-border);
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       flex-direction: column;
@@ -228,13 +160,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     }
     .main-nav > ul > li {
       padding: var(--space-3) 0;
-      border-bottom: 1px solid var(--color-panel-border);
-    }
-    .dropdown-menu {
-      position: static;
-      border: none;
-      box-shadow: none;
-      padding-left: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
     }
     .header-cta {
       margin: 0 var(--space-6) var(--space-4);

@@ -29,7 +29,7 @@ const dateFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 
   <article class="post">
     <div class="container prose">
       <a href={withBase('/blog/')} class="back-link">← Tous les articles</a>
-      <span class="article-pillar">{article.data.pillar}</span>
+      <p class="eyebrow">{article.data.pillar}</p>
       <h1>{article.data.title}</h1>
       <p class="post-meta">Publié le {dateFormatter.format(article.data.publishDate)} — Nicolas Verdot</p>
       <div class="post-content">
@@ -55,15 +55,6 @@ const dateFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 
     font-weight: 600;
     color: var(--color-navy);
     text-decoration: none;
-  }
-  .article-pillar {
-    display: inline-block;
-    font-size: var(--text-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--color-navy);
-    margin-bottom: var(--space-3);
   }
   .post-meta {
     color: var(--color-faint);

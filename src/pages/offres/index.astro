@@ -1,0 +1,69 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { offers } from '../../data/offers';
+import { withBase } from '../../utils/url';
+
+const complementary = [
+  { num: 'Événements', title: 'Concevoir une expérience participative', text: 'Architecture, rythme, niveaux de participation, grand groupe et restitution.' },
+  { num: 'Leadership', title: 'Diagnostic Leader Ancré', text: 'Prendre du recul, poser un cadre et ne plus tout porter seul.' },
+  { num: 'Visuel', title: 'Facilitation graphique', text: 'Rendre les échanges, décisions et engagements visibles et mémorables.' },
+];
+---
+
+<Layout
+  title="Les offres — by Nicolas Verdot"
+  description="Trois façons de remettre un collectif en mouvement : décider ensemble, aligner l'équipe, installer une dynamique durable. Chaque offre inclut un mini-diagnostic."
+  path="/offres/"
+>
+  <PageHero
+    eyebrow="Offres by Nicolas Verdot"
+    title="Trois façons de remettre un collectif en mouvement"
+    summary="Chaque offre part d'une situation précise et comprend un mini-diagnostic pour vous aider à évaluer où vous en êtes avant de prendre rendez-vous."
+  />
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="cards">
+        {offers.map((offer, i) => (
+          <article class="card">
+            {i === 1 && <div class="ribbon">CŒUR D'OFFRE</div>}
+            <div class="num">{String(i + 1).padStart(2, '0')} · {offer.eyebrow.split(',')[0]}</div>
+            <h3>{offer.title}</h3>
+            <p>{offer.summary}</p>
+            <a class="card-link" href={withBase(`/offres/${offer.slug}/`)}>Voir l'offre et faire le diagnostic</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Compléments</p>
+          <h2>D'autres points d'entrée, sans brouiller le cœur de l'offre</h2>
+        </div>
+        <p>Ces formats peuvent être proposés seuls ou intégrés à une mission plus large.</p>
+      </div>
+      <div class="cards">
+        {complementary.map((c) => (
+          <article class="card">
+            <div class="num">{c.num}</div>
+            <h3>{c.title}</h3>
+            <p>{c.text}</p>
+            <a class="card-link" href={withBase('/contact/')}>Découvrir</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABlock
+    eyebrow="Vous hésitez sur le bon point d'entrée ?"
+    title="Partons de la situation, pas du catalogue."
+    subtitle="Un échange de cadrage permet d'identifier ce qui doit réellement être traité et le niveau d'intervention utile."
+  />
+</Layout>

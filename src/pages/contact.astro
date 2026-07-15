@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { SITE } from '../data/site';
 
@@ -11,17 +12,14 @@ const reasons = [
   'réaliser une captation graphique',
   'former vos équipes',
   'accompagner des managers',
-  'structurer une démarche d\'intelligence collective',
+  "structurer une démarche d'intelligence collective",
 ];
 
-const prepQuestions = [
-  'Qui est concerné ?',
-  'Quel est le défi ?',
-  "Qu'est-ce qui bloque ou patine ?",
-  'Qu\'aimeriez-vous que les participants ressentent à la fin ?',
-  'Quelle décision ou action doit émerger ?',
-  'Quel est le calendrier ?',
-  'Combien de personnes sont concernées ?',
+const checks = [
+  { i: '1', title: 'La situation', text: "Qu'est-ce qui bloque ou tourne en rond aujourd'hui ?" },
+  { i: '2', title: 'Le résultat', text: "Qu'est-ce qui doit être différent après l'intervention ?" },
+  { i: '3', title: 'Les personnes', text: 'Qui doit comprendre, contribuer, arbitrer ou décider ?' },
+  { i: '4', title: "L'échéance", text: "À quelle date la décision ou l'événement doit-il avoir lieu ?" },
 ];
 ---
 
@@ -30,82 +28,79 @@ const prepQuestions = [
   description="Contactez Nicolas Verdot pour parler de vos séminaires, ateliers, formations, accompagnements, captations graphiques ou projets d'intelligence collective."
   path="/contact/"
 >
-  <section class="contact-hero">
-    <div class="container prose">
-      <h1>Parlons de votre collectif.</h1>
-      <p class="lead">
-        Vous préparez un séminaire, une transformation, une démarche participative, une conférence,
-        une formation ou un accompagnement de leaders ? Expliquez-moi simplement ce que vous avez en tête.
-      </p>
-    </div>
-  </section>
+  <PageHero
+    eyebrow="Contact"
+    title="Parlons de votre collectif."
+    summary="Vous préparez un séminaire, une transformation, une démarche participative, une conférence, une formation ou un accompagnement de leaders ? Le premier échange sert à comprendre l'enjeu, les personnes concernées, le niveau de décision et l'échéance."
+  />
 
-  <section class="contact-grid-section" data-reveal>
-    <div class="container contact-grid">
+  <section class="section" data-reveal>
+    <div class="container split">
       <div>
+        <h2>Quelques éléments suffisent pour commencer</h2>
+        <div class="checks">
+          {checks.map((c) => (
+            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
+          ))}
+        </div>
+
+        <div class="panel reasons-panel">
+          <h3>Vous pouvez me contacter pour</h3>
+          <ul>
+            {reasons.map((reason) => <li>{reason}</li>)}
+          </ul>
+          <p class="response-time">Je réponds généralement sous 48 heures ouvrées.</p>
+          <a class="card-link" href={SITE.bookingUrl} target="_blank" rel="noopener">Ou prendre rendez-vous en ligne</a>
+        </div>
+      </div>
+
+      <div class="panel form-panel">
+        <p class="eyebrow">Formulaire de contact</p>
+        <h2>Présenter la demande</h2>
         <ContactForm />
       </div>
-      <aside class="contact-info panel">
-        <h2>Coordonnées</h2>
-        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
-        <p><a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a></p>
-        <p><a href={SITE.bookingUrl} target="_blank" rel="noopener">Prendre rendez-vous en ligne →</a></p>
-        <p class="response-time">Je réponds généralement sous 48 heures ouvrées.</p>
-
-        <h2>Vous pouvez me contacter pour</h2>
-        <ul>
-          {reasons.map((reason) => <li>{reason}</li>)}
-        </ul>
-      </aside>
     </div>
   </section>
 
   <section class="prep" data-reveal>
     <div class="container prose">
       <h2>Avant notre échange</h2>
-      <p>Pour préparer la discussion, vous pouvez déjà réfléchir à :</p>
-      <ul>
-        {prepQuestions.map((q) => <li>{q}</li>)}
-      </ul>
+      <p>Pour préparer la discussion, vous pouvez déjà réfléchir à qui est concerné, au défi à relever, à ce qui bloque ou patine, à ce que vous aimeriez que les participants ressentent à la fin, à la décision ou l'action qui doit émerger, au calendrier et au nombre de personnes concernées.</p>
       <p>Pas besoin d'avoir toutes les réponses — c'est justement le point de départ de notre conversation.</p>
     </div>
   </section>
 </Layout>
 
 <style>
-  .contact-hero {
-    padding-bottom: 0;
+  .reasons-panel {
+    margin-top: var(--space-8);
   }
-  .lead {
-    color: var(--color-muted);
-  }
-  .contact-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-    gap: var(--space-12);
-    align-items: start;
-  }
-  .contact-info {
-    padding: var(--space-6);
-  }
-  .contact-info h2 {
+  .reasons-panel h3 {
     font-size: var(--text-lg);
   }
-  .contact-info a {
-    color: var(--color-navy);
-    text-decoration: none;
-    font-weight: 600;
+  .reasons-panel ul {
+    margin: 0 0 var(--space-4);
+    padding-left: 1.1rem;
+    color: var(--color-muted);
+  }
+  .reasons-panel li {
+    margin-bottom: var(--space-1);
   }
   .response-time {
     font-size: var(--text-sm);
     color: var(--color-faint);
+    margin-bottom: var(--space-3);
+  }
+  .form-panel h2 {
+    font-size: var(--text-2xl);
+    margin: var(--space-2) 0 var(--space-6);
   }
   .prep {
     background: var(--color-surface);
   }
 
   @media (max-width: 800px) {
-    .contact-grid {
+    .split {
       grid-template-columns: 1fr;
     }
   }

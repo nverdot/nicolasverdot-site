@@ -17,8 +17,6 @@
   --color-muted: #4c5158;
   --color-faint: #4c5158;
   --color-border: #cfc3b1;
-  --color-panel: rgba(255, 255, 255, 0.84);
-  --color-panel-border: rgba(223, 212, 194, 0.85);
 
   /* Constantes : ne changent JAMAIS entre les thèmes (utilisées sur des
      surfaces volontairement toujours sombres, ex. le bloc CTA). */
@@ -81,8 +79,6 @@
     --color-blue: #7da2d8;
     --color-blue-strong: #29486f;
     --color-blue-soft: #27364b;
-    --color-panel: rgba(29, 32, 39, 0.86);
-    --color-panel-border: rgba(59, 65, 75, 0.9);
     --shadow-sm: 0 12px 30px rgba(0, 0, 0, 0.35);
     --shadow-md: 0 26px 80px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 40px 90px rgba(0, 0, 0, 0.5);

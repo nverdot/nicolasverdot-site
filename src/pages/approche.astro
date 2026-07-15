@@ -1,13 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
 import ProcessSteps from '../components/ProcessSteps.astro';
 import CTABlock from '../components/CTABlock.astro';
 
-const tools = [
-  'Facilitation', 'Intelligence collective', 'Technology of Participation', 'ORID',
-  'Consensus Workshop', 'World Café', 'Open Space', 'Facilitation graphique',
-  'Sketchnoting', 'Management visuel', 'Coaching', 'Théorie polyvagale',
-  'Design pédagogique', 'Rétrospectives', 'Ateliers de vision',
+const values = [
+  { title: 'Clarté', text: "Nommer l'intention, les contraintes, la décision attendue et la place réelle de chacun." },
+  { title: 'Responsabilité', text: 'Le collectif enrichit la décision, mais il ne doit pas permettre au décideur d\'éviter son rôle.' },
+  { title: 'Participation utile', text: 'Faire contribuer les personnes là où leur expérience et leur regard apportent réellement de la valeur.' },
+  { title: 'Simplicité', text: 'Utiliser des méthodes suffisamment structurées pour être solides, sans rendre le dispositif inutilement compliqué.' },
+  { title: 'Autonomie', text: 'Construire des cadres qui permettent aux équipes d\'agir sans dépendre constamment du manager ou du consultant.' },
+];
+
+const approachSteps = [
+  { title: 'Comprendre le système', text: 'Identifier les enjeux, les tensions, les parties prenantes, les contraintes et ce qui a déjà été essayé.' },
+  { title: "Clarifier l'intention", text: 'Définir ce que les participants doivent comprendre, produire, prioriser ou décider.' },
+  { title: 'Concevoir le processus', text: 'Choisir le niveau de participation, le rythme, les séquences, les supports et la manière de restituer.' },
+  { title: 'Créer les conditions du dialogue', text: "Poser un cadre suffisamment sécurisant pour permettre l'expression, le désaccord et l'arbitrage." },
+  { title: 'Rendre visible', text: 'Matérialiser les idées, les liens, les choix et les engagements grâce à la facilitation graphique.' },
+  { title: 'Préparer la suite', text: 'Transformer la production collective en responsabilités, décisions, échéances et mécanismes de suivi.' },
+];
+
+const toolGroups = [
+  { title: 'Conversations et décisions', tags: ['ORID', 'Consensus Workshop', 'Cadres de décision', 'Priorisation'] },
+  { title: 'Intelligence collective et grands groupes', tags: ['Technology of Participation', 'World Café', 'Open Space', "Ateliers de vision"] },
+  { title: 'Organisation et travail des équipes', tags: ['Coaching', 'Rétrospectives', "Théorie polyvagale"] },
+  { title: 'Pensée visuelle et apprentissage', tags: ['Facilitation graphique', 'Sketchnoting', 'Management visuel', 'Design pédagogique'] },
 ];
 
 const shifts = [
@@ -25,19 +43,38 @@ const shifts = [
   description="Découvrez l'approche de Nicolas Verdot : donner à voir, faire participer, décider, agir et apprendre pour permettre aux collectifs de donner le meilleur d'eux-mêmes."
   path="/approche/"
 >
-  <section class="intro">
-    <div class="container prose">
-      <h1>Créer les conditions pour révéler le meilleur du collectif.</h1>
-      <p>Les réponses sont souvent déjà présentes dans le collectif. Le problème, c'est qu'elles restent parfois dispersées, silencieuses, invisibles ou enfermées dans des conversations qui ne vont pas au bout.</p>
-      <p>Mon rôle consiste à concevoir le cadre qui permet aux idées de circuler, aux points de vue de se rencontrer, aux décisions d'émerger et à l'action de devenir possible.</p>
-    </div>
-  </section>
+  <PageHero
+    eyebrow="Approche"
+    title="Je pars du résultat attendu, pas de ma boîte à outils."
+    summary="Les réponses sont souvent déjà présentes dans le collectif. Mon rôle consiste à concevoir le cadre qui permet aux idées de circuler, aux points de vue de se rencontrer, aux décisions d'émerger et à l'action de devenir possible."
+  />
 
   <section class="not-thinking" data-reveal>
     <div class="container prose">
       <h2>Je ne suis pas là pour penser à la place du groupe.</h2>
       <p>Vous êtes les experts de votre métier. Vous connaissez votre contexte, vos contraintes, vos clients, vos bénéficiaires, vos usagers et vos équipes.</p>
       <p>Je n'interviens pas pour imposer une réponse toute faite. J'interviens comme architecte du cadre : je conçois la manière dont le collectif va se parler, réfléchir, décider et avancer.</p>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Valeurs</p>
+          <h2>Les principes qui ne sont pas négociables</h2>
+        </div>
+        <p>Ces valeurs ne sont pas des mots affichés sur un mur. Elles influencent concrètement la manière dont je cadre, conçois et anime une intervention.</p>
+      </div>
+      <div class="values-grid">
+        {values.map((v, i) => (
+          <article class="value-card">
+            <div class="value-number">{i + 1}</div>
+            <h3>{v.title}</h3>
+            <p>{v.text}</p>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -48,14 +85,49 @@ const shifts = [
     </div>
   </section>
 
-  <section class="tools" data-reveal>
-    <div class="container prose">
-      <h2>Des outils au service du résultat</h2>
-      <p>Selon votre besoin, je peux mobiliser :</p>
-      <ul class="tool-list">
-        {tools.map((tool) => <li>{tool}</li>)}
-      </ul>
-      <p>Mais les outils ne sont jamais le sujet principal. Le vrai sujet est toujours : <strong>qu'est-ce que le collectif doit réussir à faire ensemble ?</strong></p>
+  <section class="section dark" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">La méthode, en détail</p>
+          <h2>Un déroulé pensé, jamais imposé.</h2>
+        </div>
+        <p>Les méthodes sont choisies après avoir compris le contexte. Un World Café, un ORID ou un Open Space ne sont jamais une réponse en eux-mêmes.</p>
+      </div>
+      <div class="approach-grid">
+        {approachSteps.map((s, i) => (
+          <article class="approach-card">
+            <div class="approach-icon">{String(i + 1).padStart(2, '0')}</div>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container tools-layout">
+      <div>
+        <p class="eyebrow">Approche et outils</p>
+        <h2>Une boîte à outils large, utilisée avec discernement.</h2>
+        <p class="hero-copy">Selon votre besoin, je mobilise plusieurs registres : conversation et décision, intelligence collective, organisation d'équipe et pensée visuelle.</p>
+        <div class="article-callout">
+          <h3>Le principe</h3>
+          <p>Je ne choisis pas une méthode parce qu'elle est à la mode ou agréable à animer. Je la choisis parce qu'elle aide le groupe à produire le résultat attendu dans le temps disponible.</p>
+        </div>
+      </div>
+
+      <div class="tool-groups">
+        {toolGroups.map((group) => (
+          <section class="tool-group">
+            <h3>{group.title}</h3>
+            <div class="tool-tags">
+              {group.tags.map((tag) => <span class="tool-tag">{tag}</span>)}
+            </div>
+          </section>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -63,7 +135,7 @@ const shifts = [
     <div class="container prose">
       <h2>Ce que cette approche change</h2>
       <p>Elle permet de passer :</p>
-      <ul>
+      <ul class="shift-list">
         {shifts.map((shift) => <li>{shift}</li>)}
       </ul>
     </div>
@@ -84,23 +156,26 @@ const shifts = [
 </Layout>
 
 <style>
-  .not-thinking,
-  .tools {
+  .not-thinking {
     background: var(--color-surface);
   }
-  .tool-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
+  .shift-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 var(--space-4);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
   }
-  .tool-list li {
-    background: var(--color-cream);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    padding: var(--space-1) var(--space-3);
-    font-size: var(--text-sm);
+  .shift-list li {
+    padding-left: var(--space-6);
+    position: relative;
+  }
+  .shift-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-orange);
+    font-weight: 700;
   }
 </style>
