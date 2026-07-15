@@ -50,10 +50,16 @@ rendered.forEach((s) => {
   <div class="chat-body">
     {rendered.map((s, i) => (
       s.kind === 'typing' ? (
-        <div class="chat-typing" data-id={i}>
-          <span class="chat-avatar chat-avatar--sm" style={`background:${people[s.name]}`}>{s.name.charAt(0)}</span>
-          <span class="typing-bubble"><i></i><i></i><i></i></span>
-        </div>
+        s.mine ? (
+          <div class="chat-typing chat-typing--mine" data-id={i}>
+            <span class="typing-bubble"><i></i><i></i><i></i></span>
+          </div>
+        ) : (
+          <div class="chat-typing" data-id={i}>
+            <span class="chat-avatar chat-avatar--sm" style={`background:${people[s.name]}`}>{s.name.charAt(0)}</span>
+            <span class="typing-bubble"><i></i><i></i><i></i></span>
+          </div>
+        )
       ) : s.mine ? (
         <div class="chat-msg chat-msg--mine" data-id={i} data-msg-id={s.msgId}>
           <div class="chat-bubble chat-bubble--mine">
@@ -148,7 +154,8 @@ rendered.forEach((s) => {
     transform: none;
     visibility: visible;
   }
-  .chat-msg--mine {
+  .chat-msg--mine,
+  .chat-typing--mine {
     justify-content: flex-end;
   }
 
@@ -262,11 +269,15 @@ rendered.forEach((s) => {
 </style>
 
 <script>
-  function initGroupChat(chat: HTMLElement) {
+  interface ChatEl extends HTMLElement {
+    __play?: () => void;
+    __played?: boolean;
+  }
+
+  function initGroupChat(chat: ChatEl) {
     const body = chat.querySelector('.chat-body');
     const stepEls = Array.from(chat.querySelectorAll<HTMLElement>('[data-id]'));
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let played = false;
 
     const delays: number[] = [];
     let cursor = 300;
@@ -274,10 +285,12 @@ rendered.forEach((s) => {
       delays[i] = cursor;
       cursor += el.classList.contains('chat-typing') ? 1300 : 1100;
     });
+    // How long the full sequence takes, including the last reaction and a short reading pause.
+    const totalDuration = cursor + 900 + 1500;
 
     function play() {
-      if (played) return;
-      played = true;
+      if (chat.__played) return;
+      chat.__played = true;
 
       if (reduceMotion) {
         stepEls.forEach((el) => el.classList.add('is-in'));
@@ -285,6 +298,7 @@ rendered.forEach((s) => {
           const targetId = triggerEl.dataset.reactOn;
           chat.querySelector<HTMLElement>(`.chat-msg[data-msg-id="${targetId}"] .chat-react`)?.classList.add('is-in');
         });
+        window.dispatchEvent(new CustomEvent('groupchat:done', { detail: { id: chat.id } }));
         return;
       }
 
@@ -310,21 +324,30 @@ rendered.forEach((s) => {
           target?.classList.add('is-in');
         }, delays[triggerIndex] + 500);
       });
+
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('groupchat:done', { detail: { id: chat.id } }));
+      }, totalDuration);
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            play();
-            observer.disconnect();
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(chat);
+    chat.__play = play;
+
+    // Standalone usage (no carousel wrapper): auto-play once scrolled into view.
+    if (!chat.closest('[data-carousel-slide]')) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              play();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      observer.observe(chat);
+    }
   }
 
-  document.querySelectorAll<HTMLElement>('.chat-window').forEach(initGroupChat);
+  document.querySelectorAll<ChatEl>('.chat-window').forEach(initGroupChat);
 </script>
