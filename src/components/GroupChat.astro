@@ -66,7 +66,7 @@ rendered.forEach((s) => {
             <p>{s.text}</p>
             <span class="chat-time">{s.time}</span>
             {typeof s.msgId === 'number' && reactionFor[s.msgId] && (
-              <span class="chat-react">{reactionFor[s.msgId].emoji} +{reactionFor[s.msgId].count}</span>
+              <span class="chat-react" data-emoji={reactionFor[s.msgId].emoji} data-count={reactionFor[s.msgId].count}>{reactionFor[s.msgId].emoji} +{reactionFor[s.msgId].count}</span>
             )}
           </div>
         </div>
@@ -78,7 +78,7 @@ rendered.forEach((s) => {
             <p>{s.text}</p>
             <span class="chat-time">{s.time}</span>
             {typeof s.msgId === 'number' && reactionFor[s.msgId] && (
-              <span class="chat-react">{reactionFor[s.msgId].emoji} +{reactionFor[s.msgId].count}</span>
+              <span class="chat-react" data-emoji={reactionFor[s.msgId].emoji} data-count={reactionFor[s.msgId].count}>{reactionFor[s.msgId].emoji} +{reactionFor[s.msgId].count}</span>
             )}
           </div>
         </div>
@@ -231,6 +231,20 @@ rendered.forEach((s) => {
     opacity: 1;
     transform: scale(1);
   }
+  .chat-react.is-bumping {
+    animation: chat-react-bump 0.35s ease;
+  }
+  @keyframes chat-react-bump {
+    0% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(1.18);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 
   .typing-bubble {
     display: inline-flex;
@@ -322,14 +336,38 @@ rendered.forEach((s) => {
         }, delays[i]);
       });
 
+      const grapheme = (str: string): string[] => {
+        if (typeof Intl !== 'undefined' && 'Segmenter' in Intl) {
+          const segmenter = new (Intl as any).Segmenter(undefined, { granularity: 'grapheme' });
+          return Array.from(segmenter.segment(str), (s: any) => s.segment);
+        }
+        return [str];
+      };
+
       chat.querySelectorAll<HTMLElement>('.chat-msg[data-react-on]').forEach((triggerEl) => {
         const targetId = triggerEl.dataset.reactOn;
         const triggerIndex = stepEls.indexOf(triggerEl);
-        setTimeout(() => {
-          if (!isCurrent()) return;
-          const target = chat.querySelector<HTMLElement>(`.chat-msg[data-msg-id="${targetId}"] .chat-react`);
-          target?.classList.add('is-in');
-        }, delays[triggerIndex] + 500);
+        const target = chat.querySelector<HTMLElement>(`.chat-msg[data-msg-id="${targetId}"] .chat-react`);
+        if (!target) return;
+        const emojiUnits = grapheme(target.dataset.emoji || '');
+        const fullCount = parseInt(target.dataset.count || '1', 10);
+        // Reveal reactions in a handful of staggered, slightly jittered ticks
+        // instead of all at once — mirrors people reacting as they each read.
+        const steps = Math.min(fullCount, 4);
+        let elapsed = delays[triggerIndex] + 450;
+        for (let step = 1; step <= steps; step++) {
+          const displayCount = step === steps ? fullCount : Math.max(1, Math.round((fullCount * step) / steps));
+          const emojiCount = Math.min(step, emojiUnits.length);
+          setTimeout(() => {
+            if (!isCurrent()) return;
+            target.textContent = `${emojiUnits.slice(0, emojiCount).join('')} +${displayCount}`;
+            target.classList.add('is-in');
+            target.classList.remove('is-bumping');
+            void target.offsetWidth;
+            target.classList.add('is-bumping');
+          }, elapsed);
+          elapsed += 380 + Math.random() * 320;
+        }
       });
 
       setTimeout(() => {
