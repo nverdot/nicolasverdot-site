@@ -2,6 +2,24 @@
 import { SITE } from '../data/site';
 import { withBase } from '../utils/url';
 const year = new Date().getFullYear();
+
+const icons = {
+  grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+  check: '<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
+  people: '<circle cx="8" cy="8" r="3"/><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M14.5 20c.2-2.6 2.1-4.7 4.6-5"/>',
+  refresh: '<path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/>',
+  trending: '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>',
+  pencil: '<path d="M3 21l3.5-1 11-11-2.5-2.5-11 11z"/><path d="M14 6.5l2.5 2.5"/>',
+  cap: '<path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/>',
+  doc: '<path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M9 13h6M9 17h6"/>',
+  compass: '<circle cx="12" cy="12" r="9"/><path d="M15 9l-2 6-6 2 2-6z"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/>',
+  palette: '<path d="M12 2a9 9 0 1 0 0 18c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1.1.9-2 2-2h1.5c1.9 0 3.5-1.6 3.5-3.5C20 5.3 16.4 2 12 2z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/><circle cx="17" cy="11.5" r="1"/>',
+  calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+  phone: '<path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1z"/>',
+};
 ---
 
 <footer class="site-footer">
@@ -16,33 +34,33 @@ const year = new Date().getFullYear();
 
     <div class="footer-col">
       <h2>Offres</h2>
-      <a href={withBase('/offres/')}>Toutes les offres</a>
-      <a href={withBase('/offres/decider-ensemble/')}>Décider ensemble</a>
-      <a href={withBase('/offres/aligner-equipe/')}>Aligner l'équipe</a>
-      <a href={withBase('/offres/dynamique-durable/')}>Installer une dynamique durable</a>
+      <a href={withBase('/offres/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.grid} /> Toutes les offres</a>
+      <a href={withBase('/offres/decider-ensemble/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.check} /> Décider ensemble</a>
+      <a href={withBase('/offres/aligner-equipe/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.people} /> Aligner l'équipe</a>
+      <a href={withBase('/offres/dynamique-durable/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.refresh} /> Installer une dynamique durable</a>
     </div>
 
     <div class="footer-col">
       <h2>Accompagnements</h2>
-      <a href={withBase('/offres/accompagnement-transformation/')}>Transformation</a>
-      <a href={withBase('/offres/coaching-professionnel/')}>Coaching professionnel</a>
-      <a href={withBase('/offres/capture-graphique/')}>Capture graphique</a>
-      <a href={withBase('/formations/')}>Formations</a>
+      <a href={withBase('/offres/accompagnement-transformation/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.trending} /> Transformation</a>
+      <a href={withBase('/offres/coaching-professionnel/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.user} /> Coaching professionnel</a>
+      <a href={withBase('/offres/capture-graphique/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.pencil} /> Capture graphique</a>
+      <a href={withBase('/formations/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.cap} /> Formations</a>
     </div>
 
     <div class="footer-col">
       <h2>Ressources</h2>
-      <a href={withBase('/blog/')}>Blog</a>
-      <a href={withBase('/approche/')}>Approche</a>
-      <a href={withBase('/a-propos/')}>À propos</a>
-      <a href={withBase('/charte-graphique/')}>Charte graphique</a>
+      <a href={withBase('/blog/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.doc} /> Blog</a>
+      <a href={withBase('/approche/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.compass} /> Approche</a>
+      <a href={withBase('/a-propos/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.info} /> À propos</a>
+      <a href={withBase('/charte-graphique/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.palette} /> Charte graphique</a>
     </div>
 
     <div class="footer-col">
       <h2>Contact</h2>
-      <a href={SITE.bookingUrl} target="_blank" rel="noopener">Prendre rendez-vous</a>
-      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
-      <a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a>
+      <a href={SITE.bookingUrl} target="_blank" rel="noopener"><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.calendar} /> Prendre rendez-vous</a>
+      <a href={`mailto:${SITE.email}`}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.mail} /> {SITE.email}</a>
+      <a href={`tel:${SITE.phone}`}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.phone} /> {SITE.phoneDisplay}</a>
     </div>
   </div>
 
@@ -106,13 +124,24 @@ const year = new Date().getFullYear();
     flex-direction: column;
   }
   .footer-col a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
     color: #c6d0df;
     text-decoration: none;
     font-size: var(--text-sm);
     padding: var(--space-1) 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
   .footer-col a:hover {
     color: var(--color-white);
+  }
+  .footer-icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    opacity: 0.75;
   }
   .footer-bottom {
     display: flex;

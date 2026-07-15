@@ -9,12 +9,18 @@ export interface ChatStep {
   reactCount?: number;
 }
 
+export interface ExpertInsight {
+  diagnosis: string;
+  action: string;
+}
+
 export interface Conversation {
   id: string;
   label: string;
   title: string;
   people: Record<string, string>;
   steps: ChatStep[];
+  insight: ExpertInsight;
 }
 
 export const conversations: Conversation[] = [
@@ -38,6 +44,10 @@ export const conversations: Conversation[] = [
       { kind: 'typing', name: 'Julie' },
       { kind: 'msg', name: 'Julie', text: "On ressort avec un plan d'action... qu'on n'ouvrira jamais 😅", time: '18:44', reactOn: 2, reactEmoji: '👍👏', reactCount: 2 },
     ],
+    insight: {
+      diagnosis: "Ce n'est pas un problème de motivation : c'est l'absence d'un processus de décision clair. Personne ne sait qui tranche, sur quels critères, ni à quel moment.",
+      action: "Cadrer chaque réunion avec un objectif de décision explicite et une méthode pour y arriver — c'est le cœur de l'offre Décider ensemble.",
+    },
   },
   {
     id: 'chat-participation',
@@ -59,6 +69,10 @@ export const conversations: Conversation[] = [
       { kind: 'typing', name: 'Thibault' },
       { kind: 'msg', name: 'Thibault', text: "Ils vont même nous envoyer un questionnaire de satisfaction après 😂", time: '14:06', reactOn: 2, reactEmoji: '😂👏', reactCount: 2 },
     ],
+    insight: {
+      diagnosis: "La participation demandée n'est pas réelle : le niveau de décision réel n'a jamais été clarifié avec le groupe avant l'atelier.",
+      action: "Choisir consciemment le niveau de participation — informer, consulter ou co-décider — et le dire clairement au groupe dès le départ.",
+    },
   },
   {
     id: 'chat-charge',
@@ -80,6 +94,10 @@ export const conversations: Conversation[] = [
       { kind: 'typing', name: 'Chloe' },
       { kind: 'msg', name: 'Chloe', text: 'Faire plus avec moins... on connaît la chanson 🎶', time: '09:16', reactOn: 2, reactEmoji: '💯🔥', reactCount: 3 },
     ],
+    insight: {
+      diagnosis: "Le sujet n'est pas caché : c'est l'écart entre les objectifs et les moyens réels qui n'a jamais été rendu visible ni arbitré collectivement.",
+      action: "Rendre la charge réelle visible et prioriser ensemble ce qui reste faisable — plutôt que de laisser chacun l'absorber seul dans son coin.",
+    },
   },
   {
     id: 'chat-reunionite',
@@ -101,6 +119,10 @@ export const conversations: Conversation[] = [
       { kind: 'typing', name: 'Manon' },
       { kind: 'msg', name: 'Manon', text: 'Ou un email de 3 lignes... qu\'on lirait vraiment', time: '17:24', reactOn: 2, reactEmoji: '💀😂', reactCount: 3 },
     ],
+    insight: {
+      diagnosis: "La réunionite n'est pas une fatalité : c'est souvent le signe qu'aucun cadre commun ne distingue ce qui mérite une réunion de ce qui mérite un message.",
+      action: "Auditer les rituels d'équipe et redéfinir collectivement ce qui justifie vraiment de réunir tout le monde.",
+    },
   },
   {
     id: 'chat-suivi',
@@ -122,6 +144,10 @@ export const conversations: Conversation[] = [
       { kind: 'typing', name: 'Maxime' },
       { kind: 'msg', name: 'Maxime', text: 'Classique. On décide, on note, on oublie', time: '11:09', reactOn: 2, reactEmoji: '🙃✅', reactCount: 2 },
     ],
+    insight: {
+      diagnosis: "Un plan d'action qui disparaît révèle l'absence de responsables clairs et de rituel de suivi — pas un manque de bonne volonté.",
+      action: "Installer un rituel de suivi court et régulier, avec des responsables et des échéances nommés dès la décision prise.",
+    },
   },
   {
     id: 'chat-silos',
@@ -143,6 +169,10 @@ export const conversations: Conversation[] = [
       { kind: 'typing', name: 'Jade' },
       { kind: 'msg', name: 'Jade', text: 'Bonne idée. On en discute... en réunion à part 😅', time: '10:35', reactOn: 2, reactEmoji: '😂🎯', reactCount: 2 },
     ],
+    insight: {
+      diagnosis: "Les silos ne se résolvent pas avec plus de réunions transverses : ils viennent d'un manque de rituels de circulation de l'information entre équipes.",
+      action: "Créer des points de synchronisation courts et réguliers entre équipes, avant que les doublons ne se créent.",
+    },
   },
   {
     id: 'chat-leader',
@@ -164,6 +194,10 @@ export const conversations: Conversation[] = [
       { kind: 'typing', name: 'Lina' },
       { kind: 'msg', name: 'Lina', text: 'On devrait plus l\'épauler franchement', time: '19:45', reactOn: 2, reactEmoji: '😔💯', reactCount: 3 },
     ],
+    insight: {
+      diagnosis: "Un leader qui porte tout seul, c'est souvent un collectif qui n'a jamais appris à partager la responsabilité et la charge mentale.",
+      action: "Travailler la posture du leader et la répartition des responsabilités dans l'équipe — c'est l'objet du coaching professionnel.",
+    },
   },
   {
     id: 'chat-teambuilding',
@@ -185,6 +219,10 @@ export const conversations: Conversation[] = [
       { kind: 'typing', name: 'Margaux' },
       { kind: 'msg', name: 'Margaux', text: 'Le prochain, on pourrait peut-être... parler du travail ? 😅', time: '20:19', reactOn: 2, reactEmoji: '🙈👏', reactCount: 2 },
     ],
+    insight: {
+      diagnosis: "Le problème n'est pas l'activité : c'est l'absence d'un espace, pendant ou après, pour aborder les vrais sujets d'équipe.",
+      action: "Profiter des temps collectifs pour ouvrir, avec un cadre sécurisant, les sujets que le quotidien ne laisse jamais remonter.",
+    },
   },
   {
     id: 'chat-priorites',
@@ -206,6 +244,10 @@ export const conversations: Conversation[] = [
       { kind: 'typing', name: 'Oceane' },
       { kind: 'msg', name: 'Oceane', text: 'Une vraie priorité, c\'est justement celle qui ne bouge pas', time: '09:00', reactOn: 2, reactEmoji: '😂🎯', reactCount: 5 },
     ],
+    insight: {
+      diagnosis: "Des priorités qui changent sans cesse trahissent l'absence d'un cadre de décision stable, pas un manque d'agilité.",
+      action: "Clarifier collectivement ce qui constitue une vraie priorité — et ce qui ne doit plus bouger une fois décidé.",
+    },
   },
   {
     id: 'chat-silence',
@@ -227,6 +269,10 @@ export const conversations: Conversation[] = [
       { kind: 'typing', name: 'Juliette' },
       { kind: 'msg', name: 'Juliette', text: 'Ça changerait beaucoup de réunions franchement', time: '15:14', reactOn: 2, reactEmoji: '👀💯', reactCount: 3 },
     ],
+    insight: {
+      diagnosis: "Le silence en réunion n'est pas un manque d'idées : c'est un manque de sécurité pour les exprimer.",
+      action: "Créer les conditions qui permettent aux désaccords de s'exprimer en réunion — pas seulement à la machine à café.",
+    },
   },
   {
     id: 'chat-onboarding',
@@ -248,6 +294,10 @@ export const conversations: Conversation[] = [
       { kind: 'typing', name: 'Louna' },
       { kind: 'msg', name: 'Louna', text: 'Sympa comme première impression de l\'entreprise...', time: '13:24', reactOn: 2, reactEmoji: '😬🫠', reactCount: 2 },
     ],
+    insight: {
+      diagnosis: "Un onboarding raté n'est pas un problème de bonne volonté : c'est l'absence d'un parcours d'intégration pensé et partagé.",
+      action: "Concevoir un parcours d'intégration clair, avec des repères et des points de suivi dès les premières semaines.",
+    },
   },
   {
     id: 'chat-transfo',
@@ -269,5 +319,9 @@ export const conversations: Conversation[] = [
       { kind: 'typing', name: 'Anais' },
       { kind: 'msg', name: 'Anais', text: 'Personne n\'a le temps de tirer les leçons avant la suivante', time: '16:49', reactOn: 2, reactEmoji: '😩🎢', reactCount: 3 },
     ],
+    insight: {
+      diagnosis: "La résistance au changement grandit surtout quand les leçons de la transformation précédente n'ont jamais été tirées collectivement.",
+      action: "Prendre le temps d'un vrai retour d'expérience avant de lancer la suivante — pour ne pas répéter les mêmes erreurs.",
+    },
   },
 ];

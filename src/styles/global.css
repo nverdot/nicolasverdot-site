@@ -64,7 +64,7 @@ a {
 
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--space-3);
 }
 .form-grid .full {
@@ -337,7 +337,7 @@ section {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-4);
 }
 .card {
@@ -838,13 +838,13 @@ section {
 @media (max-width: 980px) {
   .cards,
   .approach-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .values-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .proofgrid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .identity-grid,
   .tools-layout,
@@ -858,13 +858,13 @@ section {
   .approach-grid,
   .method,
   .about-facts {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
   .values-grid {
     grid-template-columns: 1fr;
   }
   .proofgrid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
   .section-head {
     display: block;
@@ -877,6 +877,17 @@ section {
     padding: var(--space-6);
   }
   .blog-tools {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards,
+  .approach-grid,
+  .method,
+  .about-facts,
+  .proofgrid,
+  .form-grid {
     grid-template-columns: 1fr;
   }
 }
