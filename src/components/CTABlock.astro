@@ -25,14 +25,16 @@ const { title, subtitle } = Astro.props;
 <style>
   .cta-block {
     position: relative;
-    background: var(--color-ink-solid);
+    background: var(--color-blue-strong);
     color: var(--color-white);
     overflow: hidden;
   }
   .cta-aura {
     position: absolute;
     inset: -20%;
-    background: radial-gradient(circle at 30% 30%, rgba(232, 185, 35, 0.25), transparent 55%);
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255, 203, 0, 0.18), transparent 55%),
+      radial-gradient(circle at 80% 70%, rgba(227, 67, 53, 0.1), transparent 45%);
     background-size: 140% 140%;
     animation: aura-drift 14s ease-in-out infinite;
     pointer-events: none;

@@ -55,9 +55,21 @@ const profilePoints = [
 const audiences = ['Associations', 'PME', 'Grandes entreprises', 'Collectivités', 'Réseaux'];
 
 const clients = [
-  'Air France', 'Louis Vuitton', 'PwC', 'MG2Mix', 'Ressource SI', 'Mairie de Valbonne',
-  'JCI Monaco', 'URSSAF', "Commune d'Angers", 'CAF Rhône-Alpes', 'CEC', 'Fibois Sud',
-  'Osan We', 'IA2P', 'MediaSchool',
+  { name: 'Air France KLM', logo: '/logos/air-france-klm.png' },
+  { name: 'Louis Vuitton', logo: '/logos/louis-vuitton.svg' },
+  { name: 'PwC', logo: '/logos/pwc.webp' },
+  { name: 'MG2Mix', logo: '/logos/mg2mix.png' },
+  { name: 'Ressource SI', logo: '/logos/ressources.png' },
+  { name: 'Mairie de Valbonne' },
+  { name: 'JCI Monaco', logo: '/logos/jci-monaco.png' },
+  { name: 'URSSAF', logo: '/logos/urssaf.webp' },
+  { name: "Commune d'Angers" },
+  { name: 'CAF Rhône-Alpes' },
+  { name: 'CEC', logo: '/logos/cec.png' },
+  { name: 'Fibois Sud' },
+  { name: 'Osan We', logo: '/logos/osanwe.png' },
+  { name: 'IA2P' },
+  { name: 'MediaSchool' },
 ];
 ---
 
@@ -145,8 +157,11 @@ const clients = [
     </div>
     <div class="client-marquee">
       <div class="client-marquee-track">
-        {clients.map((c) => <span>{c}</span>)}
-        {clients.map((c) => <span aria-hidden="true">{c}</span>)}
+        {[...clients, ...clients].map((c, i) => (
+          <span class="client-item" aria-hidden={i >= clients.length ? 'true' : undefined}>
+            {c.logo ? <img src={withBase(c.logo)} alt={c.name} loading="lazy" /> : <span class="client-text">{c.name}</span>}
+          </span>
+        ))}
       </div>
     </div>
   </section>
@@ -254,7 +269,7 @@ const clients = [
     color: var(--color-muted);
   }
   .friction-outcome {
-    background: var(--color-ink-solid);
+    background: var(--color-blue-strong);
     color: var(--color-white);
     padding: var(--space-6);
     border-radius: var(--radius-md);
@@ -356,7 +371,30 @@ const clients = [
   .client-marquee:hover .client-marquee-track {
     animation-play-state: paused;
   }
-  .client-marquee-track span {
+  .client-item {
+    display: flex;
+    align-items: center;
+    height: 52px;
+    flex-shrink: 0;
+    background: var(--color-white);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-4);
+  }
+  .client-item img {
+    max-height: 100%;
+    max-width: 130px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.6;
+    transition: opacity var(--duration-standard) var(--ease-standard), filter var(--duration-standard) var(--ease-standard);
+  }
+  .client-marquee:hover .client-item img {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+  .client-text {
     font-family: var(--font-display);
     font-weight: 700;
     font-size: var(--text-lg);
