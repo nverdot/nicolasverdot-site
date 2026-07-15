@@ -45,7 +45,7 @@ const prepQuestions = [
       <div>
         <ContactForm />
       </div>
-      <aside class="contact-info card-brut">
+      <aside class="contact-info panel">
         <h2>Coordonnées</h2>
         <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
         <p><a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a></p>
@@ -86,7 +86,6 @@ const prepQuestions = [
     align-items: start;
   }
   .contact-info {
-    background: var(--color-surface);
     padding: var(--space-6);
   }
   .contact-info h2 {

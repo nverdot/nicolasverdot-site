@@ -17,6 +17,8 @@
   --color-muted: #4c5158;
   --color-faint: #4c5158;
   --color-border: #cfc3b1;
+  --color-panel: rgba(255, 255, 255, 0.84);
+  --color-panel-border: rgba(223, 212, 194, 0.85);
 
   /* Constantes : ne changent JAMAIS entre les thèmes (utilisées sur des
      surfaces volontairement toujours sombres, ex. le bloc CTA). */
@@ -51,14 +53,14 @@
   --container-max: 1180px;
   --prose-max: 720px;
 
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-sm: 14px;
+  --radius-md: 26px;
+  --radius-lg: 38px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(18, 32, 51, 0.08);
-  --shadow-md: 0 8px 24px rgba(18, 32, 51, 0.12);
-  --shadow-brut: 4px 4px 0 var(--color-navy);
+  --shadow-sm: 0 12px 30px rgba(18, 32, 51, 0.08);
+  --shadow-md: 0 26px 80px rgba(18, 32, 51, 0.12);
+  --shadow-lg: 0 40px 90px rgba(18, 32, 51, 0.16);
 
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --duration-standard: 0.3s;
@@ -79,8 +81,11 @@
     --color-blue: #7da2d8;
     --color-blue-strong: #29486f;
     --color-blue-soft: #27364b;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --color-panel: rgba(29, 32, 39, 0.86);
+    --color-panel-border: rgba(59, 65, 75, 0.9);
+    --shadow-sm: 0 12px 30px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 26px 80px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 40px 90px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -97,6 +102,9 @@
   --color-blue: #7da2d8;
   --color-blue-strong: #29486f;
   --color-blue-soft: #27364b;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --color-panel: rgba(29, 32, 39, 0.86);
+  --color-panel-border: rgba(59, 65, 75, 0.9);
+  --shadow-sm: 0 12px 30px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 26px 80px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 40px 90px rgba(0, 0, 0, 0.5);
 }

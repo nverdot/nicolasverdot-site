@@ -2,7 +2,11 @@
 import { SITE } from '../data/site';
 import { withBase } from '../utils/url';
 
-const offers = ['Décider ensemble', "Aligner l'équipe", 'Installer une dynamique durable'];
+const offers = [
+  { title: 'Décider ensemble', slug: 'decider-ensemble' },
+  { title: "Aligner l'équipe", slug: 'aligner-equipe' },
+  { title: 'Installer une dynamique durable', slug: 'dynamique-durable' },
+];
 
 // Normalise Astro.url.pathname pour comparer sans se soucier du préfixe /TESTSITENV/.
 const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
@@ -34,7 +38,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
             <summary>Accompagnements</summary>
             <ul class="dropdown-menu">
               {offers.map((offer) => (
-                <li><a href={withBase('/#accompagnements')}>{offer}</a></li>
+                <li><a href={withBase(`/offres/${offer.slug}/`)}>{offer.title}</a></li>
               ))}
             </ul>
           </details>
@@ -51,8 +55,10 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
 
 <style>
   .site-header {
-    border-bottom: 1px solid var(--color-border);
-    background: var(--color-cream);
+    border-bottom: 1px solid var(--color-panel-border);
+    background: var(--color-panel);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     position: sticky;
     top: 0;
     z-index: 50;
@@ -101,14 +107,23 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     padding: 0;
   }
   .main-nav > ul > li > a {
+    display: inline-block;
     text-decoration: none;
     color: var(--color-ink);
     font-size: 0.9rem;
     font-weight: 500;
     white-space: nowrap;
+    padding: 0.5em 1em;
+    border-radius: var(--radius-pill);
+    transition: background var(--duration-standard) var(--ease-standard), color var(--duration-standard) var(--ease-standard);
+  }
+  .main-nav > ul > li > a:hover {
+    background: var(--color-blue-soft);
+    color: var(--color-navy);
   }
   .main-nav a[aria-current='page'] {
-    color: var(--color-orange);
+    background: var(--color-blue-strong);
+    color: var(--color-white);
   }
   .header-cta {
     white-space: nowrap;
@@ -120,10 +135,18 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
   .dropdown summary {
     list-style: none;
     cursor: pointer;
+    display: inline-block;
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--color-ink);
     white-space: nowrap;
+    padding: 0.5em 1em;
+    border-radius: var(--radius-pill);
+    transition: background var(--duration-standard) var(--ease-standard), color var(--duration-standard) var(--ease-standard);
+  }
+  .dropdown summary:hover {
+    background: var(--color-blue-soft);
+    color: var(--color-navy);
   }
   .dropdown summary::-webkit-details-marker {
     display: none;
@@ -139,10 +162,12 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     position: absolute;
     top: 100%;
     left: 0;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: var(--color-panel);
+    border: 1px solid var(--color-panel-border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     min-width: 240px;
   }
   .dropdown-menu li a {
@@ -153,7 +178,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     font-size: 0.9rem;
   }
   .dropdown-menu li a:hover {
-    background: var(--color-cream);
+    background: var(--color-blue-soft);
     color: var(--color-navy);
   }
 
@@ -185,8 +210,10 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
       top: 100%;
       left: 0;
       right: 0;
-      background: var(--color-cream);
-      border-bottom: 1px solid var(--color-border);
+      background: var(--color-panel);
+      border-bottom: 1px solid var(--color-panel-border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       flex-direction: column;
       align-items: stretch;
       max-height: 0;
@@ -201,7 +228,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     }
     .main-nav > ul > li {
       padding: var(--space-3) 0;
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-panel-border);
     }
     .dropdown-menu {
       position: static;

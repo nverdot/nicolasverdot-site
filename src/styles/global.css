@@ -12,7 +12,11 @@ body {
   margin: 0;
   font-family: var(--font-body);
   color: var(--color-ink);
-  background: var(--color-cream);
+  background:
+    radial-gradient(circle at 90% 0%, rgba(255, 203, 0, 0.18), transparent 25rem),
+    radial-gradient(circle at 0% 36%, rgba(227, 67, 53, 0.08), transparent 22rem),
+    var(--color-cream);
+  background-attachment: fixed;
   line-height: 1.6;
   transition: background var(--duration-standard) var(--ease-standard), color var(--duration-standard) var(--ease-standard);
 }
@@ -126,17 +130,45 @@ section {
   font-style: normal;
 }
 
-/* Cartes "neo-brutalist" : bordure nette + ombre décalée façon sticker. */
-.card-brut {
-  border: 2.5px solid var(--color-navy);
+/* Panneaux doux : fond translucide + flou + ombre portée, sans bordure dure. */
+.panel {
+  background: var(--color-panel);
+  border: 1px solid var(--color-panel-border);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-brut);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   transition: transform var(--duration-standard) var(--ease-standard), box-shadow var(--duration-standard) var(--ease-standard);
 }
 
-.card-brut:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--color-navy);
+.panel:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-navy);
+  background: var(--color-panel);
+  border: 1px solid var(--color-panel-border);
+  padding: 0.4em 0.9em;
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--space-3);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-orange);
+  flex-shrink: 0;
 }
 
 /* Reveal au scroll */

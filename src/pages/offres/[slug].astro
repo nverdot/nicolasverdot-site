@@ -1,0 +1,187 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Quiz from '../../components/Quiz.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { offers } from '../../data/offers';
+import { withBase } from '../../utils/url';
+
+export function getStaticPaths() {
+  return offers.map((offer) => ({ params: { slug: offer.slug }, props: { offer } }));
+}
+
+const { offer } = Astro.props;
+const contactHref = withBase('/contact/');
+---
+
+<Layout
+  title={`${offer.title} — by Nicolas Verdot`}
+  description={offer.summary}
+  path={`/offres/${offer.slug}/`}
+>
+  <PageHero
+    eyebrow={offer.eyebrow}
+    title={offer.title}
+    summary={offer.summary}
+    pills={[offer.price, 'Sur mesure', 'Résultat concret']}
+  />
+
+  <section class="offer-body" data-reveal>
+    <div class="container offer-layout">
+      <div class="offer-main">
+        <article class="panel">
+          <h2>Quand cette offre devient utile</h2>
+          <p class="lead">{offer.useCaseLead}</p>
+          <div class="problem-list">
+            {offer.problems.map((problem) => (
+              <div class="problem">
+                <strong>{problem.title}</strong>
+                <span class="muted">{problem.text}</span>
+              </div>
+            ))}
+          </div>
+          <div class="result-box">
+            <p class="eyebrow">Le résultat visé</p>
+            <h3>{offer.outcomeTitle}</h3>
+            <p>{offer.outcomeText}</p>
+          </div>
+        </article>
+
+        <article class="timeline-block">
+          <p class="eyebrow">Déroulé type</p>
+          <h2>De la situation au résultat</h2>
+          <div class="timeline">
+            {offer.timeline.map((step, i) => (
+              <div class="timeline-item">
+                <span>{i + 1}</span>
+                <strong>{step}</strong>
+              </div>
+            ))}
+          </div>
+        </article>
+
+        <article class="panel">
+          <p class="eyebrow">Investissement</p>
+          <h2>{offer.price}</h2>
+          <p class="muted">{offer.investmentText}</p>
+          <a class="btn" href={contactHref}>Demander un cadrage</a>
+        </article>
+      </div>
+
+      <Quiz
+        title={offer.quizTitle}
+        intro={offer.quizIntro}
+        questions={offer.quizQuestions}
+        levels={offer.quizLevels}
+        cta={offer.quizCta}
+        contactHref={contactHref}
+      />
+    </div>
+  </section>
+
+  <CTABlock
+    title="Confrontons le résultat à votre situation réelle."
+    subtitle="Le diagnostic en ligne donne une première lecture. Un échange permet d'identifier l'enjeu, le niveau de décision et le format réellement utile."
+  />
+</Layout>
+
+<style>
+  .offer-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: var(--space-8);
+    align-items: start;
+  }
+  .offer-main {
+    display: grid;
+    gap: var(--space-8);
+  }
+  .offer-main h2 {
+    font-size: var(--text-2xl);
+  }
+  .panel,
+  .timeline-block {
+    padding: var(--space-8);
+  }
+  .lead {
+    font-size: var(--text-lg);
+    color: var(--color-muted);
+  }
+  .problem-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    margin: var(--space-6) 0;
+  }
+  .problem {
+    border: 1px solid var(--color-panel-border);
+    background: var(--color-panel);
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+  }
+  .problem strong {
+    display: block;
+    margin-bottom: var(--space-1);
+  }
+  .problem .muted {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+  .result-box {
+    background: linear-gradient(145deg, var(--color-blue), var(--color-blue-strong));
+    color: var(--color-white);
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-6);
+  }
+  .result-box .eyebrow {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: var(--color-white);
+  }
+  .result-box .eyebrow::before {
+    background: var(--color-orange);
+  }
+  .result-box h3 {
+    color: var(--color-white);
+    font-size: var(--text-xl);
+    margin-top: var(--space-3);
+  }
+  .result-box p:last-child {
+    color: #d4deef;
+    margin-bottom: 0;
+  }
+  .timeline {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: var(--space-3);
+    align-items: center;
+  }
+  .timeline-item span {
+    width: 40px;
+    height: 40px;
+    background: var(--color-orange);
+    color: var(--color-ink-solid);
+    border-radius: var(--radius-sm);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+  }
+  .muted {
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 900px) {
+    .offer-layout {
+      grid-template-columns: 1fr;
+    }
+    .problem-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

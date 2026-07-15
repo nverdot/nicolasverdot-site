@@ -1,0 +1,354 @@
+---
+import { SITE } from '../data/site';
+
+interface Question {
+  text: string;
+  positive: boolean;
+}
+interface Level {
+  max: number;
+  title: string;
+  text: string;
+  tips: string[];
+}
+
+interface Props {
+  title: string;
+  intro?: string;
+  questions: Question[];
+  levels: Level[];
+  cta: string;
+  contactHref: string;
+}
+
+const { title, intro = 'Répondez à 8 questions et obtenez une première lecture de votre situation.', questions, levels, cta, contactHref } = Astro.props;
+const quizData = { questions, levels, cta };
+const accessKey = SITE.web3formsAccessKey;
+---
+
+<aside class="panel quiz sticky" data-contact-href={contactHref} data-quiz={JSON.stringify(quizData)} data-access-key={accessKey}>
+  <p class="eyebrow">Mini-diagnostic</p>
+  <h2 class="quiz-title">{title}</h2>
+  <p class="quiz-intro">{intro}</p>
+  <div class="progress"><i></i></div>
+  <div class="quiz-body"></div>
+  <div class="quiz-result"></div>
+</aside>
+
+<style>
+  .quiz {
+    background: linear-gradient(145deg, var(--color-blue), var(--color-blue-strong));
+    color: var(--color-white);
+    border: none;
+  }
+  .quiz.sticky {
+    position: sticky;
+    top: calc(var(--space-16) + 24px);
+  }
+  .quiz :global(.eyebrow) {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: var(--color-white);
+  }
+  .quiz :global(.eyebrow::before) {
+    background: var(--color-orange);
+  }
+  .quiz-title {
+    color: var(--color-white);
+    font-size: var(--text-2xl);
+    margin-top: var(--space-3);
+  }
+  .quiz-intro {
+    color: #e3ebf7;
+    font-size: var(--text-sm);
+  }
+  .progress {
+    height: 9px;
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    margin: var(--space-4) 0 var(--space-6);
+  }
+  .progress i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--color-orange);
+    transition: width 0.25s ease;
+  }
+  .quiz-body :global(.quiz-question) {
+    display: none;
+  }
+  .quiz-body :global(.quiz-question.active) {
+    display: block;
+  }
+  .quiz-body :global(.quiz-question h3) {
+    color: var(--color-white);
+    font-size: var(--text-lg);
+    line-height: 1.35;
+    margin-bottom: var(--space-4);
+  }
+  .quiz-body :global(.answers) {
+    display: grid;
+    gap: var(--space-2);
+  }
+  .quiz-body :global(.answer) {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-white);
+    padding: 0.8rem 0.9rem;
+    border-radius: var(--radius-sm);
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    transition: background 0.18s ease, border-color 0.18s ease;
+  }
+  .quiz-body :global(.answer:hover),
+  .quiz-body :global(.answer.selected) {
+    border-color: var(--color-orange);
+    background: rgba(255, 203, 0, 0.16);
+  }
+  .quiz-body :global(.quiz-nav) {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+  .quiz-body :global(.quiz-nav button:disabled) {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .quiz-result {
+    display: none;
+  }
+  .quiz-result :global(.score) {
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    background: conic-gradient(var(--color-orange) var(--score), rgba(255, 255, 255, 0.14) 0);
+    display: grid;
+    place-items: center;
+    margin-bottom: var(--space-4);
+    position: relative;
+  }
+  .quiz-result :global(.score::after) {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    background: var(--color-blue-strong);
+  }
+  .quiz-result :global(.score strong) {
+    position: relative;
+    z-index: 2;
+    font-size: var(--text-xl);
+    color: var(--color-white);
+  }
+  .quiz-result :global(h3) {
+    color: var(--color-white);
+  }
+  .quiz-result :global(.quiz-result-copy) {
+    color: #d4deef;
+    font-size: var(--text-sm);
+  }
+  .quiz-result :global(ul.quiz-result-copy) {
+    padding-left: 1.1rem;
+    margin: var(--space-3) 0;
+  }
+  .quiz-result :global(.quiz-form) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+  .quiz-result :global(.quiz-form .full) {
+    grid-column: 1 / -1;
+  }
+  .quiz-result :global(.quiz-form input) {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-white);
+    font: inherit;
+  }
+  .quiz-result :global(.quiz-form input::placeholder) {
+    color: #c6d0df;
+  }
+  .quiz-result :global(.fine) {
+    font-size: var(--text-xs);
+    color: #b9c3d4;
+  }
+  .quiz-result :global(.quiz-actions) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+  .quiz-result :global(.btn-ghost) {
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    color: var(--color-white);
+    background: transparent;
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: var(--text-sm);
+    font-family: var(--font-body);
+    cursor: pointer;
+  }
+  .quiz-result :global(.btn-ghost:hover) {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  @media (max-width: 900px) {
+    .quiz.sticky {
+      position: static;
+    }
+  }
+</style>
+
+<script>
+  const labels = ['Jamais', 'Rarement', 'Parfois', 'Souvent', 'Toujours'];
+
+  document.querySelectorAll<HTMLElement>('.quiz').forEach((quiz) => {
+    const dataset = JSON.parse(quiz.dataset.quiz || '{}');
+    const accessKey = quiz.dataset.accessKey || '';
+    const body = quiz.querySelector<HTMLElement>('.quiz-body');
+    const result = quiz.querySelector<HTMLElement>('.quiz-result');
+    const progress = quiz.querySelector<HTMLElement>('.progress i');
+    if (!body || !result || !progress || !dataset.questions) return;
+
+    const answers: (number | null)[] = Array(dataset.questions.length).fill(null);
+    let index = 0;
+
+    body.innerHTML =
+      dataset.questions
+        .map(
+          (q: { text: string }, i: number) => `
+      <section class="quiz-question ${i === 0 ? 'active' : ''}" data-index="${i}">
+        <h3>${q.text}</h3>
+        <div class="answers">
+          ${labels.map((label, val) => `<button type="button" class="answer" data-value="${val}">${label}</button>`).join('')}
+        </div>
+      </section>
+    `
+        )
+        .join('') +
+      `
+      <div class="quiz-nav">
+        <button type="button" class="btn-outline prev" disabled>Retour</button>
+        <button type="button" class="btn next" disabled>Suivant</button>
+      </div>
+    `;
+
+    const prev = body.querySelector<HTMLButtonElement>('.prev');
+    const next = body.querySelector<HTMLButtonElement>('.next');
+    if (!prev || !next) return;
+
+    function refresh() {
+      body!.querySelectorAll('.quiz-question').forEach((q, i) => q.classList.toggle('active', i === index));
+      prev!.disabled = index === 0;
+      next!.disabled = answers[index] === null;
+      next!.textContent = index === dataset.questions.length - 1 ? 'Voir mon résultat' : 'Suivant';
+      progress!.style.width = `${((index + (answers[index] !== null ? 1 : 0)) / dataset.questions.length) * 100}%`;
+    }
+
+    body.querySelectorAll('.quiz-question').forEach((q, i) => {
+      q.querySelectorAll<HTMLButtonElement>('.answer').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          q.querySelectorAll('.answer').forEach((b) => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          answers[i] = Number(btn.dataset.value);
+          refresh();
+        });
+      });
+    });
+
+    prev.addEventListener('click', () => {
+      if (index > 0) {
+        index--;
+        refresh();
+      }
+    });
+
+    next.addEventListener('click', async () => {
+      if (index < dataset.questions.length - 1) {
+        index++;
+        refresh();
+        return;
+      }
+      const raw = answers.reduce(
+        (sum: number, value, i) => sum + (dataset.questions[i].positive ? 4 - (value ?? 0) : value ?? 0),
+        0
+      );
+      const percent = Math.round((raw / (dataset.questions.length * 4)) * 100);
+      const level = dataset.levels.find((l: { max: number }) => percent <= l.max) || dataset.levels[dataset.levels.length - 1];
+      body!.style.display = 'none';
+      result!.style.display = 'block';
+      progress!.style.width = '100%';
+      const contactHref = quiz.dataset.contactHref || '/contact/';
+
+      result!.innerHTML = `
+        <div class="score" style="--score:${percent * 3.6}deg"><strong>${percent}%</strong></div>
+        <p class="eyebrow">Votre résultat</p>
+        <h3 style="font-size:1.6rem;margin-top:0.75rem">${level.title}</h3>
+        <p class="quiz-result-copy">${level.text}</p>
+        <ul class="quiz-result-copy">${level.tips.map((t: string) => `<li>${t}</li>`).join('')}</ul>
+        <form class="quiz-form">
+          <input type="hidden" name="access_key" value="${accessKey}" />
+          <input type="hidden" name="subject" value="Résultat de diagnostic — ${dataset.cta}" />
+          <input type="hidden" name="Résultat" value="${percent}% — ${level.title}" />
+          <input type="text" name="name" class="full" placeholder="Votre prénom" required>
+          <input type="email" name="email" class="full" placeholder="Votre email professionnel" required>
+          <button class="btn full" type="submit">Recevoir mon analyse détaillée</button>
+          <p class="fine full" data-form-status></p>
+        </form>
+        <div class="quiz-actions">
+          <a class="btn" href="${contactHref}">${dataset.cta}</a>
+          <button class="btn-ghost restart" type="button">Refaire le test</button>
+        </div>
+      `;
+
+      const form = result!.querySelector<HTMLFormElement>('.quiz-form');
+      form?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const status = form.querySelector<HTMLElement>('[data-form-status]');
+        const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+        if (button) button.disabled = true;
+        if (status) status.textContent = 'Envoi en cours…';
+        try {
+          const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: new FormData(form),
+          });
+          const data = await response.json();
+          if (data.success) {
+            if (status) status.textContent = 'Merci, votre analyse détaillée vous sera envoyée par email.';
+            form.reset();
+          } else {
+            throw new Error(data.message || 'Erreur inconnue');
+          }
+        } catch {
+          if (status) status.textContent = "Une erreur est survenue. Réessayez ou écrivez-moi directement.";
+        } finally {
+          if (button) button.disabled = false;
+        }
+      });
+
+      result!.querySelector('.restart')?.addEventListener('click', () => {
+        answers.fill(null);
+        index = 0;
+        body!.querySelectorAll('.answer').forEach((b) => b.classList.remove('selected'));
+        result!.style.display = 'none';
+        body!.style.display = 'block';
+        refresh();
+      });
+    });
+
+    refresh();
+  });
+</script>

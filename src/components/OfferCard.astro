@@ -11,7 +11,7 @@ interface Props {
 const { icon, title, text, href = withBase('/contact/') } = Astro.props;
 ---
 
-<a href={href} class="offer-card card-brut">
+<a href={href} class="offer-card panel">
   <span class="offer-icon" aria-hidden="true">{icon}</span>
   <h3>{title}</h3>
   <p>{text}</p>
@@ -21,7 +21,6 @@ const { icon, title, text, href = withBase('/contact/') } = Astro.props;
 <style>
   .offer-card {
     display: block;
-    background: var(--color-surface);
     padding: var(--space-6);
     text-decoration: none;
     color: inherit;
