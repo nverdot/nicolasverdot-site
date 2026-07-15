@@ -7,18 +7,26 @@ const people = {
 };
 
 const steps = [
-  { kind: 'msg', name: 'Karim', text: "Encore une réunion qui n'a servi à rien 🙃", time: '18:41' },
+  { kind: 'msg', name: 'Karim', text: "Encore une réunion qui n'a servi à rien 🙃", time: '18:41', mine: true },
   { kind: 'typing', name: 'Marc' },
-  { kind: 'msg', name: 'Marc', text: 'Grave. On a refait le même débat que la dernière fois', time: '18:42', reactOn: 0 },
+  { kind: 'msg', name: 'Marc', text: 'Grave. On a refait le même débat que la dernière fois', time: '18:42', reactOn: 0, reactEmoji: '😂' },
   { kind: 'msg', name: 'Sophie', text: "Perso j'ai arrêté d'y croire après le 3e atelier", time: '18:43' },
   { kind: 'typing', name: 'Julie' },
-  { kind: 'msg', name: 'Julie', text: "On ressort avec un plan d'action... qu'on n'ouvrira jamais 😅", time: '18:44', reactOn: 2 },
+  { kind: 'msg', name: 'Julie', text: "On ressort avec un plan d'action... qu'on n'ouvrira jamais 😅", time: '18:44', reactOn: 2, reactEmoji: '👍' },
 ];
 
 let msgCounter = -1;
 const rendered = steps.map((s) => {
   if (s.kind === 'msg') msgCounter += 1;
   return { ...s, msgId: s.kind === 'msg' ? msgCounter : null };
+});
+
+// Map target msgId -> the emoji that lands on it, so each bubble can pre-render its own (hidden) reaction.
+const reactionFor: Record<number, string> = {};
+rendered.forEach((s) => {
+  if (s.kind === 'msg' && typeof s.reactOn === 'number') {
+    reactionFor[s.reactOn] = s.reactEmoji || '❤️';
+  }
 });
 ---
 
@@ -30,7 +38,7 @@ const rendered = steps.map((s) => {
       ))}
     </div>
     <div class="chat-title">
-      <strong>Après l'atelier</strong>
+      <strong>Entre nous (sans le boss) 🙊</strong>
       <span>Groupe &middot; 4 participants</span>
     </div>
   </div>
@@ -42,6 +50,16 @@ const rendered = steps.map((s) => {
           <span class="chat-avatar chat-avatar--sm" style={`background:${people[s.name]}`}>{s.name.charAt(0)}</span>
           <span class="typing-bubble"><i></i><i></i><i></i></span>
         </div>
+      ) : s.mine ? (
+        <div class="chat-msg chat-msg--mine" data-id={i} data-msg-id={s.msgId}>
+          <div class="chat-bubble chat-bubble--mine">
+            <p>{s.text}</p>
+            <span class="chat-time">{s.time}</span>
+            {typeof s.msgId === 'number' && reactionFor[s.msgId] && (
+              <span class="chat-react">{reactionFor[s.msgId]}</span>
+            )}
+          </div>
+        </div>
       ) : (
         <div class="chat-msg" data-id={i} data-msg-id={s.msgId} data-react-on={s.reactOn ?? undefined}>
           <span class="chat-avatar chat-avatar--sm" style={`background:${people[s.name]}`}>{s.name.charAt(0)}</span>
@@ -49,7 +67,9 @@ const rendered = steps.map((s) => {
             <span class="chat-name" style={`color:${people[s.name]}`}>{s.name}</span>
             <p>{s.text}</p>
             <span class="chat-time">{s.time}</span>
-            <span class="chat-react">❤</span>
+            {typeof s.msgId === 'number' && reactionFor[s.msgId] && (
+              <span class="chat-react">{reactionFor[s.msgId]}</span>
+            )}
           </div>
         </div>
       )
@@ -71,8 +91,9 @@ const rendered = steps.map((s) => {
     align-items: center;
     gap: var(--space-3);
     padding: var(--space-4);
-    background: var(--color-blue-strong);
-    color: var(--color-white);
+    /* Couleurs fixes : cette fenêtre reste toujours en mode clair, comme une vraie capture d'écran. */
+    background: #102a52;
+    color: #fffdfa;
   }
   .chat-avatars {
     display: flex;
@@ -80,7 +101,7 @@ const rendered = steps.map((s) => {
   }
   .chat-avatars .chat-avatar {
     margin-left: -8px;
-    box-shadow: 0 0 0 2px var(--color-blue-strong);
+    box-shadow: 0 0 0 2px #102a52;
   }
   .chat-avatars .chat-avatar:first-child {
     margin-left: 0;
@@ -96,8 +117,8 @@ const rendered = steps.map((s) => {
 
   .chat-body {
     background-color: #e7ded2;
-    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cg%20fill='none'%20stroke='%23122033'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='0.1'%3E%3Cpath%20d='M12%2016%20h22%20a4%204%200%200%201%204%204%20v12%20a4%204%200%200%201%20-4%204%20h-14%20l-5%205%20v-5%20h-3%20a4%204%200%200%201%20-4%20-4%20v-12%20a4%204%200%200%201%204%20-4%20z'/%3E%3Ccircle%20cx='105'%20cy='25'%20r='9'/%3E%3Cpath%20d='M101%2025%20l3%203%20l7%20-8'/%3E%3Cpath%20d='M35%2080%20v12%20M29%2086%20h12%20M39.5%2081.5%20l-9%209%20M39.5%2090.5%20l-9%20-9'/%3E%3Cpath%20d='M105%2085%20v10%20M100%2090%20h10'/%3E%3Ccircle%20cx='90'%20cy='120'%20r='2'/%3E%3Ccircle%20cx='18'%20cy='115'%20r='2'/%3E%3Ccircle%20cx='24'%20cy='120'%20r='2'/%3E%3C/g%3E%3C/svg%3E");
-    background-size: 140px 140px;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='200'%3E%3Cg%20fill='none'%20stroke='%23122033'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='0.1'%3E%3Cpath%20d='M14%2016%20h22%20a4%204%200%200%201%204%204%20v12%20a4%204%200%200%201%20-4%204%20h-14%20l-5%205%20v-5%20h-3%20a4%204%200%200%201%20-4%20-4%20v-12%20a4%204%200%200%201%204%20-4%20z'/%3E%3Ccircle%20cx='150'%20cy='25'%20r='9'/%3E%3Cpath%20d='M146%2025%20l3%203%20l7%20-8'/%3E%3Cpath%20d='M35%2080%20v12%20M29%2086%20h12%20M39.5%2081.5%20l-9%209%20M39.5%2090.5%20l-9%20-9'/%3E%3Cpath%20d='M150%2085%20v10%20M145%2090%20h10'/%3E%3Ccircle%20cx='120'%20cy='120'%20r='2'/%3E%3Ccircle%20cx='18'%20cy='115'%20r='2'/%3E%3Ccircle%20cx='24'%20cy='120'%20r='2'/%3E%3Crect%20x='95'%20y='150'%20width='26'%20height='18'%20rx='2'/%3E%3Cpath%20d='M95%20151%20l13%2010%20l13%20-10'/%3E%3Ccircle%20cx='175'%20cy='150'%20r='7'/%3E%3Cpath%20d='M175%20138%20v4%20M175%20158%20v4%20M163%20150%20h4%20M183%20150%20h4%20M167%20142%20l3%203%20M180%20155%20l3%203%20M167%20158%20l3%20-3%20M180%20145%20l3%20-3'/%3E%3Cpath%20d='M60%20145%20l-6%2012%20h6%20l-4%2010%20l12%20-14%20h-6%20z'/%3E%3Cpath%20d='M15%2055%20c-3%20-4%20-9%20-2%20-9%203%20c0%205%209%2010%209%2010%20s9%20-5%209%20-10%20c0%20-5%20-6%20-7%20-9%20-3%20z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 200px 200px;
     padding: var(--space-4);
     max-height: 420px;
     overflow-y: auto;
@@ -121,6 +142,9 @@ const rendered = steps.map((s) => {
     opacity: 1;
     transform: none;
     visibility: visible;
+  }
+  .chat-msg--mine {
+    justify-content: flex-end;
   }
 
   .chat-avatar {
@@ -147,6 +171,10 @@ const rendered = steps.map((s) => {
     padding: 0.5rem 0.85rem 1.1rem;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
     max-width: 78%;
+  }
+  .chat-bubble--mine {
+    background: #dcf8c6;
+    border-radius: var(--radius-sm) 3px var(--radius-sm) var(--radius-sm);
   }
   .chat-name {
     display: block;
@@ -178,8 +206,7 @@ const rendered = steps.map((s) => {
     background: #fff;
     border-radius: 50%;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    font-size: 0.68rem;
-    color: var(--color-red-bright);
+    font-size: 0.72rem;
     opacity: 0;
     transform: scale(0);
     transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
