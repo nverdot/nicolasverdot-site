@@ -1,0 +1,296 @@
+---
+const people = {
+  Karim: '#e2727a',
+  Marc: '#e3a651',
+  Sophie: '#4fb0a5',
+  Julie: '#5b8def',
+};
+
+const steps = [
+  { kind: 'msg', name: 'Karim', text: "Encore une réunion qui n'a servi à rien 🙃", time: '18:41' },
+  { kind: 'typing', name: 'Marc' },
+  { kind: 'msg', name: 'Marc', text: 'Grave. On a refait le même débat que la dernière fois', time: '18:42', reactOn: 0 },
+  { kind: 'msg', name: 'Sophie', text: "Perso j'ai arrêté d'y croire après le 3e atelier", time: '18:43' },
+  { kind: 'typing', name: 'Julie' },
+  { kind: 'msg', name: 'Julie', text: "On ressort avec un plan d'action... qu'on n'ouvrira jamais 😅", time: '18:44', reactOn: 2 },
+];
+
+let msgCounter = -1;
+const rendered = steps.map((s) => {
+  if (s.kind === 'msg') msgCounter += 1;
+  return { ...s, msgId: s.kind === 'msg' ? msgCounter : null };
+});
+---
+
+<div class="chat-window" id="group-chat">
+  <div class="chat-header">
+    <div class="chat-avatars">
+      {Object.entries(people).map(([name, color]) => (
+        <span class="chat-avatar" style={`background:${color}`}>{name.charAt(0)}</span>
+      ))}
+    </div>
+    <div class="chat-title">
+      <strong>Après l'atelier</strong>
+      <span>Groupe &middot; 4 participants</span>
+    </div>
+  </div>
+
+  <div class="chat-body">
+    {rendered.map((s, i) => (
+      s.kind === 'typing' ? (
+        <div class="chat-typing" data-id={i}>
+          <span class="chat-avatar chat-avatar--sm" style={`background:${people[s.name]}`}>{s.name.charAt(0)}</span>
+          <span class="typing-bubble"><i></i><i></i><i></i></span>
+        </div>
+      ) : (
+        <div class="chat-msg" data-id={i} data-msg-id={s.msgId} data-react-on={s.reactOn ?? undefined}>
+          <span class="chat-avatar chat-avatar--sm" style={`background:${people[s.name]}`}>{s.name.charAt(0)}</span>
+          <div class="chat-bubble">
+            <span class="chat-name" style={`color:${people[s.name]}`}>{s.name}</span>
+            <p>{s.text}</p>
+            <span class="chat-time">{s.time}</span>
+            <span class="chat-react">❤</span>
+          </div>
+        </div>
+      )
+    ))}
+  </div>
+</div>
+
+<style>
+  .chat-window {
+    max-width: 560px;
+    margin: var(--space-8) auto 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+  }
+  .chat-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-blue-strong);
+    color: var(--color-white);
+  }
+  .chat-avatars {
+    display: flex;
+    flex-shrink: 0;
+  }
+  .chat-avatars .chat-avatar {
+    margin-left: -8px;
+    box-shadow: 0 0 0 2px var(--color-blue-strong);
+  }
+  .chat-avatars .chat-avatar:first-child {
+    margin-left: 0;
+  }
+  .chat-title strong {
+    display: block;
+    font-size: 0.92rem;
+  }
+  .chat-title span {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .chat-body {
+    background-color: #e7ded2;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cg%20fill='none'%20stroke='%23122033'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='0.1'%3E%3Cpath%20d='M12%2016%20h22%20a4%204%200%200%201%204%204%20v12%20a4%204%200%200%201%20-4%204%20h-14%20l-5%205%20v-5%20h-3%20a4%204%200%200%201%20-4%20-4%20v-12%20a4%204%200%200%201%204%20-4%20z'/%3E%3Ccircle%20cx='105'%20cy='25'%20r='9'/%3E%3Cpath%20d='M101%2025%20l3%203%20l7%20-8'/%3E%3Cpath%20d='M35%2080%20v12%20M29%2086%20h12%20M39.5%2081.5%20l-9%209%20M39.5%2090.5%20l-9%20-9'/%3E%3Cpath%20d='M105%2085%20v10%20M100%2090%20h10'/%3E%3Ccircle%20cx='90'%20cy='120'%20r='2'/%3E%3Ccircle%20cx='18'%20cy='115'%20r='2'/%3E%3Ccircle%20cx='24'%20cy='120'%20r='2'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 140px 140px;
+    padding: var(--space-4);
+    max-height: 420px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .chat-msg,
+  .chat-typing {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(8px);
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .chat-msg.is-in,
+  .chat-typing.is-in {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+  }
+
+  .chat-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+  .chat-avatar--sm {
+    width: 28px;
+    height: 28px;
+    font-size: 0.72rem;
+  }
+
+  .chat-bubble {
+    position: relative;
+    background: #ffffff;
+    border-radius: 3px var(--radius-sm) var(--radius-sm) var(--radius-sm);
+    padding: 0.5rem 0.85rem 1.1rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    max-width: 78%;
+  }
+  .chat-name {
+    display: block;
+    font-weight: 700;
+    font-size: 0.82rem;
+    margin-bottom: 2px;
+  }
+  .chat-bubble p {
+    margin: 0;
+    color: #1c1c1c;
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+  .chat-time {
+    position: absolute;
+    right: 10px;
+    bottom: 6px;
+    font-size: 0.65rem;
+    color: #8b8b8b;
+  }
+  .chat-react {
+    position: absolute;
+    left: 6px;
+    bottom: -9px;
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    font-size: 0.68rem;
+    color: var(--color-red-bright);
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .chat-react.is-in {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .typing-bubble {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #fff;
+    border-radius: 3px var(--radius-pill) var(--radius-pill) var(--radius-pill);
+    padding: 10px 14px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+  .typing-bubble i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #9a9a9a;
+    animation: typing-bounce 1.2s infinite ease-in-out;
+  }
+  .typing-bubble i:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .typing-bubble i:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  @keyframes typing-bounce {
+    0%,
+    60%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.5;
+    }
+    30% {
+      transform: translateY(-4px);
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  const chat = document.getElementById('group-chat');
+
+  if (chat) {
+    const body = chat.querySelector('.chat-body');
+    const stepEls = Array.from(chat.querySelectorAll<HTMLElement>('[data-id]'));
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let played = false;
+
+    // Precompute, for each message step, the delay (ms from play start) at which it appears.
+    const delays: number[] = [];
+    let cursor = 300;
+    stepEls.forEach((el, i) => {
+      delays[i] = cursor;
+      cursor += el.classList.contains('chat-typing') ? 1300 : 1100;
+    });
+
+    function play() {
+      if (played) return;
+      played = true;
+
+      if (reduceMotion) {
+        stepEls.forEach((el) => el.classList.add('is-in'));
+        chat!.querySelectorAll<HTMLElement>('.chat-msg[data-react-on]').forEach((triggerEl) => {
+          const targetId = triggerEl.dataset.reactOn;
+          chat!.querySelector<HTMLElement>(`.chat-msg[data-msg-id="${targetId}"] .chat-react`)?.classList.add('is-in');
+        });
+        return;
+      }
+
+      let activeTyping: HTMLElement | null = null;
+
+      stepEls.forEach((el, i) => {
+        setTimeout(() => {
+          if (activeTyping) {
+            activeTyping.classList.remove('is-in');
+            activeTyping = null;
+          }
+          el.classList.add('is-in');
+          body?.scrollTo({ top: body.scrollHeight, behavior: 'smooth' });
+          if (el.classList.contains('chat-typing')) activeTyping = el;
+        }, delays[i]);
+      });
+
+      // Reveal each reaction shortly after the message that triggers it.
+      chat!.querySelectorAll<HTMLElement>('.chat-msg[data-react-on]').forEach((triggerEl) => {
+        const targetId = triggerEl.dataset.reactOn;
+        const triggerIndex = stepEls.indexOf(triggerEl);
+        setTimeout(() => {
+          const target = chat!.querySelector<HTMLElement>(`.chat-msg[data-msg-id="${targetId}"] .chat-react`);
+          target?.classList.add('is-in');
+        }, delays[triggerIndex] + 500);
+      });
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            play();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(chat);
+  }
+</script>
