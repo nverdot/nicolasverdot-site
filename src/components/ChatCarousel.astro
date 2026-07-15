@@ -29,12 +29,6 @@ const { conversations } = Astro.props;
         </div>
       </div>
     ))}
-    <button type="button" class="chat-carousel-arrow chat-carousel-arrow-prev" data-arrow="prev" aria-label="Conversation précédente">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
-    </button>
-    <button type="button" class="chat-carousel-arrow chat-carousel-arrow-next" data-arrow="next" aria-label="Conversation suivante">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-    </button>
   </div>
   <div class="chat-carousel-dots">
     {conversations.map((c, i) => (
@@ -50,57 +44,22 @@ const { conversations } = Astro.props;
   }
   .chat-carousel-track {
     position: relative;
-    overflow: hidden;
-    min-height: 700px;
-    transition: height 0.3s ease;
   }
   .chat-carousel-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .chat-carousel-slide:not(:first-child) {
     display: none;
   }
-  .chat-carousel-arrow {
-    position: absolute;
-    top: 41px;
-    transform: translateY(-50%);
-    width: 34px;
-    height: 34px;
-    border-radius: 999px;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    color: var(--color-ink);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 0;
-    opacity: 0.55;
-    box-shadow: var(--shadow-lg);
-    z-index: 5;
-    transition: opacity var(--duration-standard) var(--ease-standard);
+  .chat-carousel-slide.is-active {
+    display: block;
+    animation: chat-slide-in 0.4s ease;
   }
-  .chat-carousel-arrow:hover,
-  .chat-carousel-arrow:focus-visible {
-    opacity: 1;
-  }
-  .chat-carousel-arrow svg {
-    width: 18px;
-    height: 18px;
-  }
-  .chat-carousel-arrow-prev {
-    left: 8px;
-  }
-  .chat-carousel-arrow-next {
-    right: 8px;
-  }
-  @media (hover: none) {
-    .chat-carousel-arrow {
-      opacity: 0.7;
+  @keyframes chat-slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
   .chat-label {
@@ -226,52 +185,9 @@ const { conversations } = Astro.props;
     let index = 0;
     let started = false;
     let pendingAdvance: ReturnType<typeof setTimeout> | null = null;
-    let dragPercent = 0;
 
     function wrap(i: number) {
       return (i + total) % total;
-    }
-
-    // Current/prev/next sit fully off to the side (translateX ±100%) and
-    // only become visible as a drag slides them in from the edge — a plain
-    // edge-to-edge carousel instead of a scaled-down peeking neighbour.
-    function styleSlide(slide: HTMLElement, pos: number, withTransition: boolean, isCurrent: boolean) {
-      slide.style.transition = withTransition ? '' : 'none';
-      slide.style.transform = `translateX(${pos * 100}%)`;
-      slide.style.opacity = '1';
-      slide.style.zIndex = isCurrent ? '3' : '2';
-    }
-
-    function layout(withTransition: boolean) {
-      const prevI = wrap(index - 1);
-      const nextI = wrap(index + 1);
-      slides.forEach((s, i) => {
-        let baseOffset: number | null = null;
-        if (i === index) baseOffset = 0;
-        else if (i === prevI) baseOffset = -1;
-        else if (i === nextI) baseOffset = 1;
-
-        if (baseOffset === null) {
-          s.style.display = 'none';
-          return;
-        }
-        s.style.display = 'block';
-        styleSlide(s, baseOffset + dragPercent, withTransition, i === index);
-
-        // Only the truly centred slide may show its "done playing" state —
-        // clear any leftover dim/overlay from when a neighbour was itself
-        // the active slide, so peeking cards never show a stale dark scrim.
-        if (i !== index) {
-          s.querySelector('.chat-window')?.classList.remove('is-dimmed');
-          s.querySelector('.chat-insight-overlay')?.classList.remove('is-visible');
-        }
-      });
-      const active = slides[index];
-      if (active) {
-        requestAnimationFrame(() => {
-          if (track) track.style.height = active.offsetHeight + 'px';
-        });
-      }
     }
 
     function resetSlide(slide: HTMLElement) {
@@ -293,9 +209,8 @@ const { conversations } = Astro.props;
         pendingAdvance = null;
       }
       index = wrap(i);
-      dragPercent = 0;
       dots.forEach((d, di) => d.classList.toggle('is-active', di === index));
-      layout(true);
+      slides.forEach((s, si) => s.classList.toggle('is-active', si === index));
       const slide = slides[index];
       resetSlide(slide);
       const chat = slide.querySelector<ChatEl>('.chat-window');
@@ -304,10 +219,6 @@ const { conversations } = Astro.props;
 
     function goToNext() {
       activate(index + 1);
-    }
-
-    function goToPrev() {
-      activate(index - 1);
     }
 
     window.addEventListener('groupchat:done', ((e: CustomEvent<{ id: string }>) => {
@@ -320,61 +231,6 @@ const { conversations } = Astro.props;
     }) as EventListener);
 
     dots.forEach((d, i) => d.addEventListener('click', () => activate(i)));
-
-    const prevBtn = carousel.querySelector<HTMLElement>('[data-arrow="prev"]');
-    const nextBtn = carousel.querySelector<HTMLElement>('[data-arrow="next"]');
-    prevBtn?.addEventListener('click', () => goToPrev());
-    nextBtn?.addEventListener('click', () => goToNext());
-
-    if (track) {
-      let touchStartX = 0;
-      let touchStartY = 0;
-      let axisLocked: 'x' | 'y' | null = null;
-      let dragging = false;
-
-      track.addEventListener('touchstart', (e) => {
-        if (pendingAdvance) {
-          clearTimeout(pendingAdvance);
-          pendingAdvance = null;
-        }
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        axisLocked = null;
-        dragging = false;
-      }, { passive: true });
-
-      track.addEventListener('touchmove', (e) => {
-        const dx = e.touches[0].clientX - touchStartX;
-        const dy = e.touches[0].clientY - touchStartY;
-        if (!axisLocked) {
-          if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
-          axisLocked = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
-          if (axisLocked === 'x') dragging = true;
-        }
-        if (axisLocked !== 'x') return;
-        e.preventDefault();
-        const width = track!.clientWidth || 1;
-        dragPercent = Math.max(-1, Math.min(1, dx / width));
-        layout(false);
-      }, { passive: false });
-
-      track.addEventListener('touchend', () => {
-        if (!dragging) {
-          axisLocked = null;
-          return;
-        }
-        dragging = false;
-        axisLocked = null;
-        if (dragPercent <= -0.18) {
-          goToNext();
-        } else if (dragPercent >= 0.18) {
-          goToPrev();
-        } else {
-          dragPercent = 0;
-          layout(true);
-        }
-      });
-    }
 
     const observer = new IntersectionObserver(
       (entries) => {
