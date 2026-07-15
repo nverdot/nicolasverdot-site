@@ -407,7 +407,8 @@ section {
   align-items: center;
 }
 
-/* Bloc texte + photo — même grille que .split, avec une image réelle */
+/* Bloc texte + photo — même grille que .split, avec une image réelle.
+   .split-photo par défaut = paysage ; ajouter .portrait pour un cadrage vertical. */
 .split-photo {
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -420,8 +421,13 @@ section {
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+.split-photo.portrait img {
+  aspect-ratio: 3 / 4;
+}
 
-/* Galerie photo en carrousel horizontal (défilement tactile natif) */
+/* Galerie photo en carrousel horizontal (défilement tactile natif).
+   Hauteur fixe + largeur libre : portrait et paysage cohabitent
+   naturellement, chaque image garde ses proportions. */
 .gallery {
   display: flex;
   gap: var(--space-4);
@@ -429,15 +435,22 @@ section {
   scroll-snap-type: x mandatory;
   padding-bottom: var(--space-2);
   margin-top: var(--space-6);
+  align-items: flex-end;
 }
 .gallery img {
   flex: 0 0 auto;
-  width: min(320px, 80vw);
-  aspect-ratio: 4 / 3;
+  height: 320px;
+  width: auto;
+  max-width: 80vw;
   object-fit: cover;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   scroll-snap-align: start;
+}
+@media (max-width: 680px) {
+  .gallery img {
+    height: 240px;
+  }
 }
 .checks {
   display: grid;

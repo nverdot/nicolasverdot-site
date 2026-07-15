@@ -163,22 +163,24 @@ const tags = ['Facilitation', 'Coaching', 'Formation', 'IA appliquée', 'Capture
           <h3>Une image à côté d'un message clair.</h3>
           <p class="hero-copy">Réutilise la grille <code>.split</code> déjà utilisée ailleurs sur le site, avec une vraie photo à la place de la citation. Idéal pour une preuve terrain, un portrait ou un moment d'atelier.</p>
         </div>
-        <div class="split-photo">
-          <Image src={portrait} alt="Exemple de bloc texte + photo" width={480} height={360} />
+        <div class="split-photo portrait">
+          <Image src={portrait} alt="Exemple de bloc texte + photo, cadrage portrait" width={360} height={480} />
         </div>
       </div>
+      <p class="fine" style="margin-top:var(--space-3)">Ajouter la classe <code>.portrait</code> pour un cadrage vertical ; sans elle, <code>.split-photo</code> attend un cadrage paysage (4:3).</p>
 
       <div class="section-head" style="margin-top:var(--space-16)">
         <div>
           <p class="eyebrow">Galerie / carrousel</p>
           <h3>Plusieurs photos, défilement tactile</h3>
         </div>
-        <p>Défilement horizontal natif (sans JavaScript), idéal pour un événement, une fresque en plusieurs étapes ou un aperçu d'atelier.</p>
+        <p>Hauteur fixe, largeur libre : portrait et paysage se mélangent naturellement dans le même défilement, sans recadrage forcé.</p>
       </div>
       <div class="gallery">
-        <Image src={action} alt="Exemple de galerie — photo 1" width={320} height={240} />
-        <Image src={portrait} alt="Exemple de galerie — photo 2" width={320} height={240} />
-        <Image src={action} alt="Exemple de galerie — photo 3" width={320} height={240} />
+        <Image src={action} alt="Exemple de galerie — photo paysage 1" width={400} height={300} />
+        <Image src={portrait} alt="Exemple de galerie — photo portrait 1" width={300} height={400} />
+        <Image src={action} alt="Exemple de galerie — photo paysage 2" width={400} height={300} />
+        <Image src={portrait} alt="Exemple de galerie — photo portrait 2" width={300} height={400} />
       </div>
     </div>
   </section>
