@@ -5,12 +5,12 @@ import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
 
 const verbatims = [
-  'Encore une transformation qui devient la priorité numéro 1 de toutes les priorités numéro 1.',
-  "On a déjà fait trois ateliers. On sait ce qu'il faudrait faire. Maintenant, quelqu'un décide ?",
-  'On appelle ça co-construction, mais les décisions importantes sont déjà prises.',
-  "Tout le monde dit oui en réunion. Dans les couloirs, plus personne n'y croit vraiment.",
-  'On sort avec des post-it partout. Lundi, personne ne sait quoi faire.',
-  "On nous demande d'embarquer les équipes, mais le sens change toutes les deux semaines.",
+  { name: 'Julie', time: '09:14', color: '#5b8def', text: 'Encore une transformation qui devient la priorité numéro 1 de toutes les priorités numéro 1.' },
+  { name: 'Marc', time: '09:22', color: '#e3a651', text: "On a déjà fait trois ateliers. On sait ce qu'il faudrait faire. Maintenant, quelqu'un décide ?" },
+  { name: 'Sophie', time: '09:37', color: '#4fb0a5', text: 'On appelle ça co-construction, mais les décisions importantes sont déjà prises.' },
+  { name: 'Karim', time: '10:02', color: '#e2727a', text: "Tout le monde dit oui en réunion. Dans les couloirs, plus personne n'y croit vraiment." },
+  { name: 'Camille', time: '10:15', color: '#7d8fe3', text: 'On sort avec des post-it partout. Lundi, personne ne sait quoi faire.' },
+  { name: 'Thomas', time: '10:41', color: '#2d9d7a', text: "On nous demande d'embarquer les équipes, mais le sens change toutes les deux semaines." },
 ];
 
 const offers = [
@@ -118,8 +118,17 @@ const clients = [
     <div class="container">
       <p class="eyebrow">Ce que les équipes pensent tout bas</p>
       <h2 class="prose">Les phrases qu'on entend dans les couloirs, jamais en réunion.</h2>
-      <div class="verbatim-grid">
-        {verbatims.map((v) => <blockquote>{v}</blockquote>)}
+      <div class="wa-grid">
+        {verbatims.map((v) => (
+          <div class="wa-card">
+            <div class="wa-head">
+              <span class="wa-avatar" style={`background:${v.color}`}>{v.name.charAt(0)}</span>
+              <span class="wa-name" style={`color:${v.color}`}>{v.name}</span>
+              <span class="wa-time">{v.time}</span>
+            </div>
+            <p class="wa-text">{v.text}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -242,54 +251,62 @@ const clients = [
   }
 
   .whispers {
-    background: var(--color-surface);
+    position: relative;
+    background-color: var(--color-ink-solid);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
-  .verbatim-grid {
+  .whispers .eyebrow {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.16);
+    color: var(--color-white);
+  }
+  .whispers h2 {
+    color: var(--color-white);
+  }
+  .wa-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-8) var(--space-6);
+    gap: var(--space-4);
     margin-top: var(--space-8);
   }
-  .verbatim-grid blockquote {
-    position: relative;
+  .wa-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+  }
+  .wa-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+  .wa-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .wa-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .wa-time {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .wa-text {
     margin: 0;
-    padding: var(--space-8) var(--space-6) var(--space-6);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    font-style: italic;
-    color: var(--color-muted);
-    transition: transform var(--duration-standard) var(--ease-standard), box-shadow var(--duration-standard) var(--ease-standard);
-  }
-  .verbatim-grid blockquote:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-  }
-  .verbatim-grid blockquote::before {
-    content: '\201C';
-    position: absolute;
-    top: -0.2em;
-    left: var(--space-4);
-    font-family: var(--font-display);
-    font-style: normal;
-    font-weight: 900;
-    font-size: 3.5rem;
-    line-height: 1;
-    color: var(--color-orange);
-  }
-  .verbatim-grid blockquote::after {
-    content: '';
-    position: absolute;
-    left: 28px;
-    bottom: -10px;
-    width: 20px;
-    height: 20px;
-    background: var(--color-surface);
-    border-right: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
-    border-radius: 0 0 6px 0;
-    transform: rotate(45deg);
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.95rem;
+    line-height: 1.55;
   }
 
   .complementary-label {
