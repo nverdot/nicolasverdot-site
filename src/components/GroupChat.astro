@@ -272,6 +272,7 @@ rendered.forEach((s) => {
   interface ChatEl extends HTMLElement {
     __play?: () => void;
     __played?: boolean;
+    __runId?: number;
   }
 
   function initGroupChat(chat: ChatEl) {
@@ -291,6 +292,10 @@ rendered.forEach((s) => {
     function play() {
       if (chat.__played) return;
       chat.__played = true;
+      // Each run gets its own id so leftover timers from an interrupted run
+      // (e.g. a manual carousel jump) can recognize they're stale and no-op.
+      const runId = (chat.__runId = (chat.__runId || 0) + 1);
+      const isCurrent = () => chat.__runId === runId;
 
       if (reduceMotion) {
         stepEls.forEach((el) => el.classList.add('is-in'));
@@ -306,6 +311,7 @@ rendered.forEach((s) => {
 
       stepEls.forEach((el, i) => {
         setTimeout(() => {
+          if (!isCurrent()) return;
           if (activeTyping) {
             activeTyping.classList.remove('is-in');
             activeTyping = null;
@@ -320,12 +326,14 @@ rendered.forEach((s) => {
         const targetId = triggerEl.dataset.reactOn;
         const triggerIndex = stepEls.indexOf(triggerEl);
         setTimeout(() => {
+          if (!isCurrent()) return;
           const target = chat.querySelector<HTMLElement>(`.chat-msg[data-msg-id="${targetId}"] .chat-react`);
           target?.classList.add('is-in');
         }, delays[triggerIndex] + 500);
       });
 
       setTimeout(() => {
+        if (!isCurrent()) return;
         window.dispatchEvent(new CustomEvent('groupchat:done', { detail: { id: chat.id } }));
       }, totalDuration);
     }
