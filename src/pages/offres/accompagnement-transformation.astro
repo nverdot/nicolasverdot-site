@@ -1,0 +1,173 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { withBase } from '../../utils/url';
+
+const checks = [
+  { i: '1', title: "Écouter le système", text: "Entretiens, observation, compréhension de l'histoire de la transformation et des attentes des parties prenantes." },
+  { i: '2', title: 'Rendre visibles les blocages', text: 'Incohérences, non-dits, décisions floues et mécanismes qui entretiennent la situation.' },
+  { i: '3', title: 'Mettre les acteurs au travail', text: "Ateliers, conversations structurées, séminaires, espaces de décision, accompagnement ciblé des leaders." },
+  { i: '4', title: 'Expérimenter dans le réel', text: "Des changements testables, observables et ajustables plutôt que de grands plans théoriques." },
+];
+
+const audiences = [
+  { num: 'Direction', title: 'Vous pilotez une transformation', text: 'Vous avez besoin d\'un regard extérieur pour challenger le dispositif et identifier ce qui bloque réellement.' },
+  { num: 'RH', title: 'Vous êtes une équipe RH ou transformation', text: 'Vous cherchez à relier les ambitions stratégiques aux réalités humaines, managériales et opérationnelles.' },
+  { num: 'Métiers', title: 'Vous êtes une direction métier', text: "Vous devez faire évoluer les pratiques sans perdre la capacité à délivrer ni épuiser les équipes." },
+  { num: 'IA', title: "Vous accompagnez un changement lié à l'IA", text: 'Vous voulez travailler les usages, les peurs, les rôles, les décisions et les nouvelles façons de collaborer.' },
+  { num: 'Expérience', title: 'Vous avez déjà essayé plusieurs approches', text: "Vous ne cherchez pas une nouvelle recette, mais un accompagnement capable de lire le système." },
+];
+
+const approach = [
+  'Écouter le système',
+  'Rendre visibles les blocages',
+  'Mettre les acteurs au travail',
+  'Expérimenter dans le réel',
+  'Apprendre et ajuster',
+];
+
+const diff = [
+  { title: 'Pas une méthode plaquée', text: "L'intervention ne commence pas par un framework, mais par la compréhension de votre contexte." },
+  { title: 'Une lecture systémique', text: 'Nous regardons les interactions, les règles implicites et les conditions créées par l\'organisation.' },
+  { title: 'Une vraie pratique de la facilitation', text: 'Les sujets complexes sont travaillés avec les personnes concernées, pas à leur place.' },
+  { title: 'Une attention à la sécurité', text: "Un collectif ne change pas sous la seule pression. Nous travaillons les conditions qui permettent d'essayer et d'apprendre." },
+];
+
+const faqs = [
+  { q: 'Interviens-tu uniquement au début d\'une transformation ?', a: "Non. Cette offre est particulièrement adaptée aux transformations déjà engagées qui rencontrent des blocages, des résistances ou une perte de dynamique." },
+  { q: 'Est-ce une mission de conseil classique ?', a: "Pas uniquement. J'apporte une lecture et un cadre, mais une grande partie du travail consiste à mettre les acteurs concernés au travail pour produire des décisions qu'ils pourront réellement porter." },
+  { q: "Peux-tu accompagner une transformation liée à l'IA ?", a: "Oui. L'enjeu n'est pas seulement technologique : usages, métiers, peurs, responsabilités, gouvernance et nouvelles manières de collaborer." },
+  { q: "Est-ce que tu remplaces l'équipe de transformation interne ?", a: "Non. Je travaille avec elle, je l'aide à prendre de la hauteur, à lire les blocages et à renforcer son impact." },
+  { q: 'Combien de temps dure l\'accompagnement ?', a: 'De quelques journées ciblées à plusieurs mois, selon le périmètre, la maturité du projet et la profondeur des changements attendus.' },
+];
+---
+
+<Layout
+  title="Accompagnement de transformation — by Nicolas Verdot"
+  description="Un accompagnement pour débloquer les transformations qui restent sur le papier et créer les conditions d'un changement réellement adopté par les équipes."
+  path="/offres/accompagnement-transformation/"
+>
+  <PageHero
+    eyebrow="Transformation · Alignement · Intelligence collective"
+    title="Votre transformation existe sur le papier. Faisons-la vivre sur le terrain."
+    summary="Les dispositifs ont été lancés, mais quelque chose coince : les équipes ne s'approprient pas le changement, les comportements évoluent peu, l'énergie retombe. J'interviens en cours de route pour regarder ce qui se joue réellement et construire avec vous les conditions pour que la transformation prenne."
+    pills={['Sur devis', 'Sur mesure', 'Avec vos équipes, pas à leur place']}
+  />
+
+  <section class="section" data-reveal>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">La transformation avance... mais pas vraiment</p>
+        <h2>Recréer les conditions d'un changement réellement adopté</h2>
+        <p class="hero-copy">L'objectif n'est pas d'ajouter une nouvelle méthode à celles qui existent déjà : c'est comprendre ce qui empêche la transformation de prendre, puis agir sur le sens partagé, la qualité des interactions, la clarté des décisions et la posture des leaders.</p>
+        <div class="checks">
+          {checks.map((c) => (
+            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
+          ))}
+        </div>
+      </div>
+      <div class="quote">
+        <blockquote>Une transformation ne réussit pas parce qu'un nouveau processus existe. Elle réussit quand les personnes peuvent réellement changer leur manière de travailler ensemble.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Public</p>
+          <h2>Cette offre est pertinente si…</h2>
+        </div>
+      </div>
+      <div class="cards">
+        {audiences.map((a) => (
+          <article class="card">
+            <div class="num">{a.num}</div>
+            <h3>{a.title}</h3>
+            <p>{a.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Approche</p>
+          <h2>Une intervention qui part du réel</h2>
+        </div>
+        <p>Écoute, mise en visibilité, mise au travail, expérimentation, apprentissage — dans cet ordre, sans raccourci.</p>
+      </div>
+      <div class="method">
+        {approach.map((step, i) => (
+          <div class="step"><b>{String(i + 1).padStart(2, '0')}</b>{step}</div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Différenciation</p>
+          <h2>Une transformation qui travaille aussi l'humain</h2>
+        </div>
+      </div>
+      <div class="cards">
+        {diff.map((d) => (
+          <article class="card">
+            <h3>{d.title}</h3>
+            <p>{d.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="panel">
+        <p class="eyebrow">Modalités</p>
+        <h2>Un accompagnement construit selon votre contexte</h2>
+        <p class="muted">Diagnostic, entretiens, observation, ateliers d'alignement, séminaires, accompagnement des leaders, coaching individuel, facilitation graphique — combinés selon votre situation. De quelques journées ciblées à un accompagnement de plusieurs mois. Présentiel, distanciel ou hybride.</p>
+        <p class="muted">Le tarif dépend du périmètre, du nombre d'équipes concernées, de la durée, du niveau d'enjeu et des livrables attendus.</p>
+        <a class="btn" href={withBase('/contact/')}>Échanger sur votre transformation</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">FAQ</p>
+      <h2>Questions fréquentes</h2>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABlock
+    eyebrow="Votre transformation n'a pas besoin d'un nouveau slogan"
+    title="Elle a besoin d'un espace pour regarder ce qui se joue vraiment."
+    subtitle="Prenons un premier temps pour comprendre le contexte, les tensions, les personnes concernées et ce que vous voulez réellement voir changer."
+  />
+</Layout>
+
+<style>
+  .muted {
+    color: var(--color-muted);
+  }
+  .panel .btn {
+    margin-top: var(--space-4);
+  }
+</style>

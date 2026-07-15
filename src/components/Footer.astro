@@ -23,6 +23,14 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="footer-col">
+      <h2>Accompagnements</h2>
+      <a href={withBase('/offres/accompagnement-transformation/')}>Transformation</a>
+      <a href={withBase('/offres/coaching-professionnel/')}>Coaching professionnel</a>
+      <a href={withBase('/offres/capture-graphique/')}>Capture graphique</a>
+      <a href={withBase('/formations/')}>Formations</a>
+    </div>
+
+    <div class="footer-col">
       <h2>Ressources</h2>
       <a href={withBase('/blog/')}>Blog</a>
       <a href={withBase('/approche/')}>Approche</a>
@@ -52,8 +60,8 @@ const year = new Date().getFullYear();
   }
   .footer-grid {
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr 1fr;
-    gap: var(--space-8);
+    grid-template-columns: 1.3fr 1fr 1fr 1fr 1fr;
+    gap: var(--space-8) var(--space-6);
   }
   .logo {
     text-decoration: none;
@@ -115,6 +123,16 @@ const year = new Date().getFullYear();
     border-top: 1px solid rgba(255, 255, 255, 0.12);
     font-size: var(--text-xs);
     color: #95a4bb;
+  }
+
+  @media (max-width: 1000px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .footer-brand {
+      grid-column: 1 / -1;
+      margin-bottom: var(--space-4);
+    }
   }
 
   @media (max-width: 800px) {

@@ -1,0 +1,158 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { withBase } from '../../utils/url';
+
+const checks = [
+  { i: '1', title: 'Écouter en temps réel', text: "Je suis les prises de parole, les échanges et les moments clés de l'événement." },
+  { i: '2', title: "Extraire l'essentiel", text: 'Les idées fortes, les décisions, les tensions, les messages importants et les liens entre les sujets.' },
+  { i: '3', title: 'Structurer l\'information', text: 'Une organisation visuelle pour que les contenus restent compréhensibles après l\'événement.' },
+  { i: '4', title: 'Créer une trace exploitable', text: 'Photographiée, numérisée, imprimée, partagée ou réutilisée dans vos communications internes.' },
+];
+
+const benefits = [
+  { num: 'Attention', title: 'Engager les participants', text: 'Voir les idées apparaître en direct capte l\'attention et crée un point de repère commun.' },
+  { num: 'Clarté', title: 'Clarifier les sujets complexes', text: 'Les concepts et les décisions deviennent plus faciles à comprendre.' },
+  { num: 'Mémoire', title: 'Créer une mémoire collective', text: "La fresque rassemble les moments clés de l'événement dans un support unique." },
+  { num: 'Valeur', title: 'Valoriser les contributions', text: 'Les participants voient que leurs idées sont écoutées, synthétisées et intégrées.' },
+  { num: 'Impact', title: 'Renforcer les messages', text: 'Les interventions importantes deviennent plus mémorables et plus faciles à partager.' },
+  { num: 'Durée', title: "Prolonger l'événement", text: 'La fresque continue à vivre dans les bureaux, présentations ou communications internes.' },
+];
+
+const events = [
+  "Séminaires d'entreprise", 'Conférences', 'Conventions', 'Réunions stratégiques',
+  'Comités de direction élargis', "Ateliers d'intelligence collective", 'Kick-offs',
+  'Journées de transformation', 'Concertations', 'Tables rondes', 'Formations', 'Forums participatifs',
+];
+
+const steps = [
+  'Échange initial sur les objectifs, le public et le programme',
+  'Préparation : vocabulaire, enjeux, contenus disponibles, choix du format',
+  'Jour J : capture en direct des idées, échanges et décisions',
+  'Finalisation et livraison de la fresque',
+];
+
+const faqs = [
+  { q: 'Est-ce que la capture graphique peut être projetée en direct ?', a: 'Oui. Une capture digitale peut être projetée en temps réel selon la configuration technique de l\'événement.' },
+  { q: 'Quelle est la différence avec la facilitation graphique ?', a: 'La capture graphique consiste principalement à écouter et synthétiser visuellement les échanges. La facilitation graphique peut aller plus loin en aidant directement le groupe à réfléchir, contribuer ou décider.' },
+  { q: 'Peux-tu capturer plusieurs ateliers en parallèle ?', a: 'Seul, non. Pour plusieurs salles simultanées, je peux mobiliser un réseau de facilitateurs graphiques de confiance.' },
+  { q: 'Peut-on garder la fresque originale ?', a: 'Oui, lorsque la capture est réalisée sur support physique et que cela est prévu dans le devis.' },
+  { q: 'Est-ce que tu peux respecter notre charte graphique ?', a: 'Oui. Le style peut être adapté à votre identité, tout en conservant la lisibilité nécessaire à une capture réalisée en direct.' },
+];
+---
+
+<Layout
+  title="Capture graphique en direct — by Nicolas Verdot"
+  description="Pendant votre séminaire, conférence ou réunion stratégique, les échanges sont traduits en direct sous forme de fresque visuelle claire, mémorable et partageable."
+  path="/offres/capture-graphique/"
+>
+  <PageHero
+    eyebrow="Capture graphique · Scribing · Événementiel"
+    title="Vos idées méritent d'être vues et mémorisées"
+    summary="Pendant votre séminaire, conférence ou réunion stratégique, je traduis visuellement en temps réel les idées, décisions et échanges. Une fresque prend forme, aide les participants à suivre, et crée une mémoire collective que vous pourrez conserver, partager et réutiliser."
+    pills={['Sur devis', 'En direct', 'Partout en France']}
+  />
+
+  <section class="section" data-reveal>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Ce que je fais</p>
+        <h2>Écouter, clarifier et rendre visible</h2>
+        <p class="hero-copy">La capture graphique, ou scribing, est une technique de transcription visuelle en temps réel. Je sélectionne l'essentiel, je structure l'information et je la transforme en mots-clés, pictogrammes, personnages et liens visuels — sous les yeux du groupe.</p>
+        <div class="checks">
+          {checks.map((c) => (
+            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
+          ))}
+        </div>
+      </div>
+      <div class="quote">
+        <blockquote>Vos idées méritent mieux qu'un compte rendu que personne ne relira.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Bénéfices</p>
+          <h2>Pourquoi intégrer une capture graphique ?</h2>
+        </div>
+      </div>
+      <div class="cards">
+        {benefits.map((b) => (
+          <article class="card">
+            <div class="num">{b.num}</div>
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Événements</p>
+      <h2>Pour quels événements ?</h2>
+      <div class="tool-tags">
+        {events.map((e) => <span class="tool-tag">{e}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <p class="eyebrow">Déroulé</p>
+      <h2>Comment cela fonctionne ?</h2>
+      <div class="timeline">
+        {steps.map((step, i) => (
+          <div class="timeline-item"><span>{i + 1}</span><strong>{step}</strong></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="panel">
+        <p class="eyebrow">Zone d'intervention & tarif</p>
+        <h2>Basé à Nice, mobile partout en France</h2>
+        <p class="muted">J'interviens facilement sur toute la Côte d'Azur (Nice, Cannes, Antibes, Sophia Antipolis, Monaco) et me déplace partout en France. La capture digitale peut aussi être réalisée à distance selon le format de l'événement. Pour plusieurs salles simultanées, je peux mobiliser un réseau de facilitateurs graphiques de confiance.</p>
+        <p class="muted">Le tarif dépend de la durée, du format physique ou digital, du temps de préparation et des droits d'utilisation. Sur devis.</p>
+        <a class="btn" href={withBase('/contact/')}>Parler de votre événement</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">FAQ</p>
+      <h2>Questions fréquentes</h2>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABlock
+    eyebrow="Votre événement mérite une trace vivante"
+    title="Faisons apparaître ce qui compte."
+    subtitle="Parlons de votre événement, du public, du programme et de la manière dont vous souhaitez réutiliser la fresque après le jour J."
+  />
+</Layout>
+
+<style>
+  .muted {
+    color: var(--color-muted);
+  }
+  .panel .btn {
+    margin-top: var(--space-4);
+  }
+</style>

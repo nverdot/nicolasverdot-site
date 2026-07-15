@@ -880,3 +880,64 @@ section {
     grid-template-columns: 1fr;
   }
 }
+
+/* Chronologie / déroulé en étapes numérotées */
+.timeline {
+  display: grid;
+  gap: var(--space-3);
+}
+.timeline-item {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: var(--space-3);
+  align-items: center;
+}
+.timeline-item span {
+  width: 40px;
+  height: 40px;
+  background: var(--color-orange);
+  color: var(--color-ink-solid);
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+/* FAQ en accordéon natif */
+.faq {
+  display: grid;
+  gap: var(--space-3);
+}
+.faq-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4) var(--space-5);
+}
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 700;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item summary::after {
+  content: '+';
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--color-orange);
+  flex-shrink: 0;
+  transition: transform var(--duration-standard) var(--ease-standard);
+}
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+.faq-item p {
+  margin: var(--space-3) 0 0;
+  color: var(--color-muted);
+}

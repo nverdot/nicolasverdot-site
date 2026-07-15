@@ -1,0 +1,186 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { withBase } from '../../utils/url';
+
+const situations = [
+  { num: 'Posture', title: 'Une posture qui ne te ressemble plus', text: 'Tu portes beaucoup, tu contrôles davantage que tu ne le voudrais ou tu as du mal à poser un cadre clair.' },
+  { num: 'Tensions', title: 'Des tensions récurrentes', text: 'Une relation avec un collaborateur, un pair ou ta hiérarchie te met régulièrement sous pression.' },
+  { num: 'Équipe', title: "Une équipe que tu n'arrives plus à mobiliser", text: "Tu multiplies les efforts, mais l'engagement ne suit pas et tu ne sais plus quoi changer." },
+  { num: 'Transition', title: 'Une prise de poste ou un changement de rôle', text: 'Tu dois trouver une nouvelle manière d\'exister dans le système, sans reproduire tes anciens réflexes.' },
+  { num: 'Décision', title: 'Une décision que tu repousses', text: 'Tu connais les options, mais quelque chose bloque au moment de choisir ou d\'assumer les conséquences.' },
+  { num: 'Énergie', title: 'Une fatigue de fond', text: 'Tu continues à fonctionner, mais tu sens que ton corps, ton attention ou tes émotions tirent le frein.' },
+];
+
+const topics = [
+  'Trouver ta posture de leader', 'Poser un cadre clair', 'Dire non sans rompre la relation',
+  'Gérer les tensions et les conflits', 'Préparer une conversation difficile', 'Renforcer ta confiance',
+  'Sortir du surcontrôle', 'Déléguer réellement', 'Prendre une décision complexe',
+  'Faire face à la pression', 'Réguler ton système nerveux', 'Traverser une prise de poste',
+];
+
+const steps = [
+  'Premier échange pour comprendre ta situation et vérifier si le coaching est adapté',
+  "Définition de l'objectif et du cadre de l'accompagnement",
+  'Séances de travail à partir de situations réelles',
+  'Mise en pratique entre les séances, dans ton contexte',
+  'Ajustement et clôture pour consolider ton autonomie',
+];
+
+const principles = [
+  { title: 'Un espace confidentiel', text: 'Un lieu où tu peux parler librement, sans avoir à protéger ton image ou ton rôle.' },
+  { title: 'Un regard direct', text: 'Je ne cherche pas à te rassurer à tout prix. Je t\'aide à regarder ce qui est là, avec respect et franchise.' },
+  { title: 'Pas de recette toute faite', text: 'Le travail part de ton contexte, de ta personnalité et de ce qui est possible pour toi.' },
+  { title: 'Ton autonomie comme objectif', text: 'Le coaching doit te rendre plus libre, pas dépendant de l\'accompagnement.' },
+];
+
+const faqs = [
+  { q: 'Le coaching est-il adapté si je n\'ai pas de problème précis ?', a: 'Oui, mais il est utile d\'identifier une situation, une tension ou une évolution souhaitée pour donner une direction au travail.' },
+  { q: 'Quelle est la différence avec du conseil ?', a: 'En conseil, je peux proposer des recommandations. En coaching, je t\'aide à comprendre ta situation, faire émerger tes propres choix et développer ta capacité à agir.' },
+  { q: 'Est-ce une thérapie ?', a: 'Non. Le coaching professionnel travaille sur des objectifs liés à ta vie professionnelle, ta posture et tes actions. Il ne remplace pas un accompagnement thérapeutique, psychologique ou médical.' },
+  { q: "Qu'est-ce que la théorie polyvagale ?", a: 'Une grille de lecture du fonctionnement du système nerveux autonome et de nos réponses face à la sécurité, au danger ou à la pression. Je l\'utilise comme approche complémentaire, pas comme un diagnostic.' },
+  { q: 'Le coaching peut-il être financé par mon entreprise ?', a: 'Oui, dans certains cas. Un contrat tripartite peut être mis en place avec l\'entreprise, tout en préservant la confidentialité des séances.' },
+  { q: 'Est-ce confidentiel ?', a: 'Oui. Le contenu des séances reste confidentiel. Dans un accompagnement financé par une entreprise, les objectifs peuvent être partagés, mais pas le contenu des échanges sans ton accord.' },
+];
+---
+
+<Layout
+  title="Coaching professionnel — by Nicolas Verdot"
+  description="Un coaching professionnel pour travailler la posture, les interactions, les croyances et la sécurité intérieure, avec une approche intégrant le corps et l'esprit."
+  path="/offres/coaching-professionnel/"
+>
+  <PageHero
+    eyebrow="Coaching professionnel · Posture · Leadership"
+    title="Tu es compétent. Mais quelque chose coince."
+    summary="Dans ta posture, dans tes interactions, dans la manière dont tu tiens ton équipe ou traverses les tensions. Nous travaillons sur ce qui se passe réellement : les croyances, les réactions automatiques, la sécurité intérieure et les choix que tu n'arrives plus à poser seul."
+    pills={['Sur devis', '100 % individuel', 'En ligne ou en présentiel']}
+  />
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Situations</p>
+          <h2>Tu peux venir travailler sur…</h2>
+        </div>
+      </div>
+      <div class="cards">
+        {situations.map((s) => (
+          <article class="card">
+            <div class="num">{s.num}</div>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Promesse</p>
+        <h2>Retrouver de la liberté dans ta manière d'agir</h2>
+        <p class="hero-copy">Le coaching ne consiste pas à te donner une liste de conseils. Il crée un espace pour observer ta situation avec plus de recul, comprendre les mécanismes qui se répètent et expérimenter d'autres façons d'agir — sur ce que tu penses, ce que tu ressens, ce que ton corps signale et ce que tu évites.</p>
+      </div>
+      <div class="quote">
+        <blockquote>Parfois, tu sais déjà ce qu'il faudrait faire. Le vrai sujet est ce qui t'empêche de le faire sereinement.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Approche corps-esprit</p>
+      <h2>Quand les outils seuls ne suffisent plus</h2>
+      <p>Nous pouvons comprendre intellectuellement une situation et pourtant continuer à réagir de la même manière. Sous pression, le système nerveux peut nous pousser à nous battre, fuir, nous figer ou nous couper de ce que nous ressentons.</p>
+      <p>J'intègre une approche corps-esprit inspirée de la théorie polyvagale pour t'aider à repérer ton état interne, comprendre ce qui déclenche certaines réactions, retrouver davantage de sécurité et choisir une réponse plutôt que subir un automatisme.</p>
+      <p class="fine">Cette approche ne remplace pas un suivi médical, psychologique ou thérapeutique lorsqu'il est nécessaire.</p>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Sujets</p>
+      <h2>Ce sur quoi nous pouvons travailler</h2>
+      <div class="tool-tags">
+        {topics.map((t) => <span class="tool-tag">{t}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <p class="eyebrow">Déroulé</p>
+      <h2>Comment se déroule le coaching ?</h2>
+      <div class="timeline">
+        {steps.map((step, i) => (
+          <div class="timeline-item"><span>{i + 1}</span><strong>{step}</strong></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Principes</p>
+          <h2>Ce que tu peux attendre de moi</h2>
+        </div>
+      </div>
+      <div class="cards">
+        {principles.map((p) => (
+          <article class="card">
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="panel">
+        <p class="eyebrow">Format & tarif</p>
+        <h2>Un accompagnement adapté à ton rythme</h2>
+        <p class="muted"><strong>Coaching ciblé</strong> — quelques séances pour travailler une situation précise : prise de décision, conflit, posture, prise de poste ou conversation difficile.</p>
+        <p class="muted"><strong>Coaching dans la durée</strong> — un accompagnement sur plusieurs mois pour faire évoluer en profondeur ta posture, tes relations et tes modes de fonctionnement.</p>
+        <p class="muted">Séances individuelles, en visioconférence ou en présentiel, fréquence définie ensemble. Sur devis.</p>
+        <a class="btn" href={withBase('/contact/')}>Prendre un premier rendez-vous</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">FAQ</p>
+      <h2>Questions fréquentes</h2>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABlock
+    eyebrow="Tu n'as pas besoin de devenir quelqu'un d'autre"
+    title="Tu as peut-être besoin de retrouver de la marge de manœuvre."
+    subtitle="Prenons un premier temps pour regarder ce qui se passe, ce que tu veux faire évoluer et si je suis la bonne personne pour t'accompagner."
+  />
+</Layout>
+
+<style>
+  .muted {
+    color: var(--color-muted);
+  }
+  .panel .btn {
+    margin-top: var(--space-4);
+  }
+</style>

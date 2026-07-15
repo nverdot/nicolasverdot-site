@@ -52,9 +52,10 @@ const method = [
 ];
 
 const complementary = [
-  { num: 'Visuel', title: 'Facilitation graphique', text: 'Donner à voir les idées, décisions et parcours d’un collectif.' },
-  { num: 'Leadership', title: 'Diagnostic Leader Ancré', text: 'Prendre du recul, poser un cadre et ne plus tout porter seul.' },
-  { num: 'Formation', title: 'Formation professionnelle', text: 'Transmettre les techniques de facilitation et de pensée visuelle.' },
+  { num: 'Transformation', title: 'Accompagnement de transformation', text: 'Débloquer les transformations IA, Agile ou culturelles qui restent sur le papier.', href: withBase('/offres/accompagnement-transformation/') },
+  { num: 'Individuel', title: 'Coaching professionnel', text: 'Travailler la posture, les interactions et la sécurité intérieure du leader.', href: withBase('/offres/coaching-professionnel/') },
+  { num: 'Visuel', title: 'Capture graphique en direct', text: 'Traduire vos séminaires et conférences en fresque visuelle mémorable.', href: withBase('/offres/capture-graphique/') },
+  { num: 'Compétences', title: 'Formations', text: 'Facilitation graphique, intelligence collective, IA appliquée et leader facilitateur.', href: withBase('/formations/') },
 ];
 const complementaryMore = ['Mentorat Leader', "Conception d'événements", 'Décoincés du Crayon'];
 
@@ -189,7 +190,7 @@ const clients = [
             <div class="num">{c.num}</div>
             <h3>{c.title}</h3>
             <p>{c.text}</p>
-            <a class="card-link" href={withBase('/contact/')}>Découvrir</a>
+            <a class="card-link" href={c.href}>Découvrir</a>
           </article>
         ))}
       </div>
