@@ -18,7 +18,10 @@ const { conversations } = Astro.props;
           <GroupChat id={c.id} title={c.title} people={c.people} steps={c.steps} />
           <div class="chat-insight-overlay">
             <div class="chat-insight-dialog">
-              <p class="chat-insight-eyebrow">Regard d'expert</p>
+              <p class="chat-insight-eyebrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 2z"/></svg>
+                Regard d'expert
+              </p>
               <p class="chat-insight-diagnosis">{c.insight.diagnosis}</p>
               <p class="chat-insight-action"><strong>Piste d'action :</strong> {c.insight.action}</p>
             </div>
@@ -131,7 +134,7 @@ const { conversations } = Astro.props;
   .chat-insight-eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.5em;
+    gap: 0.4em;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-size: var(--text-xs);
@@ -139,12 +142,10 @@ const { conversations } = Astro.props;
     color: var(--color-orange-ink);
     margin: 0 0 var(--space-2);
   }
-  .chat-insight-eyebrow::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--color-orange);
+  .chat-insight-eyebrow svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
   }
   .chat-insight-diagnosis {
     margin: 0 0 var(--space-3);
@@ -224,7 +225,7 @@ const { conversations } = Astro.props;
       if (activeSlide?.dataset.chatId === e.detail.id) {
         activeSlide.querySelector('.chat-window')?.classList.add('is-dimmed');
         activeSlide.querySelector('.chat-insight-overlay')?.classList.add('is-visible');
-        pendingAdvance = setTimeout(goToNext, 6500);
+        pendingAdvance = setTimeout(goToNext, 11000);
       }
     }) as EventListener);
 

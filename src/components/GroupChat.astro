@@ -1,4 +1,9 @@
 ---
+interface Reaction {
+  emoji: string;
+  count: number;
+}
+
 interface Step {
   kind: 'msg' | 'typing';
   name: string;
@@ -6,8 +11,7 @@ interface Step {
   time?: string;
   mine?: boolean;
   reactOn?: number;
-  reactEmoji?: string;
-  reactCount?: number;
+  reactions?: Reaction[];
 }
 
 interface Props {
@@ -25,11 +29,11 @@ const rendered = steps.map((s) => {
   return { ...s, msgId: s.kind === 'msg' ? msgCounter : null };
 });
 
-// Map target msgId -> the emoji/count that lands on it, so each bubble can pre-render its own (hidden) reaction.
-const reactionFor: Record<number, { emoji: string; count: number }> = {};
+// Map target msgId -> the reaction badges that land on it, so each bubble can pre-render its own (hidden) reactions.
+const reactionsFor: Record<number, Reaction[]> = {};
 rendered.forEach((s) => {
-  if (s.kind === 'msg' && typeof s.reactOn === 'number') {
-    reactionFor[s.reactOn] = { emoji: s.reactEmoji || '❤️', count: s.reactCount ?? 2 };
+  if (s.kind === 'msg' && typeof s.reactOn === 'number' && s.reactions) {
+    reactionsFor[s.reactOn] = s.reactions;
   }
 });
 ---
@@ -65,8 +69,12 @@ rendered.forEach((s) => {
           <div class="chat-bubble chat-bubble--mine">
             <p>{s.text}</p>
             <span class="chat-time">{s.time}</span>
-            {typeof s.msgId === 'number' && reactionFor[s.msgId] && (
-              <span class="chat-react" data-emoji={reactionFor[s.msgId].emoji} data-count={reactionFor[s.msgId].count}>{reactionFor[s.msgId].emoji} +{reactionFor[s.msgId].count}</span>
+            {typeof s.msgId === 'number' && reactionsFor[s.msgId] && (
+              <span class="chat-react-group">
+                {reactionsFor[s.msgId].map((r) => (
+                  <span class="chat-react" data-emoji={r.emoji} data-count={r.count}>{r.emoji} +{r.count}</span>
+                ))}
+              </span>
             )}
           </div>
         </div>
@@ -77,8 +85,12 @@ rendered.forEach((s) => {
             <span class="chat-name" style={`color:${people[s.name]}`}>{s.name}</span>
             <p>{s.text}</p>
             <span class="chat-time">{s.time}</span>
-            {typeof s.msgId === 'number' && reactionFor[s.msgId] && (
-              <span class="chat-react" data-emoji={reactionFor[s.msgId].emoji} data-count={reactionFor[s.msgId].count}>{reactionFor[s.msgId].emoji} +{reactionFor[s.msgId].count}</span>
+            {typeof s.msgId === 'number' && reactionsFor[s.msgId] && (
+              <span class="chat-react-group">
+                {reactionsFor[s.msgId].map((r) => (
+                  <span class="chat-react" data-emoji={r.emoji} data-count={r.count}>{r.emoji} +{r.count}</span>
+                ))}
+              </span>
             )}
           </div>
         </div>
@@ -207,10 +219,14 @@ rendered.forEach((s) => {
     font-size: 0.65rem;
     color: #8b8b8b;
   }
-  .chat-react {
+  .chat-react-group {
     position: absolute;
     left: 6px;
     bottom: -10px;
+    display: flex;
+    gap: 4px;
+  }
+  .chat-react {
     display: inline-flex;
     align-items: center;
     gap: 2px;
@@ -315,7 +331,7 @@ rendered.forEach((s) => {
         stepEls.forEach((el) => el.classList.add('is-in'));
         chat.querySelectorAll<HTMLElement>('.chat-msg[data-react-on]').forEach((triggerEl) => {
           const targetId = triggerEl.dataset.reactOn;
-          chat.querySelector<HTMLElement>(`.chat-msg[data-msg-id="${targetId}"] .chat-react`)?.classList.add('is-in');
+          chat.querySelectorAll<HTMLElement>(`.chat-msg[data-msg-id="${targetId}"] .chat-react`).forEach((el) => el.classList.add('is-in'));
         });
         window.dispatchEvent(new CustomEvent('groupchat:done', { detail: { id: chat.id } }));
         return;
@@ -336,38 +352,31 @@ rendered.forEach((s) => {
         }, delays[i]);
       });
 
-      const grapheme = (str: string): string[] => {
-        if (typeof Intl !== 'undefined' && 'Segmenter' in Intl) {
-          const segmenter = new (Intl as any).Segmenter(undefined, { granularity: 'grapheme' });
-          return Array.from(segmenter.segment(str), (s: any) => s.segment);
-        }
-        return [str];
-      };
-
       chat.querySelectorAll<HTMLElement>('.chat-msg[data-react-on]').forEach((triggerEl) => {
         const targetId = triggerEl.dataset.reactOn;
         const triggerIndex = stepEls.indexOf(triggerEl);
-        const target = chat.querySelector<HTMLElement>(`.chat-msg[data-msg-id="${targetId}"] .chat-react`);
-        if (!target) return;
-        const emojiUnits = grapheme(target.dataset.emoji || '');
-        const fullCount = parseInt(target.dataset.count || '1', 10);
-        // Reveal reactions in a handful of staggered, slightly jittered ticks
-        // instead of all at once — mirrors people reacting as they each read.
-        const steps = Math.min(fullCount, 4);
-        let elapsed = delays[triggerIndex] + 450;
-        for (let step = 1; step <= steps; step++) {
-          const displayCount = step === steps ? fullCount : Math.max(1, Math.round((fullCount * step) / steps));
-          const emojiCount = Math.min(step, emojiUnits.length);
-          setTimeout(() => {
-            if (!isCurrent()) return;
-            target.textContent = `${emojiUnits.slice(0, emojiCount).join('')} +${displayCount}`;
-            target.classList.add('is-in');
-            target.classList.remove('is-bumping');
-            void target.offsetWidth;
-            target.classList.add('is-bumping');
-          }, elapsed);
-          elapsed += 380 + Math.random() * 320;
-        }
+        const badges = Array.from(chat.querySelectorAll<HTMLElement>(`.chat-msg[data-msg-id="${targetId}"] .chat-react`));
+        // Each emoji type is its own badge, and each badge appears at its own
+        // staggered, jittered moment — different people notice and react at
+        // different times, rather than one combined reaction landing at once.
+        badges.forEach((badge, badgeIndex) => {
+          const emoji = badge.dataset.emoji || '';
+          const fullCount = parseInt(badge.dataset.count || '1', 10);
+          const steps = Math.min(fullCount, 3);
+          let elapsed = delays[triggerIndex] + 450 + badgeIndex * 500 + Math.random() * 200;
+          for (let step = 1; step <= steps; step++) {
+            const displayCount = step === steps ? fullCount : Math.max(1, Math.round((fullCount * step) / steps));
+            setTimeout(() => {
+              if (!isCurrent()) return;
+              badge.textContent = `${emoji} +${displayCount}`;
+              badge.classList.add('is-in');
+              badge.classList.remove('is-bumping');
+              void badge.offsetWidth;
+              badge.classList.add('is-bumping');
+            }, elapsed);
+            elapsed += 320 + Math.random() * 280;
+          }
+        });
       });
 
       setTimeout(() => {
