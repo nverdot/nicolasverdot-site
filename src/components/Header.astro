@@ -92,6 +92,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     padding: 0;
   }
   .main-nav > ul > li > a {
+    position: relative;
     display: inline-block;
     text-decoration: none;
     color: var(--color-ink);
@@ -99,16 +100,31 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     font-weight: 500;
     white-space: nowrap;
     padding: 0.5em 1em;
-    border-radius: var(--radius-pill);
-    transition: background var(--duration-standard) var(--ease-standard), color var(--duration-standard) var(--ease-standard);
+    transition: color var(--duration-standard) var(--ease-standard);
+  }
+  .main-nav > ul > li > a::after {
+    content: '';
+    position: absolute;
+    left: 1em;
+    right: 1em;
+    bottom: 0.25em;
+    height: 2px;
+    background: var(--color-orange);
+    transform: scaleX(0);
+    transition: transform var(--duration-standard) var(--ease-standard);
   }
   .main-nav > ul > li > a:hover {
-    background: var(--color-blue-soft);
-    color: var(--color-navy);
+    color: var(--color-blue);
   }
-  .main-nav a[aria-current='page'] {
-    background: var(--color-blue-strong);
-    color: var(--color-white);
+  .main-nav > ul > li > a:hover::after {
+    transform: scaleX(1);
+  }
+  .main-nav > ul > li > a[aria-current='page'] {
+    color: var(--color-blue);
+    font-weight: 700;
+  }
+  .main-nav > ul > li > a[aria-current='page']::after {
+    transform: scaleX(1);
   }
   .header-cta {
     white-space: nowrap;

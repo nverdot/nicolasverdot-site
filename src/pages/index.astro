@@ -82,8 +82,6 @@ const clients = [
   { name: 'IA2P' },
   { name: 'MediaSchool' },
 ];
-
-const proofNames = ['Air France KLM', 'Louis Vuitton', 'PwC', 'URSSAF', 'JCI Monaco'];
 ---
 
 <Layout
@@ -92,13 +90,6 @@ const proofNames = ['Air France KLM', 'Louis Vuitton', 'PwC', 'URSSAF', 'JCI Mon
   path="/"
 >
   <Hero />
-
-  <section class="proofbar">
-    <div class="container proofgrid">
-      <strong>Expériences auprès de</strong>
-      {proofNames.map((name) => <span>{name}</span>)}
-    </div>
-  </section>
 
   <section class="offers" id="accompagnements" data-reveal>
     <div class="container">
