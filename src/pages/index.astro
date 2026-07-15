@@ -5,13 +5,14 @@ import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
 
 const verbatims = [
-  { name: 'Julie', time: '09:14', color: '#5b8def', text: "Encore une transfo qui devient LA priorité n°1... comme les 3 précédentes 😅" },
-  { name: 'Marc', time: '09:22', color: '#e3a651', text: "On a fait 3 ateliers. On sait ce qu'il faut faire. Il manque juste... quelqu'un qui décide ?" },
-  { name: 'Sophie', time: '09:37', color: '#4fb0a5', text: 'On appelle ça "co-construction" mais les décisions sont déjà prises hein, on le sait tous' },
-  { name: 'Karim', time: '10:02', color: '#e2727a', text: "Tout le monde dit oui en réunion. Après, dans les couloirs... plus personne n'y croit" },
-  { name: 'Camille', time: '10:15', color: '#7d8fe3', text: 'On ressort avec 40 post-it. Lundi matin, on fait quoi concrètement ? 🤷' },
-  { name: 'Thomas', time: '10:41', color: '#2d9d7a', text: 'On nous demande d\'"embarquer" les équipes mais le cap change toutes les 2 semaines' },
+  { name: 'Julie', time: '09:14', color: '#5b8def', reaction: 2, text: "Encore une transfo qui devient LA priorité n°1... comme les 3 précédentes 😅" },
+  { name: 'Marc', time: '09:22', color: '#e3a651', reaction: 3, text: "On a fait 3 ateliers. On sait ce qu'il faut faire. Il manque juste... quelqu'un qui décide ?" },
+  { name: 'Sophie', time: '09:37', color: '#4fb0a5', reaction: 2, text: 'On appelle ça "co-construction" mais les décisions sont déjà prises hein, on le sait tous' },
+  { name: 'Karim', time: '10:02', color: '#e2727a', reaction: 4, text: "Tout le monde dit oui en réunion. Après, dans les couloirs... plus personne n'y croit" },
+  { name: 'Camille', time: '10:15', color: '#7d8fe3', reaction: 3, text: 'On ressort avec 40 post-it. Lundi matin, on fait quoi concrètement ? 🤷', featured: true },
+  { name: 'Thomas', time: '10:41', color: '#2d9d7a', reaction: 2, text: 'On nous demande d\'"embarquer" les équipes mais le cap change toutes les 2 semaines' },
 ];
+const bgPositions = ['20% 30%', '70% 60%', '40% 80%', '80% 20%', '30% 50%', '60% 40%'];
 
 const offers = [
   {
@@ -119,16 +120,31 @@ const clients = [
       <p class="eyebrow">Ce que les équipes pensent tout bas</p>
       <h2 class="prose">Les phrases qu'on entend dans les couloirs, jamais en réunion.</h2>
       <div class="wa-grid">
-        {verbatims.map((v) => (
-          <div class="wa-row">
-            <span class="wa-avatar" style={`background:${v.color}`}>{v.name.charAt(0)}</span>
-            <div class="wa-bubble">
-              <span class="wa-name" style={`color:${v.color}`}>{v.name}</span>
-              <p class="wa-text">{v.text}</p>
-              <span class="wa-time">{v.time}</span>
-              <span class="wa-heart" aria-hidden="true">❤</span>
+        {verbatims.map((v, i) => (
+          v.featured ? (
+            <div class="wa-card wa-card--day" style={`background-position:${bgPositions[i % bgPositions.length]}`}>
+              <div class="wa-row">
+                <span class="wa-avatar" style={`background:${v.color}`}>{v.name.charAt(0)}</span>
+                <div class="wa-bubble">
+                  <span class="wa-name" style={`color:${v.color}`}>{v.name}</span>
+                  <p class="wa-text">{v.text}</p>
+                  <span class="wa-time">{v.time}</span>
+                </div>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div class="wa-card" style={`background-position:${bgPositions[i % bgPositions.length]}`}>
+              <div class="wa-card-head">
+                <span class="wa-name" style={`color:${v.color}`}>{v.name}</span>
+                <span class="wa-time">{v.time}</span>
+              </div>
+              <p class="wa-text">{v.text}</p>
+              <div class="wa-card-foot">
+                <span class="wa-avatar wa-avatar--sm" style={`background:${v.color}`}>{v.name.charAt(0)}</span>
+                <span class="wa-reaction">❤ {v.reaction}</span>
+              </div>
+            </div>
+          )
         ))}
       </div>
     </div>
@@ -252,83 +268,129 @@ const clients = [
   }
 
   .whispers {
-    position: relative;
-    background-color: var(--color-cream);
-    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='160'%3E%3Cg%20fill='none'%20stroke='%23122033'%20stroke-width='1.6'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='0.09'%3E%3Cpath%20d='M14%2018%20h26%20a4%204%200%200%201%204%204%20v14%20a4%204%200%200%201%20-4%204%20h-16%20l-6%206%20v-6%20h-4%20a4%204%200%200%201%20-4%20-4%20v-14%20a4%204%200%200%201%204%20-4%20z'/%3E%3Ccircle%20cx='120'%20cy='30'%20r='11'/%3E%3Cpath%20d='M115%2030%20l4%204%20l8%20-9'/%3E%3Cpath%20d='M40%2090%20v14%20M33%2097%20h14%20M45.5%2091.5%20l-11%2011%20M45.5%20102.5%20l-11%20-11'/%3E%3Cpath%20d='M120%20100%20v12%20M114%20106%20h12'/%3E%3Ccircle%20cx='90'%20cy='140'%20r='6'/%3E%3Ccircle%20cx='20'%20cy='130'%20r='2'/%3E%3Ccircle%20cx='28'%20cy='134'%20r='2'/%3E%3Ccircle%20cx='24'%20cy='142'%20r='2'/%3E%3C/g%3E%3C/svg%3E");
-    background-size: 160px 160px;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) .whispers {
-      background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='160'%3E%3Cg%20fill='none'%20stroke='%23ffffff'%20stroke-width='1.6'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='0.07'%3E%3Cpath%20d='M14%2018%20h26%20a4%204%200%200%201%204%204%20v14%20a4%204%200%200%201%20-4%204%20h-16%20l-6%206%20v-6%20h-4%20a4%204%200%200%201%20-4%20-4%20v-14%20a4%204%200%200%201%204%20-4%20z'/%3E%3Ccircle%20cx='120'%20cy='30'%20r='11'/%3E%3Cpath%20d='M115%2030%20l4%204%20l8%20-9'/%3E%3Cpath%20d='M40%2090%20v14%20M33%2097%20h14%20M45.5%2091.5%20l-11%2011%20M45.5%20102.5%20l-11%20-11'/%3E%3Cpath%20d='M120%20100%20v12%20M114%20106%20h12'/%3E%3Ccircle%20cx='90'%20cy='140'%20r='6'/%3E%3Ccircle%20cx='20'%20cy='130'%20r='2'/%3E%3Ccircle%20cx='28'%20cy='134'%20r='2'/%3E%3Ccircle%20cx='24'%20cy='142'%20r='2'/%3E%3C/g%3E%3C/svg%3E");
-    }
-  }
-  :root[data-theme='dark'] .whispers {
-    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='160'%3E%3Cg%20fill='none'%20stroke='%23ffffff'%20stroke-width='1.6'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='0.07'%3E%3Cpath%20d='M14%2018%20h26%20a4%204%200%200%201%204%204%20v14%20a4%204%200%200%201%20-4%204%20h-16%20l-6%206%20v-6%20h-4%20a4%204%200%200%201%20-4%20-4%20v-14%20a4%204%200%200%201%204%20-4%20z'/%3E%3Ccircle%20cx='120'%20cy='30'%20r='11'/%3E%3Cpath%20d='M115%2030%20l4%204%20l8%20-9'/%3E%3Cpath%20d='M40%2090%20v14%20M33%2097%20h14%20M45.5%2091.5%20l-11%2011%20M45.5%20102.5%20l-11%20-11'/%3E%3Cpath%20d='M120%20100%20v12%20M114%20106%20h12'/%3E%3Ccircle%20cx='90'%20cy='140'%20r='6'/%3E%3Ccircle%20cx='20'%20cy='130'%20r='2'/%3E%3Ccircle%20cx='28'%20cy='134'%20r='2'/%3E%3Ccircle%20cx='24'%20cy='142'%20r='2'/%3E%3C/g%3E%3C/svg%3E");
+    background: var(--color-surface);
   }
 
   .wa-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--space-6) var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-8) var(--space-4);
     margin-top: var(--space-8);
   }
-  .wa-row {
+
+  /* Carte "plain" : texte directement sur un fond sombre texturé. */
+  .wa-card {
+    position: relative;
+    background-color: #171a20;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cg%20fill='none'%20stroke='%23ffffff'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='0.07'%3E%3Cpath%20d='M12%2016%20h22%20a4%204%200%200%201%204%204%20v12%20a4%204%200%200%201%20-4%204%20h-14%20l-5%205%20v-5%20h-3%20a4%204%200%200%201%20-4%20-4%20v-12%20a4%204%200%200%201%204%20-4%20z'/%3E%3Ccircle%20cx='105'%20cy='25'%20r='9'/%3E%3Cpath%20d='M101%2025%20l3%203%20l7%20-8'/%3E%3Cpath%20d='M35%2080%20v12%20M29%2086%20h12%20M39.5%2081.5%20l-9%209%20M39.5%2090.5%20l-9%20-9'/%3E%3Cpath%20d='M105%2085%20v10%20M100%2090%20h10'/%3E%3Ccircle%20cx='90'%20cy='120'%20r='2'/%3E%3Ccircle%20cx='18'%20cy='115'%20r='2'/%3E%3Ccircle%20cx='24'%20cy='120'%20r='2'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 140px 140px;
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+    padding-bottom: calc(var(--space-4) + 16px);
+  }
+  .wa-card-head {
     display: flex;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: baseline;
     gap: var(--space-2);
+    margin-bottom: 0.35em;
+  }
+  .wa-card .wa-name {
+    font-weight: 700;
+    font-size: 0.88rem;
+  }
+  .wa-card .wa-time {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    white-space: nowrap;
+  }
+  .wa-card .wa-text {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .wa-card-foot {
+    position: absolute;
+    left: var(--space-4);
+    bottom: -14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
   .wa-avatar {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     flex-shrink: 0;
     display: grid;
     place-items: center;
     color: #fff;
     font-weight: 700;
-    font-size: 0.9rem;
-    margin-top: var(--space-1);
+    font-size: 0.82rem;
+    box-shadow: 0 0 0 3px var(--color-surface);
   }
-  .wa-bubble {
-    position: relative;
-    background: var(--color-surface);
-    border-radius: 4px var(--radius-sm) var(--radius-sm) var(--radius-sm);
-    padding: var(--space-3) var(--space-4) var(--space-6);
+  .wa-avatar--sm {
+    width: 26px;
+    height: 26px;
+    font-size: 0.7rem;
+    box-shadow: 0 0 0 3px var(--color-cream);
+  }
+  .wa-reaction {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--color-red-bright);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--radius-pill);
     box-shadow: var(--shadow-sm);
+  }
+
+  /* Carte "day" : capture d'écran d'une vraie conversation, avatar + bulle blanche. */
+  .wa-card--day {
+    background-color: #e7ded2;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cg%20fill='none'%20stroke='%23122033'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='0.1'%3E%3Cpath%20d='M12%2016%20h22%20a4%204%200%200%201%204%204%20v12%20a4%204%200%200%201%20-4%204%20h-14%20l-5%205%20v-5%20h-3%20a4%204%200%200%201%20-4%20-4%20v-12%20a4%204%200%200%201%204%20-4%20z'/%3E%3Ccircle%20cx='105'%20cy='25'%20r='9'/%3E%3Cpath%20d='M101%2025%20l3%203%20l7%20-8'/%3E%3Cpath%20d='M35%2080%20v12%20M29%2086%20h12%20M39.5%2081.5%20l-9%209%20M39.5%2090.5%20l-9%20-9'/%3E%3Cpath%20d='M105%2085%20v10%20M100%2090%20h10'/%3E%3Ccircle%20cx='90'%20cy='120'%20r='2'/%3E%3Ccircle%20cx='18'%20cy='115'%20r='2'/%3E%3Ccircle%20cx='24'%20cy='120'%20r='2'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 140px 140px;
+    padding-bottom: var(--space-4);
+  }
+  .wa-card--day .wa-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .wa-card--day .wa-avatar {
+    margin-top: 2px;
+    box-shadow: none;
+  }
+  .wa-card--day .wa-bubble {
+    position: relative;
+    background: #ffffff;
+    border-radius: 3px var(--radius-sm) var(--radius-sm) var(--radius-sm);
+    padding: var(--space-3) var(--space-4) var(--space-5);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
     flex: 1;
   }
-  .wa-name {
+  .wa-card--day .wa-name {
     display: block;
     font-weight: 700;
     font-size: 0.88rem;
     margin-bottom: 0.2em;
   }
-  .wa-text {
+  .wa-card--day .wa-text {
     margin: 0;
-    color: var(--color-ink);
+    color: #1c1c1c;
     font-size: 0.95rem;
     line-height: 1.5;
   }
-  .wa-time {
+  .wa-card--day .wa-time {
     position: absolute;
     right: var(--space-3);
     bottom: var(--space-2);
     font-size: 0.7rem;
-    color: var(--color-faint);
-  }
-  .wa-heart {
-    position: absolute;
-    left: -8px;
-    bottom: -8px;
-    width: 22px;
-    height: 22px;
-    display: grid;
-    place-items: center;
-    background: var(--color-surface);
-    border-radius: 50%;
-    box-shadow: var(--shadow-sm);
-    font-size: 0.7rem;
-    color: var(--color-red-bright);
+    color: #8b8b8b;
   }
 
   .complementary-label {
