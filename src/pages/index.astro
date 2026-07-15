@@ -5,12 +5,12 @@ import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
 
 const verbatims = [
-  { name: 'Julie', time: '09:14', color: '#5b8def', text: 'Encore une transformation qui devient la priorité numéro 1 de toutes les priorités numéro 1.' },
-  { name: 'Marc', time: '09:22', color: '#e3a651', text: "On a déjà fait trois ateliers. On sait ce qu'il faudrait faire. Maintenant, quelqu'un décide ?" },
-  { name: 'Sophie', time: '09:37', color: '#4fb0a5', text: 'On appelle ça co-construction, mais les décisions importantes sont déjà prises.' },
-  { name: 'Karim', time: '10:02', color: '#e2727a', text: "Tout le monde dit oui en réunion. Dans les couloirs, plus personne n'y croit vraiment." },
-  { name: 'Camille', time: '10:15', color: '#7d8fe3', text: 'On sort avec des post-it partout. Lundi, personne ne sait quoi faire.' },
-  { name: 'Thomas', time: '10:41', color: '#2d9d7a', text: "On nous demande d'embarquer les équipes, mais le sens change toutes les deux semaines." },
+  { name: 'Julie', time: '09:14', color: '#5b8def', text: "Encore une transfo qui devient LA priorité n°1... comme les 3 précédentes 😅" },
+  { name: 'Marc', time: '09:22', color: '#e3a651', text: "On a fait 3 ateliers. On sait ce qu'il faut faire. Il manque juste... quelqu'un qui décide ?" },
+  { name: 'Sophie', time: '09:37', color: '#4fb0a5', text: 'On appelle ça "co-construction" mais les décisions sont déjà prises hein, on le sait tous' },
+  { name: 'Karim', time: '10:02', color: '#e2727a', text: "Tout le monde dit oui en réunion. Après, dans les couloirs... plus personne n'y croit" },
+  { name: 'Camille', time: '10:15', color: '#7d8fe3', text: 'On ressort avec 40 post-it. Lundi matin, on fait quoi concrètement ? 🤷' },
+  { name: 'Thomas', time: '10:41', color: '#2d9d7a', text: 'On nous demande d\'"embarquer" les équipes mais le cap change toutes les 2 semaines' },
 ];
 
 const offers = [
@@ -120,13 +120,14 @@ const clients = [
       <h2 class="prose">Les phrases qu'on entend dans les couloirs, jamais en réunion.</h2>
       <div class="wa-grid">
         {verbatims.map((v) => (
-          <div class="wa-card">
-            <div class="wa-head">
-              <span class="wa-avatar" style={`background:${v.color}`}>{v.name.charAt(0)}</span>
+          <div class="wa-row">
+            <span class="wa-avatar" style={`background:${v.color}`}>{v.name.charAt(0)}</span>
+            <div class="wa-bubble">
               <span class="wa-name" style={`color:${v.color}`}>{v.name}</span>
+              <p class="wa-text">{v.text}</p>
               <span class="wa-time">{v.time}</span>
+              <span class="wa-heart" aria-hidden="true">❤</span>
             </div>
-            <p class="wa-text">{v.text}</p>
           </div>
         ))}
       </div>
@@ -252,39 +253,33 @@ const clients = [
 
   .whispers {
     position: relative;
-    background-color: var(--color-ink-solid);
-    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 24px 24px;
+    background-color: var(--color-cream);
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='160'%3E%3Cg%20fill='none'%20stroke='%23122033'%20stroke-width='1.6'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='0.09'%3E%3Cpath%20d='M14%2018%20h26%20a4%204%200%200%201%204%204%20v14%20a4%204%200%200%201%20-4%204%20h-16%20l-6%206%20v-6%20h-4%20a4%204%200%200%201%20-4%20-4%20v-14%20a4%204%200%200%201%204%20-4%20z'/%3E%3Ccircle%20cx='120'%20cy='30'%20r='11'/%3E%3Cpath%20d='M115%2030%20l4%204%20l8%20-9'/%3E%3Cpath%20d='M40%2090%20v14%20M33%2097%20h14%20M45.5%2091.5%20l-11%2011%20M45.5%20102.5%20l-11%20-11'/%3E%3Cpath%20d='M120%20100%20v12%20M114%20106%20h12'/%3E%3Ccircle%20cx='90'%20cy='140'%20r='6'/%3E%3Ccircle%20cx='20'%20cy='130'%20r='2'/%3E%3Ccircle%20cx='28'%20cy='134'%20r='2'/%3E%3Ccircle%20cx='24'%20cy='142'%20r='2'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 160px 160px;
   }
-  .whispers .eyebrow {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.16);
-    color: var(--color-white);
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .whispers {
+      background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='160'%3E%3Cg%20fill='none'%20stroke='%23ffffff'%20stroke-width='1.6'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='0.07'%3E%3Cpath%20d='M14%2018%20h26%20a4%204%200%200%201%204%204%20v14%20a4%204%200%200%201%20-4%204%20h-16%20l-6%206%20v-6%20h-4%20a4%204%200%200%201%20-4%20-4%20v-14%20a4%204%200%200%201%204%20-4%20z'/%3E%3Ccircle%20cx='120'%20cy='30'%20r='11'/%3E%3Cpath%20d='M115%2030%20l4%204%20l8%20-9'/%3E%3Cpath%20d='M40%2090%20v14%20M33%2097%20h14%20M45.5%2091.5%20l-11%2011%20M45.5%20102.5%20l-11%20-11'/%3E%3Cpath%20d='M120%20100%20v12%20M114%20106%20h12'/%3E%3Ccircle%20cx='90'%20cy='140'%20r='6'/%3E%3Ccircle%20cx='20'%20cy='130'%20r='2'/%3E%3Ccircle%20cx='28'%20cy='134'%20r='2'/%3E%3Ccircle%20cx='24'%20cy='142'%20r='2'/%3E%3C/g%3E%3C/svg%3E");
+    }
   }
-  .whispers h2 {
-    color: var(--color-white);
+  :root[data-theme='dark'] .whispers {
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='160'%3E%3Cg%20fill='none'%20stroke='%23ffffff'%20stroke-width='1.6'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='0.07'%3E%3Cpath%20d='M14%2018%20h26%20a4%204%200%200%201%204%204%20v14%20a4%204%200%200%201%20-4%204%20h-16%20l-6%206%20v-6%20h-4%20a4%204%200%200%201%20-4%20-4%20v-14%20a4%204%200%200%201%204%20-4%20z'/%3E%3Ccircle%20cx='120'%20cy='30'%20r='11'/%3E%3Cpath%20d='M115%2030%20l4%204%20l8%20-9'/%3E%3Cpath%20d='M40%2090%20v14%20M33%2097%20h14%20M45.5%2091.5%20l-11%2011%20M45.5%20102.5%20l-11%20-11'/%3E%3Cpath%20d='M120%20100%20v12%20M114%20106%20h12'/%3E%3Ccircle%20cx='90'%20cy='140'%20r='6'/%3E%3Ccircle%20cx='20'%20cy='130'%20r='2'/%3E%3Ccircle%20cx='28'%20cy='134'%20r='2'/%3E%3Ccircle%20cx='24'%20cy='142'%20r='2'/%3E%3C/g%3E%3C/svg%3E");
   }
+
   .wa-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-6) var(--space-4);
     margin-top: var(--space-8);
   }
-  .wa-card {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius-sm);
-    padding: var(--space-4);
-  }
-  .wa-head {
+  .wa-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-2);
-    margin-bottom: var(--space-2);
   }
   .wa-avatar {
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     flex-shrink: 0;
     display: grid;
@@ -292,21 +287,48 @@ const clients = [
     color: #fff;
     font-weight: 700;
     font-size: 0.9rem;
+    margin-top: var(--space-1);
+  }
+  .wa-bubble {
+    position: relative;
+    background: var(--color-surface);
+    border-radius: 4px var(--radius-sm) var(--radius-sm) var(--radius-sm);
+    padding: var(--space-3) var(--space-4) var(--space-6);
+    box-shadow: var(--shadow-sm);
+    flex: 1;
   }
   .wa-name {
+    display: block;
     font-weight: 700;
-    font-size: 0.9rem;
-  }
-  .wa-time {
-    margin-left: auto;
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.88rem;
+    margin-bottom: 0.2em;
   }
   .wa-text {
     margin: 0;
-    color: rgba(255, 255, 255, 0.88);
+    color: var(--color-ink);
     font-size: 0.95rem;
-    line-height: 1.55;
+    line-height: 1.5;
+  }
+  .wa-time {
+    position: absolute;
+    right: var(--space-3);
+    bottom: var(--space-2);
+    font-size: 0.7rem;
+    color: var(--color-faint);
+  }
+  .wa-heart {
+    position: absolute;
+    left: -8px;
+    bottom: -8px;
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    background: var(--color-surface);
+    border-radius: 50%;
+    box-shadow: var(--shadow-sm);
+    font-size: 0.7rem;
+    color: var(--color-red-bright);
   }
 
   .complementary-label {
