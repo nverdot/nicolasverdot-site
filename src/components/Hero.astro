@@ -70,6 +70,7 @@ const variants = [
         <span>Tenir le cadre. Rendre visible. Passer au faire.</span>
       </div>
       <Image src={action} alt="Nicolas Verdot en facilitation graphique" width={260} height={200} class="hero-photo-action" />
+      <div class="hero-art-note">Pas plus de réunions. De meilleures conversations.</div>
     </aside>
   </div>
 </section>
@@ -152,15 +153,15 @@ const variants = [
     font-size: var(--text-sm);
   }
   .editorial-beats .is-teal {
-    background: #eef0e9;
-    color: #4b5a3f;
+    background: color-mix(in srgb, var(--color-blue) 14%, var(--color-surface));
+    color: var(--color-blue);
   }
   .editorial-beats .is-red {
-    background: #fbe2e2;
-    color: var(--color-green);
+    background: color-mix(in srgb, var(--color-red-bright) 14%, var(--color-surface));
+    color: var(--color-red-bright);
   }
   .editorial-beats .is-ochre {
-    background: #fbf0d2;
+    background: color-mix(in srgb, var(--color-orange) 22%, var(--color-surface));
     color: var(--color-ink-solid);
   }
   .hero-actions {
@@ -232,6 +233,21 @@ const variants = [
     box-shadow: var(--shadow-md);
     animation: drift-wiggle 6s ease-in-out infinite;
   }
+  .hero-art-note {
+    position: absolute;
+    z-index: 3;
+    right: var(--space-4);
+    bottom: calc(-1 * var(--space-4));
+    background: var(--color-red-bright);
+    color: var(--color-white);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    max-width: 220px;
+    transform: rotate(4deg);
+    box-shadow: var(--shadow-md);
+  }
 
   @media (max-width: 900px) {
     .hero-grid {
@@ -243,6 +259,12 @@ const variants = [
     }
     .hero-photo :global(.hero-photo-action) {
       display: none;
+    }
+    .hero-art-note {
+      position: static;
+      transform: none;
+      margin-top: var(--space-4);
+      max-width: none;
     }
   }
 </style>

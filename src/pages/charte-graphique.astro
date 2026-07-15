@@ -1,0 +1,158 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { withBase } from '../utils/url';
+
+const swatches = [
+  { name: 'Jaune signature', token: '--color-orange', usage: 'CTA, surlignages, éléments d\'accent, badges.' },
+  { name: 'Bleu confiance', token: '--color-blue', usage: 'Titres forts, citations, sections premium.' },
+  { name: 'Bleu profond', token: '--color-blue-strong', usage: 'Sections sombres, contraste fort, footer.' },
+  { name: 'Rouge action', token: '--color-red-bright', usage: 'Accents ponctuels, notes, énergie ciblée.' },
+  { name: 'Fond de page', token: '--color-cream', usage: 'Respiration, lisibilité, rendu premium. S\'inverse automatiquement en mode sombre.' },
+];
+
+const principles = [
+  { title: 'Jaune = attirer et clarifier', text: 'Boutons principaux, mots mis en avant, éléments de conversion.' },
+  { title: 'Bleu = crédibilité et structure', text: 'Zones de confiance, citations, héros, sections sombres, footer.' },
+  { title: 'Rouge = énergie ciblée', text: 'À utiliser avec parcimonie pour créer du rythme et de l\'intensité.' },
+  { title: 'Fonds clairs = respiration', text: 'Pour éviter un univers trop lourd et garder un rendu premium.' },
+];
+
+const tags = ['Facilitation', 'Coaching', 'Formation', 'IA appliquée', 'Capture graphique'];
+---
+
+<Layout
+  title="Charte graphique — by Nicolas Verdot"
+  description="Référence de marque : palette, typographie et composants utilisés sur l'ensemble du site by Nicolas Verdot."
+  path="/charte-graphique/"
+>
+  <PageHero
+    eyebrow="Direction artistique"
+    title="Charte graphique"
+    summary="Une identité visuelle lumineuse, professionnelle et mémorable : le jaune attire l'attention, le bleu installe la confiance, le rouge marque l'énergie. Cette page sert de référence pour rester cohérent sur tout le site et les supports de communication."
+    pills={['Usage interne', 'Référence de marque']}
+  />
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Palette</p>
+          <h2>Couleurs de marque</h2>
+        </div>
+        <p>Le jaune attire, le bleu structure et rassure, le rouge signale l'énergie et l'action. Les fonds restent clairs pour conserver de la respiration.</p>
+      </div>
+      <div class="swatch-grid">
+        {swatches.map((s) => (
+          <div class="swatch">
+            <div class="swatch-color" style={`background:var(${s.token})`}></div>
+            <div class="swatch-body">
+              <strong>{s.name}</strong>
+              <span>{s.token}</span>
+              <p>{s.usage}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Principes</p>
+        <h2>Comment utiliser cette palette</h2>
+        <div class="checks">
+          {principles.map((p, i) => (
+            <div class="check"><i>{i + 1}</i><div><strong>{p.title}</strong><br /><span class="muted">{p.text}</span></div></div>
+          ))}
+        </div>
+      </div>
+      <div class="quote">
+        <blockquote>Une couleur principale forte n'a pas besoin d'être partout. Elle a besoin d'être placée au bon endroit.</blockquote>
+        <cite>Direction artistique — by Nicolas Verdot</cite>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Typographie & boutons</p>
+          <h2>Le système visuel</h2>
+        </div>
+        <p>Une typographie nette et affirmée, des boutons ronds et des cartes structurées par des filets colorés.</p>
+      </div>
+      <div class="cards">
+        <div class="component-sample">
+          <p class="eyebrow">Titres</p>
+          <h2 style="margin-top:14px">Clairs, directs, sans jargon.</h2>
+          <p class="hero-copy" style="font-size:1rem">Les accroches partent de la situation vécue par le client, pas des méthodes.</p>
+        </div>
+        <div class="component-sample">
+          <p class="eyebrow">Boutons</p>
+          <div class="actions" style="margin-top:14px">
+            <a class="btn" href="#">CTA principal</a>
+            <a class="btn-outline" href="#">Action secondaire</a>
+          </div>
+        </div>
+        <div class="component-sample">
+          <p class="eyebrow">Cartes</p>
+          <div class="card" style="padding:20px;margin-top:12px">
+            <div class="num">Exemple</div>
+            <h3>Carte de contenu</h3>
+            <p>Une structure simple, respirante et lisible.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Autres composants</p>
+          <h2>Le reste du système</h2>
+        </div>
+        <p>Tags, étapes et FAQ : les mêmes briques réutilisées sur toutes les pages d'offres et de formations.</p>
+      </div>
+      <div class="cards">
+        <div class="component-sample">
+          <p class="eyebrow">Tags</p>
+          <div class="tool-tags" style="margin-top:14px">
+            {tags.map((t) => <span class="tool-tag">{t}</span>)}
+          </div>
+        </div>
+        <div class="component-sample">
+          <p class="eyebrow">Étapes</p>
+          <div class="timeline" style="margin-top:14px">
+            <div class="timeline-item"><span>1</span><strong>Cadrer</strong></div>
+            <div class="timeline-item"><span>2</span><strong>Faciliter</strong></div>
+          </div>
+        </div>
+        <div class="component-sample">
+          <p class="eyebrow">FAQ</p>
+          <div class="faq" style="margin-top:14px">
+            <details class="faq-item" open>
+              <summary>Une question fréquente ?</summary>
+              <p>Une réponse claire, courte et directe.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container banner">
+      <div>
+        <p class="eyebrow" style="color:var(--color-blue)">Le prototype devenu socle</p>
+        <h2>Le site utilise désormais cette base.</h2>
+        <p>Cette page sert de référence pour la suite du développement, les visuels, les pages de vente et les supports de formation.</p>
+      </div>
+      <a class="btn-outline" href={withBase('/')}>Retour à l'accueil</a>
+    </div>
+  </section>
+</Layout>

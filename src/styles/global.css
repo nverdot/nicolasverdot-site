@@ -941,3 +941,50 @@ section {
   margin: var(--space-3) 0 0;
   color: var(--color-muted);
 }
+
+/* Charte graphique — swatches et échantillons de composants */
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+.swatch {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+.swatch-color {
+  height: 90px;
+}
+.swatch-body {
+  padding: var(--space-4);
+}
+.swatch-body strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+}
+.swatch-body span {
+  display: block;
+  margin-top: 2px;
+  font-family: monospace;
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+.swatch-body p {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+.component-sample {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+}
+.component-sample .eyebrow {
+  margin-bottom: var(--space-3);
+}
