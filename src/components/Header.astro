@@ -112,7 +112,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     height: 2px;
     background: var(--color-orange);
     transform: scaleX(0);
-    transition: transform var(--duration-standard) var(--ease-standard);
+    transition: transform var(--duration-hover) var(--ease-out);
   }
   .main-nav > ul > li > a:hover {
     color: var(--color-blue);
@@ -167,7 +167,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
       align-items: stretch;
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.25s ease;
+      transition: max-height 0.3s var(--ease-in-out);
     }
     .main-nav > ul {
       flex-direction: column;

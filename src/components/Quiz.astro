@@ -74,7 +74,7 @@ const accessKey = SITE.web3formsAccessKey;
     height: 100%;
     width: 0;
     background: var(--color-orange);
-    transition: width 0.25s ease;
+    transition: width 0.3s var(--ease-out);
   }
   .quiz-body :global(.quiz-question) {
     display: none;
@@ -101,12 +101,20 @@ const accessKey = SITE.web3formsAccessKey;
     text-align: left;
     cursor: pointer;
     font: inherit;
-    transition: background 0.18s ease, border-color 0.18s ease;
+    transition: background 0.15s ease, border-color 0.15s ease, transform var(--duration-press) var(--ease-out);
   }
-  .quiz-body :global(.answer:hover),
+  .quiz-body :global(.answer:active) {
+    transform: scale(0.98);
+  }
   .quiz-body :global(.answer.selected) {
     border-color: var(--color-orange);
     background: rgba(255, 203, 0, 0.16);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .quiz-body :global(.answer:hover) {
+      border-color: var(--color-orange);
+      background: rgba(255, 203, 0, 0.16);
+    }
   }
   .quiz-body :global(.quiz-nav) {
     display: flex;
