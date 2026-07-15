@@ -406,6 +406,39 @@ section {
   gap: var(--space-8);
   align-items: center;
 }
+
+/* Bloc texte + photo — même grille que .split, avec une image réelle */
+.split-photo {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.split-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* Galerie photo en carrousel horizontal (défilement tactile natif) */
+.gallery {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-2);
+  margin-top: var(--space-6);
+}
+.gallery img {
+  flex: 0 0 auto;
+  width: min(320px, 80vw);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  scroll-snap-align: start;
+}
 .checks {
   display: grid;
   gap: var(--space-3);

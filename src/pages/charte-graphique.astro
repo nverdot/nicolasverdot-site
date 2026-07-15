@@ -1,7 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import { withBase } from '../utils/url';
+import portrait from '../assets/nicolas-portrait.png';
+import action from '../assets/nicolas-action.jpeg';
 
 const swatches = [
   { name: 'Jaune signature', token: '--color-orange', usage: 'CTA, surlignages, éléments d\'accent, badges.' },
@@ -141,6 +144,41 @@ const tags = ['Facilitation', 'Coaching', 'Formation', 'IA appliquée', 'Capture
             </details>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Blocs image</p>
+          <h2>Texte + photo, et galerie</h2>
+        </div>
+        <p>Deux blocs prêts à recevoir de vraies photos (séminaires, ateliers, facilitation graphique) dès qu'elles sont disponibles.</p>
+      </div>
+      <div class="split">
+        <div>
+          <p class="eyebrow">Texte + photo</p>
+          <h3>Une image à côté d'un message clair.</h3>
+          <p class="hero-copy">Réutilise la grille <code>.split</code> déjà utilisée ailleurs sur le site, avec une vraie photo à la place de la citation. Idéal pour une preuve terrain, un portrait ou un moment d'atelier.</p>
+        </div>
+        <div class="split-photo">
+          <Image src={portrait} alt="Exemple de bloc texte + photo" width={480} height={360} />
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:var(--space-16)">
+        <div>
+          <p class="eyebrow">Galerie / carrousel</p>
+          <h3>Plusieurs photos, défilement tactile</h3>
+        </div>
+        <p>Défilement horizontal natif (sans JavaScript), idéal pour un événement, une fresque en plusieurs étapes ou un aperçu d'atelier.</p>
+      </div>
+      <div class="gallery">
+        <Image src={action} alt="Exemple de galerie — photo 1" width={320} height={240} />
+        <Image src={portrait} alt="Exemple de galerie — photo 2" width={320} height={240} />
+        <Image src={action} alt="Exemple de galerie — photo 3" width={320} height={240} />
       </div>
     </div>
   </section>
