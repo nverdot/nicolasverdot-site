@@ -67,13 +67,30 @@ const faqs = [
     </div>
   </section>
 
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="blog-tools">
+        <div class="blog-search">
+          <input data-formation-search type="search" placeholder="Rechercher une formation…" aria-label="Rechercher une formation" />
+        </div>
+        <div class="filter-row" data-universe-filters>
+          <button type="button" class="filter-btn active" data-universe="">Tous les univers</button>
+          {formationGroups.map((g) => (
+            <button type="button" class="filter-btn" data-universe={g.universe}>{g.universe}</button>
+          ))}
+        </div>
+      </div>
+      <p class="formation-empty" data-formation-empty hidden>Aucune formation ne correspond à votre recherche.</p>
+    </div>
+  </section>
+
   {formationGroups.map((group) => (
-    <section class="section formation-group" data-reveal>
+    <section class="section formation-group" data-reveal data-universe={group.universe}>
       <div class="container">
         <p class="eyebrow">{group.universe}</p>
         <div class="formation-grid">
           {group.items.map((f) => (
-            <article class="formation-card">
+            <article class="formation-card" data-formation-card>
               <div class="formation-meta">
                 <span>{f.level}</span>
                 <span>{f.duration}</span>
@@ -168,4 +185,49 @@ const faqs = [
     color: var(--color-faint);
     margin-bottom: var(--space-3);
   }
+  .formation-group[hidden],
+  .formation-card[hidden] {
+    display: none;
+  }
+  .formation-empty {
+    margin-top: var(--space-4);
+    color: var(--color-muted);
+  }
 </style>
+
+<script>
+  const formationSearch = document.querySelector<HTMLInputElement>('[data-formation-search]');
+  const universeButtons = document.querySelectorAll<HTMLButtonElement>('[data-universe-filters] .filter-btn');
+  const groups = document.querySelectorAll<HTMLElement>('.formation-group');
+  const emptyMsg = document.querySelector<HTMLElement>('[data-formation-empty]');
+  let activeUniverse = '';
+
+  function applyFilters() {
+    const term = (formationSearch?.value || '').trim().toLowerCase();
+    let anyVisible = false;
+    groups.forEach((group) => {
+      const universe = group.dataset.universe || '';
+      const universeMatches = !activeUniverse || universe === activeUniverse;
+      let groupHasVisibleCard = false;
+      group.querySelectorAll<HTMLElement>('[data-formation-card]').forEach((card) => {
+        const haystack = (card.textContent || '').toLowerCase();
+        const textMatches = !term || haystack.includes(term);
+        const visible = universeMatches && textMatches;
+        card.hidden = !visible;
+        if (visible) groupHasVisibleCard = true;
+      });
+      group.hidden = !groupHasVisibleCard;
+      if (groupHasVisibleCard) anyVisible = true;
+    });
+    if (emptyMsg) emptyMsg.hidden = anyVisible;
+  }
+
+  formationSearch?.addEventListener('input', applyFilters);
+  universeButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activeUniverse = btn.dataset.universe || '';
+      universeButtons.forEach((b) => b.classList.toggle('active', b === btn));
+      applyFilters();
+    });
+  });
+</script>
