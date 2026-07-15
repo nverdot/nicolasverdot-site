@@ -58,35 +58,27 @@ const faqs = [
   />
 
   <section class="section" data-reveal>
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Situations</p>
-          <h2>Tu peux venir travailler sur…</h2>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Situations</p>
+        <h2>Tu te reconnais dans une ou plusieurs de ces situations ?</h2>
+        <div class="checks">
+          {situations.map((s) => (
+            <div class="check"><i>✓</i><div><strong>{s.title}</strong><br /><span class="muted">{s.text}</span></div></div>
+          ))}
         </div>
       </div>
-      <div class="cards">
-        {situations.map((s) => (
-          <article class="card">
-            <div class="num">{s.num}</div>
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
-          </article>
-        ))}
+      <div class="quote">
+        <blockquote>Parfois, tu sais déjà ce qu'il faudrait faire. Le vrai sujet est ce qui t'empêche de le faire sereinement.</blockquote>
       </div>
     </div>
   </section>
 
   <section class="section alt" data-reveal>
-    <div class="container split">
-      <div>
-        <p class="eyebrow">Promesse</p>
-        <h2>Retrouver de la liberté dans ta manière d'agir</h2>
-        <p class="hero-copy">Le coaching ne consiste pas à te donner une liste de conseils. Il crée un espace pour observer ta situation avec plus de recul, comprendre les mécanismes qui se répètent et expérimenter d'autres façons d'agir — sur ce que tu penses, ce que tu ressens, ce que ton corps signale et ce que tu évites.</p>
-      </div>
-      <div class="quote">
-        <blockquote>Parfois, tu sais déjà ce qu'il faudrait faire. Le vrai sujet est ce qui t'empêche de le faire sereinement.</blockquote>
-      </div>
+    <div class="container prose">
+      <p class="eyebrow">Promesse</p>
+      <h2>Retrouver de la liberté dans ta manière d'agir</h2>
+      <p class="hero-copy">Le coaching ne consiste pas à te donner une liste de conseils. Il crée un espace pour observer ta situation avec plus de recul, comprendre les mécanismes qui se répètent et expérimenter d'autres façons d'agir — sur ce que tu penses, ce que tu ressens, ce que ton corps signale et ce que tu évites.</p>
     </div>
   </section>
 
