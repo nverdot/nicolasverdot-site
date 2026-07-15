@@ -1,0 +1,86 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { withBase } from '../utils/url';
+
+const criteria = [
+  { i: '1', title: 'Une encre qui tient la distance', text: "Un marqueur qui sèche au milieu d'un atelier de trois heures n'est pas une option." },
+  { i: '2', title: 'Des supports qui résistent', text: 'Le rendu final doit tenir dans le temps : transport, affichage, numérisation, réutilisation.' },
+  { i: '3', title: 'Du matériel pensé pour durer', text: 'Je privilégie des outils réutilisables et de qualité plutôt que du matériel jetable.' },
+];
+---
+
+<Layout
+  title="Matériel & recommandations — by Nicolas Verdot"
+  description="Le matériel utilisé pour la facilitation graphique et la capture graphique : pourquoi il compte, l'engagement éco-responsable et le partenariat avec Neuland."
+  path="/materiel/"
+>
+  <PageHero
+    eyebrow="Matériel & recommandations"
+    title="Le matériel derrière la facilitation graphique"
+    summary="La qualité d'une capture graphique ne tient pas qu'au trait : elle dépend aussi du matériel utilisé pour la produire, dans la durée et dans de bonnes conditions."
+    pills={['Ambassadeur Neuland', 'Démarche éco-responsable']}
+  />
+
+  <section class="section" data-reveal>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Pourquoi ça compte</p>
+        <h2>Le matériel n'est pas un détail</h2>
+        <p class="hero-copy">Pendant un atelier ou un événement en direct, il n'y a pas de seconde prise. Un marqueur qui rend mal, un support qui gondole ou un outil numérique qui plante au mauvais moment abîment le travail autant qu'une mauvaise écoute. Le choix du matériel fait partie de la préparation, au même titre que le brief ou le déroulé.</p>
+        <div class="checks">
+          {criteria.map((c) => (
+            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
+          ))}
+        </div>
+      </div>
+      <div class="quote">
+        <blockquote>Un bon facilitateur graphique se prépare aussi sur le matériel — pas seulement sur le fond.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Partenariat</p>
+      <h2>Ambassadeur Neuland</h2>
+      <p>Je suis ambassadeur de la marque Neuland, référence reconnue dans le matériel de facilitation visuelle. C'est un choix cohérent avec la manière dont je travaille : des outils fiables, pensés spécifiquement pour la facilitation graphique et la pensée visuelle, plutôt que du matériel de bureau détourné de son usage.</p>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Engagement</p>
+      <h2>Une démarche éco-responsable</h2>
+      <p>Je privilégie du matériel durable, réutilisable et pensé pour limiter le gaspillage plutôt que des outils à usage unique. Ce n'est pas un argument marketing : c'est une manière de choisir mon matériel qui va de pair avec la longévité recherchée pour chaque fresque produite — un support conçu pour durer mérite des outils conçus pour durer.</p>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="panel">
+        <p class="eyebrow">Recommandations</p>
+        <h2>Ce que je recommande, par catégorie</h2>
+        <p class="muted"><strong>Marqueurs</strong> — une encre stable qui ne pâlit pas et ne sèche pas en cours de session, avec des recharges plutôt que du jetable.</p>
+        <p class="muted"><strong>Supports</strong> — du papier ou des surfaces adaptées au format de l'événement, pensés pour être transportés, affichés puis numérisés sans perte de qualité.</p>
+        <p class="muted"><strong>Outils numériques</strong> — une tablette graphique pour les captures digitales, la diffusion en direct et le partage à distance quand le présentiel n'est pas possible.</p>
+        <a class="btn" href={withBase('/contact/')}>Une question sur le matériel ou une intervention ?</a>
+      </div>
+    </div>
+  </section>
+
+  <CTABlock
+    title="Envie d'échanger sur votre prochain événement ?"
+    subtitle="Facilitation graphique, capture graphique, ou les deux — parlons de votre besoin."
+  />
+</Layout>
+
+<style>
+  .muted {
+    color: var(--color-muted);
+  }
+  .panel .btn {
+    margin-top: var(--space-4);
+  }
+</style>

@@ -1,0 +1,104 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { withBase } from '../utils/url';
+
+const checks = [
+  { i: '1', title: 'Pas une question de talent', text: "Nul besoin de savoir dessiner : quelques formes simples suffisent à structurer une pensée complexe." },
+  { i: '2', title: 'Un outil, pas une décoration', text: "Le visuel sert le travail du groupe. Il n'est pas ajouté après coup pour faire joli." },
+  { i: '3', title: 'Une mémoire commune', text: 'Ce qui est vu se retient et se partage mieux que ce qui est seulement dit.' },
+];
+
+const contexts = [
+  'Séminaires', 'Conférences', "Ateliers d'intelligence collective", 'Comités de direction',
+  'World café', 'Kick-offs', 'Conventions', 'Formations', 'Concertations publiques',
+];
+---
+
+<Layout
+  title="Qu'est-ce qu'un facilitateur graphique ? — by Nicolas Verdot"
+  description="Facilitation graphique et capture graphique : ce que c'est, dans quels contextes ça sert, et comment mobiliser un facilitateur graphique — seul ou en réseau."
+  path="/facilitation-graphique/"
+>
+  <PageHero
+    eyebrow="Comprendre la facilitation graphique"
+    title="Un facilitateur graphique, pour quoi faire ?"
+    summary="Utiliser le dessin et le visuel pour aider un collectif à réfléchir, décider et avancer ensemble — sans qu'il soit besoin de savoir dessiner pour en tirer parti."
+    pills={['Facilitation graphique', 'Capture graphique', 'Réseau de facilitateurs']}
+  />
+
+  <section class="section" data-reveal>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">La base</p>
+        <h2>Le visuel au service de la réflexion collective</h2>
+        <p class="hero-copy">La facilitation graphique combine deux langages qui, pris séparément, perdent en puissance : la parole et l'image. Un groupe qui échange uniquement à l'oral produit des idées qui s'évaporent presque aussi vite qu'elles apparaissent. En les rendant visibles — mots-clés, liens, schémas — on donne au collectif un support commun sur lequel revenir, se corriger et construire.</p>
+        <div class="checks">
+          {checks.map((c) => (
+            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
+          ))}
+        </div>
+      </div>
+      <div class="quote">
+        <blockquote>Le visuel ne remplace pas la parole. Il lui donne un endroit où se poser.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Deux approches</p>
+      <h2>Quelle différence entre facilitation graphique et capture graphique ?</h2>
+      <p>La <strong>capture graphique</strong> (ou scribing) consiste à écouter un échange — conférence, réunion, atelier — et à le traduire en direct sur un support visuel. C'est un travail de traduction et de synthèse : le facilitateur ne pilote pas la réunion, il en garde une trace vivante et exploitable après coup.</p>
+      <p>La <strong>facilitation graphique</strong> va plus loin : le visuel n'est plus seulement une restitution, il devient l'outil qui structure le travail du groupe pendant l'atelier — pour faire émerger des idées, organiser un débat contradictoire ou construire une décision ensemble.</p>
+      <p>Dans les deux cas, l'objectif reste le même : rendre visible ce qui, autrement, resterait dispersé dans les échanges.</p>
+      <p><a class="card-link" href={withBase('/offres/capture-graphique/')}>Découvrir l'offre de capture graphique événementielle</a></p>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Contextes</p>
+      <h2>Où intervient un facilitateur graphique ?</h2>
+      <div class="tool-tags">
+        {contexts.map((c) => <span class="tool-tag">{c}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Un réseau mobilisable</p>
+      <h2>Fondateur du Sommet de la facilitation graphique</h2>
+      <p>Je suis fondateur du Sommet de la facilitation graphique et j'anime une communauté de facilitatrices et facilitateurs graphiques en France. Ce réseau me permet de proposer bien plus qu'une seule paire de mains.</p>
+      <p>Pour un événement ponctuel, je peux mobiliser une consœur ou un confrère de confiance selon votre localisation. Pour un événement de grande ampleur — plusieurs salles en parallèle, une journée entière, un site à couvrir dans sa totalité — je peux constituer et coordonner une équipe de plusieurs facilitateurs graphiques.</p>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="panel">
+        <p class="eyebrow">Matériel</p>
+        <h2>Ambassadeur Neuland, engagement éco-responsable</h2>
+        <p class="muted">Le matériel utilisé pendant une capture ou une facilitation graphique n'est pas un détail : la qualité d'un marqueur, la tenue d'un support, la conception d'un outil influencent directement le rendu final et sa durée de vie. Je suis ambassadeur Neuland et j'ai fait le choix d'un matériel pensé pour durer, dans une démarche éco-responsable.</p>
+        <a class="btn" href={withBase('/materiel/')}>Découvrir le matériel que j'utilise</a>
+      </div>
+    </div>
+  </section>
+
+  <CTABlock
+    eyebrow="Vos idées méritent d'être vues"
+    title="Envie de voir votre prochain temps collectif prendre forme ?"
+    subtitle="Parlons de votre événement, du public et du format le plus adapté — capture, facilitation, ou les deux."
+  />
+</Layout>
+
+<style>
+  .muted {
+    color: var(--color-muted);
+  }
+  .panel .btn {
+    margin-top: var(--space-4);
+  }
+</style>
