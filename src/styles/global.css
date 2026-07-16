@@ -25,11 +25,28 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: var(--tracking-tight);
   line-height: 1.08;
   color: var(--color-navy);
   margin: 0 0 var(--space-4);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Sélection de texte façon surligneur : le geste du facilitateur graphique. */
+::selection {
+  background: rgba(255, 203, 0, 0.85);
+  color: #14181f;
+}
+
+/* Focus clavier cohérent sur tout le site. */
+:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 3px;
 }
 
 h1 {
@@ -154,6 +171,22 @@ section {
   font-family: var(--font-script);
   font-weight: 700;
   font-style: normal;
+}
+
+/* Surlignage au marqueur : un mot-clé par page, pas plus. Le trait est
+   légèrement incliné et déborde du mot, comme un vrai coup de surligneur. */
+.marker {
+  position: relative;
+  white-space: nowrap;
+}
+.marker::after {
+  content: '';
+  position: absolute;
+  inset: 55% -0.14em -0.04em;
+  background: rgba(255, 203, 0, 0.6);
+  border-radius: 0.12em;
+  transform: rotate(-1.1deg);
+  z-index: -1;
 }
 
 /* Panneaux doux : fond translucide + flou + ombre portée, sans bordure dure. */
@@ -392,14 +425,17 @@ section {
   overflow: hidden;
   transition: transform var(--duration-hover) var(--ease-out);
 }
+/* Trait de feutre en tête de carte : un seul coup de marqueur jaune aux
+   extrémités biseautées, plutôt qu'un dégradé multicolore anonyme. */
 .card::before {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
-  height: 6px;
-  background: linear-gradient(90deg, var(--color-orange), var(--color-red-bright), var(--color-blue));
+  height: 8px;
+  background: var(--color-orange);
+  clip-path: polygon(0 38%, 100% 0, 100% 62%, 0 100%);
 }
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
@@ -540,11 +576,12 @@ section {
 .quote::before {
   content: '\201C';
   position: absolute;
-  top: -30px;
+  top: -14px;
   left: 20px;
-  font-size: 12rem;
-  color: rgba(255, 255, 255, 0.08);
-  font-family: Georgia, serif;
+  font-size: 11rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.1);
+  font-family: var(--font-script);
 }
 .quote blockquote {
   font-size: var(--text-2xl);
