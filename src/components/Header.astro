@@ -165,9 +165,14 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
       -webkit-backdrop-filter: blur(18px);
       flex-direction: column;
       align-items: stretch;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s var(--ease-in-out);
+      /* Le menu est un calque en surimpression : on anime transform/opacity
+         (GPU) plutôt que max-height (layout). Fermeture plus rapide que
+         l'ouverture : la réponse du système doit claquer. */
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.15s;
     }
     .main-nav > ul {
       flex-direction: column;
@@ -184,7 +189,11 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
       text-align: center;
     }
     .nav-toggle:checked ~ .main-nav {
-      max-height: 600px;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+      transition: opacity 0.2s ease, transform 0.25s var(--ease-out), visibility 0s;
     }
   }
 </style>

@@ -72,9 +72,12 @@ const accessKey = SITE.web3formsAccessKey;
   .progress i {
     display: block;
     height: 100%;
-    width: 0;
+    width: 100%;
     background: var(--color-orange);
-    transition: width 0.3s var(--ease-out);
+    /* scaleX plutôt que width : la barre s'anime sur le GPU sans relayout. */
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease-out);
   }
   .quiz-body :global(.quiz-question) {
     display: none;
@@ -261,7 +264,7 @@ const accessKey = SITE.web3formsAccessKey;
       prev!.disabled = index === 0;
       next!.disabled = answers[index] === null;
       next!.textContent = index === dataset.questions.length - 1 ? 'Voir mon résultat' : 'Suivant';
-      progress!.style.width = `${((index + (answers[index] !== null ? 1 : 0)) / dataset.questions.length) * 100}%`;
+      progress!.style.transform = `scaleX(${(index + (answers[index] !== null ? 1 : 0)) / dataset.questions.length})`;
     }
 
     body.querySelectorAll('.quiz-question').forEach((q, i) => {
@@ -296,7 +299,7 @@ const accessKey = SITE.web3formsAccessKey;
       const level = dataset.levels.find((l: { max: number }) => percent <= l.max) || dataset.levels[dataset.levels.length - 1];
       body!.style.display = 'none';
       result!.style.display = 'block';
-      progress!.style.width = '100%';
+      progress!.style.transform = 'scaleX(1)';
       const contactHref = quiz.dataset.contactHref || '/contact/';
 
       result!.innerHTML = `
