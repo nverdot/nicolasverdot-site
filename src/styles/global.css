@@ -656,6 +656,16 @@ section {
 .article-visual.green {
   background: var(--color-red-bright);
 }
+/* Variantes par pilier éditorial : une couleur fixe par thématique. */
+.article-visual.teal {
+  background: var(--color-green);
+}
+.article-visual.deep {
+  background: var(--color-blue-strong);
+}
+.article-visual.navy {
+  background: var(--color-ink-solid);
+}
 .article-visual::after {
   content: '';
   position: absolute;

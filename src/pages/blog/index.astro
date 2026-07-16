@@ -9,7 +9,23 @@ const allArticles = await getCollection('articles', ({ data }) => !data.draft);
 const articles = allArticles.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 
 const dateFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
-const visuals = ['', 'orange', 'green'];
+
+// Une couleur de vignette fixe par pilier : la thématique se repère d'un
+// coup d'œil dans la grille, avant même de lire l'étiquette.
+const pillarVisuals: Record<string, string> = {
+  'Décision et priorisation': '',
+  'Réunions et séminaires': 'orange',
+  'Intelligence collective concrète': 'teal',
+  'Pensée visuelle': 'green',
+  'Leadership et autonomie': 'deep',
+  'Parcours personnel': 'navy',
+};
+
+// Seuls les piliers réellement publiés apparaissent en filtre, avec leur compte.
+const pillars = [...new Set(articles.map((a) => a.data.pillar))].map((p) => ({
+  name: p,
+  count: articles.filter((a) => a.data.pillar === p).length,
+}));
 ---
 
 <Layout
@@ -29,13 +45,19 @@ const visuals = ['', 'orange', 'green'];
         <div class="blog-search">
           <input data-blog-search type="search" placeholder="Rechercher un article…" aria-label="Rechercher un article" />
         </div>
+        <div class="filter-row" data-pillar-filters role="group" aria-label="Filtrer par thématique">
+          <button type="button" class="filter-btn active" data-pillar-filter="">Tous <span class="filter-count">{articles.length}</span></button>
+          {pillars.map((p) => (
+            <button type="button" class="filter-btn" data-pillar-filter={p.name}>{p.name} <span class="filter-count">{p.count}</span></button>
+          ))}
+        </div>
       </div>
 
       {articles.length === 0 && <p class="prose">Les premiers articles arrivent bientôt.</p>}
       <div class="article-grid">
-        {articles.map((article, i) => (
-          <article class="article-card" data-article-card>
-            <div class={`article-visual ${visuals[i % visuals.length]}`}></div>
+        {articles.map((article) => (
+          <article class="article-card" data-article-card data-pillar={article.data.pillar}>
+            <div class={`article-visual ${pillarVisuals[article.data.pillar] ?? ''}`}></div>
             <div class="article-body">
               <div class="num">{article.data.pillar}</div>
               <h3><a href={withBase(`/blog/${article.slug}/`)}>{article.data.title}</a></h3>
@@ -46,6 +68,7 @@ const visuals = ['', 'orange', 'green'];
           </article>
         ))}
       </div>
+      <p class="blog-empty" data-blog-empty hidden>Aucun article ne correspond à cette recherche. Essayez un autre mot-clé ou une autre thématique.</p>
     </div>
   </section>
 
@@ -56,6 +79,22 @@ const visuals = ['', 'orange', 'green'];
 </Layout>
 
 <style>
+  .blog-tools {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+  .filter-count {
+    font-weight: 400;
+    opacity: 0.65;
+    font-size: 0.85em;
+    margin-left: 0.25em;
+  }
+  .blog-empty {
+    margin-top: var(--space-8);
+    color: var(--color-muted);
+  }
   .article-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -101,13 +140,29 @@ const visuals = ['', 'orange', 'green'];
 
 <script>
   const searchInput = document.querySelector<HTMLInputElement>('[data-blog-search]');
+  const filterButtons = Array.from(document.querySelectorAll<HTMLElement>('[data-pillar-filter]'));
   const cards = document.querySelectorAll<HTMLElement>('[data-article-card]');
+  const emptyMessage = document.querySelector<HTMLElement>('[data-blog-empty]');
+  let activePillar = '';
 
-  searchInput?.addEventListener('input', () => {
-    const term = searchInput.value.trim().toLowerCase();
+  function applyFilters() {
+    const term = (searchInput?.value || '').trim().toLowerCase();
+    let visible = 0;
     cards.forEach((card) => {
-      const haystack = (card.textContent || '').toLowerCase();
-      card.hidden = !!term && !haystack.includes(term);
+      const matchesPillar = !activePillar || card.dataset.pillar === activePillar;
+      const matchesTerm = !term || (card.textContent || '').toLowerCase().includes(term);
+      card.hidden = !(matchesPillar && matchesTerm);
+      if (!card.hidden) visible++;
+    });
+    if (emptyMessage) emptyMessage.hidden = visible > 0;
+  }
+
+  searchInput?.addEventListener('input', applyFilters);
+  filterButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activePillar = btn.dataset.pillarFilter || '';
+      filterButtons.forEach((b) => b.classList.toggle('active', b === btn));
+      applyFilters();
     });
   });
 </script>

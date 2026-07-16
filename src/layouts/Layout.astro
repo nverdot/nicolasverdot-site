@@ -66,7 +66,11 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
           }
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+      // threshold: 0 (et non 0.15) : une section très haute (blog, catalogue
+      // matériel) ne peut jamais atteindre 15% de visibilité dans le viewport
+      // et resterait invisible à jamais. Le rootMargin garde l'effet "déclenche
+      // un peu après l'entrée à l'écran".
+      { threshold: 0, rootMargin: '0px 0px -60px 0px' }
     );
     document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
   } else {
