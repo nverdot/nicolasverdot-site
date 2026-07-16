@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { withBase } from '../utils/url';
+
+const villes = [
+  { name: 'Nice', text: "Sièges régionaux, collectivités, scale-ups : des séminaires qui produisent des décisions, pas seulement des souvenirs." },
+  { name: 'Sophia Antipolis', text: "Tech et innovation : ateliers d'intelligence collective pour équipes produit, R&D et directions en croissance." },
+  { name: 'Cannes', text: "Conventions, événements d'entreprise et comités de direction, avec ou sans capture graphique en direct." },
+  { name: 'Monaco', text: "Comités exécutifs et équipes internationales : un cadre exigeant, une facilitation à la hauteur." },
+  { name: 'Antibes & Mandelieu', text: "PME et ETI locales : redonner de l'élan à une équipe sans traverser la France pour le faire." },
+];
+
+const formats = [
+  { i: '1', title: "Séminaire d'équipe ou de direction", text: "Une journée ou deux pour clarifier une stratégie, trancher des priorités et repartir avec un plan d'action réel." },
+  { i: '2', title: "Atelier d'intelligence collective", text: "Un format court et structuré pour traiter un sujet précis : décision, organisation, tensions, projet." },
+  { i: '3', title: 'Capture graphique en direct', text: "Une fresque visuelle réalisée pendant votre événement, qui en garde la mémoire et prolonge son impact." },
+];
+
+const faq = [
+  {
+    q: 'Intervenez-vous uniquement dans les Alpes-Maritimes ?',
+    a: "Non. Je suis basé dans les Alpes-Maritimes, ce qui rend mes interventions à Nice, Cannes, Sophia Antipolis, Antibes, Mandelieu ou Monaco simples et sans frais de déplacement importants — mais j'interviens partout en France pour des séminaires et des formations.",
+  },
+  {
+    q: "Quel est le délai pour organiser un séminaire facilité ?",
+    a: "Comptez idéalement trois à six semaines : un premier échange pour cadrer l'intention, une préparation avec le commanditaire, puis l'animation. Pour un atelier court, deux semaines peuvent suffire.",
+  },
+  {
+    q: 'Travaillez-vous avec les collectivités et les associations ?',
+    a: "Oui. J'accompagne des entreprises, des collectivités territoriales et des associations. Les démarches de concertation et les projets de territoire se prêtent particulièrement bien à la facilitation et à la capture graphique.",
+  },
+  {
+    q: "Pouvez-vous animer en anglais ?",
+    a: "Oui, les ateliers et séminaires peuvent être animés en français ou en anglais, ce qui est fréquent pour les équipes internationales de Sophia Antipolis et de Monaco.",
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout
+  title="Séminaires & facilitation dans les Alpes-Maritimes (06) — Nice, Cannes, Sophia Antipolis, Monaco"
+  description="Facilitateur professionnel basé dans les Alpes-Maritimes : animation de séminaires d'entreprise, ateliers d'intelligence collective et capture graphique à Nice, Cannes, Sophia Antipolis, Antibes, Mandelieu et Monaco."
+  path="/seminaires-alpes-maritimes/"
+>
+  <PageHero
+    eyebrow="Alpes-Maritimes & Monaco"
+    title="Un facilitateur professionnel basé dans le 06"
+    summary="Animation de séminaires, ateliers d'intelligence collective, facilitation graphique : j'interviens là où vos équipes travaillent — Nice, Cannes, Sophia Antipolis, Antibes, Mandelieu, Monaco — et partout en France."
+    pills={['Séminaires', 'Ateliers', 'Capture graphique', 'Basé dans le 06']}
+  />
+
+  <section class="section" data-reveal>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Pourquoi un facilitateur local</p>
+        <h2>La proximité change la préparation</h2>
+        <p class="hero-copy">Un séminaire réussi se joue avant le jour J : comprendre l'intention, rencontrer le commanditaire, sentir le contexte. Être basé dans les Alpes-Maritimes me permet de préparer vos temps forts en présentiel, de repérer les lieux et d'intervenir sans les coûts et les aléas d'un intervenant qui traverse la France.</p>
+        <div class="checks">
+          {formats.map((f) => (
+            <div class="check"><i>{f.i}</i><div><strong>{f.title}</strong><br /><span class="muted">{f.text}</span></div></div>
+          ))}
+        </div>
+      </div>
+      <div class="quote">
+        <blockquote>Le bon format au bon endroit : une salle à Sophia, une terrasse à Cannes ou votre siège à Nice — c'est le résultat qui compte.</blockquote>
+        <cite>Nicolas Verdot — Facilitateur, Alpes-Maritimes</cite>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Zones d'intervention</p>
+          <h2>Nice, Cannes, Sophia Antipolis, Monaco et au-delà</h2>
+        </div>
+        <p>Chaque bassin a ses contextes. Les enjeux, eux, se ressemblent : clarifier, décider, faire avancer.</p>
+      </div>
+      <div class="cards">
+        {villes.map((v) => (
+          <article class="card">
+            <div class="num">Alpes-Maritimes · 06</div>
+            <h3>{v.name}</h3>
+            <p>{v.text}</p>
+            <a class="card-link" href={withBase('/contact/')}>Parler de votre projet</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Ce que vous obtenez</p>
+      <h2>Un séminaire qui ne retombe pas le lundi suivant</h2>
+      <p>Beaucoup de séminaires produisent de bons moments et peu de suites. Mon travail consiste à concevoir la conversation qui permettra à votre collectif de produire un résultat exploitable : des décisions assumées, des responsabilités claires, un plan d'action réaliste — et, si vous choisissez la <a href={withBase('/offres/capture-graphique/')}>capture graphique</a>, une trace visuelle que vos équipes gardent et réutilisent.</p>
+      <p>Trois portes d'entrée selon votre situation : <a href={withBase('/offres/decider-ensemble/')}>décider ensemble</a>, <a href={withBase('/offres/aligner-equipe/')}>aligner l'équipe</a> ou <a href={withBase('/offres/dynamique-durable/')}>installer une dynamique durable</a>. Et pour monter en compétence en interne, des <a href={withBase('/formations/')}>formations à l'intelligence collective et à la facilitation</a>.</p>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Questions fréquentes</p>
+          <h2>Avant de nous appeler</h2>
+        </div>
+      </div>
+      <div class="faq">
+        {faq.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <CTABlock
+    eyebrow="Un séminaire en préparation ?"
+    title="Parlons de votre prochain temps fort dans le 06."
+    subtitle="Un premier échange de 30 minutes pour cadrer l'intention, le format et vérifier que mon intervention est pertinente."
+  />
+</Layout>
+
+<style>
+  .muted {
+    color: var(--color-muted);
+  }
+</style>

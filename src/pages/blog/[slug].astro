@@ -19,6 +19,32 @@ interface Props {
 const { article } = Astro.props;
 const { Content } = await article.render();
 const dateFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+// Maillage interne automatique : 3 articles du même pilier, les plus récents.
+const siblings = (await getCollection('articles', ({ data, slug }) => !data.draft))
+  .filter((a) => a.slug !== article.slug && a.data.pillar === article.data.pillar)
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3);
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.data.title,
+  description: article.data.description,
+  datePublished: article.data.publishDate.toISOString().split('T')[0],
+  inLanguage: 'fr-FR',
+  author: {
+    '@type': 'Person',
+    name: 'Nicolas Verdot',
+    jobTitle: 'Facilitateur, coach professionnel et formateur',
+    url: new URL(withBase('/a-propos/'), Astro.site).toString(),
+  },
+  publisher: {
+    '@type': 'Person',
+    name: 'Nicolas Verdot',
+  },
+  mainEntityOfPage: new URL(withBase(`/blog/${article.slug}/`), Astro.site).toString(),
+};
 ---
 
 <Layout
@@ -35,8 +61,21 @@ const dateFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 
       <div class="post-content">
         <Content />
       </div>
+
+      {siblings.length > 0 && (
+        <aside class="related" aria-label="Articles sur le même thème">
+          <h2>Sur le même thème</h2>
+          <ul>
+            {siblings.map((s) => (
+              <li><a href={withBase(`/blog/${s.slug}/`)}>{s.data.title}</a></li>
+            ))}
+          </ul>
+        </aside>
+      )}
     </div>
   </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 
   <CTABlock
     title="Un sujet précis à traiter avec votre équipe ?"
@@ -75,6 +114,26 @@ const dateFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 
     margin-bottom: var(--space-2);
   }
   .post-content :global(a) {
+    color: var(--color-navy);
+    font-weight: 600;
+  }
+  .related {
+    margin-top: var(--space-12);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+  .related h2 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-3);
+  }
+  .related ul {
+    margin: 0;
+    padding-left: var(--space-6);
+  }
+  .related li {
+    margin-bottom: var(--space-2);
+  }
+  .related a {
     color: var(--color-navy);
     font-weight: 600;
   }

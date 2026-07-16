@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { withBase } from '../utils/url';
+
+const conditions = [
+  { i: '1', title: 'Un enjeu réel', text: "On ne mobilise pas un collectif pour valider une décision déjà prise. L'intelligence collective suppose une vraie question ouverte." },
+  { i: '2', title: 'Un cadre explicite', text: 'Qui décide, sur quels critères, avec quelles limites : sans cadre, la participation produit de la frustration.' },
+  { i: '3', title: 'Un processus structuré', text: "Divergence, convergence, décision : les bonnes idées émergent d'un déroulé pensé, pas d'un tour de table improvisé." },
+  { i: '4', title: 'Une trace exploitable', text: 'Ce qui a été dit, décidé et confié doit rester visible — sinon tout se rejoue à la réunion suivante.' },
+];
+
+const methodes = [
+  { name: 'World café', text: 'Faire circuler les idées entre petits groupes pour croiser les points de vue à grande échelle.' },
+  { name: 'Forum ouvert', text: "Laisser les participants construire l'agenda autour de ce qui compte vraiment pour eux." },
+  { name: 'Codéveloppement', text: 'Un groupe de pairs qui aide un de ses membres à traiter une situation réelle, avec une méthode précise.' },
+  { name: 'Ateliers de décision', text: 'Consentement, vote pondéré, matrices de priorisation : décider ensemble sans noyer la décision.' },
+  { name: 'Facilitation graphique', text: 'Rendre visibles les idées et les décisions pour que le collectif raisonne sur un support commun.' },
+  { name: 'Formats sur mesure', text: "Le format suit l'intention : chaque déroulé est conçu pour votre enjeu, jamais plaqué depuis un catalogue." },
+];
+
+const faq = [
+  {
+    q: "Qu'est-ce que l'intelligence collective, concrètement ?",
+    a: "C'est la capacité d'un groupe à produire un résultat qu'aucun de ses membres n'aurait produit seul : une décision plus robuste, une solution plus créative, un diagnostic plus complet. Elle ne se décrète pas — elle se facilite, avec un cadre, un processus et une posture adaptés.",
+  },
+  {
+    q: "Quelle différence entre intelligence collective et brainstorming ?",
+    a: "Le brainstorming est un outil de divergence parmi d'autres. Une démarche d'intelligence collective couvre tout le cycle : poser la question, faire émerger les idées, les confronter, converger et décider. Sans convergence ni décision, le brainstorming reste un moment sympathique sans suite.",
+  },
+  {
+    q: "Faut-il former les équipes ou faire appel à un facilitateur ?",
+    a: "Les deux se complètent. Un facilitateur externe est précieux quand l'enjeu est sensible, que le dirigeant veut participer plutôt qu'animer, ou que le collectif est nombreux. Former des relais internes permet ensuite d'ancrer ces pratiques au quotidien — c'est l'objet de mes formations.",
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout
+  title="Intelligence collective : la faciliter, la former, l'ancrer — by Nicolas Verdot"
+  description="Qu'est-ce que l'intelligence collective et comment l'activer dans votre organisation ? Conditions, méthodes (world café, forum ouvert, codéveloppement), ateliers facilités et formations."
+  path="/intelligence-collective/"
+>
+  <PageHero
+    eyebrow="Comprendre et activer"
+    title="L'intelligence collective ne se décrète pas. Elle se facilite."
+    summary="Un groupe ne devient pas intelligent en se réunissant : il le devient quand le cadre, le processus et la posture d'animation le permettent. Voici comment ça fonctionne — et comment l'installer chez vous."
+    pills={['Ateliers facilités', 'Formations', 'Méthodes éprouvées']}
+  />
+
+  <section class="section" data-reveal>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Les fondations</p>
+        <h2>Quatre conditions, sinon rien</h2>
+        <p class="hero-copy">La plupart des déceptions autour de l'intelligence collective viennent d'un malentendu : réunir des gens de bonne volonté ne suffit pas. Quatre conditions font la différence entre un moment participatif et un résultat réel.</p>
+        <div class="checks">
+          {conditions.map((c) => (
+            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
+          ))}
+        </div>
+      </div>
+      <div class="quote">
+        <blockquote>Les réponses sont souvent déjà dans la salle. Encore faut-il créer les conditions pour les faire émerger.</blockquote>
+        <cite>Nicolas Verdot — Facilitateur en intelligence collective</cite>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Les méthodes</p>
+          <h2>Des formats éprouvés, jamais plaqués</h2>
+        </div>
+        <p>Le format n'est pas le point de départ : c'est l'intention qui choisit la méthode. En voici quelques-unes que j'utilise régulièrement.</p>
+      </div>
+      <div class="cards">
+        {methodes.map((m) => (
+          <article class="card">
+            <div class="num">Méthode</div>
+            <h3>{m.name}</h3>
+            <p>{m.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Passer à l'action</p>
+      <h2>Deux manières de l'installer chez vous</h2>
+      <p><strong>Faire appel à un facilitateur</strong> pour vos temps forts : un <a href={withBase('/offres/decider-ensemble/')}>atelier de décision</a>, un <a href={withBase('/offres/aligner-equipe/')}>séminaire d'alignement</a> ou une <a href={withBase('/offres/dynamique-durable/')}>transformation du fonctionnement d'équipe</a>. Vous participez pleinement pendant que je tiens le cadre.</p>
+      <p><strong>Former vos équipes</strong> pour ancrer ces pratiques au quotidien : mes <a href={withBase('/formations/')}>formations à l'intelligence collective, à la facilitation et à la pensée visuelle</a> s'adressent aux managers, aux chefs de projet et aux équipes RH qui veulent des réunions et des ateliers qui produisent enfin des résultats.</p>
+      <p>Basé dans les Alpes-Maritimes, j'interviens <a href={withBase('/seminaires-alpes-maritimes/')}>à Nice, Cannes, Sophia Antipolis et Monaco</a> comme partout en France.</p>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Questions fréquentes</p>
+          <h2>Ce qu'on me demande souvent</h2>
+        </div>
+      </div>
+      <div class="faq">
+        {faq.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <CTABlock
+    eyebrow="Un enjeu collectif à traiter ?"
+    title="Voyons ce que l'intelligence collective peut débloquer chez vous."
+    subtitle="Un premier échange pour comprendre votre situation et choisir le bon format — atelier, séminaire ou formation."
+  />
+</Layout>
+
+<style>
+  .muted {
+    color: var(--color-muted);
+  }
+</style>
