@@ -9,7 +9,8 @@ interface Props {
   image?: string;
 }
 
-const { title, description, path, image = '/og-image.svg' } = Astro.props;
+// PNG obligatoire : LinkedIn, Facebook et WhatsApp ne rendent pas les SVG.
+const { title, description, path, image = '/og-image.png' } = Astro.props;
 const canonicalURL = new URL(withBase(path), SITE.url).toString();
 const ogImageURL = new URL(withBase(image), SITE.url).toString();
 

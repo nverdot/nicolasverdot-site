@@ -1,0 +1,4 @@
+# Page 404 personnalisée.
+# TODO : quand le site passera à la racine (base '/' dans astro.config.mjs
+# + secret FTP_SERVER_DIR), remplacer le chemin par /404.html.
+ErrorDocument 404 /TESTSITENV/404.html

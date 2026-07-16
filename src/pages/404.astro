@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { withBase } from '../utils/url';
+---
+
+<Layout
+  title="Page introuvable — by Nicolas Verdot"
+  description="Cette page n'existe pas ou a été déplacée."
+  path="/404/"
+>
+  <section class="section notfound">
+    <div class="container">
+      <p class="notfound-code" aria-hidden="true">
+        4<span class="notfound-zero"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" aria-hidden="true"><path d="M52 8C28 10 12 28 11 50c-1 24 16 41 38 42 24 1 41-17 41-42C90 26 74 7 51 8c-2 0-4 1-5 2"/></svg></span>4
+      </p>
+      <h1>Cette page s'est perdue entre deux post-its.</h1>
+      <p class="hero-copy">L'adresse n'existe pas, ou la page a été déplacée pendant une réorganisation. Le plus simple : repartir d'un endroit connu.</p>
+      <div class="actions">
+        <a class="btn" href={withBase('/')}>Retour à l'accueil</a>
+        <a class="btn-outline" href={withBase('/offres/')}>Voir les offres</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .notfound {
+    text-align: center;
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
+  }
+  .notfound h1 {
+    max-width: 18ch;
+    margin-inline: auto;
+  }
+  .notfound .hero-copy {
+    max-width: 52ch;
+    margin: 0 auto var(--space-6);
+    color: var(--color-muted);
+  }
+  .notfound .actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  /* Le zéro est dessiné d'un trait de feutre qui ne se referme pas tout à
+     fait — la seule fantaisie de la page. */
+  .notfound-code {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(5rem, 16vw, 9rem);
+    line-height: 1;
+    color: var(--color-navy);
+    margin: 0 0 var(--space-4);
+    letter-spacing: -0.04em;
+  }
+  .notfound-zero {
+    display: inline-block;
+    width: 0.82em;
+    height: 0.82em;
+    color: var(--color-orange);
+    vertical-align: baseline;
+    margin: 0 0.04em;
+  }
+  .notfound-zero svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>

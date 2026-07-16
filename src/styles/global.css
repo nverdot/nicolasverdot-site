@@ -548,16 +548,20 @@ section {
   grid-template-columns: 34px 1fr;
   gap: var(--space-3);
 }
+/* Pastille légèrement irrégulière, comme un rond dessiné au feutre. */
 .check i {
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-sm);
+  border-radius: 52% 48% 55% 45% / 47% 53% 46% 54%;
   background: var(--color-orange);
   color: var(--color-ink-solid);
   display: grid;
   place-items: center;
   font-style: normal;
   font-weight: 700;
+}
+.check:nth-child(even) i {
+  border-radius: 46% 54% 48% 52% / 55% 45% 54% 46%;
 }
 
 .quote {
@@ -608,8 +612,12 @@ section {
   background: rgba(255, 255, 255, 0.08);
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
 }
+/* Numérotation manuscrite, comme sur une fresque de facilitation. */
 .step b {
   display: block;
+  font-family: var(--font-script);
+  font-size: 1.6em;
+  line-height: 1;
   color: var(--color-orange);
   margin-bottom: var(--space-1);
 }
@@ -1051,10 +1059,13 @@ section {
   height: 40px;
   background: var(--color-orange);
   color: var(--color-ink-solid);
-  border-radius: var(--radius-sm);
+  border-radius: 52% 48% 55% 45% / 47% 53% 46% 54%;
   display: grid;
   place-items: center;
   font-weight: 700;
+}
+.timeline-item:nth-child(even) span {
+  border-radius: 46% 54% 48% 52% / 55% 45% 54% 46%;
 }
 
 /* FAQ en accordéon natif */
