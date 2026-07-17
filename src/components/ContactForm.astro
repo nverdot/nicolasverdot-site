@@ -60,6 +60,13 @@ import { SITE } from '../data/site';
   }
   #form-status {
     min-height: 1.2em;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 250ms var(--ease-out), transform 250ms var(--ease-out);
+  }
+  #form-status.is-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
   #form-status[data-state='success'] {
     color: #4b5a3f;
@@ -78,9 +85,24 @@ import { SITE } from '../data/site';
     if (!status) return;
 
     const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
-    if (submitButton) submitButton.disabled = true;
-    status.dataset.state = '';
-    status.textContent = 'Envoi en cours…';
+    const originalLabel = submitButton?.textContent ?? 'Envoyer';
+
+    function setStatus(text: string, state: '' | 'success' | 'error') {
+      if (!status) return;
+      status.classList.remove('is-visible');
+      // Force un reflow pour que la transition redémarre même si le texte
+      // change alors que le message est déjà visible (Envoi en cours… -> succès).
+      void status.offsetWidth;
+      status.dataset.state = state;
+      status.textContent = text;
+      status.classList.add('is-visible');
+    }
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Envoi…';
+    }
+    setStatus('Envoi en cours…', '');
 
     try {
       const formData = new FormData(form);
@@ -92,17 +114,18 @@ import { SITE } from '../data/site';
       const result = await response.json();
 
       if (result.success) {
-        status.dataset.state = 'success';
-        status.textContent = 'Merci, votre message a bien été envoyé ! Je vous répondrai rapidement.';
+        setStatus('Merci, votre message a bien été envoyé ! Je vous répondrai rapidement.', 'success');
         form.reset();
       } else {
         throw new Error(result.message || 'Erreur inconnue');
       }
     } catch (error) {
-      status.dataset.state = 'error';
-      status.textContent = "Une erreur est survenue lors de l'envoi. Merci de réessayer ou de m'écrire directement par email.";
+      setStatus("Une erreur est survenue lors de l'envoi. Merci de réessayer ou de m'écrire directement par email.", 'error');
     } finally {
-      if (submitButton) submitButton.disabled = false;
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = originalLabel;
+      }
     }
   });
 </script>

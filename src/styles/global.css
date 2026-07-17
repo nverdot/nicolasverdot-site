@@ -235,7 +235,7 @@ section {
 [data-reveal] {
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity 0.5s ease, transform 0.55s var(--ease-out);
+  transition: opacity 0.5s var(--ease-out), transform 0.55s var(--ease-out);
 }
 
 [data-reveal].is-visible {
@@ -356,7 +356,24 @@ section {
   * {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
+  }
+
+  /* Le mouvement disparaît ; l'opacity (compréhension) garde sa transition
+     normale — sinon le feedback (bouton pressé, apparition d'un statut)
+     disparaît aussi, alors que seule la translation doit s'effacer. */
+  [data-reveal] {
+    transform: none !important;
+  }
+  [data-reveal].is-visible .cards .card {
+    animation-name: none !important;
+    opacity: 1 !important;
+  }
+  .chat-msg,
+  .chat-typing {
+    transform: none !important;
+  }
+  .chat-insight-dialog {
+    transform: none !important;
   }
 }
 
