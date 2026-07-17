@@ -1,0 +1,197 @@
+---
+import ChatCarousel from './ChatCarousel.astro';
+import JourneyIcon from './JourneyIcon.astro';
+import { journey } from '../data/journey';
+import { conversations } from '../data/conversations';
+
+interface Props {
+  conversations: typeof conversations;
+}
+const { conversations: convos } = Astro.props;
+---
+
+<section class="journey" aria-label="Le parcours, étape par étape">
+  <div class="container">
+    <div class="journey-intro" data-reveal>
+      <p class="eyebrow">Le chemin</p>
+      <h2 class="prose">Du flou à la clarté. De la discussion à la décision. De la décision à l'action.</h2>
+    </div>
+
+    <div class="journey-rail" aria-hidden="true" data-journey-rail>
+      <div class="journey-rail-fill" data-journey-rail-fill></div>
+    </div>
+
+    <div class="journey-steps">
+      {journey.map((step, i) => (
+        <article class={`journey-step ${i % 2 === 1 ? 'is-reverse' : ''}`} data-reveal>
+          <div class="journey-step-icon">
+            <JourneyIcon name={step.icon} />
+          </div>
+          <div class="journey-step-body">
+            <p class="eyebrow">{step.eyebrow}</p>
+            <h3>{step.title}</h3>
+            <p class="hero-copy">{step.text}</p>
+            <ul class="journey-bullets">
+              {step.bullets.map((b) => <li>{b}</li>)}
+            </ul>
+            {i === 0 && (
+              <div class="journey-proof">
+                <p class="journey-proof-label">Ce que ça donne, concrètement :</p>
+                <ChatCarousel conversations={convos} />
+              </div>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Rail de progression : remplit une ligne verticale au fil du scroll dans
+  // la section .journey. Purement décoratif, 1:1 avec le scroll (pas
+  // d'easing indépendant) — pas besoin de le couper sous reduced-motion,
+  // contrairement au dessin des icônes qui a sa propre temporalité.
+  const journeySection = document.querySelector<HTMLElement>('.journey');
+  const rail = document.querySelector<HTMLElement>('[data-journey-rail]');
+  const railFill = document.querySelector<HTMLElement>('[data-journey-rail-fill]');
+  const mq = window.matchMedia('(min-width: 860px)');
+
+  if (journeySection && rail && railFill) {
+    let ticking = false;
+
+    function update() {
+      ticking = false;
+      if (!mq.matches || !journeySection || !railFill) return;
+      const rect = journeySection.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const total = rect.height - vh * 0.5;
+      const scrolled = vh * 0.7 - rect.top;
+      const progress = total > 0 ? Math.min(1, Math.max(0, scrolled / total)) : 0;
+      railFill.style.transform = `scaleY(${progress})`;
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  }
+</script>
+
+<style>
+  .journey {
+    padding: var(--space-24) 0;
+    position: relative;
+  }
+  .journey-intro {
+    max-width: var(--prose-max);
+    margin: 0 auto var(--space-16);
+    text-align: center;
+  }
+  .journey-intro h2 {
+    margin: 0 auto;
+  }
+
+  .journey-steps {
+    display: grid;
+    gap: var(--space-16);
+    position: relative;
+  }
+
+  .journey-step {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: var(--space-8);
+    align-items: start;
+  }
+  .journey-step.is-reverse {
+    grid-template-columns: 1fr 140px;
+  }
+  .journey-step.is-reverse .journey-step-icon {
+    order: 2;
+  }
+
+  .journey-step-icon {
+    width: 140px;
+    height: 140px;
+    color: var(--color-orange-ink);
+    flex-shrink: 0;
+  }
+
+  .journey-step-body h3 {
+    margin: var(--space-2) 0 var(--space-3);
+    font-size: var(--text-2xl);
+  }
+  .journey-bullets {
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+  }
+  .journey-bullets li {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-navy);
+    background: var(--color-blue-soft);
+    padding: 0.35em 0.9em;
+    border-radius: var(--radius-pill);
+  }
+
+  .journey-proof {
+    margin-top: var(--space-12);
+  }
+  .journey-proof-label {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-4);
+  }
+
+  /* Rail de progression : une simple ligne qui se remplit, desktop only —
+     sur mobile le fil conducteur reste la lecture verticale naturelle. */
+  .journey-rail {
+    display: none;
+  }
+  @media (min-width: 860px) {
+    .journey-rail {
+      display: block;
+      position: absolute;
+      left: calc(var(--space-8) + 69px);
+      top: 220px;
+      bottom: 40px;
+      width: 2px;
+      background: var(--color-border);
+      border-radius: 1px;
+    }
+    .journey-rail-fill {
+      position: absolute;
+      inset: 0;
+      background: var(--color-orange);
+      transform: scaleY(0);
+      transform-origin: top;
+      border-radius: 1px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .journey-step,
+    .journey-step.is-reverse {
+      grid-template-columns: 1fr;
+    }
+    .journey-step.is-reverse .journey-step-icon {
+      order: 0;
+    }
+    .journey-step-icon {
+      width: 84px;
+      height: 84px;
+    }
+  }
+</style>

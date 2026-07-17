@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import ChatCarousel from '../components/ChatCarousel.astro';
+import Journey from '../components/Journey.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
 import { conversations } from '../data/conversations';
@@ -69,25 +69,10 @@ const offers = [
   },
 ];
 
-const doChecks = [
-  { i: '1', title: 'Lancer', text: "Donner un vrai départ à un projet ou une transformation — pas seulement l'annoncer en kickoff." },
-  { i: '2', title: 'Construire une culture', text: 'Installer les rituels, les responsabilités et les repères qui font tenir un collectif dans la durée.' },
-  { i: '3', title: 'Remotiver', text: 'Redonner du sens, de la clarté et de l\'énergie à une équipe qui tourne au ralenti.' },
-  { i: '4', title: 'Arrêter le gâchis', text: 'Remplacer les réunions qui ne mènent nulle part par des temps qui produisent un résultat.' },
-];
-
 const whoChecks = [
   { i: 'V', title: 'Une vision', text: 'Des organisations où les personnes savent ce qui compte et dans quel cadre agir.' },
   { i: 'M', title: 'Une mission', text: 'Concevoir de meilleures conversations pour produire de meilleures décisions.' },
   { i: 'A', title: 'Une approche', text: 'Partir du résultat attendu avant de choisir les méthodes et les outils.' },
-];
-
-const method = [
-  { title: 'Donner à voir', text: 'Clarifier les enjeux et rendre visibles les idées, les défis et les opportunités.' },
-  { title: 'Faire participer', text: "Faire émerger l'intelligence collective et créer les conditions de l'engagement." },
-  { title: 'Décider', text: 'Transformer les échanges en choix concrets. Prioriser. Aligner les énergies.' },
-  { title: 'Agir', text: 'Passer des intentions aux actions et construire un plan réaliste et mobilisateur.' },
-  { title: 'Apprendre', text: 'Observer, ajuster et progresser ensemble.' },
 ];
 
 const complementary = [
@@ -146,33 +131,7 @@ const clients = [
     </div>
   </section>
 
-  <section class="whispers" data-reveal>
-    <div class="container">
-      <p class="eyebrow">Ce qui se dit vraiment</p>
-      <h2 class="prose">Ce que les équipes se disent <span class="marker">réellement</span> entre elles.</h2>
-      <p class="prose whispers-lead">Jamais en réunion. Toujours juste après, entre deux portes ou dans un message privé. Si ces conversations vous rappellent quelque chose, ce n'est pas une fatalité — c'est un symptôme qui se traite.</p>
-      <ChatCarousel conversations={conversations} />
-    </div>
-  </section>
-
-  <section class="section alt" data-reveal>
-    <div class="container split">
-      <div>
-        <p class="eyebrow">Ce que je fais réellement</p>
-        <h2>Beaucoup plus qu'animer une réunion.</h2>
-        <p class="hero-copy">Lancer un projet qui tient dans la durée. Construire une culture qui apprend au lieu de se répéter. Redonner de l'énergie à une équipe qui tourne au ralenti. Arrêter de perdre du temps en réunions qui ne mènent nulle part. La réunion n'est qu'un outil parmi d'autres — jamais le point de départ.</p>
-        <div class="checks">
-          {doChecks.map((c) => (
-            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
-          ))}
-        </div>
-      </div>
-      <div class="quote">
-        <blockquote>Ce n'est pas la réunion qui change une organisation. C'est ce qu'elle rend possible ensuite.</blockquote>
-        <cite>Nicolas Verdot — Facilitateur, coach et formateur</cite>
-      </div>
-    </div>
-  </section>
+  <Journey conversations={conversations} />
 
   <section class="offers" id="accompagnements" data-reveal>
     <div class="container">
@@ -236,23 +195,6 @@ const clients = [
       </div>
       <div class="split-photo">
         <Image src={action} alt="Nicolas Verdot en pleine facilitation graphique" width={480} height={360} />
-      </div>
-    </div>
-  </section>
-
-  <section class="section dark" data-reveal>
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">La méthode</p>
-          <h2>Un processus simple, jamais simpliste.</h2>
-        </div>
-        <p>Les méthodes changent selon le contexte. Les étapes, elles, restent lisibles.</p>
-      </div>
-      <div class="method">
-        {method.map((m, i) => (
-          <div class="step"><b>{String(i + 1).padStart(2, '0')}</b>{m.title} — {m.text}</div>
-        ))}
       </div>
     </div>
   </section>
@@ -324,10 +266,6 @@ const clients = [
     text-align: center;
   }
 
-  .whispers {
-    background: var(--color-surface);
-  }
-
   .authority {
     list-style: none;
     display: flex;
@@ -357,10 +295,6 @@ const clients = [
   .authority a:hover {
     color: var(--color-ink);
     border-color: var(--color-orange);
-  }
-  .whispers-lead {
-    color: var(--color-muted);
-    margin-top: var(--space-2);
   }
 
   .complementary-label {
