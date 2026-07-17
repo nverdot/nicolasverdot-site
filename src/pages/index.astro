@@ -10,23 +10,26 @@ import action from '../assets/nicolas-action.jpeg';
 
 const offers = [
   {
-    num: '01 · Décision',
-    title: 'Décider ensemble',
-    text: 'Pour sortir des discussions qui tournent en rond et transformer un sujet complexe en décision claire.',
+    num: '01 · Décider ensemble',
+    title: '« On discute beaucoup. On décide peu. »',
+    text: 'Un processus de décision qui transforme votre sujet complexe en choix clair, assumé et suivi d\'effets — dès la sortie de la salle.',
+    cta: 'Débloquer la décision',
     href: withBase('/offres/decider-ensemble/'),
     ribbon: false,
   },
   {
-    num: "02 · Alignement",
-    title: "Aligner l'équipe",
-    text: 'Pour créer une direction commune, traiter les divergences et remettre le collectif en mouvement.',
+    num: "02 · Aligner l'équipe",
+    title: '« Chacun avance. Mais pas dans le même sens. »',
+    text: 'Un temps fort pour construire une direction commune, traiter les divergences en face et remettre le collectif en mouvement.',
+    cta: 'Retrouver un cap commun',
     href: withBase('/offres/aligner-equipe/'),
     ribbon: true,
   },
   {
-    num: '03 · Fonctionnement',
-    title: 'Installer une dynamique durable',
-    text: "Pour faire évoluer la prise de décision, les responsabilités, les rituels et l'autonomie dans le temps.",
+    num: '03 · Dynamique durable',
+    title: '« On répare toujours les mêmes pannes. »',
+    text: "Faire évoluer la prise de décision, les responsabilités et les rituels — changer le système, pas poser des pansements.",
+    cta: 'Installer une dynamique durable',
     href: withBase('/offres/dynamique-durable/'),
     ribbon: false,
   },
@@ -54,10 +57,10 @@ const method = [
 ];
 
 const complementary = [
-  { num: 'Transformation', title: 'Accompagnement de transformation', text: 'Débloquer les transformations IA, Agile ou culturelles qui restent sur le papier.', href: withBase('/offres/accompagnement-transformation/') },
-  { num: 'Individuel', title: 'Coaching professionnel', text: 'Travailler la posture, les interactions et la sécurité intérieure du leader.', href: withBase('/offres/coaching-professionnel/') },
-  { num: 'Visuel', title: 'Capture graphique en direct', text: 'Traduire vos séminaires et conférences en fresque visuelle mémorable.', href: withBase('/offres/capture-graphique/') },
-  { num: 'Compétences', title: 'Formations', text: 'Facilitation graphique, intelligence collective, IA appliquée et leader facilitateur.', href: withBase('/formations/') },
+  { num: 'Transformation', title: '« La transfo est lancée. Le terrain ne suit pas. »', text: 'Débloquer les transformations IA, Agile ou culturelles qui restent sur le papier.', cta: "Remettre la transformation en mouvement", href: withBase('/offres/accompagnement-transformation/') },
+  { num: 'Coaching professionnel', title: '« Je porte beaucoup. Et je le porte seul. »', text: 'Travailler la posture, les interactions et la sécurité intérieure du leader, en individuel.', cta: 'Découvrir le coaching', href: withBase('/offres/coaching-professionnel/') },
+  { num: 'Capture graphique', title: '« Ce séminaire doit rester dans les mémoires. »', text: 'Une fresque visuelle réalisée en direct, qui capte vos échanges et prolonge leur impact bien après l\'événement.', cta: 'Voir la capture graphique', href: withBase('/offres/capture-graphique/') },
+  { num: 'Formations', title: '« Nos managers animent comme ils peuvent. »', text: "Facilitation, intelligence collective, pensée visuelle, IA appliquée : des compétences qui restent dans l'équipe.", cta: 'Parcourir les formations', href: withBase('/formations/') },
 ];
 const complementaryMore = ['Mentorat Leader', "Conception d'événements", 'Décoincés du Crayon'];
 
@@ -81,8 +84,8 @@ const clients = [
 ---
 
 <Layout
-  title="by Nicolas Verdot — Du collectif qui discute au collectif qui agit vraiment"
-  description="Facilitation, séminaires, facilitation graphique, coaching, IA et formations pour aider les collectifs à clarifier, décider et passer à l'action."
+  title="Facilitateur professionnel, coach et formateur — by Nicolas Verdot"
+  description="Séminaires facilités, ateliers d'intelligence collective, facilitation graphique, coaching et formations : trouvez le service qui débloquera votre équipe — et passez de la discussion à l'action."
   path="/"
 >
   <Hero />
@@ -123,9 +126,9 @@ const clients = [
       <div class="section-head">
         <div>
           <p class="eyebrow">Trois portes d'entrée</p>
-          <h2>Par quel sujet commencer ?</h2>
+          <h2>Commencez par votre problème, pas par nos méthodes.</h2>
         </div>
-        <p>Le site ne présente pas un catalogue de compétences. Il vous aide à reconnaître la situation que vous vivez, à vous situer grâce à un diagnostic et à comprendre ce que vous pouvez obtenir.</p>
+        <p>Vous n'avez pas besoin d'un catalogue de compétences : vous vivez une situation précise. Reconnaissez-la ci-dessous — chaque porte mène au service qui la traite, avec un diagnostic pour vous situer.</p>
       </div>
       <div class="cards">
         {offers.map((offer) => (
@@ -134,10 +137,33 @@ const clients = [
             <div class="num">{offer.num}</div>
             <h3>{offer.title}</h3>
             <p>{offer.text}</p>
-            <a class="card-link" href={offer.href}>Explorer l'offre et faire le test</a>
+            <a class="card-link" href={offer.href}>{offer.cta}</a>
           </article>
         ))}
       </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Votre situation est ailleurs ?</p>
+          <h2>Elle a aussi sa porte.</h2>
+        </div>
+        <p>Transformation qui patine, dirigeant isolé, événement à marquer, compétences à ancrer : quatre autres façons de travailler ensemble.</p>
+      </div>
+      <div class="cards">
+        {complementary.map((c) => (
+          <article class="card">
+            <div class="num">{c.num}</div>
+            <h3>{c.title}</h3>
+            <p>{c.text}</p>
+            <a class="card-link" href={c.href}>{c.cta}</a>
+          </article>
+        ))}
+      </div>
+      <p class="complementary-label">Et aussi : {complementaryMore.join(' · ')}. Curieux de la pensée visuelle ? <a href={withBase('/facilitation-graphique/')}>Découvrez ce qu'est la facilitation graphique</a>.</p>
     </div>
   </section>
 
@@ -195,29 +221,6 @@ const clients = [
           <div class="step"><b>{String(i + 1).padStart(2, '0')}</b>{m.title} — {m.text}</div>
         ))}
       </div>
-    </div>
-  </section>
-
-  <section data-reveal>
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Autres façons de travailler ensemble</p>
-          <h2>Autour du cœur de métier</h2>
-        </div>
-        <p>Des offres complémentaires sans brouiller le positionnement principal.</p>
-      </div>
-      <div class="cards">
-        {complementary.map((c) => (
-          <article class="card">
-            <div class="num">{c.num}</div>
-            <h3>{c.title}</h3>
-            <p>{c.text}</p>
-            <a class="card-link" href={c.href}>Découvrir</a>
-          </article>
-        ))}
-      </div>
-      <p class="complementary-label">Et aussi : {complementaryMore.join(' · ')}. Curieux de la pensée visuelle ? <a href={withBase('/facilitation-graphique/')}>Découvrez ce qu'est la facilitation graphique</a>.</p>
     </div>
   </section>
 
