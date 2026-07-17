@@ -1,0 +1,194 @@
+---
+interface Step {
+  title: string;
+  text: string;
+  bullets: string[];
+}
+
+interface Props {
+  steps: Step[];
+}
+
+const { steps } = Astro.props;
+---
+
+<div class="approach-timeline">
+  <div class="approach-rail" aria-hidden="true" data-approach-rail>
+    <div class="approach-rail-fill" data-approach-rail-fill></div>
+  </div>
+
+  <ol class="approach-timeline-list">
+    {steps.map((step, i) => (
+      <li class="approach-row" data-reveal>
+        <span class="approach-dot" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <div class="approach-row-text">
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+          <div class="checks">
+            {step.bullets.map((bullet) => (
+              <div class="check"><i aria-hidden="true">✓</i><span>{bullet}</span></div>
+            ))}
+          </div>
+        </div>
+        <div class="approach-illustration" role="img" aria-label={`Illustration sketchnote à venir pour l'étape ${step.title}`}>
+          <span>Illustration sketchnote à venir</span>
+        </div>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<script>
+  // Rail de progression : remplit une ligne verticale au fil du scroll,
+  // même principe que la section Journey de la home, adapté à cette liste.
+  const timeline = document.querySelector<HTMLElement>('.approach-timeline-list');
+  const rail = document.querySelector<HTMLElement>('[data-approach-rail]');
+  const railFill = document.querySelector<HTMLElement>('[data-approach-rail-fill]');
+  const mq = window.matchMedia('(min-width: 860px)');
+
+  if (timeline && rail && railFill) {
+    let ticking = false;
+
+    function update() {
+      ticking = false;
+      if (!mq.matches || !timeline || !railFill) return;
+      const rect = timeline.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const total = rect.height - vh * 0.4;
+      const scrolled = vh * 0.6 - rect.top;
+      const progress = total > 0 ? Math.min(1, Math.max(0, scrolled / total)) : 0;
+      railFill.style.transform = `scaleY(${progress})`;
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  }
+</script>
+
+<style>
+  .approach-timeline {
+    position: relative;
+  }
+
+  .approach-timeline-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-16);
+    position: relative;
+  }
+
+  .approach-row {
+    display: grid;
+    grid-template-columns: 56px 1fr 260px;
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  .approach-dot {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border-radius: 52% 48% 55% 45% / 47% 53% 46% 54%;
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    color: var(--color-muted);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    transition: background 300ms var(--ease-out), border-color 300ms var(--ease-out), color 300ms var(--ease-out);
+  }
+  .approach-row:nth-child(even) .approach-dot {
+    border-radius: 46% 54% 48% 52% / 55% 45% 54% 46%;
+  }
+  [data-reveal].is-visible .approach-dot {
+    background: var(--color-orange);
+    border-color: var(--color-orange);
+    color: var(--color-ink-solid);
+  }
+
+  .approach-row-text h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-2xl);
+  }
+  .approach-row-text p {
+    color: var(--color-muted);
+    margin: 0;
+  }
+  .approach-row-text .checks {
+    margin-top: var(--space-4);
+  }
+  .approach-row-text .check span {
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .approach-illustration {
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    border: 2px dashed var(--color-border);
+    display: grid;
+    place-items: center;
+    padding: var(--space-4);
+    text-align: center;
+  }
+  .approach-illustration span {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+  }
+
+  .approach-rail {
+    display: none;
+  }
+  @media (min-width: 860px) {
+    .approach-rail {
+      display: block;
+      position: absolute;
+      left: 27px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--color-border);
+      border-radius: 1px;
+    }
+    .approach-rail-fill {
+      position: absolute;
+      inset: 0;
+      background: var(--color-orange);
+      transform: scaleY(0);
+      transform-origin: top;
+      border-radius: 1px;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .approach-row {
+      grid-template-columns: 1fr;
+    }
+    .approach-dot {
+      margin-bottom: var(--space-2);
+    }
+    .approach-illustration {
+      order: 2;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .approach-dot {
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
