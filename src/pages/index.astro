@@ -36,10 +36,10 @@ const offers = [
 ];
 
 const doChecks = [
-  { i: '1', title: "Cadrer l'enjeu", text: 'Que faut-il comprendre, traiter ou décider ?' },
-  { i: '2', title: 'Concevoir le processus', text: 'Qui contribue, à quel moment, avec quelles limites ?' },
-  { i: '3', title: 'Faciliter et rendre visible', text: 'Faire émerger, structurer, arbitrer et garder une trace.' },
-  { i: '4', title: 'Préparer la suite', text: 'Responsables, décisions, feuille de route et suivi.' },
+  { i: '1', title: 'Lancer', text: "Donner un vrai départ à un projet ou une transformation — pas seulement l'annoncer en kickoff." },
+  { i: '2', title: 'Construire une culture', text: 'Installer les rituels, les responsabilités et les repères qui font tenir un collectif dans la durée.' },
+  { i: '3', title: 'Remotiver', text: 'Redonner du sens, de la clarté et de l\'énergie à une équipe qui tourne au ralenti.' },
+  { i: '4', title: 'Arrêter le gâchis', text: 'Remplacer les réunions qui ne mènent nulle part par des temps qui produisent un résultat.' },
 ];
 
 const whoChecks = [
@@ -112,11 +112,30 @@ const clients = [
     </div>
   </section>
 
+  <section class="section alt" data-reveal>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Ce que je fais réellement</p>
+        <h2>Beaucoup plus qu'animer une réunion.</h2>
+        <p class="hero-copy">Lancer un projet qui tient dans la durée. Construire une culture qui apprend au lieu de se répéter. Redonner de l'énergie à une équipe qui tourne au ralenti. Arrêter de perdre du temps en réunions qui ne mènent nulle part. La réunion n'est qu'un outil parmi d'autres — jamais le point de départ.</p>
+        <div class="checks">
+          {doChecks.map((c) => (
+            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
+          ))}
+        </div>
+      </div>
+      <div class="quote">
+        <blockquote>Ce n'est pas la réunion qui change une organisation. C'est ce qu'elle rend possible ensuite.</blockquote>
+        <cite>Nicolas Verdot — Facilitateur, coach et formateur</cite>
+      </div>
+    </div>
+  </section>
+
   <section class="whispers" data-reveal>
     <div class="container">
       <p class="eyebrow">Ce qui se dit vraiment</p>
       <h2 class="prose">Ce que les équipes se disent <span class="marker">réellement</span> entre elles.</h2>
-      <p class="prose whispers-lead">Jamais en réunion. Toujours juste après, entre deux portes ou dans un message privé. Si ces conversations vous rappellent quelque chose, la suite est pour vous.</p>
+      <p class="prose whispers-lead">Jamais en réunion. Toujours juste après, entre deux portes ou dans un message privé. C'est souvent là que se joue l'état réel d'une culture d'équipe. Si ces conversations vous rappellent quelque chose, la suite est pour vous.</p>
       <ChatCarousel conversations={conversations} />
     </div>
   </section>
@@ -164,25 +183,6 @@ const clients = [
         ))}
       </div>
       <p class="complementary-label">Et aussi : {complementaryMore.join(' · ')}. Curieux de la pensée visuelle ? <a href={withBase('/facilitation-graphique/')}>Découvrez ce qu'est la facilitation graphique</a>.</p>
-    </div>
-  </section>
-
-  <section class="section alt" data-reveal>
-    <div class="container split">
-      <div>
-        <p class="eyebrow">Ce que je fais réellement</p>
-        <h2>Je ne viens pas seulement animer une salle.</h2>
-        <p class="hero-copy">Le travail commence avant : clarifier l'intention, comprendre le système, identifier le niveau réel de participation et concevoir la conversation qui permettra d'obtenir un résultat exploitable.</p>
-        <div class="checks">
-          {doChecks.map((c) => (
-            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
-          ))}
-        </div>
-      </div>
-      <div class="quote">
-        <blockquote>Un bon séminaire ne se mesure pas au nombre de post-it. Il se mesure à ce qui devient plus clair après.</blockquote>
-        <cite>Nicolas Verdot — Facilitateur, coach et formateur</cite>
-      </div>
     </div>
   </section>
 
