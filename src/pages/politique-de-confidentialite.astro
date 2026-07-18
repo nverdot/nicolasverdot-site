@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { SITE } from '../data/site';
+---
+
+<Layout
+  title="Politique de confidentialité — by Nicolas Verdot"
+  description="Comment ce site collecte, utilise et protège vos données personnelles, conformément au RGPD."
+  path="/politique-de-confidentialite/"
+>
+  <PageHero
+    eyebrow="Informations légales"
+    title="Politique de confidentialité"
+    summary="Cette page explique quelles données sont collectées sur ce site, pourquoi, et comment vous pouvez exercer vos droits — conformément au Règlement général sur la protection des données (RGPD)."
+  />
+
+  <section class="section" data-reveal>
+    <div class="container prose">
+      <div class="legal-todo-banner">
+        <strong>À compléter avant mise en ligne :</strong> vérifier les champs <code>[à compléter]</code> (identité du responsable de traitement, coordonnées du DPO le cas échéant) avant publication.
+      </div>
+
+      <h2>Responsable du traitement</h2>
+      <p>
+        Le responsable du traitement des données collectées sur ce site est Nicolas Verdot, exerçant sous le nom commercial « {SITE.name} », <code>[à compléter — forme juridique et SIRET]</code>, joignable à l'adresse <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+      </p>
+
+      <h2>Quelles données sont collectées</h2>
+      <p>Ce site collecte des données personnelles uniquement lorsque vous les fournissez volontairement, via deux formulaires :</p>
+      <ul>
+        <li><strong>Le formulaire de contact</strong> : nom, adresse e-mail et contenu de votre message.</li>
+        <li><strong>Le formulaire de diagnostic (quiz)</strong> : vos réponses aux questions posées et, si vous choisissez de recevoir le résultat, votre adresse e-mail.</li>
+      </ul>
+      <p>
+        Aucune donnée n'est collectée à votre insu : ce site n'utilise pas de cookies de mesure d'audience ni de traceurs publicitaires. Une préférence technique (mode clair/sombre) est enregistrée localement dans votre navigateur (<code>localStorage</code>) ; elle ne quitte jamais votre appareil et n'est pas accessible à Nicolas Verdot.
+      </p>
+
+      <h2>Pourquoi ces données sont collectées</h2>
+      <p>
+        Ces informations sont utilisées exclusivement pour répondre à votre demande de contact ou vous transmettre le résultat du diagnostic que vous avez sollicité. Elles ne sont ni revendues, ni utilisées à des fins de prospection sans votre accord explicite.
+      </p>
+
+      <h2>Base légale</h2>
+      <p>
+        Le traitement repose sur votre consentement, exprimé au moment où vous soumettez volontairement l'un de ces formulaires (article 6.1.a du RGPD).
+      </p>
+
+      <h2>Destinataires des données</h2>
+      <p>
+        Le formulaire de contact est acheminé par le service tiers <a href="https://web3forms.com" target="_blank" rel="noopener">Web3Forms</a>, qui agit en tant que sous-traitant technique pour la transmission de l'e-mail. Aucune autre donnée n'est transmise à un tiers.
+      </p>
+
+      <h2>Durée de conservation</h2>
+      <p>
+        Les messages reçus via ces formulaires sont conservés le temps nécessaire au traitement de votre demande, puis supprimés dans un délai raisonnable, sauf obligation légale contraire.
+      </p>
+
+      <h2>Vos droits</h2>
+      <p>
+        Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition concernant vos données personnelles. Pour exercer ces droits, écrivez à <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. Vous disposez également du droit d'introduire une réclamation auprès de la CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a>).
+      </p>
+
+      <h2>Hébergement des données</h2>
+      <p>
+        Les données transitant par le formulaire de contact sont hébergées par Web3Forms. Le site lui-même est hébergé par <code>[à compléter — hébergeur]</code>, voir les <a href="/mentions-legales/">mentions légales</a>.
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .legal-todo-banner {
+    background: color-mix(in srgb, var(--color-orange) 16%, var(--color-surface));
+    border: 1px solid var(--color-orange);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-6);
+    margin-bottom: var(--space-8);
+    font-size: var(--text-sm);
+  }
+  .prose code {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0.1em 0.4em;
+    font-size: 0.9em;
+  }
+</style>

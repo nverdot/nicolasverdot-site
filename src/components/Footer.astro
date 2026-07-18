@@ -72,7 +72,9 @@ const icons = {
 
   <div class="container footer-bottom">
     <span>&copy; {year} Nicolas Verdot. Tous droits réservés.</span>
-    <span class="footer-legal">Mentions légales · Confidentialité · Accessibilité : à venir</span>
+    <span class="footer-legal">
+      <a href={withBase('/mentions-legales/')}>Mentions légales</a> · <a href={withBase('/politique-de-confidentialite/')}>Confidentialité</a>
+    </span>
   </div>
 </footer>
 
@@ -160,6 +162,15 @@ const icons = {
     border-top: 1px solid rgba(255, 255, 255, 0.12);
     font-size: var(--text-xs);
     color: #95a4bb;
+  }
+  .footer-legal a {
+    color: #95a4bb;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s ease;
+  }
+  .footer-legal a:hover {
+    color: var(--color-white);
   }
 
   @media (max-width: 1000px) {

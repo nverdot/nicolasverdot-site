@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../data/site';
+import { withBase } from '../utils/url';
 ---
 
 <form id="contact-form" class="contact-form form-grid">
@@ -27,6 +28,9 @@ import { SITE } from '../data/site';
     <textarea id="message" name="message" rows="5" required></textarea>
   </div>
 
+  <p class="fine full">
+    Ces informations sont utilisées uniquement pour vous répondre. <a href={withBase('/politique-de-confidentialite/')}>Politique de confidentialité</a>.
+  </p>
   <button type="submit" class="btn full">Envoyer</button>
   <p id="form-status" class="fine full" role="status" aria-live="polite"></p>
 </form>

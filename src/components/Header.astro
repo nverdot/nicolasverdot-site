@@ -21,10 +21,10 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
       </svg>
     </button>
     <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-    <label for="nav-toggle" class="nav-toggle-label" aria-label="Ouvrir le menu">
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
       <span></span>
     </label>
-    <nav class="main-nav">
+    <nav class="main-nav" id="main-nav">
       <ul>
         <li><a href={withBase('/')} aria-current={currentPath === '/' ? 'page' : undefined}>Accueil</a></li>
         <li><a href={withBase('/offres/')} aria-current={currentPath.startsWith('/offres/') ? 'page' : undefined}>Offres</a></li>
@@ -233,5 +233,15 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     } catch (e) {
       /* localStorage indisponible (navigation privée...) — le choix ne sera pas mémorisé */
     }
+  });
+
+  // Reflète l'état ouvert/fermé du menu mobile pour les lecteurs d'écran —
+  // le pattern checkbox+label ne met à jour aucun ARIA tout seul.
+  const navToggle = document.getElementById('nav-toggle');
+  const navLabel = document.querySelector('.nav-toggle-label');
+  navToggle?.addEventListener('change', () => {
+    const isOpen = navToggle instanceof HTMLInputElement && navToggle.checked;
+    navLabel?.setAttribute('aria-expanded', String(isOpen));
+    navLabel?.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
   });
 </script>

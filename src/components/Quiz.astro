@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../data/site';
+import { withBase } from '../utils/url';
 
 interface Question {
   text: string;
@@ -24,9 +25,10 @@ interface Props {
 const { title, intro = 'Répondez à 8 questions et obtenez une première lecture de votre situation.', questions, levels, cta, contactHref } = Astro.props;
 const quizData = { questions, levels, cta };
 const accessKey = SITE.web3formsAccessKey;
+const privacyHref = withBase('/politique-de-confidentialite/');
 ---
 
-<aside class="panel quiz sticky" data-contact-href={contactHref} data-quiz={JSON.stringify(quizData)} data-access-key={accessKey}>
+<aside class="panel quiz sticky" data-contact-href={contactHref} data-privacy-href={privacyHref} data-quiz={JSON.stringify(quizData)} data-access-key={accessKey}>
   <p class="eyebrow">Mini-diagnostic</p>
   <h2 class="quiz-title">{title}</h2>
   <p class="quiz-intro">{intro}</p>
@@ -301,6 +303,7 @@ const accessKey = SITE.web3formsAccessKey;
       result!.style.display = 'block';
       progress!.style.transform = 'scaleX(1)';
       const contactHref = quiz.dataset.contactHref || '/contact/';
+      const privacyHref = quiz.dataset.privacyHref || '/politique-de-confidentialite/';
 
       result!.innerHTML = `
         <div class="score" style="--score:${percent * 3.6}deg"><strong>${percent}%</strong></div>
@@ -314,6 +317,7 @@ const accessKey = SITE.web3formsAccessKey;
           <input type="hidden" name="Résultat" value="${percent}% — ${level.title}" />
           <input type="text" name="name" class="full" placeholder="Votre prénom" required>
           <input type="email" name="email" class="full" placeholder="Votre email professionnel" required>
+          <p class="fine full">Cet email sert uniquement à vous envoyer votre analyse. <a href="${privacyHref}">Politique de confidentialité</a>.</p>
           <button class="btn full" type="submit">Recevoir mon analyse détaillée</button>
           <p class="fine full" data-form-status></p>
         </form>
