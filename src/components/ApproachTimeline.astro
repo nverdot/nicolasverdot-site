@@ -13,10 +13,6 @@ const { steps } = Astro.props;
 ---
 
 <div class="approach-timeline">
-  <div class="approach-rail" aria-hidden="true" data-approach-rail>
-    <div class="approach-rail-fill" data-approach-rail-fill></div>
-  </div>
-
   <ol class="approach-timeline-list">
     {steps.map((step, i) => (
       <li class="approach-row" data-reveal>
@@ -45,28 +41,6 @@ const { steps } = Astro.props;
   gsap.registerPlugin(ScrollTrigger);
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const timeline = document.querySelector<HTMLElement>('.approach-timeline-list');
-  const railFill = document.querySelector<HTMLElement>('[data-approach-rail-fill]');
-
-  // Rail de progression, même mécanique scrubbée que la section Journey de
-  // la home (voir Journey.astro) — cohérence intentionnelle entre les deux.
-  // gsap.matchMedia() recrée/détruit le ScrollTrigger si la fenêtre
-  // franchit 860px sans rechargement (contrairement à un window.matchMedia
-  // figé au chargement du script).
-  if (!reduceMotion && timeline && railFill) {
-    const mm = gsap.matchMedia();
-    mm.add('(min-width: 860px)', () => {
-      gsap.set(railFill, { scaleY: 0, transformOrigin: 'top' });
-      const trigger = ScrollTrigger.create({
-        trigger: timeline,
-        start: 'top 70%',
-        end: 'bottom 60%',
-        scrub: 0.6,
-        onUpdate: (self) => gsap.set(railFill, { scaleY: self.progress }),
-      });
-      return () => trigger.kill();
-    });
-  }
 
   // Chaque emplacement d'illustration se révèle de haut en bas au scroll
   // (masqué par clip-path, pas par opacité, pour préfigurer l'effet
@@ -161,30 +135,6 @@ const { steps } = Astro.props;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--color-muted);
-  }
-
-  .approach-rail {
-    display: none;
-  }
-  @media (min-width: 860px) {
-    .approach-rail {
-      display: block;
-      position: absolute;
-      left: 27px;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: var(--color-border);
-      border-radius: 1px;
-    }
-    .approach-rail-fill {
-      position: absolute;
-      inset: 0;
-      background: var(--color-orange);
-      transform: scaleY(0);
-      transform-origin: top;
-      border-radius: 1px;
-    }
   }
 
   @media (max-width: 860px) {

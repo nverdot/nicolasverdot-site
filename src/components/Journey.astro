@@ -1,6 +1,5 @@
 ---
 import ChatCarousel from './ChatCarousel.astro';
-import JourneyIcon from './JourneyIcon.astro';
 import { journey } from '../data/journey';
 import { conversations } from '../data/conversations';
 
@@ -17,16 +16,10 @@ const { conversations: convos } = Astro.props;
       <h2 class="prose">Du flou à la clarté. De la discussion à la décision. De la décision à l'action.</h2>
     </div>
 
-    <div class="journey-rail" aria-hidden="true" data-journey-rail>
-      <div class="journey-rail-fill" data-journey-rail-fill></div>
-    </div>
-
     <div class="journey-steps">
       {journey.map((step, i) => (
-        <article class={`journey-step ${i % 2 === 1 ? 'is-reverse' : ''}`} data-reveal>
-          <div class="journey-step-icon">
-            <JourneyIcon name={step.icon} />
-          </div>
+        <article class="journey-step" data-reveal>
+          <span class="journey-step-number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
           <div class="journey-step-body">
             <p class="eyebrow">{step.eyebrow}</p>
             <h3>{step.title}</h3>
@@ -47,63 +40,9 @@ const { conversations: convos } = Astro.props;
   </div>
 </section>
 
-<script>
-  import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const journeySection = document.querySelector<HTMLElement>('.journey');
-  const railFill = document.querySelector<HTMLElement>('[data-journey-rail-fill]');
-
-  // Rail de progression : remplit une ligne verticale scrubbée au scroll
-  // (0.6s de lissage plutôt qu'un 1:1 brut, pour un mouvement moins sec).
-  // Sous reduced-motion on garde la barre statique, pas d'écoute scroll.
-  // gsap.matchMedia() (et non un simple window.matchMedia figé au chargement)
-  // recrée/détruit le ScrollTrigger si la fenêtre franchit 860px sans
-  // rechargement de page (redimensionnement, rotation d'un écran pliable).
-  if (!reduceMotion && journeySection && railFill) {
-    const mm = gsap.matchMedia();
-    mm.add('(min-width: 860px)', () => {
-      gsap.set(railFill, { scaleY: 0, transformOrigin: 'top' });
-      const trigger = ScrollTrigger.create({
-        trigger: journeySection,
-        start: 'top 70%',
-        end: 'bottom 60%',
-        scrub: 0.6,
-        onUpdate: (self) => gsap.set(railFill, { scaleY: self.progress }),
-      });
-      return () => trigger.kill();
-    });
-  }
-
-  // Dessin des icônes : chaque tracé (pathLength="1") se dessine au fil du
-  // scroll plutôt qu'au simple passage en viewport — c'est la mécanique
-  // "trait qui se clarifie en scrollant" du brief sketchnote d'origine.
-  // Le fallback CSS (transition sur [data-reveal].is-visible, déjà en
-  // place dans JourneyIcon.astro) reste actif tant que GSAP n'a pas pris
-  // la main sur un tracé donné, et sert de secours sous reduced-motion.
-  if (!reduceMotion) {
-    document.querySelectorAll<HTMLElement>('.journey-step').forEach((step) => {
-      const shapes = step.querySelectorAll<SVGGeometryElement>('.journey-icon > *');
-      if (!shapes.length) return;
-      gsap.set(shapes, { transition: 'none', strokeDashoffset: 1 });
-      ScrollTrigger.create({
-        trigger: step,
-        start: 'top 80%',
-        end: 'top 30%',
-        scrub: 0.6,
-        onUpdate: (self) => gsap.set(shapes, { strokeDashoffset: 1 - self.progress }),
-      });
-    });
-  }
-</script>
-
 <style>
   .journey {
     padding: var(--space-24) 0;
-    position: relative;
   }
   .journey-intro {
     max-width: var(--prose-max);
@@ -117,27 +56,29 @@ const { conversations: convos } = Astro.props;
   .journey-steps {
     display: grid;
     gap: var(--space-16);
-    position: relative;
   }
 
   .journey-step {
     display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: var(--space-8);
+    grid-template-columns: 56px 1fr;
+    gap: var(--space-6);
     align-items: start;
   }
-  .journey-step.is-reverse {
-    grid-template-columns: 1fr 140px;
-  }
-  .journey-step.is-reverse .journey-step-icon {
-    order: 2;
-  }
 
-  .journey-step-icon {
-    width: 140px;
-    height: 140px;
-    color: var(--color-orange-ink);
-    flex-shrink: 0;
+  .journey-step-number {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border-radius: 52% 48% 55% 45% / 47% 53% 46% 54%;
+    background: var(--color-orange);
+    color: var(--color-ink-solid);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-sm);
+  }
+  .journey-step:nth-child(even) .journey-step-number {
+    border-radius: 46% 54% 48% 52% / 55% 45% 54% 46%;
   }
 
   .journey-step-body h3 {
@@ -171,43 +112,13 @@ const { conversations: convos } = Astro.props;
     margin: 0 0 var(--space-4);
   }
 
-  /* Rail de progression : une simple ligne qui se remplit, desktop only —
-     sur mobile le fil conducteur reste la lecture verticale naturelle. */
-  .journey-rail {
-    display: none;
-  }
-  @media (min-width: 860px) {
-    .journey-rail {
-      display: block;
-      position: absolute;
-      left: calc(var(--space-8) + 69px);
-      top: 220px;
-      bottom: 40px;
-      width: 2px;
-      background: var(--color-border);
-      border-radius: 1px;
-    }
-    .journey-rail-fill {
-      position: absolute;
-      inset: 0;
-      background: var(--color-orange);
-      transform: scaleY(0);
-      transform-origin: top;
-      border-radius: 1px;
-    }
-  }
-
   @media (max-width: 720px) {
-    .journey-step,
-    .journey-step.is-reverse {
+    .journey-step {
       grid-template-columns: 1fr;
     }
-    .journey-step.is-reverse .journey-step-icon {
-      order: 0;
-    }
-    .journey-step-icon {
-      width: 84px;
-      height: 84px;
+    .journey-step-number {
+      width: 44px;
+      height: 44px;
     }
   }
 </style>
