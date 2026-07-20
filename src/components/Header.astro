@@ -6,7 +6,7 @@ import { withBase } from '../utils/url';
 const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
 ---
 
-<header class="site-header">
+<header class="site-header" data-section-name="Header / navigation">
   <div class="container header-inner">
     <a href={withBase('/')} class="logo">
       <span class="logo-script">by</span> <span class="logo-caps">NICOLAS VERDOT</span>

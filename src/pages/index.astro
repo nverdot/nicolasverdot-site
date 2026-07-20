@@ -116,7 +116,7 @@ const clients = [
 >
   <Hero />
 
-  <section class="trust" data-reveal>
+  <section class="trust" data-reveal data-section-name="Logos clients">
     <div class="container">
       <p class="eyebrow center">Ils m'ont déjà fait confiance</p>
     </div>
@@ -138,7 +138,7 @@ const clients = [
     </div>
   </section>
 
-  <section class="recognize" data-reveal>
+  <section class="recognize" data-reveal data-section-name="Situations reconnaissables">
     <div class="container">
       <p class="eyebrow center">Vous reconnaissez peut-être...</p>
       <h2 class="prose center">Le symptôme n'est presque jamais celui qu'on croit.</h2>
@@ -150,7 +150,7 @@ const clients = [
 
   <Journey conversations={conversations} />
 
-  <section class="offers" id="accompagnements" data-reveal>
+  <section class="offers" id="accompagnements" data-reveal data-section-name="Offres principales">
     <div class="container">
       <div class="section-head">
         <div>
@@ -173,7 +173,7 @@ const clients = [
     </div>
   </section>
 
-  <section class="section" data-reveal>
+  <section class="section" data-reveal data-section-name="Autres portes d'entrée">
     <div class="container">
       <div class="section-head">
         <div>
@@ -195,7 +195,7 @@ const clients = [
     </div>
   </section>
 
-  <section class="section" data-reveal>
+  <section class="section" data-reveal data-section-name="Qui suis-je">
     <div class="container split">
       <div>
         <p class="eyebrow">Qui suis-je ?</p>
@@ -217,7 +217,7 @@ const clients = [
   </section>
 
   {latestArticles.length > 0 && (
-    <section class="section" data-reveal>
+    <section class="section" data-reveal data-section-name="Articles du blog">
       <div class="container">
         <div class="section-head">
           <div>
@@ -242,7 +242,7 @@ const clients = [
     </section>
   )}
 
-  <section class="section alt" data-reveal>
+  <section class="section alt" data-reveal data-section-name="FAQ">
     <div class="container">
       <div class="section-head">
         <div>

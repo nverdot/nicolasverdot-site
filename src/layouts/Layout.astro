@@ -79,6 +79,32 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
 </script>
 
 <script>
+  // Étiquettes de section pour la relecture — invisibles par défaut, ne
+  // s'affichent que si l'URL contient ?labels (aucun impact pour un vrai
+  // visiteur). Sert uniquement à pouvoir dire "garde X, change Y" en
+  // pointant un nom plutôt qu'en décrivant une zone de la page.
+  if (new URLSearchParams(location.search).has('labels')) {
+    const style = document.createElement('style');
+    style.textContent = `
+      [data-section-name] { position: relative; outline: 1px dashed rgba(230, 57, 70, 0.6); outline-offset: -1px; }
+      .__section-tag {
+        position: absolute; top: 0; left: 0; z-index: 999;
+        background: #e63946; color: #fff; font: 700 11px/1.4 monospace;
+        padding: 3px 8px; border-radius: 0 0 4px 0; pointer-events: none;
+        letter-spacing: 0.02em;
+      }
+    `;
+    document.head.appendChild(style);
+    document.querySelectorAll('[data-section-name]').forEach((el) => {
+      const tag = document.createElement('span');
+      tag.className = '__section-tag';
+      tag.textContent = el.getAttribute('data-section-name') || '';
+      el.prepend(tag);
+    });
+  }
+</script>
+
+<script>
   // Renforcement sitewide du système de révélation : les grilles de cartes
   // (offres, formations, blog, matériel, problèmes d'une offre...) gagnent
   // un pop-in échelonné par carte au lieu du simple fondu de bloc hérité de
