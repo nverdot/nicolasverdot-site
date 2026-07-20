@@ -19,10 +19,14 @@ const titleWords = [
   { t: 'mouvement.', hl: true },
 ];
 
-const orbitCards = [
-  { title: 'Voir clair', text: 'Nommer ce qui se joue vraiment.' },
-  { title: 'Décider', text: 'Sortir du consensus mou.' },
-  { title: 'Agir', text: 'Repartir avec une suite concrète.' },
+const loopCards = [
+  { t: 'Le même sujet', s: 'revient chaque semaine' },
+  { t: 'La même tension', s: "jamais nommée" },
+  { t: 'Le même flou', s: 'sur qui tranche' },
+];
+const exitCards = [
+  { t: 'Décider', s: 'un choix assumé' },
+  { t: 'Agir', s: 'un premier pas' },
 ];
 ---
 
@@ -48,29 +52,36 @@ const orbitCards = [
       <p class="hero-pillars">Facilitation · Coaching · Séminaires · Transformation · Formation</p>
     </div>
 
-    <div class="hero-orbit" aria-hidden="true">
-      <div class="orbit-ring"></div>
-      <div class="orbit-dot-wrap" data-orbit-dot-wrap>
-        <span class="orbit-dot"></span>
+    <div class="hero-loop" aria-hidden="true">
+      <p class="loop-badge">Ça tourne en rond</p>
+
+      <svg class="loop-svg" viewBox="0 0 600 520" preserveAspectRatio="xMidYMid meet">
+        <path class="loop-track" d="M180 110 C 85 145, 70 270, 145 350 C 225 435, 370 415, 395 315 C 415 235, 335 130, 180 110" />
+        <path class="exit-track" d="M395 315 C 450 335, 490 315, 525 270 C 555 230, 575 190, 600 145" />
+        <circle class="loop-runner runner-1" r="9" />
+        <circle class="loop-runner runner-2" r="6" />
+      </svg>
+
+      <div class="loop-center">
+        <strong>On en reparle ?</strong>
+        <small>Toujours la même réponse.</small>
       </div>
-      <div class="orbit-center">
-        <span>COMPRENDRE</span>
-        <span>→ DÉCIDER</span>
-        <span>→ AGIR</span>
-      </div>
-      <article class="orbit-card orbit-card-1" data-orbit-card>
-        <strong>Voir clair</strong>
-        <span>Nommer ce qui se joue vraiment.</span>
-      </article>
-      <article class="orbit-card orbit-card-2" data-orbit-card>
-        <strong>Décider</strong>
-        <span>Sortir du consensus mou.</span>
-      </article>
-      <article class="orbit-card orbit-card-3" data-orbit-card>
-        <strong>Agir</strong>
-        <span>Repartir avec une suite concrète.</span>
-      </article>
-      <svg class="orbit-wave" viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M2 30 C 60 5, 120 55, 180 30 S 300 5, 398 35" fill="none" /></svg>
+
+      <div class="break-point"><span>STOP</span></div>
+
+      {loopCards.map((c, i) => (
+        <article class:list={['loop-card', `loop-card-${i + 1}`]}>
+          <strong>{c.t}</strong>
+          <span>{c.s}</span>
+        </article>
+      ))}
+
+      {exitCards.map((c, i) => (
+        <article class:list={['exit-card', `exit-card-${i + 1}`]}>
+          <strong>{c.t}</strong>
+          <span>{c.s}</span>
+        </article>
+      ))}
     </div>
   </div>
 </section>
@@ -80,41 +91,26 @@ const orbitCards = [
 
   const mm = gsap.matchMedia();
 
+  // Seule animation JS de ce composant : la révélation du titre mot par
+  // mot. Le diagramme "boucle qui se brise" plus bas est du CSS pur
+  // (@keyframes) — un choix délibéré après avoir vérifié que les tweens
+  // GSAP purement temporels (sans scroll) ne se comportaient pas de façon
+  // fiable dans certains environnements : le CSS tourne sur son propre
+  // thread de composition, sans dépendre du ticker JS.
   mm.add(
     { reduceMotion: '(prefers-reduced-motion: reduce)' },
     (context) => {
       const { reduceMotion } = context.conditions ?? {};
       const words = gsap.utils.toArray<HTMLElement>('[data-word]');
-      const cards = gsap.utils.toArray<HTMLElement>('[data-orbit-card]');
-      const dotWrap = document.querySelector<HTMLElement>('[data-orbit-dot-wrap]');
 
       if (reduceMotion) {
         gsap.set(words, { clearProps: 'all' });
-        gsap.set(cards, { clearProps: 'all' });
       } else {
-        // Titre : révélation masquée mot par mot, plus net qu'un fondu.
-        // Cartes de l'orbite : arrivent en éventail depuis le centre, avec
-        // un léger rebond, dans l'ordre où on les lit visuellement.
-        const tl = gsap.timeline({ delay: 0.1 });
-        tl.set(words, { yPercent: 110, rotate: 6 })
-          .set(cards, { opacity: 0, scale: 0.6, x: 0, y: 0 })
-          .to(words, { yPercent: 0, rotate: 0, duration: 0.85, ease: 'power4.out', stagger: 0.045 })
-          .to(cards, { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.5)', stagger: 0.15 }, 0.3);
+        gsap.set(words, { yPercent: 110, rotate: 6 });
+        gsap.to(words, { yPercent: 0, rotate: 0, duration: 0.85, ease: 'power4.out', stagger: 0.045, delay: 0.1 });
       }
 
-      // "Un truc qui tourne en rond" : un point orbite en continu sur le
-      // cercle en pointillés — la seule animation en boucle infinie de la
-      // page, réservée à cet unique élément décoratif (aria-hidden), donc
-      // coupée sous reduced-motion plutôt qu'atténuée.
-      if (!reduceMotion && dotWrap) {
-        gsap.to(dotWrap, { rotation: 360, duration: 14, ease: 'none', repeat: -1, transformOrigin: '50% 50%' });
-      }
-
-      return () => {
-        words.forEach((w) => gsap.killTweensOf(w));
-        cards.forEach((c) => gsap.killTweensOf(c));
-        if (dotWrap) gsap.killTweensOf(dotWrap);
-      };
+      return () => words.forEach((w) => gsap.killTweensOf(w));
     }
   );
 </script>
@@ -168,130 +164,283 @@ const orbitCards = [
     color: var(--color-muted);
   }
 
-  /* --- Diagramme orbital --- */
-  .hero-orbit {
+  /* --- Diagramme "boucle qui se brise" --- */
+  .hero-loop {
     position: relative;
     width: 100%;
-    max-width: 520px;
-    aspect-ratio: 1;
+    max-width: 560px;
+    aspect-ratio: 600 / 520;
     margin-inline: auto;
   }
-  .orbit-ring {
+  .loop-badge {
     position: absolute;
-    inset: 8%;
-    border: 2px dashed var(--color-border);
-    border-radius: 50%;
+    top: 0;
+    left: 4%;
+    z-index: 4;
+    margin: 0;
+    background: var(--color-ink-solid);
+    color: var(--color-white);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.5em 0.8em;
+    border-radius: var(--radius-sm);
+    transform: rotate(-3deg);
   }
-  .orbit-center {
+
+  .loop-svg {
     position: absolute;
-    top: 50%;
-    left: 46%;
-    width: 40%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .loop-track {
+    fill: none;
+    stroke: var(--color-border);
+    stroke-width: 3;
+    stroke-dasharray: 9 9;
+  }
+  .exit-track {
+    fill: none;
+    stroke: var(--color-orange);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 320;
+    stroke-dashoffset: 320;
+    animation: hero-loop-draw 5.5s ease-in-out infinite;
+  }
+  .loop-runner {
+    fill: var(--color-clay);
+    stroke: var(--color-surface);
+    stroke-width: 3;
+    offset-path: path("M180 110 C 85 145, 70 270, 145 350 C 225 435, 370 415, 395 315 C 415 235, 335 130, 180 110");
+    offset-rotate: 0deg;
+    animation: hero-loop-run 5.5s cubic-bezier(0.55, 0.02, 0.45, 0.98) infinite;
+  }
+  .runner-2 {
+    fill: var(--color-orange);
+    animation-delay: -1.6s;
+    opacity: 0.9;
+  }
+
+  .loop-center {
+    position: absolute;
+    z-index: 3;
+    top: 47%;
+    left: 45%;
+    width: 34%;
     aspect-ratio: 1;
     transform: translate(-50%, -50%);
-    background: var(--color-orange);
+    border: 2px solid var(--color-ink);
+    background: var(--color-surface);
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    gap: 0.15em;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(0.85rem, 1.6vw, 1.05rem);
-    color: var(--color-ink-solid);
+    padding: var(--space-3);
     box-shadow: var(--shadow-md);
   }
-  .orbit-dot-wrap {
-    position: absolute;
-    inset: 8%;
-    border-radius: 50%;
-    pointer-events: none;
+  .loop-center strong {
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
   }
-  .orbit-dot {
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    width: 16px;
-    height: 16px;
-    margin-left: -8px;
-    border-radius: 50%;
-    background: var(--color-red-bright);
-    box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-red-bright) 18%, transparent);
+  .loop-center small {
+    margin-top: 0.35em;
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    font-weight: 600;
   }
 
-  .orbit-card {
+  .break-point {
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    gap: 0.2em;
+    z-index: 6;
+    right: 14%;
+    top: 55%;
+    width: 56px;
+    height: 56px;
+    background: var(--color-clay);
+    color: var(--color-white);
+    border: 3px solid var(--color-surface);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 0 0 2px var(--color-ink);
+    transform: rotate(-8deg);
+    animation: hero-loop-break-pulse 5.5s ease-in-out infinite;
+  }
+  .break-point span {
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+  }
+
+  .loop-card,
+  .exit-card {
+    position: absolute;
+    z-index: 3;
+    width: 145px;
     background: var(--color-surface);
-    border-radius: var(--radius-sm);
-    padding: var(--space-3) var(--space-4);
-    box-shadow: var(--shadow-md);
-    width: 44%;
+    border: 1px solid var(--color-ink);
+    padding: var(--space-2) var(--space-3);
+    box-shadow: 5px 5px 0 var(--color-ink);
+    line-height: 1.15;
   }
-  .orbit-card strong {
-    font-size: var(--text-base);
-  }
-  .orbit-card span {
+  .loop-card strong,
+  .exit-card strong {
+    display: block;
     font-size: var(--text-sm);
+  }
+  .loop-card span,
+  .exit-card span {
+    display: block;
+    font-size: var(--text-xs);
     color: var(--color-muted);
+    margin-top: 0.2em;
   }
-  .orbit-card-1 {
-    top: 2%;
-    left: 2%;
-    transform: rotate(-3deg);
+  .loop-card-1 {
+    top: 6%;
+    left: 24%;
+    transform: rotate(3deg);
   }
-  .orbit-card-2 {
-    top: 30%;
-    right: 0%;
+  .loop-card-2 {
+    top: 47%;
+    right: 1%;
     transform: rotate(4deg);
   }
-  .orbit-card-3 {
-    bottom: 6%;
-    left: 6%;
-    transform: rotate(-2deg);
+  .loop-card-3 {
+    bottom: 8%;
+    left: 15%;
+    transform: rotate(-4deg);
   }
 
-  .orbit-wave {
-    position: absolute;
-    bottom: -4%;
-    left: 10%;
-    width: 80%;
-    height: auto;
-    stroke: var(--color-ink);
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    opacity: 0.55;
+  .exit-card {
+    z-index: 5;
+    background: var(--color-orange);
+    border-color: var(--color-ink-solid);
+    color: var(--color-ink-solid);
+    opacity: 0;
+    transform: translateX(-16px) rotate(-2deg);
+    animation: hero-loop-exit-in 5.5s ease-in-out infinite;
+  }
+  .exit-card span {
+    color: color-mix(in srgb, var(--color-ink-solid) 75%, transparent);
+  }
+  .exit-card-1 {
+    right: -4%;
+    top: 30%;
+    animation-delay: 0.15s;
+  }
+  .exit-card-2 {
+    right: -6%;
+    top: 10%;
+    animation-delay: 0.38s;
+  }
+
+  @keyframes hero-loop-run {
+    0% { offset-distance: 0%; opacity: 0; }
+    8% { opacity: 1; }
+    68% { offset-distance: 100%; opacity: 1; }
+    74%, 100% { offset-distance: 100%; opacity: 0; }
+  }
+  @keyframes hero-loop-draw {
+    0%, 62% { stroke-dashoffset: 320; opacity: 0; }
+    68% { opacity: 1; }
+    84%, 100% { stroke-dashoffset: 0; opacity: 1; }
+  }
+  @keyframes hero-loop-exit-in {
+    0%, 69% { opacity: 0; transform: translateX(-16px) rotate(-2deg); }
+    78%, 94% { opacity: 1; transform: translateX(0) rotate(-2deg); }
+    100% { opacity: 0; transform: translateX(6px) rotate(-2deg); }
+  }
+  @keyframes hero-loop-break-pulse {
+    0%, 58% { transform: rotate(-8deg) scale(0.9); }
+    65%, 76% { transform: rotate(-8deg) scale(1.15); }
+    100% { transform: rotate(-8deg) scale(0.9); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loop-runner {
+      display: none;
+    }
+    .exit-track {
+      stroke-dashoffset: 0;
+      opacity: 1;
+      animation: none;
+    }
+    .exit-card {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+    .break-point {
+      animation: none;
+    }
   }
 
   @media (max-width: 900px) {
     .hero-grid {
       grid-template-columns: 1fr;
     }
-    .hero-orbit {
+    .hero-loop {
       margin-top: var(--space-12);
-      max-width: 420px;
-    }
-    /* Le cercle central est plus petit ici pour ne plus passer sous la
-       carte "Décider" — à 520px de large, les deux se chevauchaient. */
-    .orbit-center {
-      width: 34%;
-      left: 42%;
-    }
-    .orbit-card-2 {
-      top: 34%;
+      max-width: 460px;
     }
   }
 
-  @media (max-width: 520px) {
-    .orbit-card {
-      padding: var(--space-2) var(--space-3);
+  /* En dessous de 560px, le diagramme spatial (positions en %) fait se
+     chevaucher les cartes — leur taille ne rétrécit pas aussi vite que le
+     conteneur. Plutôt que de forcer, on recompose en liste verticale : le
+     même récit (bloqué -> STOP -> débloqué), lu de haut en bas. */
+  @media (max-width: 560px) {
+    .hero-loop {
+      aspect-ratio: auto;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+      padding-top: var(--space-10);
     }
-    .orbit-card span {
-      font-size: var(--text-xs);
+    .loop-svg {
+      display: none;
+    }
+    .loop-badge {
+      position: static;
+      transform: none;
+      align-self: flex-start;
+      order: 1;
+    }
+    .loop-center {
+      position: static;
+      transform: none;
+      width: 200px;
+      margin: var(--space-2) 0;
+      order: 2;
+    }
+    .loop-card,
+    .exit-card {
+      position: static;
+      transform: none !important;
+      width: 100%;
+      max-width: 280px;
+      opacity: 1;
+      animation: none;
+      order: 3;
+    }
+    .break-point {
+      position: static;
+      transform: none;
+      animation: none;
+      margin: var(--space-2) 0;
+      order: 4;
+    }
+    .exit-card {
+      background: var(--color-orange);
+      order: 5;
     }
   }
 </style>
