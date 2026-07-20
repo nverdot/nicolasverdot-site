@@ -1,84 +1,82 @@
 ---
-import { Image } from 'astro:assets';
-import portrait from '../assets/nicolas-portrait.png';
-import action from '../assets/nicolas-action.jpeg';
 import { SITE } from '../data/site';
 import { withBase } from '../utils/url';
 
-// Les "symptômes" dramatisent la promesse dès le chargement : ils entrent
-// dispersés (rotation/décalage aléatoires) puis se rangent, comme la
-// situation du visiteur va se ranger. Contenu réel, pas juste décoratif —
-// ce sont des situations reconnaissables, lisibles par tout lecteur d'écran.
-const symptoms = ['Réunions qui tournent en rond', 'Décisions qui reviennent', 'Priorités qui changent', 'Équipes qui hésitent'];
+// Le titre joue sur le double sens de "tourner en rond" (bloqué / en boucle)
+// — la partie qui répond au problème ("on remet du mouvement") porte un
+// surlignage jaune, le reste reste en texte plein. Piloté par un tableau
+// plutôt que du HTML en dur pour garder l'effet de révélation masquée
+// mot par mot (voir le script plus bas) sans dupliquer la logique.
+const titleWords = [
+  { t: 'Quand', hl: false },
+  { t: 'ça', hl: false },
+  { t: 'tourne', hl: false },
+  { t: 'en', hl: false },
+  { t: 'rond,', hl: false },
+  { t: 'on', hl: true },
+  { t: 'remet', hl: true },
+  { t: 'du', hl: true },
+  { t: 'mouvement.', hl: true },
+];
 
-// Titre découpé en mots pour l'effet de révélation masquée (chaque mot
-// glisse depuis sous sa propre fenêtre) — voir le script plus bas.
-const titleWords = "Ce qui vous freine n'est pas un manque d'idées.".split(' ');
-const accentWords = "C'est un manque de mouvement.".split(' ');
+const orbitCards = [
+  { title: 'Voir clair', text: 'Nommer ce qui se joue vraiment.' },
+  { title: 'Décider', text: 'Sortir du consensus mou.' },
+  { title: 'Agir', text: 'Repartir avec une suite concrète.' },
+];
 ---
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="container hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow">Facilitateur professionnel · Coach de dirigeants · Formateur</p>
-
-      <ul class="symptom-row" data-symptom-row>
-        {symptoms.map((s) => <li class="symptom-chip">{s}</li>)}
-      </ul>
+      <p class="eyebrow">Boosteur de leaders et d'équipes</p>
 
       <h1 id="hero-title">
-        <span class="word-line">
-          {titleWords.map((w) => (
-            <>
-              <span class="word-mask"><span class="word" data-word>{w}</span></span>{' '}
-            </>
-          ))}
-        </span>
-        {' '}
-        <span class="accent-wrap">
-          <span class="word-line">
-            {accentWords.map((w) => (
-              <>
-                <span class="word-mask"><span class="word word-accent" data-word>{w}</span></span>{' '}
-              </>
-            ))}
-          </span>
-          <svg class="ink-underline" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path d="M6 20 C 120 8, 250 6, 360 14 S 540 26, 594 12" /></svg>
-        </span>
+        {titleWords.map((w) => (
+          <>
+            <span class:list={['word-mask', { 'is-highlight': w.hl }]}><span class="word" data-word>{w.t}</span></span>{' '}
+          </>
+        ))}
       </h1>
 
-      <p class="hero-lead">Je conçois et j'anime les ateliers, séminaires et accompagnements qui transforment vos discussions en décisions — et vos décisions en actions qui tiennent.</p>
+      <p class="hero-lead">J'aide les dirigeants, managers et équipes à voir ce qui bloque, prendre des décisions utiles et transformer les échanges en actions concrètes.</p>
 
-      <div class="editorial-beats" aria-label="Ma méthode">
-        <span class="is-teal">Clarifier</span>
-        <span class="is-red">Décider</span>
-        <span class="is-ochre">Faire</span>
-      </div>
       <div class="hero-actions">
-        <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Prendre rendez-vous</a>
-        <a href={withBase('/#accompagnements')} class="btn-outline">Voir ce que je propose</a>
+        <a href={withBase('/contact/')} class="btn">Parler de ce qui coince →</a>
+        <a href={withBase('/#accompagnements')} class="btn-outline">Voir les accompagnements</a>
       </div>
-      <p class="hero-promise">
-        Le résultat attendu : <strong>moins de dispersion, plus d'engagement</strong>, des responsabilités claires et des actions assumées dès lundi.
-      </p>
+      <p class="hero-pillars">Facilitation · Coaching · Séminaires · Transformation · Formation</p>
     </div>
-    <aside class="hero-photo" aria-label="Nicolas Verdot sur le terrain">
-      <div class="hero-photo-frame">
-        <Image src={portrait} alt="Portrait de Nicolas Verdot" width={420} height={520} class="hero-photo-main" />
-        <div class="hero-grain" aria-hidden="true"></div>
+
+    <div class="hero-orbit" aria-hidden="true">
+      <div class="orbit-ring"></div>
+      <div class="orbit-dot-wrap" data-orbit-dot-wrap>
+        <span class="orbit-dot"></span>
       </div>
-      <span class="hero-photo-action-parallax">
-        <Image src={action} alt="Nicolas Verdot en facilitation graphique" width={260} height={200} class="hero-photo-action" />
-      </span>
-    </aside>
+      <div class="orbit-center">
+        <span>COMPRENDRE</span>
+        <span>→ DÉCIDER</span>
+        <span>→ AGIR</span>
+      </div>
+      <article class="orbit-card orbit-card-1" data-orbit-card>
+        <strong>Voir clair</strong>
+        <span>Nommer ce qui se joue vraiment.</span>
+      </article>
+      <article class="orbit-card orbit-card-2" data-orbit-card>
+        <strong>Décider</strong>
+        <span>Sortir du consensus mou.</span>
+      </article>
+      <article class="orbit-card orbit-card-3" data-orbit-card>
+        <strong>Agir</strong>
+        <span>Repartir avec une suite concrète.</span>
+      </article>
+      <svg class="orbit-wave" viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M2 30 C 60 5, 120 55, 180 30 S 300 5, 398 35" fill="none" /></svg>
+    </div>
   </div>
 </section>
 
 <script>
   import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-  gsap.registerPlugin(ScrollTrigger);
 
   const mm = gsap.matchMedia();
 
@@ -86,77 +84,36 @@ const accentWords = "C'est un manque de mouvement.".split(' ');
     { reduceMotion: '(prefers-reduced-motion: reduce)' },
     (context) => {
       const { reduceMotion } = context.conditions ?? {};
-      const chips = gsap.utils.toArray<HTMLElement>('.symptom-chip');
       const words = gsap.utils.toArray<HTMLElement>('[data-word]');
+      const cards = gsap.utils.toArray<HTMLElement>('[data-orbit-card]');
+      const dotWrap = document.querySelector<HTMLElement>('[data-orbit-dot-wrap]');
 
       if (reduceMotion) {
-        gsap.set(chips, { clearProps: 'all' });
         gsap.set(words, { clearProps: 'all' });
+        gsap.set(cards, { clearProps: 'all' });
       } else {
-        // Moment signature du hero, en deux temps :
-        // 1) le titre se révèle mot par mot, glissant hors d'un masque
-        //    (overflow hidden sur .word-mask) — plus net et plus "premium"
-        //    qu'un simple fondu, sans toucher au tracé/pictos déjà écartés.
-        // 2) les "symptômes" arrivent dispersés depuis loin, avec une bonne
-        //    amplitude de rotation, et se rangent en place à la suite —
-        //    la promesse de la marque, jouée une fois au chargement.
+        // Titre : révélation masquée mot par mot, plus net qu'un fondu.
+        // Cartes de l'orbite : arrivent en éventail depuis le centre, avec
+        // un léger rebond, dans l'ordre où on les lit visuellement.
         const tl = gsap.timeline({ delay: 0.1 });
         tl.set(words, { yPercent: 110, rotate: 6 })
-          .set(chips, {
-            opacity: 0,
-            x: () => gsap.utils.random(-140, 140),
-            y: () => gsap.utils.random(-50, 50),
-            rotation: () => gsap.utils.random(-25, 25),
-            scale: 0.7,
-          })
-          .to(words, {
-            yPercent: 0,
-            rotate: 0,
-            duration: 0.85,
-            ease: 'power4.out',
-            stagger: 0.045,
-          })
-          .to(
-            chips,
-            {
-              opacity: 1,
-              x: 0,
-              y: 0,
-              rotation: 0,
-              scale: 1,
-              duration: 0.9,
-              ease: 'elastic.out(1, 0.65)',
-              stagger: 0.08,
-            },
-            0.15
-          );
+          .set(cards, { opacity: 0, scale: 0.6, x: 0, y: 0 })
+          .to(words, { yPercent: 0, rotate: 0, duration: 0.85, ease: 'power4.out', stagger: 0.045 })
+          .to(cards, { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.5)', stagger: 0.15 }, 0.3);
       }
 
-      // Parallax léger : la photo d'action (au premier plan) défile un peu
-      // plus vite que le portrait derrière elle, pour une sensation de
-      // profondeur dès le premier écran — pas besoin d'attendre un scroll profond.
-      if (!reduceMotion) {
-        const heroSection = document.querySelector('.hero');
-        const mainPhoto = document.querySelector('.hero-photo-main');
-        const actionWrap = document.querySelector('.hero-photo-action-parallax');
-        if (heroSection && (mainPhoto || actionWrap)) {
-          gsap.set(mainPhoto, { scale: 1.08 });
-          gsap.to(mainPhoto, {
-            y: 24,
-            ease: 'none',
-            scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: 0.6 },
-          });
-          gsap.to(actionWrap, {
-            y: -36,
-            ease: 'none',
-            scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: 0.6 },
-          });
-        }
+      // "Un truc qui tourne en rond" : un point orbite en continu sur le
+      // cercle en pointillés — la seule animation en boucle infinie de la
+      // page, réservée à cet unique élément décoratif (aria-hidden), donc
+      // coupée sous reduced-motion plutôt qu'atténuée.
+      if (!reduceMotion && dotWrap) {
+        gsap.to(dotWrap, { rotation: 360, duration: 14, ease: 'none', repeat: -1, transformOrigin: '50% 50%' });
       }
 
       return () => {
-        chips.forEach((c) => gsap.killTweensOf(c));
         words.forEach((w) => gsap.killTweensOf(w));
+        cards.forEach((c) => gsap.killTweensOf(c));
+        if (dotWrap) gsap.killTweensOf(dotWrap);
       };
     }
   );
@@ -165,10 +122,11 @@ const accentWords = "C'est un manque de mouvement.".split(' ');
 <style>
   .hero {
     padding-top: var(--space-16);
+    padding-bottom: var(--space-8);
   }
   .hero-grid {
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
+    grid-template-columns: 1.05fr 1fr;
     gap: var(--space-12);
     align-items: center;
   }
@@ -176,148 +134,164 @@ const accentWords = "C'est un manque de mouvement.".split(' ');
     margin: var(--space-3) 0 var(--space-4);
   }
 
-  .word-line {
-    display: inline;
-  }
   .word-mask {
     display: inline-block;
     overflow: hidden;
     vertical-align: bottom;
     padding-bottom: 0.08em;
   }
+  .word-mask.is-highlight {
+    background: var(--color-orange);
+    padding: 0 0.12em 0.08em;
+    border-radius: 2px;
+  }
   .word {
     display: inline-block;
     will-change: transform;
   }
-  .word-accent {
-    font-family: var(--font-script);
-    font-weight: 700;
-    color: var(--color-orange);
-    letter-spacing: 0;
-  }
 
-  .symptom-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    list-style: none;
-    margin: var(--space-4) 0 0;
-    padding: 0;
-  }
-  .symptom-chip {
-    font-size: var(--text-xs);
-    font-weight: 700;
-    color: var(--color-clay-ink);
-    background: color-mix(in srgb, var(--color-clay) 14%, var(--color-surface));
-    border: 1px solid color-mix(in srgb, var(--color-clay) 30%, transparent);
-    padding: 0.35em 0.85em;
-    border-radius: var(--radius-pill);
-  }
-
-  .accent-wrap {
-    position: relative;
-    display: inline-block;
-  }
-  .ink-underline {
-    position: absolute;
-    left: 0;
-    bottom: -0.15em;
-    width: 100%;
-    height: 0.3em;
-    stroke: var(--color-orange);
-    stroke-width: 6;
-    fill: none;
-  }
   .hero-lead {
     display: block;
     font-size: var(--text-lg);
     color: var(--color-muted);
-  }
-  .editorial-beats {
-    display: flex;
-    gap: var(--space-3);
-    margin: var(--space-4) 0 var(--space-6);
-  }
-  .editorial-beats span {
-    padding: var(--space-1) var(--space-4);
-    border-radius: var(--radius-pill);
-    font-weight: 600;
-    font-size: var(--text-sm);
-  }
-  .editorial-beats .is-teal {
-    background: color-mix(in srgb, var(--color-blue) 14%, var(--color-surface));
-    color: var(--color-blue);
-  }
-  .editorial-beats .is-red {
-    background: color-mix(in srgb, var(--color-red-bright) 14%, var(--color-surface));
-    color: var(--color-red-bright);
-  }
-  .editorial-beats .is-ochre {
-    background: color-mix(in srgb, var(--color-orange) 22%, var(--color-surface));
-    color: var(--color-ink-solid);
+    max-width: 46ch;
   }
   .hero-actions {
     display: flex;
     gap: var(--space-4);
     flex-wrap: wrap;
+    margin-top: var(--space-6);
   }
-  .hero-promise {
+  .hero-pillars {
     margin-top: var(--space-6);
     font-size: var(--text-sm);
     color: var(--color-muted);
   }
 
-  .hero-photo {
+  /* --- Diagramme orbital --- */
+  .hero-orbit {
     position: relative;
+    width: 100%;
+    max-width: 520px;
+    aspect-ratio: 1;
+    margin-inline: auto;
   }
-  .hero-photo-frame {
-    position: relative;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
+  .orbit-ring {
+    position: absolute;
+    inset: 8%;
+    border: 2px dashed var(--color-border);
+    border-radius: 50%;
+  }
+  .orbit-center {
+    position: absolute;
+    top: 50%;
+    left: 46%;
+    width: 40%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    background: var(--color-orange);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.15em;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(0.85rem, 1.6vw, 1.05rem);
+    color: var(--color-ink-solid);
     box-shadow: var(--shadow-md);
   }
-  .hero-photo-frame :global(.hero-photo-main) {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-  .hero-grain {
+  .orbit-dot-wrap {
     position: absolute;
-    inset: -10%;
-    opacity: 0.15;
-    mix-blend-mode: overlay;
+    inset: 8%;
+    border-radius: 50%;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    animation: grain-drift 8s steps(6) infinite;
   }
-  .hero-photo-action-parallax {
+  .orbit-dot {
     position: absolute;
-    top: -10%;
-    right: -12%;
-    width: 45%;
-    display: block;
+    top: -8px;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin-left: -8px;
+    border-radius: 50%;
+    background: var(--color-red-bright);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-red-bright) 18%, transparent);
   }
-  .hero-photo :global(.hero-photo-action) {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius-md);
-    border: 4px solid var(--color-cream);
+
+  .orbit-card {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    background: var(--color-surface);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
     box-shadow: var(--shadow-md);
-    animation: drift-wiggle 6s ease-in-out infinite;
+    width: 44%;
+  }
+  .orbit-card strong {
+    font-size: var(--text-base);
+  }
+  .orbit-card span {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+  .orbit-card-1 {
+    top: 2%;
+    left: 2%;
+    transform: rotate(-3deg);
+  }
+  .orbit-card-2 {
+    top: 30%;
+    right: 0%;
+    transform: rotate(4deg);
+  }
+  .orbit-card-3 {
+    bottom: 6%;
+    left: 6%;
+    transform: rotate(-2deg);
+  }
+
+  .orbit-wave {
+    position: absolute;
+    bottom: -4%;
+    left: 10%;
+    width: 80%;
+    height: auto;
+    stroke: var(--color-ink);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    opacity: 0.55;
   }
 
   @media (max-width: 900px) {
     .hero-grid {
       grid-template-columns: 1fr;
     }
-    /* Sur mobile, le message d'abord : le premier écran doit dire ce que
-       fait Nicolas avant de montrer son visage. */
-    .hero-photo {
-      margin-top: var(--space-8);
+    .hero-orbit {
+      margin-top: var(--space-12);
+      max-width: 420px;
     }
-    .hero-photo-action-parallax {
-      display: none;
+    /* Le cercle central est plus petit ici pour ne plus passer sous la
+       carte "Décider" — à 520px de large, les deux se chevauchaient. */
+    .orbit-center {
+      width: 34%;
+      left: 42%;
+    }
+    .orbit-card-2 {
+      top: 34%;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .orbit-card {
+      padding: var(--space-2) var(--space-3);
+    }
+    .orbit-card span {
+      font-size: var(--text-xs);
     }
   }
 </style>
