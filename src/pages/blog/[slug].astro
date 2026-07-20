@@ -52,13 +52,17 @@ const articleSchema = {
   description={article.data.description}
   path={`/blog/${article.slug}/`}
 >
+  <div class="reading-progress" aria-hidden="true">
+    <div class="reading-progress-fill" data-reading-progress-fill></div>
+  </div>
+
   <article class="post">
     <div class="container prose">
       <a href={withBase('/blog/')} class="back-link">← Tous les articles</a>
       <p class="eyebrow">{article.data.pillar}</p>
       <h1>{article.data.title}</h1>
       <p class="post-meta">Publié le {dateFormatter.format(article.data.publishDate)} — Nicolas Verdot</p>
-      <div class="post-content">
+      <div class="post-content" data-post-content>
         <Content />
       </div>
 
@@ -77,6 +81,33 @@ const articleSchema = {
 
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 
+  <script>
+    import gsap from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Barre de progression de lecture : reflet direct de la position de
+    // scroll dans l'article (scrub: true, sans lissage), pas une animation
+    // autonome — comparable à une scrollbar native, donc active même sous
+    // prefers-reduced-motion plutôt que masquée.
+    const content = document.querySelector<HTMLElement>('[data-post-content]');
+    const fill = document.querySelector<HTMLElement>('[data-reading-progress-fill]');
+    if (content && fill) {
+      gsap.set(fill, { scaleX: 0, transformOrigin: 'left center' });
+      gsap.to(fill, {
+        scaleX: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: content,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: true,
+        },
+      });
+    }
+  </script>
+
   <CTABlock
     title="Un sujet précis à traiter avec votre équipe ?"
     subtitle="Parlons de votre situation pour voir quel format serait le plus utile."
@@ -84,6 +115,22 @@ const articleSchema = {
 </Layout>
 
 <style>
+  .reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: transparent;
+    z-index: 60;
+  }
+  .reading-progress-fill {
+    height: 100%;
+    width: 100%;
+    background: var(--color-orange);
+    transform: scaleX(0);
+  }
+
   .post {
     padding-top: var(--space-8);
   }

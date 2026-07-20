@@ -93,7 +93,7 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
 
   const mm = gsap.matchMedia();
   mm.add('(prefers-reduced-motion: no-preference)', () => {
-    const grids = document.querySelectorAll<HTMLElement>('.cards, .article-grid, .product-grid, .formation-grid, .problem-list');
+    const grids = document.querySelectorAll<HTMLElement>('.cards, .article-grid, .product-grid, .formation-grid, .problem-list, .timeline');
     grids.forEach((grid) => {
       const items = Array.from(grid.children) as HTMLElement[];
       if (!items.length) return;
