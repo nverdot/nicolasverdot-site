@@ -77,3 +77,42 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
     document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-visible'));
   }
 </script>
+
+<script>
+  // Renforcement sitewide du système de révélation : les grilles de cartes
+  // (offres, formations, blog, matériel, problèmes d'une offre...) gagnent
+  // un pop-in échelonné par carte au lieu du simple fondu de bloc hérité de
+  // [data-reveal] sur leur section parente — les deux coexistent sans
+  // conflit (l'un anime la section, l'autre les enfants). Un seul script
+  // ici plutôt que dupliqué page par page : s'applique automatiquement à
+  // toute grille existante ou future portant une de ces classes.
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const mm = gsap.matchMedia();
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    const grids = document.querySelectorAll<HTMLElement>('.cards, .article-grid, .product-grid, .formation-grid, .problem-list');
+    grids.forEach((grid) => {
+      const items = Array.from(grid.children) as HTMLElement[];
+      if (!items.length) return;
+      gsap.set(items, { opacity: 0, y: 28, scale: 0.97 });
+      ScrollTrigger.batch(items, {
+        start: 'top 88%',
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.65,
+            ease: 'power3.out',
+            stagger: 0.09,
+            overwrite: true,
+          }),
+      });
+    });
+
+    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
+  });
+</script>
