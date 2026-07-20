@@ -5,57 +5,33 @@ import action from '../assets/nicolas-action.jpeg';
 import { SITE } from '../data/site';
 import { withBase } from '../utils/url';
 
-// La rotation s'ouvre sur l'identité large (mouvement collectif) avant de
-// décliner les terrains concrets — projet, culture, énergie, priorités,
-// visuel. La réunion n'est jamais le point d'entrée : elle est un outil,
-// mentionné seulement en aparté, jamais en tête de phrase.
-const variants = [
-  {
-    main: 'Du collectif qui discute au collectif qui agit',
-    accent: 'vraiment.',
-    lead: "Vous ne manquez pas d'idées. Il manque souvent la posture, les techniques et le cadre pour transformer les discussions, les priorités et les tensions en décisions utiles et en actions réelles.",
-  },
-  {
-    main: 'Lancer un projet.',
-    accent: 'Vraiment le lancer.',
-    lead: "Un kickoff ne suffit pas à engager une équipe. Je conçois les conditions pour qu'un projet démarre, tienne et avance dans la durée.",
-  },
-  {
-    main: "Une culture d'entreprise,",
-    accent: 'ça se construit.',
-    lead: 'Pas par une charte affichée dans le hall. Par des rituels, des décisions et des responsabilités qui tiennent dans le temps.',
-  },
-  {
-    main: 'Remotiver une équipe',
-    accent: 'ne se décrète pas.',
-    lead: 'Ça se construit en redonnant du sens, de la clarté et de la prise sur ce qui compte vraiment.',
-  },
-  {
-    main: 'Quand tout semble prioritaire,',
-    accent: "plus rien ne l'est.",
-    lead: 'Retrouvez une vision commune, des priorités partagées et l\'énergie pour avancer.',
-  },
-  {
-    main: 'Donner à voir ce qui compte',
-    accent: 'vraiment.',
-    lead: "Parce qu'un collectif avance mieux lorsqu'il partage une même compréhension.",
-  },
-];
+// Les "symptômes" dramatisent la promesse dès le chargement : ils entrent
+// dispersés (rotation/décalage aléatoires) puis se rangent, comme la
+// situation du visiteur va se ranger. Contenu réel, pas juste décoratif —
+// ce sont des situations reconnaissables, lisibles par tout lecteur d'écran.
+const symptoms = ['Réunions qui tournent en rond', 'Décisions qui reviennent', 'Priorités qui changent', 'Équipes qui hésitent'];
 ---
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="container hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow">Facilitateur professionnel · Coach · Formateur</p>
-      <h1 id="hero-title">
-        <span id="hero-main">{variants[0].main}</span>
+      <p class="eyebrow">Facilitateur professionnel · Coach de dirigeants · Formateur</p>
+
+      <ul class="symptom-row" data-symptom-row>
+        {symptoms.map((s) => <li class="symptom-chip">{s}</li>)}
+      </ul>
+
+      <h1 id="hero-title" data-hero-title>
+        Ce qui vous freine n'est pas un manque d'idées.
         {' '}
         <span class="accent-wrap">
-          <span class="accent-script" id="hero-accent">{variants[0].accent}</span>
+          <span class="accent-script">C'est un manque de mouvement.</span>
           <svg class="ink-underline" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path d="M6 20 C 120 8, 250 6, 360 14 S 540 26, 594 12" /></svg>
         </span>
       </h1>
-      <p class="hero-lead" id="hero-lead">{variants[0].lead}</p>
+
+      <p class="hero-lead">Je conçois et j'anime les ateliers, séminaires et accompagnements qui transforment vos discussions en décisions — et vos décisions en actions qui tiennent.</p>
+
       <div class="editorial-beats" aria-label="Ma méthode">
         <span class="is-teal">Clarifier</span>
         <span class="is-red">Décider</span>
@@ -87,63 +63,73 @@ const variants = [
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // Parallax léger : la photo d'action (au premier plan) défile un peu plus
-  // vite que le portrait derrière elle, pour une sensation de profondeur
-  // dès le premier écran — pas besoin d'attendre un scroll profond.
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const heroSection = document.querySelector('.hero');
-    const mainPhoto = document.querySelector('.hero-photo-main');
-    const actionWrap = document.querySelector('.hero-photo-action-parallax');
-    if (heroSection && (mainPhoto || actionWrap)) {
-      // Portrait légèrement zoomé pour que le déplacement vertical ne
-      // découvre jamais de bord vide sous le cadre (overflow: hidden).
-      gsap.set(mainPhoto, { scale: 1.08 });
-      gsap.to(mainPhoto, {
-        y: 24,
-        ease: 'none',
-        scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: 0.6 },
-      });
-      // Photo d'action animée sur son wrapper, pas sur l'image elle-même,
-      // pour ne pas entrer en conflit avec son animation CSS drift-wiggle.
-      gsap.to(actionWrap, {
-        y: -36,
-        ease: 'none',
-        scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: 0.6 },
-      });
+  const mm = gsap.matchMedia();
+
+  mm.add(
+    { reduceMotion: '(prefers-reduced-motion: reduce)' },
+    (context) => {
+      const { reduceMotion } = context.conditions ?? {};
+
+      // Moment signature du hero : les "symptômes" entrent dispersés (rotation
+      // et décalage aléatoires par élément) puis se rangent dans l'ordre —
+      // la promesse de la marque ("je fais bouger ce qui est bloqué"), jouée
+      // une fois au chargement plutôt qu'au scroll.
+      const chips = gsap.utils.toArray<HTMLElement>('.symptom-chip');
+      const title = document.querySelector('[data-hero-title]');
+      if (chips.length) {
+        if (reduceMotion) {
+          gsap.set(chips, { clearProps: 'all' });
+        } else {
+          gsap.set(chips, {
+            opacity: 0,
+            x: () => gsap.utils.random(-60, 60),
+            y: () => gsap.utils.random(-16, 16),
+            rotation: () => gsap.utils.random(-9, 9),
+          });
+          gsap.to(chips, {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            rotation: 0,
+            duration: 0.7,
+            ease: 'back.out(1.6)',
+            stagger: 0.09,
+            delay: 0.15,
+          });
+        }
+      }
+      if (title && !reduceMotion) {
+        gsap.from(title, { opacity: 0, y: 14, duration: 0.6, ease: 'power2.out', delay: 0.5 });
+      }
+
+      // Parallax léger : la photo d'action (au premier plan) défile un peu
+      // plus vite que le portrait derrière elle, pour une sensation de
+      // profondeur dès le premier écran — pas besoin d'attendre un scroll profond.
+      if (!reduceMotion) {
+        const heroSection = document.querySelector('.hero');
+        const mainPhoto = document.querySelector('.hero-photo-main');
+        const actionWrap = document.querySelector('.hero-photo-action-parallax');
+        if (heroSection && (mainPhoto || actionWrap)) {
+          gsap.set(mainPhoto, { scale: 1.08 });
+          gsap.to(mainPhoto, {
+            y: 24,
+            ease: 'none',
+            scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: 0.6 },
+          });
+          gsap.to(actionWrap, {
+            y: -36,
+            ease: 'none',
+            scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: 0.6 },
+          });
+        }
+      }
+
+      return () => {
+        chips.forEach((c) => gsap.killTweensOf(c));
+        if (title) gsap.killTweensOf(title);
+      };
     }
-  }
-</script>
-
-<script define:vars={{ variants }}>
-  const mainEl = document.getElementById('hero-main');
-  const accentEl = document.getElementById('hero-accent');
-  const leadEl = document.getElementById('hero-lead');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (!reduceMotion && mainEl && accentEl && leadEl && variants.length > 1) {
-    // Un seul tour complet puis arrêt (WCAG 2.2.2) ; pause tant que le
-    // pointeur est sur le texte, pour ne jamais couper une lecture en cours.
-    let index = 0;
-    let paused = false;
-    const copy = mainEl.closest('.hero-copy');
-    copy?.addEventListener('mouseenter', () => (paused = true));
-    copy?.addEventListener('mouseleave', () => (paused = false));
-    const timer = setInterval(() => {
-      if (paused) return;
-      index += 1;
-      const stopAfter = index >= variants.length;
-      const v = variants[index % variants.length];
-      const group = [mainEl, accentEl, leadEl];
-      group.forEach((el) => (el.style.opacity = '0'));
-      setTimeout(() => {
-        mainEl.textContent = v.main;
-        accentEl.textContent = v.accent;
-        leadEl.textContent = v.lead;
-        group.forEach((el) => (el.style.opacity = '1'));
-      }, 300);
-      if (stopAfter) clearInterval(timer);
-    }, 5500);
-  }
+  );
 </script>
 
 <style>
@@ -157,13 +143,27 @@ const variants = [
     align-items: center;
   }
   .hero-copy h1 {
-    margin-bottom: var(--space-4);
+    margin: var(--space-3) 0 var(--space-4);
   }
-  #hero-main,
-  #hero-accent,
-  #hero-lead {
-    transition: opacity 0.3s ease;
+
+  .symptom-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
   }
+  .symptom-chip {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--color-clay-ink);
+    background: color-mix(in srgb, var(--color-clay) 14%, var(--color-surface));
+    border: 1px solid color-mix(in srgb, var(--color-clay) 30%, transparent);
+    padding: 0.35em 0.85em;
+    border-radius: var(--radius-pill);
+  }
+
   .accent-wrap {
     position: relative;
     display: inline-block;
@@ -188,7 +188,6 @@ const variants = [
     display: block;
     font-size: var(--text-lg);
     color: var(--color-muted);
-    min-height: 3.4em;
   }
   .editorial-beats {
     display: flex;

@@ -11,6 +11,11 @@
   --color-blue: #173b73;
   --color-blue-strong: #102a52;
   --color-blue-soft: #dfe9ff;
+  /* Terre cuite : deuxième accent chaud pour ne pas dépendre uniquement du
+     jaune — un secondaire organique, pas une couleur de marque secondaire
+     de plus (voir usage dans le hero et la section "manière de travailler"). */
+  --color-clay: #c1440e;
+  --color-clay-ink: #7a2b09;
   --color-cream: #fcf8ef;
   --color-surface: #fffdfa;
   --color-ink: #122033;
@@ -89,6 +94,8 @@
     --color-blue: #7da2d8;
     --color-blue-strong: #29486f;
     --color-blue-soft: #27364b;
+    --color-clay: #e08350;
+    --color-clay-ink: #f0b28c;
     --shadow-sm: 0 12px 30px rgba(0, 0, 0, 0.35);
     --shadow-md: 0 26px 80px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 40px 90px rgba(0, 0, 0, 0.5);
@@ -108,6 +115,8 @@
   --color-blue: #7da2d8;
   --color-blue-strong: #29486f;
   --color-blue-soft: #27364b;
+  --color-clay: #e08350;
+  --color-clay-ink: #f0b28c;
   --color-panel: rgba(29, 32, 39, 0.86);
   --color-panel-border: rgba(59, 65, 75, 0.9);
   --shadow-sm: 0 12px 30px rgba(0, 0, 0, 0.35);

@@ -27,7 +27,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     <nav class="main-nav" id="main-nav">
       <ul>
         <li><a href={withBase('/')} aria-current={currentPath === '/' ? 'page' : undefined}>Accueil</a></li>
-        <li><a href={withBase('/offres/')} aria-current={currentPath.startsWith('/offres/') ? 'page' : undefined}>Offres</a></li>
+        <li><a href={withBase('/offres/')} aria-current={currentPath.startsWith('/offres/') ? 'page' : undefined}>Accompagnements</a></li>
         <li><a href={withBase('/formations/')} aria-current={currentPath.startsWith('/formations/') ? 'page' : undefined}>Formations</a></li>
         <li><a href={withBase('/approche/')} aria-current={currentPath === '/approche/' ? 'page' : undefined}>Approche</a></li>
         <li><a href={withBase('/blog/')} aria-current={currentPath.startsWith('/blog/') ? 'page' : undefined}>Blog</a></li>

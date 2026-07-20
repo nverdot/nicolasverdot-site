@@ -1,8 +1,8 @@
 // Configuration centrale du site — modifie ces valeurs avec tes vraies coordonnées.
 export const SITE = {
   name: 'by Nicolas Verdot',
-  baseline: 'Leader facilitateur · Coach · Formateur',
-  tagline: 'Révéler le meilleur de votre collectif.',
+  baseline: 'Facilitateur · Coach de dirigeants · Formateur',
+  tagline: 'Je fais bouger ce qui est bloqué.',
   url: 'https://nicolasverdot.com',
   email: 'contact@nicolasverdot.com',
   phone: '+33770058522',

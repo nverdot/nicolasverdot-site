@@ -70,9 +70,16 @@ const offers = [
 ];
 
 const whoChecks = [
-  { i: 'V', title: 'Une vision', text: 'Des organisations où les personnes savent ce qui compte et dans quel cadre agir.' },
-  { i: 'M', title: 'Une mission', text: 'Concevoir de meilleures conversations pour produire de meilleures décisions.' },
-  { i: 'A', title: 'Une approche', text: 'Partir du résultat attendu avant de choisir les méthodes et les outils.' },
+  { i: '✓', title: 'Vous gardez la main', text: 'Le collectif enrichit la décision, il ne la prend pas à votre place. Vous restez décideur — en sachant enfin sur quoi vous appuyer.' },
+  { i: '✓', title: 'Ça se voit tout de suite', text: 'Chaque échange est capturé et rendu visible en direct, grâce à la facilitation graphique. Personne ne repart en se demandant ce qui a été dit.' },
+  { i: '✓', title: 'Vos équipes continuent sans moi', text: "Mon objectif n'est pas de revenir animer votre prochaine réunion. C'est que vous n'en ayez plus besoin." },
+];
+
+const recognizable = [
+  "« On a fait un séminaire l'an dernier. Rien n'a vraiment changé. »",
+  '« Le CODIR décide. Trois semaines après, tout se rediscute. »',
+  '« Tout le monde est débordé. Personne ne sait dire pourquoi. »',
+  '« La transformation est lancée. Le terrain ne suit pas. »',
 ];
 
 const complementary = [
@@ -127,6 +134,16 @@ const clients = [
         <li><a href={withBase('/facilitation-graphique/')}>Fondateur du Sommet des Décoincés du Crayon</a></li>
         <li><a href={withBase('/materiel/')}>Ambassadeur Neuland</a></li>
         <li><a href={withBase('/facilitation-graphique/')}>Un réseau national de facilitateurs mobilisable</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="recognize" data-reveal>
+    <div class="container">
+      <p class="eyebrow center">Vous reconnaissez peut-être...</p>
+      <h2 class="prose center">Le symptôme n'est presque jamais celui qu'on croit.</h2>
+      <ul class="recognize-list">
+        {recognizable.map((r) => <li>{r}</li>)}
       </ul>
     </div>
   </section>
@@ -264,6 +281,37 @@ const clients = [
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+  }
+
+  .recognize {
+    padding: var(--space-16) 0;
+  }
+  .recognize-list {
+    list-style: none;
+    margin: var(--space-10) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    max-width: 920px;
+    margin-inline: auto;
+  }
+  .recognize-list li {
+    position: relative;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-clay);
+    border-radius: var(--radius-sm);
+    padding: var(--space-5) var(--space-6);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-navy);
+  }
+  @media (max-width: 720px) {
+    .recognize-list {
+      grid-template-columns: 1fr;
+    }
   }
 
   .authority {
