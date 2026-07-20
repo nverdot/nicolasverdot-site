@@ -132,9 +132,6 @@ const clients = [
   </section>
 
   <section class="trust" data-reveal data-section-name="Logos clients">
-    <div class="container">
-      <p class="eyebrow center">Ils m'ont déjà fait confiance</p>
-    </div>
     <div class="client-marquee">
       <div class="client-marquee-track">
         {[...clients, ...clients].map((c, i) => (
@@ -545,8 +542,13 @@ const clients = [
     }
   }
 
+  /* Bandeau de logos resserré : sans étiquette "Ils m'ont fait confiance"
+     au-dessus, c'est déjà lisible comme preuve sociale — inutile de l'entourer
+     d'autant de vide que les autres sections. */
+  .trust {
+    padding: var(--space-8) 0;
+  }
   .client-marquee {
-    margin-top: var(--space-8);
     overflow: hidden;
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
