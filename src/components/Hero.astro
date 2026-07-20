@@ -10,6 +10,11 @@ import { withBase } from '../utils/url';
 // situation du visiteur va se ranger. Contenu réel, pas juste décoratif —
 // ce sont des situations reconnaissables, lisibles par tout lecteur d'écran.
 const symptoms = ['Réunions qui tournent en rond', 'Décisions qui reviennent', 'Priorités qui changent', 'Équipes qui hésitent'];
+
+// Titre découpé en mots pour l'effet de révélation masquée (chaque mot
+// glisse depuis sous sa propre fenêtre) — voir le script plus bas.
+const titleWords = "Ce qui vous freine n'est pas un manque d'idées.".split(' ');
+const accentWords = "C'est un manque de mouvement.".split(' ');
 ---
 
 <section class="hero" aria-labelledby="hero-title">
@@ -21,11 +26,23 @@ const symptoms = ['Réunions qui tournent en rond', 'Décisions qui reviennent',
         {symptoms.map((s) => <li class="symptom-chip">{s}</li>)}
       </ul>
 
-      <h1 id="hero-title" data-hero-title>
-        Ce qui vous freine n'est pas un manque d'idées.
+      <h1 id="hero-title">
+        <span class="word-line">
+          {titleWords.map((w) => (
+            <>
+              <span class="word-mask"><span class="word" data-word>{w}</span></span>{' '}
+            </>
+          ))}
+        </span>
         {' '}
         <span class="accent-wrap">
-          <span class="accent-script">C'est un manque de mouvement.</span>
+          <span class="word-line">
+            {accentWords.map((w) => (
+              <>
+                <span class="word-mask"><span class="word word-accent" data-word>{w}</span></span>{' '}
+              </>
+            ))}
+          </span>
           <svg class="ink-underline" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path d="M6 20 C 120 8, 250 6, 360 14 S 540 26, 594 12" /></svg>
         </span>
       </h1>
@@ -69,37 +86,50 @@ const symptoms = ['Réunions qui tournent en rond', 'Décisions qui reviennent',
     { reduceMotion: '(prefers-reduced-motion: reduce)' },
     (context) => {
       const { reduceMotion } = context.conditions ?? {};
-
-      // Moment signature du hero : les "symptômes" entrent dispersés (rotation
-      // et décalage aléatoires par élément) puis se rangent dans l'ordre —
-      // la promesse de la marque ("je fais bouger ce qui est bloqué"), jouée
-      // une fois au chargement plutôt qu'au scroll.
       const chips = gsap.utils.toArray<HTMLElement>('.symptom-chip');
-      const title = document.querySelector('[data-hero-title]');
-      if (chips.length) {
-        if (reduceMotion) {
-          gsap.set(chips, { clearProps: 'all' });
-        } else {
-          gsap.set(chips, {
+      const words = gsap.utils.toArray<HTMLElement>('[data-word]');
+
+      if (reduceMotion) {
+        gsap.set(chips, { clearProps: 'all' });
+        gsap.set(words, { clearProps: 'all' });
+      } else {
+        // Moment signature du hero, en deux temps :
+        // 1) le titre se révèle mot par mot, glissant hors d'un masque
+        //    (overflow hidden sur .word-mask) — plus net et plus "premium"
+        //    qu'un simple fondu, sans toucher au tracé/pictos déjà écartés.
+        // 2) les "symptômes" arrivent dispersés depuis loin, avec une bonne
+        //    amplitude de rotation, et se rangent en place à la suite —
+        //    la promesse de la marque, jouée une fois au chargement.
+        const tl = gsap.timeline({ delay: 0.1 });
+        tl.set(words, { yPercent: 110, rotate: 6 })
+          .set(chips, {
             opacity: 0,
-            x: () => gsap.utils.random(-60, 60),
-            y: () => gsap.utils.random(-16, 16),
-            rotation: () => gsap.utils.random(-9, 9),
-          });
-          gsap.to(chips, {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            rotation: 0,
-            duration: 0.7,
-            ease: 'back.out(1.6)',
-            stagger: 0.09,
-            delay: 0.15,
-          });
-        }
-      }
-      if (title && !reduceMotion) {
-        gsap.from(title, { opacity: 0, y: 14, duration: 0.6, ease: 'power2.out', delay: 0.5 });
+            x: () => gsap.utils.random(-140, 140),
+            y: () => gsap.utils.random(-50, 50),
+            rotation: () => gsap.utils.random(-25, 25),
+            scale: 0.7,
+          })
+          .to(words, {
+            yPercent: 0,
+            rotate: 0,
+            duration: 0.85,
+            ease: 'power4.out',
+            stagger: 0.045,
+          })
+          .to(
+            chips,
+            {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              rotation: 0,
+              scale: 1,
+              duration: 0.9,
+              ease: 'elastic.out(1, 0.65)',
+              stagger: 0.08,
+            },
+            0.15
+          );
       }
 
       // Parallax léger : la photo d'action (au premier plan) défile un peu
@@ -126,7 +156,7 @@ const symptoms = ['Réunions qui tournent en rond', 'Décisions qui reviennent',
 
       return () => {
         chips.forEach((c) => gsap.killTweensOf(c));
-        if (title) gsap.killTweensOf(title);
+        words.forEach((w) => gsap.killTweensOf(w));
       };
     }
   );
@@ -144,6 +174,26 @@ const symptoms = ['Réunions qui tournent en rond', 'Décisions qui reviennent',
   }
   .hero-copy h1 {
     margin: var(--space-3) 0 var(--space-4);
+  }
+
+  .word-line {
+    display: inline;
+  }
+  .word-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.08em;
+  }
+  .word {
+    display: inline-block;
+    will-change: transform;
+  }
+  .word-accent {
+    font-family: var(--font-script);
+    font-weight: 700;
+    color: var(--color-orange);
+    letter-spacing: 0;
   }
 
   .symptom-row {
@@ -177,12 +227,6 @@ const symptoms = ['Réunions qui tournent en rond', 'Décisions qui reviennent',
     stroke: var(--color-orange);
     stroke-width: 6;
     fill: none;
-  }
-  .accent-script {
-    font-family: var(--font-script);
-    font-weight: 700;
-    color: var(--color-orange);
-    letter-spacing: 0;
   }
   .hero-lead {
     display: block;

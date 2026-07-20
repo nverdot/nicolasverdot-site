@@ -142,8 +142,8 @@ const clients = [
     <div class="container">
       <p class="eyebrow center">Vous reconnaissez peut-être...</p>
       <h2 class="prose center">Le symptôme n'est presque jamais celui qu'on croit.</h2>
-      <ul class="recognize-list">
-        {recognizable.map((r) => <li>{r}</li>)}
+      <ul class="recognize-list" data-recognize-list>
+        {recognizable.map((r) => <li data-recognize-item>{r}</li>)}
       </ul>
     </div>
   </section>
@@ -269,6 +269,47 @@ const clients = [
     subtitle="Un premier échange permet de comprendre l'enjeu, le niveau de décision et de vérifier si mon intervention est pertinente."
   />
 </Layout>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const mm = gsap.matchMedia();
+
+  // Séquence scrollée (pin + scrub) : desktop uniquement, et seulement hors
+  // reduced-motion — le repli est le simple fondu [data-reveal] déjà en
+  // place partout ailleurs, donc rien à faire côté HTML/CSS pour ce cas.
+  mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
+    const section = document.querySelector<HTMLElement>('.recognize');
+    const items = gsap.utils.toArray<HTMLElement>('[data-recognize-item]');
+    if (!section || !items.length) return;
+
+    gsap.set(items, { transformOrigin: 'center center' });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: '+=120%',
+        scrub: 0.8,
+        pin: true,
+      },
+    });
+
+    items.forEach((item, i) => {
+      tl.fromTo(
+        item,
+        { opacity: 0, scale: 0.7, y: 70, rotate: gsap.utils.random(-7, 7) },
+        { opacity: 1, scale: 1, y: 0, rotate: 0, duration: 1, ease: 'power2.out' },
+        i * 0.9
+      );
+    });
+
+    return () => tl.scrollTrigger?.kill();
+  });
+</script>
 
 <style>
   .eyebrow.center {
