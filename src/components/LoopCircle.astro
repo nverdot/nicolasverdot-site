@@ -1,38 +1,34 @@
 ---
-// Section "Vous tournez en rond ?" — cercle animé de 6 situations qui
-// apparaissent progressivement, tournent légèrement (sens antihoraire),
-// puis s'ouvrent sur une sortie jaune vers le CTA. Structure data-driven :
-// modifier `situations` suffit à changer contenu/ordre/images.
-import { Image } from 'astro:assets';
+// Section "Vous tournez en rond ?" — pas d'illustrations : un cercle tracé
+// au trait, 6 situations en typographie pure disposées autour, et un signal
+// qui tourne en continu (jamais scroll-gaté) pour montrer littéralement que
+// le problème est une boucle sans fin. La rupture jaune vers le CTA est la
+// seule chose qui NE boucle PAS — c'est la sortie. Structure data-driven :
+// modifier `situations` suffit à changer contenu/ordre.
 import { withBase } from '../utils/url';
 
-import img1 from '../assets/tourner-en-rond/01-reunions.png';
-import img2 from '../assets/tourner-en-rond/03-tout-semble-prioritaire.png';
-import img3 from '../assets/tourner-en-rond/06-decisions-peu-appliquees.png';
-import img4 from '../assets/tourner-en-rond/05-equipe-sans-direction.png';
-import img5 from '../assets/tourner-en-rond/04-quelques-personnes-parlent.png';
-import img6 from '../assets/tourner-en-rond/02-transformation-essoufflee.png';
-import imgKnot from '../assets/tourner-en-rond/07-noeud-central.png';
-import picto1 from '../assets/tourner-en-rond/picto-methodes-participatives.png';
-import picto2 from '../assets/tourner-en-rond/picto-facilitation-visuelle.png';
-import picto3 from '../assets/tourner-en-rond/picto-decisions-claires.png';
-import picto4 from '../assets/tourner-en-rond/picto-actions-qui-comptent.png';
+const icons: Record<string, string> = {
+  people: '<circle cx="8" cy="8" r="3"/><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M14.5 20c.2-2.6 2.1-4.7 4.6-5"/>',
+  pencil: '<path d="M3 21l3.5-1 11-11-2.5-2.5-11 11z"/><path d="M14 6.5l2.5 2.5"/>',
+  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
+  trending: '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
+};
 
-// id · texte · image · angle (0 = haut, sens horaire) · délai relatif (s)
+// id · texte · angle (0 = haut, sens horaire)
 const situations = [
-  { id: 1, text: "Les réunions se multiplient, mais rien n'avance vraiment.", image: img1, angle: 0, delay: 0 },
-  { id: 2, text: 'Tout semble prioritaire.', image: img2, angle: 60, delay: 0.9 },
-  { id: 3, text: 'Les décisions sont prises, mais rarement appliquées.', image: img3, angle: 120, delay: 1.8 },
-  { id: 4, text: "Les équipes ne comprennent plus où l'on va.", image: img4, angle: 180, delay: 2.7 },
-  { id: 5, text: 'Quelques personnes parlent, les autres décrochent.', image: img5, angle: 240, delay: 3.6 },
-  { id: 6, text: "Les transformations s'essoufflent après le lancement.", image: img6, angle: 300, delay: 4.5 },
+  { id: 1, text: "Les réunions se multiplient, mais rien n'avance vraiment." , angle: 0 },
+  { id: 2, text: 'Tout semble prioritaire.', angle: 60 },
+  { id: 3, text: 'Les décisions sont prises, mais rarement appliquées.', angle: 120 },
+  { id: 4, text: "Les équipes ne comprennent plus où l'on va.", angle: 180 },
+  { id: 5, text: 'Quelques personnes parlent, les autres décrochent.', angle: 240 },
+  { id: 6, text: "Les transformations s'essoufflent après le lancement.", angle: 300 },
 ];
 
 const benefits = [
-  { image: picto1, title: 'Des méthodes participatives', text: 'Pour impliquer vraiment les bonnes personnes.' },
-  { image: picto2, title: 'Une facilitation visuelle', text: "Pour rendre l'essentiel visible et partagé." },
-  { image: picto3, title: 'Des décisions claires', text: "Pour sortir de l'incertitude et choisir une direction." },
-  { image: picto4, title: 'Des actions qui comptent', text: 'Pour transformer les décisions en résultats concrets.' },
+  { icon: 'people', title: 'Des méthodes participatives', text: 'Pour impliquer vraiment les bonnes personnes.' },
+  { icon: 'pencil', title: 'Une facilitation visuelle', text: "Pour rendre l'essentiel visible et partagé." },
+  { icon: 'target', title: 'Des décisions claires', text: "Pour sortir de l'incertitude et choisir une direction." },
+  { icon: 'trending', title: 'Des actions qui comptent', text: 'Pour transformer les décisions en résultats concrets.' },
 ];
 
 // Coordonnées des 6 points sur un cercle de rayon 350 dans un viewBox
@@ -45,15 +41,16 @@ const pt = (angleDeg: number) => {
   return { x: CX + R * Math.sin(rad), y: CY - R * Math.cos(rad) };
 };
 const points = situations.map((s) => pt(s.angle));
-// Segments reliant les points consécutifs — le segment 3 (entre la
-// situation 3 "bas-droite" et la situation 4 "bas") est volontairement
-// omis : c'est la rupture du cercle, remplacée par la sortie jaune.
-const arcs = [0, 1, 2, 3, 4, 5].map((i) => {
-  const a = points[i];
-  const b = points[(i + 1) % 6];
-  return { id: i, d: `M${a.x.toFixed(1)},${a.y.toFixed(1)} A${R},${R} 0 0 1 ${b.x.toFixed(1)},${b.y.toFixed(1)}` };
-});
-const BROKEN_ARC = 2; // segment situation3 → situation4
+// Un seul tracé continu qui fait presque tout le tour, en partant juste
+// après la rupture (entre situation 3 et situation 4) et en y revenant :
+// c'est la boucle brisée, remplacée à cet endroit par la sortie jaune.
+const BREAK_AFTER = 2; // rupture entre points[2] et points[3]
+const order = [3, 4, 5, 0, 1, 2];
+let ringPath = `M${points[order[0]].x.toFixed(1)},${points[order[0]].y.toFixed(1)} `;
+for (let k = 0; k < order.length - 1; k++) {
+  const b = points[order[k + 1]];
+  ringPath += `A${R},${R} 0 0 1 ${b.x.toFixed(1)},${b.y.toFixed(1)} `;
+}
 ---
 
 <section class="loop-circle" data-reveal data-section-name="Vous tournez en rond ?">
@@ -67,39 +64,36 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
     </div>
 
     <div class="loop-stage">
-      <div class="loop-orbit" data-loop-orbit>
-        <svg class="loop-arrows" viewBox="0 0 1000 1000" aria-hidden="true">
-          <defs>
-            <marker id="loop-arrowhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M0,0 L10,5 L0,10 z" fill="var(--color-navy)" />
-            </marker>
-          </defs>
-          {arcs.map((arc) => (
-            arc.id === BROKEN_ARC ? null : (
-              <path
-                class="loop-arc"
-                data-loop-arc={arc.id}
-                d={arc.d}
-                marker-end="url(#loop-arrowhead)"
-              />
-            )
-          ))}
-        </svg>
+      <div class="loop-blob" aria-hidden="true"></div>
 
+      <svg class="loop-ring" viewBox="0 0 1000 1000" aria-hidden="true">
+        <circle class="loop-track" cx={CX} cy={CY} r={R} />
+        <path class="loop-arc" data-loop-arc d={ringPath} />
+      </svg>
+
+      <div class="loop-beacon-orbit" data-loop-beacon aria-hidden="true">
+        <span class="loop-beacon"></span>
+      </div>
+
+      <div class="loop-dots" aria-hidden="true">
+        {situations.map((s) => (
+          <span class="loop-dot" style={`--angle: ${s.angle};`}><span class="loop-dot-core"></span></span>
+        ))}
+      </div>
+
+      <div class="loop-orbit">
         {situations.map((s) => (
           <div class="loop-node" style={`--angle: ${s.angle};`} data-loop-node={s.id}>
-            <div class="loop-node-inner">
-              <div class="loop-node-visual" data-loop-node-visual>
-                <span class="loop-node-img"><Image src={s.image} alt="" width={200} height={145} loading="lazy" /></span>
-                <p class="loop-node-text">{s.text}</p>
+            <div class="loop-node-inner" data-loop-node-inner>
+              <div class="loop-node-visual" style={`--angle: ${s.angle};`}>
+                <p class="loop-node-text">
+                  <span class="loop-node-index">0{s.id}</span>
+                  {s.text}
+                </p>
               </div>
             </div>
           </div>
         ))}
-      </div>
-
-      <div class="loop-knot" aria-hidden="true">
-        <Image src={imgKnot} alt="" width={220} height={220} />
       </div>
 
       <svg class="loop-exit" viewBox="0 0 1000 1000" aria-hidden="true" data-loop-exit>
@@ -126,7 +120,7 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
     <div class="loop-benefits" data-loop-benefits>
       {benefits.map((b) => (
         <div class="loop-benefit">
-          <span class="loop-benefit-img"><Image src={b.image} alt="" width={64} height={64} /></span>
+          <svg class="loop-benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[b.icon]} />
           <h3>{b.title}</h3>
           <p>{b.text}</p>
         </div>
@@ -142,52 +136,45 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
   gsap.registerPlugin(ScrollTrigger);
 
   const mm = gsap.matchMedia();
-  const ROTATION_STEP = -10; // degrés par apparition, sens antihoraire
 
   mm.add(
     {
       reduceMotion: '(prefers-reduced-motion: reduce)',
-      // Sous 640px, le cercle bascule en liste verticale statique (voir CSS) :
-      // un pin scroll-scrubbé n'a plus de sens sur cette mise en page, on
-      // garde le simple fondu déclenché une fois au scroll.
-      compactMotion: '(prefers-reduced-motion: no-preference) and (max-width: 640px)',
-      fullMotion: '(prefers-reduced-motion: no-preference) and (min-width: 641px)',
+      fullMotion: '(prefers-reduced-motion: no-preference)',
     },
     (context) => {
-      const { reduceMotion, compactMotion } = context.conditions ?? {};
+      const { reduceMotion } = context.conditions ?? {};
       const section = document.querySelector<HTMLElement>('.loop-circle');
-      const orbit = document.querySelector<HTMLElement>('[data-loop-orbit]');
-      if (!section || !orbit) return;
+      if (!section) return;
 
       const title = section.querySelector('[data-loop-title]');
       const sub = section.querySelector('[data-loop-sub]');
-      const knot = section.querySelector('.loop-knot');
-      // Anime le wrapper visuel interne, jamais `.loop-node` : cet élément
-      // porte déjà un transform rotate()+translateY() piloté par CSS pour le
-      // placement sur le cercle, et gsap.set(..., {scale}) écrit directement
-      // dans style.transform, ce qui écraserait ce placement.
-      const nodes = gsap.utils.toArray<HTMLElement>('[data-loop-node-visual]');
-      const arcs = gsap.utils.toArray<SVGPathElement>('[data-loop-arc]');
+      const arc = section.querySelector<SVGPathElement>('[data-loop-arc]');
       const exitPath = section.querySelector<SVGPathElement>('[data-loop-exit-path]');
+      // On anime l'opacité de `.loop-node-inner`, jamais `.loop-node` (porte
+      // le placement circulaire via transform, à ne jamais toucher) ni
+      // `.loop-node-visual` (porte le pouls CSS infini indépendant) : le
+      // moindre gsap.set({scale}) sur le mauvais élément casse soit le
+      // placement, soit se fait immédiatement écraser par l'animation CSS.
+      const nodeInners = gsap.utils.toArray<HTMLElement>('[data-loop-node-inner]');
+      const beacon = section.querySelector('[data-loop-beacon]');
       const handwritten = section.querySelector('[data-loop-handwritten]');
       const ctaWrap = section.querySelector('[data-loop-cta]');
       const benefits = gsap.utils.toArray<HTMLElement>('.loop-benefit');
 
-      // Longueur de chaque arc pour l'effet "dessiné au trait".
-      arcs.forEach((arc) => {
+      if (arc) {
         const len = arc.getTotalLength();
         gsap.set(arc, { strokeDasharray: len, strokeDashoffset: reduceMotion ? 0 : len });
-      });
+      }
       if (exitPath) {
         const len = exitPath.getTotalLength();
         gsap.set(exitPath, { strokeDasharray: len, strokeDashoffset: reduceMotion ? 0 : len });
       }
 
       if (reduceMotion) {
-        // Tout est affiché immédiatement, disposition circulaire conservée,
-        // aucune rotation.
-        gsap.set([title, sub, knot, ...nodes, ...benefits], { opacity: 1, y: 0, scale: 1 });
-        gsap.set(orbit, { '--orbit-rot': '0deg' } as gsap.TweenVars);
+        // Tout est affiché immédiatement ; le signal tournant et les pouls
+        // sont coupés (voir CSS) pour ne pas imposer de mouvement continu.
+        gsap.set([title, sub, ...nodeInners, ...benefits], { opacity: 1, y: 0 });
         if (handwritten) gsap.set(handwritten, { opacity: 1 });
         if (ctaWrap) gsap.set(ctaWrap, { opacity: 1, y: 0 });
         return;
@@ -195,72 +182,39 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
 
       gsap.set(title, { opacity: 0, y: 16 });
       gsap.set(sub, { opacity: 0, y: 12 });
-      gsap.set(knot, { opacity: 0, scale: 0.7 });
-      gsap.set(nodes, { opacity: 0, scale: 0.6 });
+      gsap.set(nodeInners, { opacity: 0 });
       gsap.set(benefits, { opacity: 0, y: 20 });
+      if (beacon) gsap.set(beacon, { opacity: 0 });
       if (handwritten) gsap.set(handwritten, { opacity: 0 });
       if (ctaWrap) gsap.set(ctaWrap, { opacity: 0, y: 12 });
 
-      const rot = { value: 0 };
-      const applyRot = () => orbit.style.setProperty('--orbit-rot', `${rot.value}deg`);
-      applyRot();
-
-      // Desktop/tablette : la section reste épinglée le temps que la
-      // révélation se joue, scrubée au scroll — impossible de "passer à
-      // travers" avant d'avoir tout vu. Mobile compact : simple fondu au
-      // scroll, sans pin (voir le commentaire sur `compactMotion` plus haut).
-      const header = document.querySelector<HTMLElement>('.site-header');
+      // Révélation ponctuelle une seule fois au scroll. Pas de pin ni de
+      // scrub ici : le signal qui tourne en continu (CSS, toujours actif
+      // une fois la section révélée) porte à lui seul la métaphore de la
+      // boucle sans fin — bloquer le scroll par-dessus serait redondant.
       const tl = gsap.timeline({
-        scrollTrigger: compactMotion
-          ? { trigger: section, start: 'top 60%', once: true }
-          : {
-              trigger: section,
-              start: () => `top ${header ? header.offsetHeight : 0}`,
-              end: () => `+=${Math.round(window.innerHeight * 1.6)}`,
-              pin: true,
-              anticipatePin: 1,
-              scrub: 0.6,
-            },
+        scrollTrigger: { trigger: section, start: 'top 65%', once: true },
       });
 
       tl.to(title, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-        .to(sub, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.25')
-        .to(knot, { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.6)' }, '-=0.15');
+        .to(sub, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.25');
 
-      nodes.forEach((node, i) => {
-        tl.to(node, { opacity: 1, scale: 1, duration: 0.55, ease: 'back.out(1.5)' }, '+=0.1');
-
-        // Arc reliant ce nœud au précédent (sauf le premier, et sauf la
-        // rupture volontaire entre les situations 3 et 4).
-        if (i > 0 && i - 1 !== 2) {
-          const arc = arcs.find((a) => Number(a.dataset.loopArc) === i - 1);
-          if (arc) {
-            tl.to(arc, { strokeDashoffset: 0, duration: 0.5, ease: 'power2.out' }, '<');
-          }
-        }
-        // Après la 6ᵉ situation, referme aussi la boucle (segment 6 → 1).
-        if (i === 5) {
-          const closingArc = arcs.find((a) => Number(a.dataset.loopArc) === 5);
-          if (closingArc) {
-            tl.to(closingArc, { strokeDashoffset: 0, duration: 0.5, ease: 'power2.out' }, '<');
-          }
-        }
-
-        // Légère rotation antihoraire après chaque situation, sauf la
-        // dernière : le cercle s'arrête dès que tout est visible.
-        if (i < nodes.length - 1) {
-          tl.to(rot, { value: rot.value + ROTATION_STEP, duration: 0.9, ease: 'sine.inOut', onUpdate: applyRot }, '+=0.05');
-        }
-      });
+      if (arc) {
+        tl.to(arc, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, '-=0.1');
+      }
+      tl.to(nodeInners, { opacity: 1, duration: 0.4, stagger: 0.08, ease: 'power1.out' }, '-=0.9');
 
       if (exitPath) {
-        tl.to(exitPath, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out' }, '+=0.2');
+        tl.to(exitPath, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out' }, '-=0.1');
       }
       if (handwritten) {
         tl.to(handwritten, { opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.2');
       }
       if (ctaWrap) {
         tl.to(ctaWrap, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
+      }
+      if (beacon) {
+        tl.to(beacon, { opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.3');
       }
       tl.to(benefits, { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' }, '-=0.1');
 
@@ -275,8 +229,7 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
 <style>
   .loop-circle {
     /* Section volontairement toujours claire, indépendamment du thème :
-       la référence visuelle fournie n'a pas de variante sombre, et le
-       diagramme (flèches navy, texte navy sur blanc) perd tout contraste
+       les traits fins et le texte navy sur crème perdent tout contraste
        une fois les tokens inversés en mode sombre. */
     --color-navy: #122033;
     --color-cream: #fcf8ef;
@@ -296,90 +249,161 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
   .loop-stage {
     position: relative;
     width: 100%;
-    max-width: 700px;
+    max-width: 640px;
     aspect-ratio: 1;
     margin: 0 auto;
+    --radius: clamp(160px, 24vw, 224px);
   }
-  .loop-orbit {
+
+  /* Tache respirante au centre : pas d'image, juste un dégradé flou qui
+     pulse doucement — évoque le "flou" du problème sans l'illustrer. */
+  .loop-blob {
     position: absolute;
-    inset: 0;
-    --orbit-rot: 0deg;
-    --radius: clamp(180px, 22vw, 260px);
+    top: 50%;
+    left: 50%;
+    width: clamp(90px, 14vw, 150px);
+    height: clamp(90px, 14vw, 150px);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color-navy) 16%, transparent), transparent 72%);
+    filter: blur(6px);
+    animation: loop-breathe 5s ease-in-out infinite;
   }
-  .loop-arrows {
+
+  .loop-ring {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     overflow: visible;
-    transform: rotate(var(--orbit-rot));
+  }
+  .loop-track {
+    fill: none;
+    stroke: var(--color-border);
+    stroke-width: 1.5;
   }
   .loop-arc {
     fill: none;
     stroke: var(--color-navy);
-    stroke-width: 3;
+    stroke-width: 2;
     stroke-linecap: round;
-    opacity: 0.75;
+    opacity: 0.85;
   }
 
+  /* Signal qui tourne en continu autour de l'anneau — jamais scroll-gaté
+     une fois révélé : c'est la preuve visuelle, littérale, que ça tourne
+     en rond, plutôt qu'une simple affirmation en toutes lettres. */
+  .loop-beacon-orbit {
+    position: absolute;
+    inset: 0;
+    animation: loop-spin 13s linear infinite;
+  }
+  .loop-beacon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 9px;
+    height: 9px;
+    margin: -4.5px;
+    border-radius: 50%;
+    background: var(--color-orange);
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, var(--color-orange) 22%, transparent),
+      0 0 16px 3px color-mix(in srgb, var(--color-orange) 55%, transparent);
+    transform: translateY(calc(-1 * var(--radius)));
+  }
+
+  .loop-dots {
+    position: absolute;
+    inset: 0;
+  }
+  .loop-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(-1 * var(--radius)));
+  }
+  .loop-dot-core {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    margin: -3.5px;
+    border-radius: 50%;
+    background: var(--color-navy);
+    display: block;
+    animation: loop-pulse 13s ease-in-out infinite;
+    animation-delay: calc(var(--angle) / 360 * -13s);
+  }
+
+  .loop-orbit {
+    position: absolute;
+    inset: 0;
+  }
   .loop-node {
     position: absolute;
     top: 50%;
     left: 50%;
     width: 0;
     height: 0;
-    transform: rotate(calc(var(--angle) * 1deg + var(--orbit-rot))) translateY(calc(-1 * var(--radius)));
+    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(-1 * (var(--radius) + 30px)));
   }
   .loop-node-inner {
     position: absolute;
-    transform: translate(-50%, -50%) rotate(calc(-1 * (var(--angle) * 1deg + var(--orbit-rot))));
+    transform: translate(-50%, -50%) rotate(calc(-1 * var(--angle) * 1deg));
     width: 180px;
   }
   .loop-node-visual {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-2);
-  }
-  .loop-node-img {
-    display: block;
-    width: 162px;
-    height: 118px;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-  }
-  .loop-node-img :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    animation: loop-pulse 13s ease-in-out infinite;
+    animation-delay: calc(var(--angle) / 360 * -13s);
   }
   .loop-node-text {
     margin: 0;
     text-align: center;
-    font-size: var(--text-xs);
-    font-weight: 700;
-    line-height: 1.3;
+    line-height: 1.35;
+    font-size: 0.875rem;
+    font-weight: 600;
     color: var(--color-navy);
-    background: color-mix(in srgb, var(--color-surface) 88%, transparent);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 0.5em 0.75em;
-    box-shadow: var(--shadow-sm);
+  }
+  .loop-node-index {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-orange-ink);
+    margin-bottom: 0.3em;
   }
 
-  .loop-knot {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: clamp(70px, 11vw, 140px);
-    z-index: 1;
+  @keyframes loop-spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
-  .loop-knot :global(img) {
-    width: 100%;
-    height: auto;
-    display: block;
+  @keyframes loop-pulse {
+    0%, 88%, 100% {
+      opacity: 0.42;
+      transform: scale(0.96);
+    }
+    4% {
+      opacity: 1;
+      transform: scale(1.06);
+    }
+  }
+  .loop-dot-core {
+    transform-origin: center;
+  }
+  @keyframes loop-breathe {
+    0%, 100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.75;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.18);
+      opacity: 1;
+    }
   }
 
   .loop-exit {
@@ -400,7 +424,7 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
   .loop-handwritten {
     position: absolute;
     right: 2%;
-    bottom: 6%;
+    bottom: 4%;
     max-width: 200px;
     margin: 0;
     font-family: var(--font-script);
@@ -424,16 +448,12 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
   .loop-benefit {
     text-align: center;
   }
-  .loop-benefit-img {
+  .loop-benefit-icon {
     display: block;
-    width: 56px;
-    height: 56px;
+    width: 32px;
+    height: 32px;
     margin: 0 auto var(--space-3);
-  }
-  .loop-benefit-img :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    color: var(--color-orange-ink);
   }
   .loop-benefit h3 {
     margin: 0 0 var(--space-2);
@@ -446,22 +466,17 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
   }
 
   @media (max-width: 900px) {
-    .loop-orbit {
-      --radius: clamp(190px, 25vw, 220px);
+    .loop-stage {
+      --radius: clamp(120px, 20vw, 170px);
+    }
+    .loop-node {
+      transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(-1 * (var(--radius) + 22px)));
     }
     .loop-node-inner {
-      width: 118px;
+      width: 140px;
     }
     .loop-node-text {
-      font-size: 0.66rem;
-      width: 108px;
-    }
-    .loop-node-img {
-      width: 108px;
-      height: 78px;
-    }
-    .loop-knot {
-      width: clamp(60px, 10vw, 100px);
+      font-size: 0.75rem;
     }
   }
 
@@ -471,25 +486,28 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
     }
   }
 
-  /* --- Sous 640px : le cercle devient trop serré pour rester lisible sans
-     risquer que les cartes se chevauchent, on bascule en boucle verticale —
-     même contenu, même esprit de répétition, disposition en colonne avec le
-     nœud au centre et la sortie jaune en bas. --- */
-  @media (max-width: 640px) {
+  /* --- Sous 480px : le cercle devient trop serré, on bascule en liste
+     verticale — même contenu, même esprit de répétition, disposition en
+     colonne avec le signal tournant retiré (il n'a plus de piste à suivre)
+     et la sortie jaune en bas. --- */
+  @media (max-width: 480px) {
     .loop-stage {
       aspect-ratio: auto;
-      max-width: 340px;
+      max-width: 360px;
+    }
+    .loop-blob,
+    .loop-ring,
+    .loop-beacon-orbit,
+    .loop-dots,
+    .loop-exit {
+      display: none;
     }
     .loop-orbit {
       position: static;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: var(--space-6);
-    }
-    .loop-arrows,
-    .loop-exit {
-      display: none;
+      gap: var(--space-5);
     }
     .loop-node {
       position: static;
@@ -506,20 +524,13 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
       content: '';
       display: block;
       width: 2px;
-      height: 28px;
+      height: 24px;
       margin: var(--space-2) auto 0;
       background: var(--color-navy);
-      opacity: 0.4;
+      opacity: 0.35;
     }
     .loop-node:last-of-type::after {
       display: none;
-    }
-    .loop-knot {
-      position: static;
-      transform: none;
-      width: 120px;
-      order: 3;
-      margin: var(--space-4) auto;
     }
     .loop-handwritten {
       position: static;
@@ -540,6 +551,19 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
     .loop-arc,
     .loop-exit-path {
       stroke-dashoffset: 0 !important;
+    }
+    .loop-blob,
+    .loop-beacon-orbit {
+      animation: none !important;
+    }
+    .loop-beacon-orbit {
+      opacity: 0 !important;
+    }
+    .loop-dot-core,
+    .loop-node-visual {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 </style>
