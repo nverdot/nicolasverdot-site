@@ -357,12 +357,13 @@ const clients = [
   const mm = gsap.matchMedia();
 
   // Le trait sous "le collectif avance." se dessine de gauche à droite au
-  // scroll, plutôt que d'apparaître d'un bloc — seul cet exemplaire du
-  // motif .ink-underline (celui du bandeau bénéfices) est concerné.
-  // Trigger sur la SECTION (pas le path, trop fin pour un calcul fiable) et
-  // seuil à 65% : sur un grand écran, le bandeau peut déjà dépasser 85% de
-  // hauteur de viewport dès le chargement, ce qui déclenchait l'anim avant
-  // même que l'utilisateur ait scrollé jusqu'à elle.
+  // scroll et se redessine à chaque passage — descendre le trace, remonter
+  // l'efface — plutôt que de rester acquis une fois pour toutes. Seul cet
+  // exemplaire du motif .ink-underline (celui du bandeau bénéfices) est
+  // concerné. Trigger sur la SECTION (pas le path, trop fin pour un calcul
+  // fiable) et seuil à 65% : sur un grand écran, le bandeau peut déjà
+  // dépasser 85% de hauteur de viewport dès le chargement, ce qui
+  // déclenchait l'anim avant même que l'utilisateur ait scrollé jusqu'à elle.
   mm.add('(prefers-reduced-motion: no-preference)', () => {
     const section = document.querySelector<HTMLElement>('.proof-band');
     const path = document.querySelector<SVGPathElement>('.proof-inner .ink-underline path');
@@ -379,7 +380,7 @@ const clients = [
       scrollTrigger: {
         trigger: section,
         start: 'top 65%',
-        once: true,
+        toggleActions: 'play none none reverse',
       },
     });
 
