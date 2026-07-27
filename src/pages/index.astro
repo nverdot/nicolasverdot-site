@@ -105,13 +105,6 @@ const clients = [
         ))}
       </div>
     </div>
-    <div class="container">
-      <ul class="authority" aria-label="Repères de confiance">
-        <li><a href={withBase('/facilitation-graphique/')}>Fondateur du Sommet des Décoincés du Crayon</a></li>
-        <li><a href={withBase('/materiel/')}>Ambassadeur Neuland</a></li>
-        <li><a href={withBase('/facilitation-graphique/')}>Un réseau national de facilitateurs mobilisable</a></li>
-      </ul>
-    </div>
   </section>
 
   <section class="section" id="accompagnements" data-reveal data-section-name="Offres principales">
@@ -166,37 +159,6 @@ const clients = [
 </Layout>
 
 <style>
-  .authority {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-2) var(--space-4);
-    margin: var(--space-6) 0 0;
-    padding: 0;
-    font-size: var(--text-sm);
-  }
-  .authority li {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-  }
-  .authority li + li::before {
-    content: '·';
-    color: var(--color-orange);
-    font-weight: 900;
-  }
-  .authority a {
-    color: var(--color-muted);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: color 0.15s ease, border-color 0.15s ease;
-  }
-  .authority a:hover {
-    color: var(--color-ink);
-    border-color: var(--color-orange);
-  }
-
   .complementary-label {
     margin: var(--space-6) 0 0;
     font-size: var(--text-sm);
@@ -285,6 +247,7 @@ const clients = [
   }
   .circle-mark {
     position: absolute;
+    z-index: -1;
     inset: -0.3em -0.25em;
     width: calc(100% + 0.5em);
     height: calc(100% + 0.6em);
