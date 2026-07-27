@@ -359,20 +359,26 @@ const clients = [
   // Le trait sous "le collectif avance." se dessine de gauche à droite au
   // scroll, plutôt que d'apparaître d'un bloc — seul cet exemplaire du
   // motif .ink-underline (celui du bandeau bénéfices) est concerné.
+  // Trigger sur la SECTION (pas le path, trop fin pour un calcul fiable) et
+  // seuil à 65% : sur un grand écran, le bandeau peut déjà dépasser 85% de
+  // hauteur de viewport dès le chargement, ce qui déclenchait l'anim avant
+  // même que l'utilisateur ait scrollé jusqu'à elle.
   mm.add('(prefers-reduced-motion: no-preference)', () => {
+    const section = document.querySelector<HTMLElement>('.proof-band');
     const path = document.querySelector<SVGPathElement>('.proof-inner .ink-underline path');
-    if (!path) return;
+    if (!section || !path) return;
 
     const length = path.getTotalLength();
     gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
 
     const tween = gsap.to(path, {
       strokeDashoffset: 0,
-      duration: 0.9,
+      duration: 1,
+      delay: 0.15,
       ease: 'power2.out',
       scrollTrigger: {
-        trigger: path,
-        start: 'top 85%',
+        trigger: section,
+        start: 'top 65%',
         once: true,
       },
     });

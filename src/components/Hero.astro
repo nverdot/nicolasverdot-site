@@ -1,11 +1,33 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import { withBase } from '../utils/url';
 import heroBg from '../assets/hero-mountain.jpg';
+import heroBgMobile from '../assets/hero-mountain-mobile.png';
+
+const desktopSrcset = (
+  await Promise.all(
+    [640, 1200, 1920].map(async (w) => {
+      const img = await getImage({ src: heroBg, width: w, format: 'webp' });
+      return `${img.src} ${w}w`;
+    })
+  )
+).join(', ');
+const mobileSrcset = (
+  await Promise.all(
+    [480, 750, 940].map(async (w) => {
+      const img = await getImage({ src: heroBgMobile, width: w, format: 'webp' });
+      return `${img.src} ${w}w`;
+    })
+  )
+).join(', ');
+const mobileFallback = await getImage({ src: heroBgMobile, width: 750, format: 'webp' });
 ---
 
 <section class="hero" aria-labelledby="hero-title" data-section-name="Hero">
-  <Image src={heroBg} alt="" class="hero-bg" widths={[640, 1200, 1920]} sizes="100vw" aria-hidden="true" />
+  <picture>
+    <source media="(max-width: 640px)" srcset={mobileSrcset} sizes="100vw" />
+    <img class="hero-bg" src={mobileFallback.src} srcset={desktopSrcset} sizes="100vw" alt="" aria-hidden="true" />
+  </picture>
   <div class="hero-scrim" aria-hidden="true"></div>
 
   <div class="hero-inner">
@@ -127,24 +149,12 @@ import heroBg from '../assets/hero-mountain.jpg';
 
   @media (max-width: 640px) {
     .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
+      min-height: 680px;
+      align-items: flex-start;
       padding-top: var(--space-10);
     }
     .hero :global(.hero-bg) {
-      position: static;
-      width: 100%;
-      height: 220px;
-      order: 2;
-      margin-top: var(--space-8);
-      border-radius: var(--radius-md);
-    }
-    .hero-scrim {
-      display: none;
-    }
-    .hero-inner {
-      order: 1;
+      object-position: 45% 15%;
     }
   }
 
