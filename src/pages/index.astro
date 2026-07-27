@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import LoopCircle from '../components/LoopCircle.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
 import portrait from '../assets/nicolas-portrait.png';
@@ -77,15 +78,6 @@ const traits = [
   { icon: 'target', title: 'Pragmatique', text: "au service de l'action." },
   { icon: 'bolt', title: 'Directe', text: 'sans détour.' },
   { icon: 'flag', title: 'Engagée', text: 'à vos côtés.' },
-];
-
-const problemPoints = [
-  "Les réunions se multiplient, mais rien n'avance vraiment.",
-  'Tout semble prioritaire.',
-  'Les décisions sont prises, mais rarement appliquées.',
-  "Les équipes ne comprennent plus où l'on va.",
-  'Quelques personnes parlent, les autres décrochent.',
-  "Les transformations s'essoufflent après le lancement.",
 ];
 
 const principles = [
@@ -176,36 +168,7 @@ const clients = [
     </div>
   </section>
 
-  <section class="problem-section" data-reveal data-section-name="Vous tournez en rond ?">
-    <div class="container problem-inner">
-      <div class="problem-copy">
-        <h2>Vous tournez en rond ?</h2>
-        <p class="problem-sub">Vous avez peut-être déjà vécu ça…</p>
-        <ul class="problem-list">
-          {problemPoints.map((p) => <li>{p}</li>)}
-        </ul>
-        <a href={withBase('/contact/')} class="btn">Sortons du cercle →</a>
-      </div>
-      <div class="problem-illustration" aria-hidden="true">
-        <svg viewBox="0 0 360 360">
-          <circle class="loop-ring" cx="180" cy="180" r="120" />
-          <path class="loop-break" d="M180 60 A120 120 0 0 1 293 155" />
-          <circle class="loop-dot" cx="180" cy="60" r="9" />
-          <circle class="loop-dot" cx="272" cy="98" r="9" />
-          <circle class="loop-dot" cx="300" cy="180" r="9" />
-          <circle class="loop-dot" cx="272" cy="262" r="9" />
-          <circle class="loop-dot" cx="180" cy="300" r="9" />
-          <circle class="loop-dot" cx="88" cy="262" r="9" />
-          <circle class="loop-dot" cx="60" cy="180" r="9" />
-          <circle class="loop-dot" cx="88" cy="98" r="9" />
-          <circle class="loop-center" cx="180" cy="180" r="34" />
-          <path class="loop-center-icon" d="M172 180l6 6 12-14" />
-          <path class="loop-exit" d="M293 155c26-10 48-30 55-52" />
-          <path class="loop-exit-arrow" d="M338 92l12 13-17 5" />
-        </svg>
-      </div>
-    </div>
-  </section>
+  <LoopCircle />
 
   <section class="value-prop" data-reveal data-section-name="Proposition de valeur">
     <div class="container">
@@ -486,103 +449,6 @@ const clients = [
     fill: none;
   }
 
-  /* --- "Vous tournez en rond ?" (bandeau navy, contraste avec le hero) --- */
-  .problem-section {
-    background: var(--color-ink-solid);
-    color: var(--color-white);
-    padding: var(--space-16) 0;
-  }
-  .problem-inner {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: var(--space-10);
-    align-items: center;
-  }
-  .problem-section h2 {
-    color: var(--color-white);
-    margin: 0 0 var(--space-3);
-  }
-  .problem-sub {
-    color: rgba(255, 255, 255, 0.75);
-    margin: 0 0 var(--space-6);
-  }
-  .problem-list {
-    list-style: none;
-    margin: 0 0 var(--space-8);
-    padding: 0;
-    display: grid;
-    gap: var(--space-3);
-  }
-  .problem-list li {
-    position: relative;
-    padding-left: var(--space-5);
-    color: rgba(255, 255, 255, 0.9);
-  }
-  .problem-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 10px;
-    height: 3px;
-    background: var(--color-orange);
-    border-radius: 2px;
-  }
-  .problem-illustration svg {
-    width: 100%;
-    height: auto;
-    max-width: 340px;
-    margin-inline: auto;
-    display: block;
-  }
-  .loop-ring {
-    fill: none;
-    stroke: rgba(255, 255, 255, 0.3);
-    stroke-width: 2;
-    stroke-dasharray: 6 8;
-  }
-  .loop-break {
-    fill: none;
-    stroke: rgba(255, 255, 255, 0);
-  }
-  .loop-dot {
-    fill: rgba(255, 255, 255, 0.55);
-  }
-  .loop-center {
-    fill: var(--color-ink-solid);
-    stroke: var(--color-orange);
-    stroke-width: 2.5;
-  }
-  .loop-center-icon {
-    fill: none;
-    stroke: var(--color-orange);
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .loop-exit {
-    fill: none;
-    stroke: var(--color-orange);
-    stroke-width: 4;
-    stroke-linecap: round;
-  }
-  .loop-exit-arrow {
-    fill: none;
-    stroke: var(--color-orange);
-    stroke-width: 4;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  @media (max-width: 900px) {
-    .problem-inner {
-      grid-template-columns: 1fr;
-    }
-    .problem-illustration {
-      order: -1;
-      max-width: 280px;
-      margin-inline: auto;
-    }
-  }
 
   /* --- Proposition de valeur --- */
   .value-prop {
