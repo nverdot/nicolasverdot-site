@@ -2,15 +2,6 @@
 import { Image } from 'astro:assets';
 import { withBase } from '../utils/url';
 import heroBg from '../assets/hero-mountain.jpg';
-import iconVoirClair from '../assets/icon-voir-clair.png';
-import iconPrendreDecisions from '../assets/icon-prendre-decisions.png';
-import iconPasserAction from '../assets/icon-passer-action.png';
-
-const steps = [
-  { icon: iconVoirClair, label: 'Voir clair' },
-  { icon: iconPrendreDecisions, label: 'Prendre les bonnes décisions' },
-  { icon: iconPasserAction, label: "Passer réellement à l'action" },
-];
 ---
 
 <section class="hero" aria-labelledby="hero-title" data-section-name="Hero">
@@ -24,18 +15,6 @@ const steps = [
         <span class="script-accent">en mouvement</span>
         <span class="hero-tail">autour des projets qui comptent vraiment.</span>
       </h1>
-
-      <div class="hero-steps">
-        {steps.map((s, i) => (
-          <>
-            {i > 0 && <span class="step-dash" aria-hidden="true"></span>}
-            <div class="hero-step">
-              <span class="hero-step-icon"><Image src={s.icon} alt="" width={96} height={96} /></span>
-              <span class="hero-step-label">{s.label}</span>
-            </div>
-          </>
-        ))}
-      </div>
 
       <p class="hero-lead">
         J'accompagne les leaders, les managers et les équipes à <strong>voir clair</strong>, <strong>prendre les bonnes décisions</strong> et <strong>passer réellement à l'action</strong>.
@@ -118,51 +97,6 @@ const steps = [
     color: var(--color-navy);
   }
 
-  .hero-steps {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-bottom: var(--space-8);
-  }
-  .hero-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--space-2);
-    width: 110px;
-  }
-  .hero-step-icon {
-    display: grid;
-    place-items: center;
-    width: 76px;
-    height: 76px;
-    padding: 10px;
-    border-radius: 50%;
-    background: var(--color-surface);
-    box-shadow: var(--shadow-sm);
-    flex-shrink: 0;
-  }
-  .hero-step-icon :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-  .hero-step-label {
-    font-weight: 700;
-    font-size: var(--text-sm);
-    color: var(--color-navy);
-    line-height: 1.25;
-  }
-  .step-dash {
-    width: 20px;
-    height: 0;
-    margin-top: 38px;
-    border-top: 2px dashed rgba(18, 32, 51, 0.3);
-    flex-shrink: 0;
-  }
-
   .hero-actions {
     display: flex;
     gap: var(--space-4);
@@ -211,15 +145,6 @@ const steps = [
     }
     .hero-inner {
       order: 1;
-    }
-    .hero-steps {
-      gap: var(--space-2);
-    }
-    .step-dash {
-      display: none;
-    }
-    .hero-step {
-      width: 100%;
     }
   }
 
