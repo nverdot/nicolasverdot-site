@@ -5,6 +5,7 @@ import Hero from '../components/Hero.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
 import portrait from '../assets/nicolas-portrait.png';
+import action from '../assets/nicolas-action.jpeg';
 
 // Convention icônes du site : traits feutre currentColor, viewBox 24×24
 // (mêmes tracés que Footer.astro, pour rester cohérent d'une section à l'autre).
@@ -22,6 +23,11 @@ const icons: Record<string, string> = {
   target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
   bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/>',
   flag: '<path d="M5 21V4"/><path d="M5 4h14l-3 5 3 5H5"/>',
+  compass: '<circle cx="12" cy="12" r="9"/><path d="M14.5 9.5l-2 5-5 2 2-5z"/>',
+  knot: '<path d="M9 9a3 3 0 1 0 3 3V9a3 3 0 1 1 3 3"/><path d="M9 15a3 3 0 1 1 3-3v6a3 3 0 1 0 3-3"/>',
+  bridge: '<path d="M2 18h20"/><path d="M4 18v-4a8 8 0 0 1 16 0v4"/><path d="M8 18v-3M12 18v-4M16 18v-3"/>',
+  lighthouse: '<path d="M10 21h4M9 21l1-14h4l1 14"/><path d="M9.5 11h5M10 7h4"/><path d="M12 3v2M8 4.5l1.3 1M16 4.5l-1.3 1"/>',
+  path: '<path d="M4 20C8 15 6 11 10 9s6 2 10-5"/><circle cx="4" cy="20" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="4" r="1" fill="currentColor" stroke="none"/>',
 };
 
 // Ce que change un accompagnement — pas de chiffre ni de témoignage inventés :
@@ -33,12 +39,38 @@ const proofItems = [
   { icon: 'trending', title: 'Des actions concrètes', text: 'Pour transformer les décisions en résultats visibles.' },
 ];
 
-const offerTiles = [
-  { icon: 'grid', title: 'Séminaires et ateliers', text: 'Concevoir et animer des temps collectifs qui font avancer.', href: withBase('/offres/') },
-  { icon: 'user', title: 'Coaching et mentoring', text: "Prendre du recul, renforcer sa posture, passer à l'action.", href: withBase('/offres/coaching-professionnel/') },
-  { icon: 'trending', title: 'Transformation des organisations', text: 'Accompagner les changements qui engagent, avec clarté.', href: withBase('/offres/accompagnement-transformation/') },
-  { icon: 'pencil', title: 'Capture graphique', text: "Rendre visible l'essentiel en temps réel.", href: withBase('/offres/capture-graphique/') },
-  { icon: 'cap', title: 'Formations à la facilitation', text: 'Développer vos compétences pour animer autrement.', href: withBase('/formations/') },
+// Quatre grandes portes d'entrée plutôt qu'une liste de prestations —
+// "Séminaires et ateliers" renvoie directement vers la prise de contact
+// (c'est la porte la plus engageante, pas besoin d'une étape intermédiaire).
+const offerCards = [
+  {
+    icon: 'grid',
+    title: 'Séminaires et ateliers',
+    text: 'Pour permettre à un collectif de comprendre, décider, prioriser et construire ensemble.',
+    cta: 'Découvrir les séminaires et ateliers',
+    href: withBase('/contact/'),
+  },
+  {
+    icon: 'trending',
+    title: 'Accompagnement des transformations',
+    text: "Pour donner du sens au changement, impliquer les équipes et transformer une intention stratégique en réalité opérationnelle.",
+    cta: "Découvrir l'accompagnement",
+    href: withBase('/offres/accompagnement-transformation/'),
+  },
+  {
+    icon: 'user',
+    title: 'Coaching et mentoring des leaders',
+    text: 'Pour prendre du recul, clarifier sa posture et agir avec davantage de justesse.',
+    cta: 'Découvrir le coaching',
+    href: withBase('/offres/coaching-professionnel/'),
+  },
+  {
+    icon: 'pencil',
+    title: 'Facilitation et capture graphique',
+    text: "Pour rendre les échanges visibles, maintenir l'attention et produire une mémoire collective utile.",
+    cta: 'Découvrir la facilitation graphique',
+    href: withBase('/offres/capture-graphique/'),
+  },
 ];
 
 const traits = [
@@ -47,6 +79,44 @@ const traits = [
   { icon: 'target', title: 'Pragmatique', text: "au service de l'action." },
   { icon: 'bolt', title: 'Directe', text: 'sans détour.' },
   { icon: 'flag', title: 'Engagée', text: 'à vos côtés.' },
+];
+
+const problemPoints = [
+  "Les réunions se multiplient, mais rien n'avance vraiment.",
+  'Tout semble prioritaire.',
+  'Les décisions sont prises, mais rarement appliquées.',
+  "Les équipes ne comprennent plus où l'on va.",
+  'Quelques personnes parlent, les autres décrochent.',
+  "Les transformations s'essoufflent après le lancement.",
+];
+
+const principles = [
+  { icon: 'eye', title: 'Rendre visible', text: 'Les enjeux, les tensions, les idées et les décisions deviennent compréhensibles par tous.' },
+  { icon: 'people', title: 'Faire participer', text: 'Les personnes concernées contribuent réellement au travail et ne subissent pas une décision déjà prise.' },
+  { icon: 'trending', title: 'Transformer en action', text: 'Chaque accompagnement doit produire des décisions, des priorités et une suite concrète.' },
+];
+
+const situations = [
+  { icon: 'compass', title: 'Préparer un séminaire qui produit quelque chose' },
+  { icon: 'knot', title: 'Aligner une équipe autour d\'une direction commune' },
+  { icon: 'bridge', title: 'Faire avancer un projet complexe ou bloqué' },
+  { icon: 'people', title: 'Accompagner une transformation' },
+  { icon: 'lighthouse', title: 'Remobiliser une équipe' },
+  { icon: 'path', title: 'Aider un leader à prendre du recul' },
+];
+
+const processSteps = [
+  { title: "Clarifier l'intention", text: 'Pourquoi réunir ces personnes ? Qu\'est-ce qui doit réellement changer ?' },
+  { title: 'Concevoir le bon processus', text: 'Choisir les étapes, les méthodes et le niveau de participation adapté.' },
+  { title: 'Mettre le collectif au travail', text: 'Créer un cadre sécurisant, rythmé et orienté vers un résultat.' },
+  { title: 'Faire émerger une décision claire', text: 'Rendre visibles les convergences, les désaccords et les arbitrages.' },
+  { title: "Organiser le passage à l'action", text: 'Définir les responsabilités, les premières étapes et le suivi.' },
+];
+
+const resourceArticles = [
+  { slug: 'reunionite-sept-signes', title: 'Réunionite : sept signes que vos réunions tournent à vide', description: 'Sept signes concrets que vos réunions tournent à vide, et un remède actionnable pour chacun.' },
+  { slug: 'organiser-seminaire-equipe', title: 'Organiser un séminaire d\'équipe qui change vraiment quelque chose', description: "Intention, déroulé, lieu, facilitation, suites : la méthode pour un séminaire qui produit des effets durables." },
+  { slug: 'daci-raci-qui-decide', title: 'Qui décide quoi : clarifier les rôles avec DACI et RACI', description: 'La matrice RACI et son cousin DACI clarifient qui décide, qui fait, qui est consulté.' },
 ];
 
 const clients = [
@@ -108,22 +178,120 @@ const clients = [
     </div>
   </section>
 
-  <section class="section" id="accompagnements" data-reveal data-section-name="Offres principales">
-    <div class="container">
-      <div class="section-head">
-        <h2>Des accompagnements <span class="circled">concrets<svg class="ink-underline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 10 C 70 2, 150 14, 296 6" /></svg></span> pour chaque étape clé</h2>
+  <section class="problem-section" data-reveal data-section-name="Vous tournez en rond ?">
+    <div class="container problem-inner">
+      <div class="problem-copy">
+        <h2>Vous tournez en rond ?</h2>
+        <p class="problem-sub">Vous avez peut-être déjà vécu ça…</p>
+        <ul class="problem-list">
+          {problemPoints.map((p) => <li>{p}</li>)}
+        </ul>
+        <a href={withBase('/contact/')} class="btn">Sortons du cercle →</a>
       </div>
-      <div class="offer-grid">
-        {offerTiles.map((o) => (
-          <a class="offer-tile" href={o.href}>
-            <svg class="offer-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[o.icon]} />
-            <h3>{o.title}</h3>
-            <p>{o.text}</p>
-            <span class="card-link">En savoir plus</span>
-          </a>
+      <div class="problem-illustration" aria-hidden="true">
+        <svg viewBox="0 0 360 360">
+          <circle class="loop-ring" cx="180" cy="180" r="120" />
+          <path class="loop-break" d="M180 60 A120 120 0 0 1 293 155" />
+          <circle class="loop-dot" cx="180" cy="60" r="9" />
+          <circle class="loop-dot" cx="272" cy="98" r="9" />
+          <circle class="loop-dot" cx="300" cy="180" r="9" />
+          <circle class="loop-dot" cx="272" cy="262" r="9" />
+          <circle class="loop-dot" cx="180" cy="300" r="9" />
+          <circle class="loop-dot" cx="88" cy="262" r="9" />
+          <circle class="loop-dot" cx="60" cy="180" r="9" />
+          <circle class="loop-dot" cx="88" cy="98" r="9" />
+          <circle class="loop-center" cx="180" cy="180" r="34" />
+          <path class="loop-center-icon" d="M172 180l6 6 12-14" />
+          <path class="loop-exit" d="M293 155c26-10 48-30 55-52" />
+          <path class="loop-exit-arrow" d="M338 92l12 13-17 5" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="value-prop" data-reveal data-section-name="Ta proposition de valeur">
+    <div class="container">
+      <div class="value-intro">
+        <p class="eyebrow">Ma proposition de valeur</p>
+        <p class="value-statement">Je ne viens pas avec une solution toute faite. Je crée les conditions pour que les bonnes personnes puissent comprendre la situation, construire une réponse pertinente et s'engager réellement dans sa mise en œuvre.</p>
+      </div>
+      <div class="principles-grid">
+        {principles.map((p) => (
+          <div class="principle">
+            <svg class="principle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[p.icon]} />
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </div>
         ))}
       </div>
-      <p class="complementary-label"><a href={withBase('/offres/')}>Voir toutes les offres</a> ou <a href={withBase('/facilitation-graphique/')}>découvrir la facilitation graphique</a>.</p>
+      <div class="path-line">
+        <svg class="path-line-svg" viewBox="0 0 600 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 10 C 150 2, 300 14, 450 6 S 590 2, 596 8" /></svg>
+        <span>Comprendre</span>
+        <span class="path-arrow">→</span>
+        <span>Décider</span>
+        <span class="path-arrow">→</span>
+        <span>Agir</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="situations" data-reveal data-section-name="Vos situations">
+    <div class="container">
+      <div class="section-head">
+        <h2>À quel moment avez-vous besoin de remettre votre collectif en mouvement ?</h2>
+      </div>
+      <div class="situations-grid">
+        {situations.map((s) => (
+          <div class="situation-card">
+            <svg class="situation-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[s.icon]} />
+            <p>{s.title}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="accompagnements" data-reveal data-section-name="Tes offres">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Tes offres</p>
+        <h2>Quatre grandes portes d'entrée</h2>
+      </div>
+      <div class="offer-rows">
+        {offerCards.map((o, i) => (
+          <div class={`offer-row${i % 2 === 1 ? ' reverse' : ''}`}>
+            <div class="offer-row-text">
+              <h3>{o.title}</h3>
+              <p>{o.text}</p>
+              <a class="card-link" href={o.href}>{o.cta}</a>
+            </div>
+            <div class="offer-row-visual" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" set:html={icons[o.icon]} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="process" data-reveal data-section-name="Comment ça se passe">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Comment ça se passe</p>
+        <h2>Un accompagnement qui ne commence pas directement par un atelier</h2>
+      </div>
+      <div class="process-path">
+        <svg class="process-line" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M20 30 C 150 5, 220 55, 350 30 S 550 5, 650 30 S 850 55, 980 25" />
+        </svg>
+        {processSteps.map((s, i) => (
+          <div class="process-step">
+            <span class="process-num">{i + 1}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -142,20 +310,43 @@ const clients = [
         </div>
       </div>
       <div class="working-bio">
-        <Image src={portrait} alt="Nicolas Verdot" width={220} height={220} class="working-photo" />
+        <Image src={action} alt="Nicolas Verdot en pleine facilitation graphique" width={320} height={320} class="working-photo" />
         <div>
           <p class="working-name">Je suis Nicolas Verdot</p>
-          <p class="working-text">Facilitateur, coach et formateur, j'aide les leaders et les équipes à voir clair, décider et passer à l'action.</p>
-          <a class="card-link working-link" href={withBase('/a-propos/')}>En savoir plus sur moi</a>
+          <p class="working-text">Facilitateur, coach et formateur, j'aide les leaders et les équipes à faire avancer les sujets qui ne peuvent pas être résolus seuls ou uniquement derrière un écran.</p>
+          <p class="working-text">J'interviens à la croisée de la facilitation, du coaching, de l'intelligence collective, de l'agilité et de la pensée visuelle.</p>
+          <a class="card-link working-link" href={withBase('/a-propos/')}>Découvrir mon parcours et mon approche</a>
         </div>
       </div>
     </div>
   </section>
 
+  <section class="resources" data-reveal data-section-name="Les ressources">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Les ressources</p>
+        <h2>Pour commencer à débloquer les choses</h2>
+      </div>
+      <div class="resources-grid">
+        {resourceArticles.map((a) => (
+          <a class="resource-card" href={withBase(`/blog/${a.slug}/`)}>
+            <h3>{a.title}</h3>
+            <p>{a.description}</p>
+            <span class="card-link">Lire l'article</span>
+          </a>
+        ))}
+      </div>
+      <p class="complementary-label"><a href={withBase('/blog/')}>Voir tous les articles</a></p>
+    </div>
+  </section>
+
   <CTABlock
-    eyebrow="Un sujet à débloquer ?"
-    title="Commençons par la situation réelle."
-    subtitle="Un premier échange permet de comprendre l'enjeu, le niveau de décision et de vérifier si mon intervention est pertinente."
+    dark
+    title="Un projet important mérite mieux qu'une réunion de plus."
+    subtitle="Parlons de la situation, de ce qui bloque et de ce que tu aimerais réellement voir évoluer."
+    ctaLabel="Parler de mon projet"
+    secondaryLabel="Découvrir les accompagnements"
+    secondaryHref={withBase('/#accompagnements')}
   />
 </Layout>
 
@@ -257,17 +448,355 @@ const clients = [
     fill: none;
   }
 
-  /* --- Grille des 5 accompagnements --- */
-  .offer-grid {
+  /* --- "Vous tournez en rond ?" (bandeau navy, contraste avec le hero) --- */
+  .problem-section {
+    background: var(--color-ink-solid);
+    color: var(--color-white);
+    padding: var(--space-16) 0;
+  }
+  .problem-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+  .problem-section h2 {
+    color: var(--color-white);
+    margin: 0 0 var(--space-3);
+  }
+  .problem-sub {
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0 0 var(--space-6);
+  }
+  .problem-list {
+    list-style: none;
+    margin: 0 0 var(--space-8);
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .problem-list li {
+    position: relative;
+    padding-left: var(--space-5);
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .problem-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 10px;
+    height: 3px;
+    background: var(--color-orange);
+    border-radius: 2px;
+  }
+  .problem-illustration svg {
+    width: 100%;
+    height: auto;
+    max-width: 340px;
+    margin-inline: auto;
+    display: block;
+  }
+  .loop-ring {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 2;
+    stroke-dasharray: 6 8;
+  }
+  .loop-break {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0);
+  }
+  .loop-dot {
+    fill: rgba(255, 255, 255, 0.55);
+  }
+  .loop-center {
+    fill: var(--color-ink-solid);
+    stroke: var(--color-orange);
+    stroke-width: 2.5;
+  }
+  .loop-center-icon {
+    fill: none;
+    stroke: var(--color-orange);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .loop-exit {
+    fill: none;
+    stroke: var(--color-orange);
+    stroke-width: 4;
+    stroke-linecap: round;
+  }
+  .loop-exit-arrow {
+    fill: none;
+    stroke: var(--color-orange);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  @media (max-width: 900px) {
+    .problem-inner {
+      grid-template-columns: 1fr;
+    }
+    .problem-illustration {
+      order: -1;
+      max-width: 280px;
+      margin-inline: auto;
+    }
+  }
+
+  /* --- Proposition de valeur --- */
+  .value-prop {
+    padding: var(--space-16) 0;
+  }
+  .value-intro {
+    max-width: 760px;
+    margin: 0 auto var(--space-10);
+    text-align: center;
+  }
+  .value-statement {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--color-navy);
+    line-height: 1.4;
+  }
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+    max-width: 960px;
+    margin-inline: auto;
+  }
+  .principle {
+    text-align: center;
+  }
+  .principle-icon {
+    width: 30px;
+    height: 30px;
+    color: var(--color-orange-ink);
+    margin-bottom: var(--space-3);
+  }
+  .principle h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-lg);
+  }
+  .principle p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .path-line {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-12);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: var(--color-navy);
+  }
+  .path-line-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(600px, 90%);
+    height: 16px;
+    stroke: var(--color-orange);
+    stroke-width: 3;
+    fill: none;
+    z-index: 0;
+  }
+  .path-line span {
+    position: relative;
+    z-index: 1;
+    background: var(--color-cream);
+    padding: 0 var(--space-2);
+  }
+  .path-arrow {
+    color: var(--color-orange-ink);
+  }
+  @media (max-width: 700px) {
+    .principles-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+    .path-line {
+      flex-wrap: wrap;
+    }
+  }
+
+  /* --- Situations --- */
+  .situations {
+    padding: var(--space-16) 0;
+    background: var(--color-surface-alt, var(--color-cream));
+  }
+  .situations .section-head h2 {
+    max-width: 760px;
+  }
+  .situations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+  .situation-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+  .situation-icon {
+    width: 30px;
+    height: 30px;
+    color: var(--color-orange-ink);
+    flex-shrink: 0;
+  }
+  .situation-card p {
+    margin: 0;
+    font-weight: 700;
+    color: var(--color-navy);
+    font-size: var(--text-sm);
+  }
+  @media (max-width: 900px) {
+    .situations-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .situations-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* --- Quatre grandes portes d'entrée : cartes horizontales alternées --- */
+  .offer-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+    margin-top: var(--space-8);
+  }
+  .offer-row {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--space-8);
+    align-items: center;
+  }
+  .offer-row.reverse {
+    grid-template-columns: 1fr 1.3fr;
+  }
+  .offer-row.reverse .offer-row-text {
+    order: 2;
+  }
+  .offer-row-text h3 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-2xl);
+  }
+  .offer-row-text p {
+    color: var(--color-muted);
+    max-width: 50ch;
+  }
+  .offer-row-visual {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+  .offer-row-visual svg {
+    width: 35%;
+    height: 35%;
+    color: var(--color-orange-ink);
+  }
+  @media (max-width: 800px) {
+    .offer-row,
+    .offer-row.reverse {
+      grid-template-columns: 1fr;
+    }
+    .offer-row.reverse .offer-row-text {
+      order: 0;
+    }
+    .offer-row-visual {
+      order: -1;
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  /* --- Processus en 5 étapes, ligne jaune irrégulière --- */
+  .process {
+    padding: var(--space-16) 0;
+    background: var(--color-surface-alt, var(--color-cream));
+  }
+  .process-path {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--space-4);
-    margin-top: var(--space-8);
+    margin-top: var(--space-14);
   }
-  .offer-tile {
+  .process-line {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    stroke: var(--color-orange);
+    stroke-width: 3;
+    fill: none;
+  }
+  .process-step {
+    position: relative;
+  }
+  .process-num {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-3);
+  }
+  .process-step h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-base);
+  }
+  .process-step p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  @media (max-width: 900px) {
+    .process-path {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+    .process-line {
+      display: none;
+    }
+  }
+
+  /* --- Ressources / articles --- */
+  .resources {
+    padding: var(--space-16) 0;
+  }
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+  .resource-card {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     gap: var(--space-2);
     padding: var(--space-6);
     border: 1px solid var(--color-border);
@@ -277,37 +806,27 @@ const clients = [
     transition: transform var(--duration-hover) var(--ease-out), box-shadow var(--duration-hover) ease;
   }
   @media (hover: hover) and (pointer: fine) {
-    .offer-tile:hover {
+    .resource-card:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow-sm);
     }
   }
-  .offer-tile-icon {
-    width: 32px;
-    height: 32px;
-    color: var(--color-orange-ink);
-    margin-bottom: var(--space-2);
-  }
-  .offer-tile h3 {
+  .resource-card h3 {
     margin: 0;
     font-size: var(--text-lg);
+    color: var(--color-navy);
   }
-  .offer-tile p {
+  .resource-card p {
     margin: 0;
     color: var(--color-muted);
     font-size: var(--text-sm);
   }
-  .offer-tile .card-link {
+  .resource-card .card-link {
     margin-top: auto;
     padding-top: var(--space-2);
   }
-  @media (max-width: 1000px) {
-    .offer-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  @media (max-width: 560px) {
-    .offer-grid {
+  @media (max-width: 900px) {
+    .resources-grid {
       grid-template-columns: 1fr;
     }
   }
@@ -357,8 +876,8 @@ const clients = [
     gap: var(--space-4);
   }
   .working-bio :global(.working-photo) {
-    width: 96px;
-    height: 96px;
+    width: 148px;
+    height: 148px;
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
@@ -367,13 +886,13 @@ const clients = [
   .working-name {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: var(--text-lg);
-    margin: 0 0 var(--space-2);
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-3);
   }
   .working-text {
     color: rgba(255, 255, 255, 0.8);
     margin: 0 0 var(--space-3);
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
   }
   .working-link {
     color: var(--color-orange);
