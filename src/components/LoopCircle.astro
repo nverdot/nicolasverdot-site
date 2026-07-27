@@ -58,13 +58,16 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
 
 <section class="loop-circle" data-reveal data-section-name="Vous tournez en rond ?">
   <div class="container">
-    <div class="loop-head">
-      <h2 data-loop-title>Vous tournez en rond ?</h2>
-      <p class="loop-sub" data-loop-sub>Vous avez peut-être déjà vécu ça…</p>
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Le diagnostic</p>
+        <h2 data-loop-title>Vous tournez en rond ?</h2>
+      </div>
+      <p data-loop-sub>Vous avez peut-être déjà vécu ça…</p>
     </div>
 
     <div class="loop-stage">
-      <div class="loop-orbit" data-loop-orbit style={`--radius: clamp(150px, 27vw, 400px);`}>
+      <div class="loop-orbit" data-loop-orbit>
         <svg class="loop-arrows" viewBox="0 0 1000 1000" aria-hidden="true">
           <defs>
             <marker id="loop-arrowhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -87,7 +90,7 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
           <div class="loop-node" style={`--angle: ${s.angle};`} data-loop-node={s.id}>
             <div class="loop-node-inner">
               <div class="loop-node-visual" data-loop-node-visual>
-                <span class="loop-node-img"><Image src={s.image} alt="" width={235} height={170} loading="lazy" /></span>
+                <span class="loop-node-img"><Image src={s.image} alt="" width={200} height={145} loading="lazy" /></span>
                 <p class="loop-node-text">{s.text}</p>
               </div>
             </div>
@@ -144,10 +147,14 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
   mm.add(
     {
       reduceMotion: '(prefers-reduced-motion: reduce)',
-      fullMotion: '(prefers-reduced-motion: no-preference)',
+      // Sous 640px, le cercle bascule en liste verticale statique (voir CSS) :
+      // un pin scroll-scrubbé n'a plus de sens sur cette mise en page, on
+      // garde le simple fondu déclenché une fois au scroll.
+      compactMotion: '(prefers-reduced-motion: no-preference) and (max-width: 640px)',
+      fullMotion: '(prefers-reduced-motion: no-preference) and (min-width: 641px)',
     },
     (context) => {
-      const { reduceMotion } = context.conditions ?? {};
+      const { reduceMotion, compactMotion } = context.conditions ?? {};
       const section = document.querySelector<HTMLElement>('.loop-circle');
       const orbit = document.querySelector<HTMLElement>('[data-loop-orbit]');
       if (!section || !orbit) return;
@@ -198,12 +205,22 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
       const applyRot = () => orbit.style.setProperty('--orbit-rot', `${rot.value}deg`);
       applyRot();
 
+      // Desktop/tablette : la section reste épinglée le temps que la
+      // révélation se joue, scrubée au scroll — impossible de "passer à
+      // travers" avant d'avoir tout vu. Mobile compact : simple fondu au
+      // scroll, sans pin (voir le commentaire sur `compactMotion` plus haut).
+      const header = document.querySelector<HTMLElement>('.site-header');
       const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 60%',
-          once: true,
-        },
+        scrollTrigger: compactMotion
+          ? { trigger: section, start: 'top 60%', once: true }
+          : {
+              trigger: section,
+              start: () => `top ${header ? header.offsetHeight : 0}`,
+              end: () => `+=${Math.round(window.innerHeight * 1.6)}`,
+              pin: true,
+              anticipatePin: 1,
+              scrub: 0.6,
+            },
       });
 
       tl.to(title, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
@@ -257,42 +274,29 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
 
 <style>
   .loop-circle {
+    /* Section volontairement toujours claire, indépendamment du thème :
+       la référence visuelle fournie n'a pas de variante sombre, et le
+       diagramme (flèches navy, texte navy sur blanc) perd tout contraste
+       une fois les tokens inversés en mode sombre. */
+    --color-navy: #122033;
+    --color-cream: #fcf8ef;
+    --color-surface: #fffdfa;
+    --color-ink: #122033;
+    --color-muted: #4c5158;
+    --color-faint: #4c5158;
+    --color-border: #cfc3b1;
+    --shadow-sm: 0 12px 30px rgba(18, 32, 51, 0.08);
+    --shadow-md: 0 26px 80px rgba(18, 32, 51, 0.12);
     padding: var(--space-16) 0;
     background: var(--color-cream);
+    color: var(--color-ink);
     overflow: hidden;
-  }
-  .loop-head {
-    text-align: center;
-    max-width: 640px;
-    margin: 0 auto var(--space-10);
-  }
-  .loop-head h2 {
-    color: var(--color-navy);
-    position: relative;
-    display: inline-block;
-    margin: 0 0 var(--space-3);
-  }
-  .loop-head h2::after {
-    content: '';
-    position: absolute;
-    left: 4%;
-    right: 4%;
-    bottom: -0.15em;
-    height: 0.2em;
-    background: var(--color-orange);
-    border-radius: 999px;
-    transform: rotate(-1deg);
-  }
-  .loop-sub {
-    color: var(--color-muted);
-    font-size: var(--text-lg);
-    margin: 0;
   }
 
   .loop-stage {
     position: relative;
     width: 100%;
-    max-width: 950px;
+    max-width: 700px;
     aspect-ratio: 1;
     margin: 0 auto;
   }
@@ -300,6 +304,7 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
     position: absolute;
     inset: 0;
     --orbit-rot: 0deg;
+    --radius: clamp(180px, 22vw, 260px);
   }
   .loop-arrows {
     position: absolute;
@@ -328,7 +333,7 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
   .loop-node-inner {
     position: absolute;
     transform: translate(-50%, -50%) rotate(calc(-1 * (var(--angle) * 1deg + var(--orbit-rot))));
-    width: 150px;
+    width: 180px;
   }
   .loop-node-visual {
     display: flex;
@@ -338,8 +343,8 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
   }
   .loop-node-img {
     display: block;
-    width: 118px;
-    height: 86px;
+    width: 162px;
+    height: 118px;
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
@@ -368,7 +373,7 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: clamp(90px, 15vw, 190px);
+    width: clamp(70px, 11vw, 140px);
     z-index: 1;
   }
   .loop-knot :global(img) {
@@ -441,13 +446,22 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
   }
 
   @media (max-width: 900px) {
+    .loop-orbit {
+      --radius: clamp(190px, 25vw, 220px);
+    }
+    .loop-node-inner {
+      width: 118px;
+    }
     .loop-node-text {
-      font-size: 0.68rem;
-      width: 120px;
+      font-size: 0.66rem;
+      width: 108px;
     }
     .loop-node-img {
-      width: 92px;
-      height: 67px;
+      width: 108px;
+      height: 78px;
+    }
+    .loop-knot {
+      width: clamp(60px, 10vw, 100px);
     }
   }
 
@@ -457,10 +471,11 @@ const BROKEN_ARC = 2; // segment situation3 → situation4
     }
   }
 
-  /* --- Sous 480px : le cercle devient illisible, on bascule en boucle
-     verticale — même contenu, même esprit de répétition, disposition en
-     colonne avec le nœud au centre et la sortie jaune en bas. --- */
-  @media (max-width: 480px) {
+  /* --- Sous 640px : le cercle devient trop serré pour rester lisible sans
+     risquer que les cartes se chevauchent, on bascule en boucle verticale —
+     même contenu, même esprit de répétition, disposition en colonne avec le
+     nœud au centre et la sortie jaune en bas. --- */
+  @media (max-width: 640px) {
     .loop-stage {
       aspect-ratio: auto;
       max-width: 340px;
