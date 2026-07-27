@@ -27,10 +27,10 @@ const icons: Record<string, string> = {
 // Ce que change un accompagnement — pas de chiffre ni de témoignage inventés :
 // le "+ de 15" du hero est le compte réel du bandeau de logos clients ci-dessous.
 const proofItems = [
-  { icon: 'bulb', title: 'Plus de clarté', text: "sur l'essentiel" },
-  { icon: 'check', title: 'Des décisions plus rapides', text: 'et partagées' },
-  { icon: 'people', title: 'Des équipes engagées', text: 'et alignées' },
-  { icon: 'trending', title: 'Des actions qui produisent', text: 'vraiment des résultats' },
+  { icon: 'target', title: 'Des priorités claires', text: "Pour concentrer l'énergie là où elle compte vraiment." },
+  { icon: 'check', title: 'Des décisions assumées', text: 'Pour sortir des discussions sans fin et choisir une direction.' },
+  { icon: 'people', title: 'Des équipes alignées', text: "Pour que chacun comprenne où l'on va et comment contribuer." },
+  { icon: 'trending', title: 'Des actions concrètes', text: 'Pour transformer les décisions en résultats visibles.' },
 ];
 
 const offerTiles = [
@@ -78,9 +78,9 @@ const clients = [
   <section class="proof-band" data-reveal data-section-name="Bénéfices">
     <div class="container proof-inner">
       <h2>
-        Quand c'est plus clair,
+        Quand l'essentiel devient visible,
         <span class="accent-wrap">
-          tout avance.
+          le collectif avance.
           <svg class="ink-underline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 10 C 70 2, 150 14, 296 6" /></svg>
         </span>
       </h2>
@@ -88,7 +88,8 @@ const clients = [
         {proofItems.map((p) => (
           <div class="proof-item">
             <svg class="proof-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[p.icon]} />
-            <p><strong>{p.title}</strong> {p.text}</p>
+            <strong>{p.title}</strong>
+            <p>{p.text}</p>
           </div>
         ))}
       </div>
