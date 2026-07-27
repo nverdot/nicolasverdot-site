@@ -207,7 +207,7 @@ const clients = [
     </div>
   </section>
 
-  <section class="value-prop" data-reveal data-section-name="Ta proposition de valeur">
+  <section class="value-prop" data-reveal data-section-name="Proposition de valeur">
     <div class="container">
       <div class="value-intro">
         <p class="eyebrow">Ma proposition de valeur</p>
@@ -249,10 +249,10 @@ const clients = [
     </div>
   </section>
 
-  <section class="section" id="accompagnements" data-reveal data-section-name="Tes offres">
+  <section class="section" id="accompagnements" data-reveal data-section-name="Offres">
     <div class="container">
       <div class="section-head">
-        <p class="eyebrow">Tes offres</p>
+        <p class="eyebrow">Mes accompagnements</p>
         <h2>Quatre grandes portes d'entrée</h2>
       </div>
       <div class="offer-rows">
@@ -341,12 +341,45 @@ const clients = [
   <CTABlock
     dark
     title="Un projet important mérite mieux qu'une réunion de plus."
-    subtitle="Parlons de la situation, de ce qui bloque et de ce que tu aimerais réellement voir évoluer."
+    subtitle="Parlons de la situation, de ce qui bloque et de ce que vous aimeriez réellement voir évoluer."
     ctaLabel="Parler de mon projet"
     secondaryLabel="Découvrir les accompagnements"
     secondaryHref={withBase('/#accompagnements')}
   />
 </Layout>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const mm = gsap.matchMedia();
+
+  // Le trait sous "le collectif avance." se dessine de gauche à droite au
+  // scroll, plutôt que d'apparaître d'un bloc — seul cet exemplaire du
+  // motif .ink-underline (celui du bandeau bénéfices) est concerné.
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    const path = document.querySelector<SVGPathElement>('.proof-inner .ink-underline path');
+    if (!path) return;
+
+    const length = path.getTotalLength();
+    gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+
+    const tween = gsap.to(path, {
+      strokeDashoffset: 0,
+      duration: 0.9,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: path,
+        start: 'top 85%',
+        once: true,
+      },
+    });
+
+    return () => tween.scrollTrigger?.kill();
+  });
+</script>
 
 <style>
   .complementary-label {
