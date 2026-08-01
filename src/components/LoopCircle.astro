@@ -64,21 +64,32 @@ for (let k = 0; k < order.length - 1; k++) {
     </div>
 
     <div class="loop-stage">
-      <div class="loop-blob" aria-hidden="true"></div>
+      <div class="loop-dial" aria-hidden="true"></div>
 
       <svg class="loop-ring" viewBox="0 0 1000 1000" aria-hidden="true">
         <circle class="loop-track" cx={CX} cy={CY} r={R} />
         <path class="loop-arc" data-loop-arc d={ringPath} />
       </svg>
 
-      <div class="loop-beacon-orbit" data-loop-beacon aria-hidden="true">
-        <span class="loop-beacon"></span>
-      </div>
+      <svg class="loop-sweep" viewBox="0 0 1000 1000" aria-hidden="true" data-loop-beacon>
+        <defs>
+          <linearGradient id="loop-sweep-gradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="var(--color-orange)" stop-opacity="0" />
+            <stop offset="100%" stop-color="var(--color-orange)" stop-opacity="1" />
+          </linearGradient>
+        </defs>
+        <g class="loop-sweep-spin">
+          <path class="loop-sweep-arc" d={`M${CX},${CY - R} A${R},${R} 0 0 1 ${(CX + R * Math.sin((50 * Math.PI) / 180)).toFixed(1)},${(CY - R * Math.cos((50 * Math.PI) / 180)).toFixed(1)}`} />
+        </g>
+      </svg>
 
-      <div class="loop-dots" aria-hidden="true">
-        {situations.map((s) => (
-          <span class="loop-dot" style={`--angle: ${s.angle};`}><span class="loop-dot-core"></span></span>
-        ))}
+      <div class="loop-core" aria-hidden="true">
+        <svg class="loop-core-icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-cream)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 0 1 15.3-6.4L21 8" />
+          <path d="M21 3v5h-5" />
+          <path d="M21 12a9 9 0 0 1-15.3 6.4L3 16" />
+          <path d="M3 21v-5h5" />
+        </svg>
       </div>
 
       <div class="loop-orbit">
@@ -86,10 +97,10 @@ for (let k = 0; k < order.length - 1; k++) {
           <div class="loop-node" style={`--angle: ${s.angle};`} data-loop-node={s.id}>
             <div class="loop-node-inner" data-loop-node-inner>
               <div class="loop-node-visual" style={`--angle: ${s.angle};`}>
-                <p class="loop-node-text">
+                <div class="loop-node-chip">
                   <span class="loop-node-index">0{s.id}</span>
-                  {s.text}
-                </p>
+                  <p class="loop-node-text">{s.text}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -255,19 +266,16 @@ for (let k = 0; k < order.length - 1; k++) {
     --radius: clamp(160px, 24vw, 224px);
   }
 
-  /* Tache respirante au centre : pas d'image, juste un dégradé flou qui
-     pulse doucement — évoque le "flou" du problème sans l'illustrer. */
-  .loop-blob {
+  /* Cadran plein : donne du poids réel au diagramme au lieu d'un simple
+     trait flottant dans le vide — dégradé doux + ombre portée. */
+  .loop-dial {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: clamp(90px, 14vw, 150px);
-    height: clamp(90px, 14vw, 150px);
-    transform: translate(-50%, -50%);
+    inset: 7%;
     border-radius: 50%;
-    background: radial-gradient(circle, color-mix(in srgb, var(--color-navy) 16%, transparent), transparent 72%);
-    filter: blur(6px);
-    animation: loop-breathe 5s ease-in-out infinite;
+    background: radial-gradient(circle at 32% 26%, var(--color-surface), color-mix(in srgb, var(--color-cream) 92%, var(--color-navy) 3%) 60%);
+    box-shadow:
+      0 30px 70px rgba(18, 32, 51, 0.12),
+      0 0 0 1px var(--color-border);
   }
 
   .loop-ring {
@@ -287,56 +295,56 @@ for (let k = 0; k < order.length - 1; k++) {
     stroke: var(--color-navy);
     stroke-width: 2;
     stroke-linecap: round;
-    opacity: 0.85;
+    opacity: 0.4;
   }
 
   /* Signal qui tourne en continu autour de l'anneau — jamais scroll-gaté
      une fois révélé : c'est la preuve visuelle, littérale, que ça tourne
-     en rond, plutôt qu'une simple affirmation en toutes lettres. */
-  .loop-beacon-orbit {
+     en rond, plutôt qu'une simple affirmation en toutes lettres. Un arc
+     dégradé lumineux plutôt qu'un point : plus visible, plus "designé". */
+  .loop-sweep {
     position: absolute;
     inset: 0;
-    animation: loop-spin 13s linear infinite;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
   }
-  .loop-beacon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 9px;
-    height: 9px;
-    margin: -4.5px;
-    border-radius: 50%;
-    background: var(--color-orange);
-    box-shadow:
-      0 0 0 5px color-mix(in srgb, var(--color-orange) 22%, transparent),
-      0 0 16px 3px color-mix(in srgb, var(--color-orange) 55%, transparent);
-    transform: translateY(calc(-1 * var(--radius)));
+  .loop-sweep-spin {
+    animation: loop-spin 13s linear infinite;
+    transform-box: view-box;
+    transform-origin: 500px 500px;
+  }
+  .loop-sweep-arc {
+    fill: none;
+    stroke: url(#loop-sweep-gradient);
+    stroke-width: 6;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--color-orange) 65%, transparent));
   }
 
-  .loop-dots {
-    position: absolute;
-    inset: 0;
-  }
-  .loop-dot {
+  /* Badge central : point d'ancrage franc plutôt qu'un flou vague. */
+  .loop-core {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 0;
-    height: 0;
-    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(-1 * var(--radius)));
-  }
-  .loop-dot-core {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 7px;
-    height: 7px;
-    margin: -3.5px;
+    width: clamp(76px, 12vw, 108px);
+    height: clamp(76px, 12vw, 108px);
+    transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: var(--color-navy);
-    display: block;
-    animation: loop-pulse 13s ease-in-out infinite;
-    animation-delay: calc(var(--angle) / 360 * -13s);
+    background: linear-gradient(155deg, var(--color-navy), #0d1826);
+    box-shadow:
+      0 18px 38px rgba(18, 32, 51, 0.32),
+      0 0 0 6px color-mix(in srgb, var(--color-surface) 70%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  .loop-core-icon {
+    width: 38%;
+    height: 38%;
+    animation: loop-spin 13s linear infinite;
   }
 
   .loop-orbit {
@@ -360,21 +368,39 @@ for (let k = 0; k < order.length - 1; k++) {
     animation: loop-pulse 13s ease-in-out infinite;
     animation-delay: calc(var(--angle) / 360 * -13s);
   }
-  .loop-node-text {
-    margin: 0;
-    text-align: center;
-    line-height: 1.35;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-navy);
+
+  /* Chip ancré : carte posée sur l'anneau, pas du texte nu qui flotte. */
+  .loop-node-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.45em 0.9em 0.45em 0.45em;
+    box-shadow: var(--shadow-sm);
   }
   .loop-node-index {
-    display: block;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--color-navy);
+    color: var(--color-cream);
     font-size: 0.6875rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--color-orange-ink);
-    margin-bottom: 0.3em;
+    font-variant-numeric: tabular-nums;
+  }
+  .loop-node-text {
+    margin: 0;
+    text-align: left;
+    line-height: 1.32;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-navy);
   }
 
   @keyframes loop-spin {
@@ -384,25 +410,12 @@ for (let k = 0; k < order.length - 1; k++) {
   }
   @keyframes loop-pulse {
     0%, 88%, 100% {
-      opacity: 0.42;
-      transform: scale(0.96);
+      opacity: 0.5;
+      transform: scale(0.97);
     }
     4% {
       opacity: 1;
-      transform: scale(1.06);
-    }
-  }
-  .loop-dot-core {
-    transform-origin: center;
-  }
-  @keyframes loop-breathe {
-    0%, 100% {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 0.75;
-    }
-    50% {
-      transform: translate(-50%, -50%) scale(1.18);
-      opacity: 1;
+      transform: scale(1.03);
     }
   }
 
@@ -467,16 +480,25 @@ for (let k = 0; k < order.length - 1; k++) {
 
   @media (max-width: 900px) {
     .loop-stage {
-      --radius: clamp(120px, 20vw, 170px);
+      --radius: clamp(145px, 22vw, 190px);
     }
     .loop-node {
       transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(-1 * (var(--radius) + 22px)));
     }
     .loop-node-inner {
-      width: 140px;
+      width: 148px;
+    }
+    .loop-node-chip {
+      padding: 0.4em 0.75em 0.4em 0.4em;
+      gap: 8px;
+    }
+    .loop-node-index {
+      width: 21px;
+      height: 21px;
+      font-size: 0.6rem;
     }
     .loop-node-text {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
     }
   }
 
@@ -495,10 +517,10 @@ for (let k = 0; k < order.length - 1; k++) {
       aspect-ratio: auto;
       max-width: 360px;
     }
-    .loop-blob,
+    .loop-dial,
     .loop-ring,
-    .loop-beacon-orbit,
-    .loop-dots,
+    .loop-sweep,
+    .loop-core,
     .loop-exit {
       display: none;
     }
@@ -508,6 +530,9 @@ for (let k = 0; k < order.length - 1; k++) {
       flex-direction: column;
       align-items: center;
       gap: var(--space-5);
+    }
+    .loop-node-chip {
+      max-width: 300px;
     }
     .loop-node {
       position: static;
@@ -552,14 +577,13 @@ for (let k = 0; k < order.length - 1; k++) {
     .loop-exit-path {
       stroke-dashoffset: 0 !important;
     }
-    .loop-blob,
-    .loop-beacon-orbit {
+    .loop-sweep-spin,
+    .loop-core-icon {
       animation: none !important;
     }
-    .loop-beacon-orbit {
+    .loop-sweep {
       opacity: 0 !important;
     }
-    .loop-dot-core,
     .loop-node-visual {
       animation: none !important;
       opacity: 1 !important;
