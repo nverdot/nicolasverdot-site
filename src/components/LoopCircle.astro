@@ -25,15 +25,15 @@ import img6 from '../assets/tourner-en-rond/06-walking.png';
 const situations = [
   { id: 1, lines: ["Les réunions se multiplient,", "mais rien n'avance vraiment."], angle: 0, image: img1 },
   { id: 2, lines: ['Tout semble prioritaire.'], angle: 60, image: img2 },
-  { id: 3, lines: ['Les décisions sont prises,', 'mais rarement appliquées.'], angle: 120, image: img3 },
+  { id: 3, lines: ['Les décisions sont prises,', 'mais rarement appliquées.'], angle: 88, image: img3 },
   { id: 4, lines: ["Les équipes ne comprennent plus", "où l'on va."], angle: 180, image: img4 },
   { id: 5, lines: ['Quelques personnes parlent,', 'les autres décrochent.'], angle: 240, image: img5 },
   { id: 6, lines: ["Les transformations s'essoufflent", 'après le lancement.'], angle: 300, image: img6 },
 ];
 // Rayon elliptique (en % de la scène) juste au-delà du bord de l'image
-// affichée à 68% de large, centrée — voir .loop-stage / .loop-illustration.
-const RX = 40;
-const RY = 35;
+// affichée à 80% de large, centrée — voir .loop-stage / .loop-illustration.
+const RX = 43;
+const RY = 39;
 const toRad = (deg: number) => (deg * Math.PI) / 180;
 const captionStyle = (angle: number) => {
   const left = 50 + RX * Math.sin(toRad(angle));
@@ -220,7 +220,7 @@ const captionStyle = (angle: number) => {
   .loop-stage {
     position: relative;
     max-width: 900px;
-    aspect-ratio: 1672 / 1200;
+    aspect-ratio: 1672 / 1050;
     margin: 0 auto;
   }
   .loop-stage :global(.loop-illustration) {
@@ -228,7 +228,7 @@ const captionStyle = (angle: number) => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 68%;
+    width: 80%;
     height: auto;
     border-radius: var(--radius-lg);
   }
