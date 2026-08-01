@@ -1,13 +1,11 @@
 ---
-// Section "Vous tournez en rond ?" — après un diagramme circulaire (3
-// passes) puis un bandeau en défilement horizontal (repris par erreur du
-// même mécanisme que la section "Logos clients" juste au-dessus dans la
-// page), nouveau départ : un panneau de diagnostic vertical, dans l'esprit
-// d'une console/terminal. Un balayage lumineux descend la liste des 6
-// situations en boucle continue, une ligne à la fois, pour de vrai — pas de
-// marquee, pas de cercle, axe et mécanique différents de tout le reste de
-// la page (grille d'icônes pour proof-band/value-prop/situations, bandeau
-// défilant pour les logos, lignes alternées pour les offres).
+// Section "Vous tournez en rond ?" — après plusieurs passes sur des
+// concepts "originaux" (cercle animé, bandeau défilant, panneau console)
+// toutes jugées ratées, retour au langage visuel déjà éprouvé et validé
+// ailleurs sur ce site : la grille `.cards` standard (offres, ressources,
+// situations plus bas sur cette même page) et le système de révélation au
+// scroll générique (`[data-reveal]` + `.cards .card`, géré globalement
+// dans Layout.astro — pas de script custom ici, volontairement).
 import { withBase } from '../utils/url';
 
 const icons: Record<string, string> = {
@@ -25,8 +23,6 @@ const situations = [
   { id: 5, text: 'Quelques personnes parlent, les autres décrochent.' },
   { id: 6, text: "Les transformations s'essoufflent après le lancement." },
 ];
-const SCAN_DURATION = 9; // secondes pour un tour complet des 6 lignes
-const STEP = SCAN_DURATION / situations.length;
 
 const benefits = [
   { icon: 'people', title: 'Des méthodes participatives', text: 'Pour impliquer vraiment les bonnes personnes.' },
@@ -39,37 +35,24 @@ const benefits = [
 <section class="loop-circle" data-reveal data-section-name="Vous tournez en rond ?">
   <div class="container">
     <div class="section-head">
-      <div>
-        <p class="eyebrow">Le diagnostic</p>
-        <h2 data-loop-title>Vous tournez en rond ?</h2>
-      </div>
-      <p data-loop-sub>Vous avez peut-être déjà vécu ça…</p>
+      <h2>Vous tournez en rond ?</h2>
+      <p>Vous avez peut-être déjà vécu ça…</p>
     </div>
 
-    <div class="loop-panel" data-loop-panel>
-      <div class="loop-panel-head">
-        <span class="loop-panel-live" aria-hidden="true"></span>
-        <span>Ce qui revient, encore et encore</span>
-      </div>
-      <div class="loop-panel-list">
-        {situations.map((s, i) => (
-          <div class="loop-row" style={`--i: ${i}; --step: ${STEP}s; --duration: ${SCAN_DURATION}s;`}>
-            <span class="loop-row-index">0{s.id}</span>
-            <p class="loop-row-text">{s.text}</p>
-            <span class="loop-row-status" aria-hidden="true"></span>
-          </div>
-        ))}
-      </div>
+    <div class="cards">
+      {situations.map((s) => (
+        <div class="card">
+          <div class="num">0{s.id}</div>
+          <p>{s.text}</p>
+        </div>
+      ))}
     </div>
 
-    <div class="loop-exit-wrap">
-      <p class="loop-handwritten" data-loop-handwritten>Et si on sortait de cette boucle ?</p>
-      <div class="loop-cta-wrap" data-loop-cta>
-        <a href={withBase('/contact/')} class="btn">Sortons du cercle →</a>
-      </div>
+    <div class="loop-cta-wrap">
+      <a href={withBase('/contact/')} class="btn">Sortons du cercle →</a>
     </div>
 
-    <div class="loop-benefits" data-loop-benefits>
+    <div class="loop-benefits">
       {benefits.map((b) => (
         <div class="loop-benefit">
           <svg class="loop-benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[b.icon]} />
@@ -81,192 +64,20 @@ const benefits = [
   </div>
 </section>
 
-<script>
-  import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const mm = gsap.matchMedia();
-
-  mm.add(
-    {
-      reduceMotion: '(prefers-reduced-motion: reduce)',
-      fullMotion: '(prefers-reduced-motion: no-preference)',
-    },
-    (context) => {
-      const { reduceMotion } = context.conditions ?? {};
-      const section = document.querySelector<HTMLElement>('.loop-circle');
-      if (!section) return;
-
-      const title = section.querySelector('[data-loop-title]');
-      const sub = section.querySelector('[data-loop-sub]');
-      // On anime l'opacité de `.loop-panel` (le panneau dans son ensemble),
-      // jamais `.loop-row` : chaque ligne porte son propre pouls CSS infini
-      // (balayage), et un gsap.set({...}) dessus entrerait en conflit avec
-      // cette animation qui doit tourner en continu une fois révélée.
-      const panel = section.querySelector('[data-loop-panel]');
-      const handwritten = section.querySelector('[data-loop-handwritten]');
-      const ctaWrap = section.querySelector('[data-loop-cta]');
-      const benefits = gsap.utils.toArray<HTMLElement>('.loop-benefit');
-
-      if (reduceMotion) {
-        gsap.set([title, sub, panel, ...benefits], { opacity: 1, y: 0 });
-        if (handwritten) gsap.set(handwritten, { opacity: 1 });
-        if (ctaWrap) gsap.set(ctaWrap, { opacity: 1, y: 0 });
-        return;
-      }
-
-      gsap.set(title, { opacity: 0, y: 16 });
-      gsap.set(sub, { opacity: 0, y: 12 });
-      gsap.set(panel, { opacity: 0, y: 16 });
-      gsap.set(benefits, { opacity: 0, y: 20 });
-      if (handwritten) gsap.set(handwritten, { opacity: 0 });
-      if (ctaWrap) gsap.set(ctaWrap, { opacity: 0, y: 12 });
-
-      const tl = gsap.timeline({
-        scrollTrigger: { trigger: section, start: 'top 70%', once: true },
-      });
-
-      tl.to(title, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-        .to(sub, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.25')
-        .to(panel, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.2');
-
-      if (handwritten) {
-        tl.to(handwritten, { opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.1');
-      }
-      if (ctaWrap) {
-        tl.to(ctaWrap, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
-      }
-      tl.to(benefits, { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' }, '-=0.1');
-
-      return () => {
-        tl.scrollTrigger?.kill();
-        tl.kill();
-      };
-    }
-  );
-</script>
-
 <style>
   .loop-circle {
     padding: var(--space-16) 0;
-    overflow: hidden;
   }
 
-  /* --- Panneau : un objet contenu, délibérément sombre (registre
-     "console/terminal"), posé sur la page — pas une section pleine largeur
-     comme le bandeau clients juste au-dessus. --- */
-  .loop-panel {
-    max-width: 720px;
-    margin: var(--space-10) auto 0;
-    background: #0d1826;
-    border-radius: var(--radius-lg);
-    box-shadow: 0 30px 70px rgba(13, 24, 38, 0.35);
-    overflow: hidden;
-  }
-  .loop-panel-head {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-4) var(--space-6);
-    border-bottom: 1px solid rgba(252, 248, 239, 0.1);
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.03em;
-    color: color-mix(in srgb, var(--color-cream) 55%, transparent);
-  }
-  .loop-panel-live {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--color-orange);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-orange) 25%, transparent);
-    animation: loop-live-blink 1.8s ease-in-out infinite;
-  }
-
-  .loop-panel-list {
-    padding: var(--space-2) 0;
-  }
-  .loop-row {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-    padding: var(--space-4) var(--space-6);
-    animation: loop-row-scan var(--duration) ease-in-out infinite;
-    animation-delay: calc(var(--i) * var(--step) * -1);
-  }
-  .loop-row-index {
-    flex-shrink: 0;
-    width: 2ch;
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 0.8125rem;
-    font-variant-numeric: tabular-nums;
-    color: color-mix(in srgb, var(--color-cream) 40%, transparent);
-  }
-  .loop-row-text {
-    flex: 1;
+  .loop-circle .cards .card p {
     margin: 0;
-    font-size: 1rem;
     font-weight: 600;
-    line-height: 1.4;
-    color: color-mix(in srgb, var(--color-cream) 78%, transparent);
-  }
-  .loop-row-status {
-    flex-shrink: 0;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: 1.5px solid color-mix(in srgb, var(--color-cream) 30%, transparent);
-    animation: loop-status-scan var(--duration) ease-in-out infinite;
-    animation-delay: calc(var(--i) * var(--step) * -1);
-  }
-
-  @keyframes loop-live-blink {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.35;
-    }
-  }
-  /* La ligne "scannée" s'éclaire brièvement, texte inclus, puis retombe —
-     la même ligne repassera au même endroit dans le cycle suivant : le
-     constat ne change jamais, c'est tout le principe de la section. */
-  @keyframes loop-row-scan {
-    0%, 14%, 100% {
-      background: transparent;
-    }
-    3% {
-      background: color-mix(in srgb, var(--color-orange) 10%, transparent);
-    }
-  }
-  @keyframes loop-status-scan {
-    0%, 14%, 100% {
-      background: transparent;
-      border-color: color-mix(in srgb, var(--color-cream) 30%, transparent);
-    }
-    3% {
-      background: var(--color-orange);
-      border-color: var(--color-orange);
-    }
-  }
-
-  .loop-exit-wrap {
-    text-align: center;
-    max-width: 480px;
-    margin: var(--space-12) auto 0;
-  }
-  .loop-handwritten {
-    margin: 0 0 var(--space-4);
-    font-family: var(--font-script);
-    font-size: clamp(1.4rem, 2.8vw, 1.9rem);
-    color: var(--color-orange-ink);
+    color: var(--color-navy);
   }
 
   .loop-cta-wrap {
     text-align: center;
+    margin-top: var(--space-10);
   }
 
   .loop-benefits {
@@ -295,17 +106,7 @@ const benefits = [
     font-size: var(--text-sm);
   }
 
-  @media (max-width: 640px) {
-    .loop-panel-head {
-      padding: var(--space-3) var(--space-4);
-    }
-    .loop-row {
-      padding: var(--space-3) var(--space-4);
-      gap: var(--space-3);
-    }
-    .loop-row-text {
-      font-size: 0.9rem;
-    }
+  @media (max-width: 768px) {
     .loop-benefits {
       grid-template-columns: 1fr 1fr;
     }
@@ -314,19 +115,6 @@ const benefits = [
   @media (max-width: 480px) {
     .loop-benefits {
       grid-template-columns: 1fr;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .loop-panel-live {
-      animation: none !important;
-      opacity: 1 !important;
-    }
-    .loop-row,
-    .loop-row-status {
-      animation: none !important;
-      background: transparent !important;
-      border-color: color-mix(in srgb, var(--color-cream) 30%, transparent) !important;
     }
   }
 </style>
