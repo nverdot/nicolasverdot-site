@@ -21,12 +21,12 @@ import img6 from '../assets/tourner-en-rond/06-walking.png';
 // image individuelle utilisée uniquement dans le repli mobile (liste de
 // cartes) — sur desktop, l'illustration du cercle suffit.
 const situations = [
-  { id: 1, lines: ["Les réunions se multiplient,", "mais rien n'avance vraiment."], style: 'top: 25%; left: 47%; transform: translateX(-50%);', image: img1 },
-  { id: 2, lines: ['Tout semble prioritaire.'], style: 'top: 47%; left: 75%; transform: translateX(-50%);', image: img2 },
-  { id: 3, lines: ['Les décisions sont prises,', 'mais rarement appliquées.'], style: 'top: 61%; left: 66%; transform: translateX(-50%);', image: img3 },
+  { id: 1, lines: ["Les réunions se multiplient,", "mais rien n'avance vraiment."], style: 'top: 32%; left: 47%; transform: translateX(-50%);', image: img1 },
+  { id: 2, lines: ['Tout semble prioritaire.'], style: 'top: 54%; left: 76%; transform: translateX(-50%);', image: img2 },
+  { id: 3, lines: ['Les décisions sont prises,', 'mais rarement appliquées.'], style: 'top: 75%; left: 74%; transform: translateX(-50%);', image: img3 },
   { id: 4, lines: ["Les équipes ne comprennent plus", "où l'on va."], style: 'bottom: 1%; left: 49%; transform: translateX(-50%);', image: img4 },
-  { id: 5, lines: ['Quelques personnes parlent,', 'les autres décrochent.'], style: 'top: 69%; left: 23%; transform: translateX(-50%);', image: img5 },
-  { id: 6, lines: ["Les transformations s'essoufflent", 'après le lancement.'], style: 'top: 47%; left: 22%; transform: translateX(-50%);', image: img6 },
+  { id: 5, lines: ['Quelques personnes parlent,', 'les autres décrochent.'], style: 'top: 79%; left: 22%; transform: translateX(-50%);', image: img5 },
+  { id: 6, lines: ["Les transformations s'essoufflent", 'après le lancement.'], style: 'top: 54%; left: 21%; transform: translateX(-50%);', image: img6 },
 ];
 ---
 
@@ -61,11 +61,14 @@ const situations = [
           </div>
         </div>
       ))}
+    </div>
 
-      <div class="loop-exit-text-pos">
-        <p class="loop-exit-text" data-loop-caption={situations.length}>Et si on sortait de ce cercle ?</p>
-      </div>
-
+    <!-- Sortie : sous l'image plutôt qu'en position absolue par-dessus —
+         le coin bas-droit de l'illustration (déjà occupé par la légende
+         "décisions" et la flèche jaune) n'a pas la place d'accueillir en
+         plus le texte manuscrit et le bouton sans chevauchement. -->
+    <div class="loop-exit-wrap-desktop" data-loop-exit-desktop>
+      <p class="loop-exit-text" data-loop-caption={situations.length}>Et si on sortait de ce cercle ?</p>
       <a href={withBase('/contact/')} class="btn loop-exit-btn" data-loop-caption={situations.length + 1}>Sortons du cercle →</a>
     </div>
 
@@ -264,28 +267,20 @@ const situations = [
     color: var(--color-navy);
   }
 
-  .loop-exit-text-pos {
-    position: absolute;
-    top: 71%;
-    right: -2%;
-    max-width: min(135px, 17vw);
-    transform: rotate(-2deg);
+  .loop-exit-wrap-desktop {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-6);
+    max-width: 900px;
+    margin: var(--space-6) auto 0;
   }
   .loop-exit-text {
     margin: 0;
     font-family: var(--font-script);
-    font-size: clamp(1.05rem, 2vw, 1.35rem);
-    line-height: 1.15;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
     color: var(--color-orange-ink);
-    text-align: right;
-  }
-  .loop-exit-btn {
-    position: absolute;
-    bottom: 0.5%;
-    right: 1%;
-    font-size: clamp(0.75rem, 1.5vw, 0.95rem);
-    padding: 0.7em 1.1em;
-    white-space: nowrap;
+    transform: rotate(-2deg);
   }
 
   /* --- Repli mobile : caché par défaut, activé sous 860px --- */
@@ -299,6 +294,9 @@ const situations = [
     /* Le cercle complet devient inutile en dessous de 860px : chaque
        situation a déjà sa propre image en tête de carte (voir plus bas). */
     .loop-stage {
+      display: none;
+    }
+    .loop-exit-wrap-desktop {
       display: none;
     }
 
