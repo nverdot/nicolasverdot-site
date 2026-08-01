@@ -10,15 +10,23 @@
 import { Image } from 'astro:assets';
 import { withBase } from '../utils/url';
 import circleImg from '../assets/tourner-en-rond/cercle-illustration.png';
+import img1 from '../assets/tourner-en-rond/01-reunions.png';
+import img2 from '../assets/tourner-en-rond/02-post-its.png';
+import img3 from '../assets/tourner-en-rond/03-decisions.png';
+import img4 from '../assets/tourner-en-rond/04-signpost.png';
+import img5 from '../assets/tourner-en-rond/05-group.png';
+import img6 from '../assets/tourner-en-rond/06-walking.png';
 
-// texte · position desktop (pourcentages, calibrés sur l'image 1672×941)
+// texte · position desktop (pourcentages, calibrés sur l'image 1672×941) ·
+// image individuelle utilisée uniquement dans le repli mobile (liste de
+// cartes) — sur desktop, l'illustration du cercle suffit.
 const situations = [
-  { id: 1, lines: ["Les réunions se multiplient,", "mais rien n'avance vraiment."], style: 'top: 25%; left: 47%; transform: translateX(-50%);' },
-  { id: 2, lines: ['Tout semble prioritaire.'], style: 'top: 47%; left: 75%; transform: translateX(-50%);' },
-  { id: 3, lines: ['Les décisions sont prises,', 'mais rarement appliquées.'], style: 'top: 61%; left: 66%; transform: translateX(-50%);' },
-  { id: 4, lines: ["Les équipes ne comprennent plus", "où l'on va."], style: 'bottom: 1%; left: 49%; transform: translateX(-50%);' },
-  { id: 5, lines: ['Quelques personnes parlent,', 'les autres décrochent.'], style: 'top: 69%; left: 23%; transform: translateX(-50%);' },
-  { id: 6, lines: ["Les transformations s'essoufflent", 'après le lancement.'], style: 'top: 47%; left: 22%; transform: translateX(-50%);' },
+  { id: 1, lines: ["Les réunions se multiplient,", "mais rien n'avance vraiment."], style: 'top: 25%; left: 47%; transform: translateX(-50%);', image: img1 },
+  { id: 2, lines: ['Tout semble prioritaire.'], style: 'top: 47%; left: 75%; transform: translateX(-50%);', image: img2 },
+  { id: 3, lines: ['Les décisions sont prises,', 'mais rarement appliquées.'], style: 'top: 61%; left: 66%; transform: translateX(-50%);', image: img3 },
+  { id: 4, lines: ["Les équipes ne comprennent plus", "où l'on va."], style: 'bottom: 1%; left: 49%; transform: translateX(-50%);', image: img4 },
+  { id: 5, lines: ['Quelques personnes parlent,', 'les autres décrochent.'], style: 'top: 69%; left: 23%; transform: translateX(-50%);', image: img5 },
+  { id: 6, lines: ["Les transformations s'essoufflent", 'après le lancement.'], style: 'top: 47%; left: 22%; transform: translateX(-50%);', image: img6 },
 ];
 ---
 
@@ -26,8 +34,12 @@ const situations = [
   <div class="container">
     <div class="loop-head">
       <h2 data-loop-title>
-        Vous tournez en rond ?
-        <svg class="loop-underline" viewBox="0 0 260 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 C 60 3, 140 12, 257 5" /></svg>
+        Vous tournez
+        <span class="accent-wrap">
+          en rond
+          <svg class="ink-underline" viewBox="0 0 120 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9 C 30 2, 70 12, 118 5" /></svg>
+        </span>
+        ?
       </h2>
       <p class="loop-sub" data-loop-sub>Vous avez peut-être déjà vécu ça…</p>
     </div>
@@ -63,8 +75,11 @@ const situations = [
     <ol class="loop-mobile-list">
       {situations.map((s) => (
         <li class="loop-mobile-item">
-          <span class="loop-caption-index">0{s.id}</span>
-          <p>{s.lines.join(' ')}</p>
+          <Image src={s.image} alt="" width={400} height={280} loading="lazy" class="loop-mobile-img" />
+          <div class="loop-mobile-content">
+            <span class="loop-caption-index">0{s.id}</span>
+            <p>{s.lines.join(' ')}</p>
+          </div>
         </li>
       ))}
     </ol>
@@ -103,6 +118,16 @@ const situations = [
         (a, b) => Number(a.dataset.loopCaption) - Number(b.dataset.loopCaption)
       );
 
+      // Trait sous "en rond" : même motif que "le collectif avance." dans le
+      // bandeau bénéfices — se dessine de gauche à droite au scroll et se
+      // redessine à chaque passage (toggleActions play/reverse), plutôt que
+      // de rester acquis une fois pour toutes.
+      const underlinePath = section.querySelector<SVGPathElement>('.ink-underline path');
+      if (underlinePath) {
+        const length = underlinePath.getTotalLength();
+        gsap.set(underlinePath, { strokeDasharray: length, strokeDashoffset: reduceMotion ? 0 : length });
+      }
+
       if (reduceMotion) {
         gsap.set([title, sub, ...captions], { opacity: 1, y: 0 });
         return;
@@ -120,9 +145,26 @@ const situations = [
         .to(sub, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.25')
         .to(captions, { opacity: 1, y: 0, duration: 0.4, stagger: 0.12, ease: 'power2.out' }, '-=0.15');
 
+      let underlineTween: gsap.core.Tween | undefined;
+      if (underlinePath) {
+        underlineTween = gsap.to(underlinePath, {
+          strokeDashoffset: 0,
+          duration: 1,
+          delay: 0.15,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 65%',
+            toggleActions: 'play none none reverse',
+          },
+        });
+      }
+
       return () => {
         tl.scrollTrigger?.kill();
         tl.kill();
+        underlineTween?.scrollTrigger?.kill();
+        underlineTween?.kill();
       };
     }
   );
@@ -139,25 +181,26 @@ const situations = [
     margin: 0 auto var(--space-8);
   }
   .loop-head h2 {
-    position: relative;
-    display: inline-block;
     color: var(--color-navy);
     margin: 0 0 var(--space-3);
   }
-  .loop-underline {
-    position: absolute;
-    left: 2%;
-    right: 2%;
-    bottom: -0.28em;
-    width: 96%;
-    height: 0.3em;
-    overflow: visible;
+  /* Même motif que le soulignement de "le collectif avance." dans le
+     bandeau bénéfices (proof-band) : un seul mot souligné, pas tout le
+     titre, tracé au scroll et effacé au retour en arrière. */
+  .accent-wrap {
+    display: inline-block;
+    position: relative;
   }
-  .loop-underline path {
-    fill: none;
+  .accent-wrap .ink-underline {
+    position: absolute;
+    left: 0;
+    bottom: -0.12em;
+    width: 100%;
+    height: 0.25em;
     stroke: var(--color-orange);
-    stroke-width: 3;
-    stroke-linecap: round;
+    stroke-width: 5;
+    fill: none;
+    overflow: visible;
   }
   .loop-sub {
     margin: 0;
@@ -224,7 +267,7 @@ const situations = [
   .loop-exit-text-pos {
     position: absolute;
     top: 71%;
-    right: 0%;
+    right: -2%;
     max-width: min(135px, 17vw);
     transform: rotate(-2deg);
   }
@@ -253,14 +296,10 @@ const situations = [
   }
 
   @media (max-width: 860px) {
-    .loop-caption-pos,
-    .loop-exit-text-pos,
-    .loop-exit-btn {
-      display: none;
-    }
+    /* Le cercle complet devient inutile en dessous de 860px : chaque
+       situation a déjà sa propre image en tête de carte (voir plus bas). */
     .loop-stage {
-      max-width: none;
-      margin-bottom: var(--space-8);
+      display: none;
     }
 
     .loop-mobile-list {
@@ -271,14 +310,24 @@ const situations = [
       padding: 0;
     }
     .loop-mobile-item {
-      display: flex;
-      align-items: baseline;
-      gap: var(--space-3);
-      padding: var(--space-4);
+      overflow: hidden;
       background: var(--color-surface);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-sm);
+    }
+    .loop-mobile-item :global(.loop-mobile-img) {
+      display: block;
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      object-position: center 25%;
+    }
+    .loop-mobile-content {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-3);
+      padding: var(--space-4);
     }
     .loop-mobile-item p {
       margin: 0;
