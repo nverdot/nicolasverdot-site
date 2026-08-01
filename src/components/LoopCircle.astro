@@ -1,14 +1,12 @@
 ---
 // Section "Vous tournez en rond ?" — construite à partir d'une illustration
 // fournie (cercle peint à la main : 6 scènes, flèches, nœud central, sortie
-// jaune). L'image ne contient aucun texte : tout le contenu (titre, 6
-// légendes, texte de sortie, bouton) est du vrai HTML positionné par-dessus
-// en absolu (desktop) via des pourcentages, pour rester lisible, accessible
-// et modifiable sans toucher à l'image. Positions calibrées en analysant les
-// pixels de l'image (centre de chaque scène, cf. historique de commit) puis
-// ajustées à l'œil.
+// jaune). L'image ne contient aucun texte : le titre et les 6 légendes sont
+// du vrai HTML, positionnés sur un anneau invisible à l'EXTÉRIEUR de
+// l'image (jamais par-dessus, pour ne jamais masquer une scène) — voir
+// RX/RY plus bas. Pas de numérotation : les légendes se lisent par leur
+// position autour du cercle, pas par un ordre chiffré.
 import { Image } from 'astro:assets';
-import { withBase } from '../utils/url';
 import circleImg from '../assets/tourner-en-rond/cercle-illustration.png';
 import img1 from '../assets/tourner-en-rond/01-reunions.png';
 import img2 from '../assets/tourner-en-rond/02-post-its.png';
@@ -17,17 +15,31 @@ import img4 from '../assets/tourner-en-rond/04-signpost.png';
 import img5 from '../assets/tourner-en-rond/05-group.png';
 import img6 from '../assets/tourner-en-rond/06-walking.png';
 
-// texte · position desktop (pourcentages, calibrés sur l'image 1672×941) ·
-// image individuelle utilisée uniquement dans le repli mobile (liste de
-// cartes) — sur desktop, l'illustration du cercle suffit.
+// texte · position desktop, sur un anneau invisible EXTÉRIEUR à l'image
+// (jamais par-dessus) — l'image elle-même est affichée plus petite,
+// centrée dans une scène plus grande, pour laisser une marge tout autour
+// où poser les légendes. Positions calculées par trigonométrie (angle 0 =
+// haut, sens horaire) sur un rayon choisi juste au-delà du bord de
+// l'image, pas calibrées scène par scène. Image individuelle utilisée
+// uniquement dans le repli mobile (liste de cartes).
 const situations = [
-  { id: 1, lines: ["Les réunions se multiplient,", "mais rien n'avance vraiment."], style: 'top: 32%; left: 47%; transform: translateX(-50%);', image: img1 },
-  { id: 2, lines: ['Tout semble prioritaire.'], style: 'top: 54%; left: 76%; transform: translateX(-50%);', image: img2 },
-  { id: 3, lines: ['Les décisions sont prises,', 'mais rarement appliquées.'], style: 'top: 75%; left: 74%; transform: translateX(-50%);', image: img3 },
-  { id: 4, lines: ["Les équipes ne comprennent plus", "où l'on va."], style: 'bottom: 1%; left: 49%; transform: translateX(-50%);', image: img4 },
-  { id: 5, lines: ['Quelques personnes parlent,', 'les autres décrochent.'], style: 'top: 79%; left: 22%; transform: translateX(-50%);', image: img5 },
-  { id: 6, lines: ["Les transformations s'essoufflent", 'après le lancement.'], style: 'top: 54%; left: 21%; transform: translateX(-50%);', image: img6 },
+  { id: 1, lines: ["Les réunions se multiplient,", "mais rien n'avance vraiment."], angle: 0, image: img1 },
+  { id: 2, lines: ['Tout semble prioritaire.'], angle: 60, image: img2 },
+  { id: 3, lines: ['Les décisions sont prises,', 'mais rarement appliquées.'], angle: 120, image: img3 },
+  { id: 4, lines: ["Les équipes ne comprennent plus", "où l'on va."], angle: 180, image: img4 },
+  { id: 5, lines: ['Quelques personnes parlent,', 'les autres décrochent.'], angle: 240, image: img5 },
+  { id: 6, lines: ["Les transformations s'essoufflent", 'après le lancement.'], angle: 300, image: img6 },
 ];
+// Rayon elliptique (en % de la scène) juste au-delà du bord de l'image
+// affichée à 68% de large, centrée — voir .loop-stage / .loop-illustration.
+const RX = 40;
+const RY = 35;
+const toRad = (deg: number) => (deg * Math.PI) / 180;
+const captionStyle = (angle: number) => {
+  const left = 50 + RX * Math.sin(toRad(angle));
+  const top = 50 - RY * Math.cos(toRad(angle));
+  return `top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%; transform: translate(-50%, -50%);`;
+};
 ---
 
 <section class="loop-circle" data-reveal data-section-name="Vous tournez en rond ?">
@@ -54,22 +66,17 @@ const situations = [
       />
 
       {situations.map((s, i) => (
-        <div class="loop-caption-pos" style={s.style}>
+        <div class="loop-caption-pos" style={captionStyle(s.angle)}>
           <div class="loop-caption" data-loop-caption={i}>
-            <span class="loop-caption-index">0{s.id}</span>
             <p>{s.lines.map((line, li) => <>{li > 0 && <br />}{line}</>)}</p>
           </div>
         </div>
       ))}
     </div>
 
-    <!-- Sortie : sous l'image plutôt qu'en position absolue par-dessus —
-         le coin bas-droit de l'illustration (déjà occupé par la légende
-         "décisions" et la flèche jaune) n'a pas la place d'accueillir en
-         plus le texte manuscrit et le bouton sans chevauchement. -->
+    <!-- Sortie : sous l'image plutôt qu'en position absolue par-dessus. -->
     <div class="loop-exit-wrap-desktop" data-loop-exit-desktop>
       <p class="loop-exit-text" data-loop-caption={situations.length}>Et si on sortait de ce cercle ?</p>
-      <a href={withBase('/contact/')} class="btn loop-exit-btn" data-loop-caption={situations.length + 1}>Sortons du cercle →</a>
     </div>
 
     <!-- Repli mobile : mêmes 6 situations, en liste de cartes sous l'image
@@ -80,16 +87,12 @@ const situations = [
         <li class="loop-mobile-item">
           <Image src={s.image} alt="" width={400} height={280} loading="lazy" class="loop-mobile-img" />
           <div class="loop-mobile-content">
-            <span class="loop-caption-index">0{s.id}</span>
             <p>{s.lines.join(' ')}</p>
           </div>
         </li>
       ))}
     </ol>
     <p class="loop-exit-text loop-exit-text--mobile">Et si on sortait de ce cercle ?</p>
-    <div class="loop-mobile-cta">
-      <a href={withBase('/contact/')} class="btn">Sortons du cercle →</a>
-    </div>
   </div>
 </section>
 
@@ -211,15 +214,21 @@ const situations = [
     font-size: var(--text-lg);
   }
 
-  /* --- Scène desktop : image + légendes en position absolue --- */
+  /* --- Scène desktop : image réduite et centrée dans une zone plus grande,
+     pour laisser une marge tout autour où poser les légendes sans jamais
+     toucher l'illustration (voir RX/RY dans le frontmatter). --- */
   .loop-stage {
     position: relative;
     max-width: 900px;
+    aspect-ratio: 1672 / 1200;
     margin: 0 auto;
   }
   .loop-stage :global(.loop-illustration) {
-    display: block;
-    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 68%;
     height: auto;
     border-radius: var(--radius-lg);
   }
@@ -232,15 +241,12 @@ const situations = [
     position: absolute;
   }
   .loop-caption {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5em;
     /* Largeur plafonnée en px sur grand écran, mais qui doit rétrécir avec
        la scène (max-width:900px) plutôt que rester fixe — sinon, sous
        ~900px de large, les pastilles gardent leur taille pleine pendant que
        la scène rétrécit et finissent par se chevaucher. */
-    max-width: min(190px, 24vw);
-    /* Base en clamp(): padding et tailles de texte ci-dessous sont en `em`,
+    max-width: min(170px, 21vw);
+    /* Base en clamp(): padding et taille de texte ci-dessous sont en `em`,
        donc tout le bloc (texte + espace intérieur) rétrécit ensemble avec
        la scène plutôt que juste la largeur — sans ça, réduire uniquement
        max-width laisse le texte aussi grand et le bloc déborde en hauteur. */
@@ -252,41 +258,29 @@ const situations = [
     box-shadow: 0 8px 20px rgba(18, 32, 51, 0.08);
     backdrop-filter: blur(2px);
   }
-  .loop-caption-index {
-    flex-shrink: 0;
-    font-size: 0.85em;
-    font-weight: 700;
-    color: var(--color-orange-ink);
-    font-variant-numeric: tabular-nums;
-  }
   .loop-caption p {
     margin: 0;
     font-size: 0.95em;
     font-weight: 600;
     line-height: 1.35;
+    text-align: center;
     color: var(--color-navy);
   }
 
   .loop-exit-wrap-desktop {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: var(--space-6);
-    max-width: 900px;
-    margin: var(--space-6) auto 0;
+    text-align: center;
+    margin: var(--space-8) auto 0;
   }
   .loop-exit-text {
     margin: 0;
     font-family: var(--font-script);
-    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
     color: var(--color-orange-ink);
-    transform: rotate(-2deg);
   }
 
   /* --- Repli mobile : caché par défaut, activé sous 860px --- */
   .loop-mobile-list,
-  .loop-exit-text--mobile,
-  .loop-mobile-cta {
+  .loop-exit-text--mobile {
     display: none;
   }
 
@@ -322,9 +316,6 @@ const situations = [
       object-position: center 25%;
     }
     .loop-mobile-content {
-      display: flex;
-      align-items: baseline;
-      gap: var(--space-3);
       padding: var(--space-4);
     }
     .loop-mobile-item p {
@@ -337,14 +328,10 @@ const situations = [
     .loop-exit-text--mobile {
       display: block;
       text-align: center;
-      margin: 0 0 var(--space-4);
+      margin: 0;
       font-family: var(--font-script);
       font-size: 1.5rem;
       color: var(--color-orange-ink);
-    }
-    .loop-mobile-cta {
-      display: block;
-      text-align: center;
     }
   }
 </style>
