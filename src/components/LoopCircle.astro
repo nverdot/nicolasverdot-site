@@ -1,11 +1,13 @@
 ---
-// Section "Vous tournez en rond ?" — après trois passes sur un diagramme
-// circulaire jugées insuffisamment abouties, changement de langage visuel :
-// un bandeau plein écran, navy, où les 6 situations défilent en boucle
-// horizontale infinie. La métaphore "ça tourne en rond" devient un fait
-// physique et continu (comme un ticker) plutôt qu'un diagramme à décoder —
-// plus simple à rendre soigné, plus direct, réellement interactif (pause au
-// survol). Structure data-driven : modifier `situations` suffit.
+// Section "Vous tournez en rond ?" — après un diagramme circulaire (3
+// passes) puis un bandeau en défilement horizontal (repris par erreur du
+// même mécanisme que la section "Logos clients" juste au-dessus dans la
+// page), nouveau départ : un panneau de diagnostic vertical, dans l'esprit
+// d'une console/terminal. Un balayage lumineux descend la liste des 6
+// situations en boucle continue, une ligne à la fois, pour de vrai — pas de
+// marquee, pas de cercle, axe et mécanique différents de tout le reste de
+// la page (grille d'icônes pour proof-band/value-prop/situations, bandeau
+// défilant pour les logos, lignes alternées pour les offres).
 import { withBase } from '../utils/url';
 
 const icons: Record<string, string> = {
@@ -23,6 +25,8 @@ const situations = [
   { id: 5, text: 'Quelques personnes parlent, les autres décrochent.' },
   { id: 6, text: "Les transformations s'essoufflent après le lancement." },
 ];
+const SCAN_DURATION = 9; // secondes pour un tour complet des 6 lignes
+const STEP = SCAN_DURATION / situations.length;
 
 const benefits = [
   { icon: 'people', title: 'Des méthodes participatives', text: 'Pour impliquer vraiment les bonnes personnes.' },
@@ -41,29 +45,23 @@ const benefits = [
       </div>
       <p data-loop-sub>Vous avez peut-être déjà vécu ça…</p>
     </div>
-  </div>
 
-  <div class="loop-band" data-loop-band>
-    <div class="loop-band-scan" aria-hidden="true"></div>
-    <div class="loop-marquee">
-      <div class="loop-track">
-        {situations.map((s) => (
-          <div class="loop-pill">
-            <span class="loop-pill-index">0{s.id}</span>
-            <p class="loop-pill-text">{s.text}</p>
-          </div>
-        ))}
-        {situations.map((s) => (
-          <div class="loop-pill" aria-hidden="true">
-            <span class="loop-pill-index">0{s.id}</span>
-            <p class="loop-pill-text">{s.text}</p>
+    <div class="loop-panel" data-loop-panel>
+      <div class="loop-panel-head">
+        <span class="loop-panel-live" aria-hidden="true"></span>
+        <span>Ce qui revient, encore et encore</span>
+      </div>
+      <div class="loop-panel-list">
+        {situations.map((s, i) => (
+          <div class="loop-row" style={`--i: ${i}; --step: ${STEP}s; --duration: ${SCAN_DURATION}s;`}>
+            <span class="loop-row-index">0{s.id}</span>
+            <p class="loop-row-text">{s.text}</p>
+            <span class="loop-row-status" aria-hidden="true"></span>
           </div>
         ))}
       </div>
     </div>
-  </div>
 
-  <div class="container">
     <div class="loop-exit-wrap">
       <p class="loop-handwritten" data-loop-handwritten>Et si on sortait de cette boucle ?</p>
       <div class="loop-cta-wrap" data-loop-cta>
@@ -103,17 +101,17 @@ const benefits = [
 
       const title = section.querySelector('[data-loop-title]');
       const sub = section.querySelector('[data-loop-sub]');
-      // On anime l'opacité de `.loop-band` (le bandeau dans son ensemble),
-      // jamais `.loop-track` : ce dernier porte le défilement infini en CSS
-      // (translateX), et un gsap.set({...}) dessus écraserait ou entrerait
-      // en conflit avec cette animation qui doit tourner en continu.
-      const band = section.querySelector('[data-loop-band]');
+      // On anime l'opacité de `.loop-panel` (le panneau dans son ensemble),
+      // jamais `.loop-row` : chaque ligne porte son propre pouls CSS infini
+      // (balayage), et un gsap.set({...}) dessus entrerait en conflit avec
+      // cette animation qui doit tourner en continu une fois révélée.
+      const panel = section.querySelector('[data-loop-panel]');
       const handwritten = section.querySelector('[data-loop-handwritten]');
       const ctaWrap = section.querySelector('[data-loop-cta]');
       const benefits = gsap.utils.toArray<HTMLElement>('.loop-benefit');
 
       if (reduceMotion) {
-        gsap.set([title, sub, band, ...benefits], { opacity: 1, y: 0 });
+        gsap.set([title, sub, panel, ...benefits], { opacity: 1, y: 0 });
         if (handwritten) gsap.set(handwritten, { opacity: 1 });
         if (ctaWrap) gsap.set(ctaWrap, { opacity: 1, y: 0 });
         return;
@@ -121,7 +119,7 @@ const benefits = [
 
       gsap.set(title, { opacity: 0, y: 16 });
       gsap.set(sub, { opacity: 0, y: 12 });
-      gsap.set(band, { opacity: 0, y: 16 });
+      gsap.set(panel, { opacity: 0, y: 16 });
       gsap.set(benefits, { opacity: 0, y: 20 });
       if (handwritten) gsap.set(handwritten, { opacity: 0 });
       if (ctaWrap) gsap.set(ctaWrap, { opacity: 0, y: 12 });
@@ -132,7 +130,7 @@ const benefits = [
 
       tl.to(title, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
         .to(sub, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.25')
-        .to(band, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.2');
+        .to(panel, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.2');
 
       if (handwritten) {
         tl.to(handwritten, { opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.1');
@@ -152,105 +150,113 @@ const benefits = [
 
 <style>
   .loop-circle {
-    /* Section volontairement toujours claire (hors bandeau), indépendamment
-       du thème : la référence n'a pas de variante sombre. */
-    --color-navy: #122033;
-    --color-cream: #fcf8ef;
-    --color-surface: #fffdfa;
-    --color-ink: #122033;
-    --color-muted: #4c5158;
-    --color-faint: #4c5158;
-    --color-border: #cfc3b1;
-    --shadow-sm: 0 12px 30px rgba(18, 32, 51, 0.08);
-    --shadow-md: 0 26px 80px rgba(18, 32, 51, 0.12);
     padding: var(--space-16) 0;
-    background: var(--color-cream);
-    color: var(--color-ink);
     overflow: hidden;
   }
 
-  /* --- Bandeau plein écran : rupture de contraste franche, comme le
-     bandeau "problème" d'origine, mais qui sert maintenant le contenu
-     défilant plutôt qu'une simple liste statique. --- */
-  .loop-band {
-    position: relative;
-    margin: var(--space-10) 0;
-    padding: var(--space-8) 0;
-    background: var(--color-navy);
+  /* --- Panneau : un objet contenu, délibérément sombre (registre
+     "console/terminal"), posé sur la page — pas une section pleine largeur
+     comme le bandeau clients juste au-dessus. --- */
+  .loop-panel {
+    max-width: 720px;
+    margin: var(--space-10) auto 0;
+    background: #0d1826;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 30px 70px rgba(13, 24, 38, 0.35);
     overflow: hidden;
   }
-  .loop-band-scan {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(100deg, transparent 42%, color-mix(in srgb, var(--color-cream) 10%, transparent) 50%, transparent 58%);
-    animation: loop-scan 7s ease-in-out infinite;
-    pointer-events: none;
-  }
-
-  .loop-marquee {
-    overflow: hidden;
-  }
-  .loop-marquee:hover .loop-track {
-    animation-play-state: paused;
-  }
-
-  .loop-track {
-    display: flex;
-    width: max-content;
-    gap: var(--space-4);
-    animation: loop-scroll 34s linear infinite;
-  }
-
-  .loop-pill {
-    flex-shrink: 0;
+  .loop-panel-head {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
-    background: color-mix(in srgb, var(--color-cream) 8%, transparent);
-    border: 1px solid color-mix(in srgb, var(--color-cream) 18%, transparent);
-    border-radius: var(--radius-pill);
-    padding: 0.6em 1.4em 0.6em 0.6em;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-6);
+    border-bottom: 1px solid rgba(252, 248, 239, 0.1);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    color: color-mix(in srgb, var(--color-cream) 55%, transparent);
   }
-  .loop-pill-index {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
+  .loop-panel-live {
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: var(--color-orange);
-    color: var(--color-navy);
-    font-size: 0.75rem;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-  }
-  .loop-pill-text {
-    margin: 0;
-    white-space: nowrap;
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--color-cream);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-orange) 25%, transparent);
+    animation: loop-live-blink 1.8s ease-in-out infinite;
   }
 
-  @keyframes loop-scroll {
-    to {
-      transform: translateX(-50%);
-    }
+  .loop-panel-list {
+    padding: var(--space-2) 0;
   }
-  @keyframes loop-scan {
+  .loop-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
+    animation: loop-row-scan var(--duration) ease-in-out infinite;
+    animation-delay: calc(var(--i) * var(--step) * -1);
+  }
+  .loop-row-index {
+    flex-shrink: 0;
+    width: 2ch;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    color: color-mix(in srgb, var(--color-cream) 40%, transparent);
+  }
+  .loop-row-text {
+    flex: 1;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: color-mix(in srgb, var(--color-cream) 78%, transparent);
+  }
+  .loop-row-status {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid color-mix(in srgb, var(--color-cream) 30%, transparent);
+    animation: loop-status-scan var(--duration) ease-in-out infinite;
+    animation-delay: calc(var(--i) * var(--step) * -1);
+  }
+
+  @keyframes loop-live-blink {
     0%, 100% {
-      transform: translateX(-30%);
+      opacity: 1;
     }
     50% {
-      transform: translateX(30%);
+      opacity: 0.35;
+    }
+  }
+  /* La ligne "scannée" s'éclaire brièvement, texte inclus, puis retombe —
+     la même ligne repassera au même endroit dans le cycle suivant : le
+     constat ne change jamais, c'est tout le principe de la section. */
+  @keyframes loop-row-scan {
+    0%, 14%, 100% {
+      background: transparent;
+    }
+    3% {
+      background: color-mix(in srgb, var(--color-orange) 10%, transparent);
+    }
+  }
+  @keyframes loop-status-scan {
+    0%, 14%, 100% {
+      background: transparent;
+      border-color: color-mix(in srgb, var(--color-cream) 30%, transparent);
+    }
+    3% {
+      background: var(--color-orange);
+      border-color: var(--color-orange);
     }
   }
 
   .loop-exit-wrap {
     text-align: center;
     max-width: 480px;
-    margin: 0 auto;
+    margin: var(--space-12) auto 0;
   }
   .loop-handwritten {
     margin: 0 0 var(--space-4);
@@ -289,9 +295,16 @@ const benefits = [
     font-size: var(--text-sm);
   }
 
-  @media (max-width: 768px) {
-    .loop-pill-text {
-      font-size: 0.92rem;
+  @media (max-width: 640px) {
+    .loop-panel-head {
+      padding: var(--space-3) var(--space-4);
+    }
+    .loop-row {
+      padding: var(--space-3) var(--space-4);
+      gap: var(--space-3);
+    }
+    .loop-row-text {
+      font-size: 0.9rem;
     }
     .loop-benefits {
       grid-template-columns: 1fr 1fr;
@@ -299,39 +312,21 @@ const benefits = [
   }
 
   @media (max-width: 480px) {
-    .loop-band {
-      padding: var(--space-6) 0;
-    }
-    .loop-pill {
-      padding: 0.5em 1.1em 0.5em 0.5em;
-    }
-    .loop-pill-index {
-      width: 26px;
-      height: 26px;
-      font-size: 0.68rem;
-    }
-    .loop-pill-text {
-      font-size: 0.85rem;
-    }
     .loop-benefits {
       grid-template-columns: 1fr;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .loop-band-scan {
-      display: none;
-    }
-    .loop-track {
+    .loop-panel-live {
       animation: none !important;
-      flex-wrap: wrap;
-      width: auto;
-      justify-content: center;
+      opacity: 1 !important;
     }
-    /* Les 6 dernières pastilles sont une copie dupliquée pour la boucle
-       infinie (voir markup) — sans l'animation, on ne garde que l'original. */
-    .loop-pill[aria-hidden='true'] {
-      display: none;
+    .loop-row,
+    .loop-row-status {
+      animation: none !important;
+      background: transparent !important;
+      border-color: color-mix(in srgb, var(--color-cream) 30%, transparent) !important;
     }
   }
 </style>
