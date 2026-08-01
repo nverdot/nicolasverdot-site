@@ -12,12 +12,38 @@ export function getStaticPaths() {
 
 const { offer } = Astro.props;
 const contactHref = withBase('/contact/');
+
+// Pas de champ `price` structuré : les tarifs de offers.ts sont des chaînes
+// ("À partir de...", "De X à Y €") pas toujours parseables en nombre, et un
+// schema.org Offer.price invalide serait pire que pas de prix du tout.
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: offer.title,
+  name: offer.title,
+  description: offer.summary,
+  provider: {
+    '@type': 'Person',
+    name: 'Nicolas Verdot',
+    url: new URL(withBase('/a-propos/'), Astro.site).toString(),
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'France',
+  },
+  url: new URL(withBase(`/offres/${offer.slug}/`), Astro.site).toString(),
+};
 ---
 
 <Layout
   title={`${offer.title} — by Nicolas Verdot`}
   description={offer.summary}
   path={`/offres/${offer.slug}/`}
+  breadcrumbs={[
+    { name: 'Accueil', path: '/' },
+    { name: 'Les offres', path: '/offres/' },
+    { name: offer.title, path: `/offres/${offer.slug}/` },
+  ]}
 >
   <PageHero
     eyebrow={offer.eyebrow}
@@ -83,6 +109,8 @@ const contactHref = withBase('/contact/');
     title="Confrontons le résultat à votre situation réelle."
     subtitle="Le diagnostic en ligne donne une première lecture. Un échange permet d'identifier l'enjeu, le niveau de décision et le format réellement utile."
   />
+
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 </Layout>
 
 <style>

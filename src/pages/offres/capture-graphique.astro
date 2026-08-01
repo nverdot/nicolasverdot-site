@@ -4,6 +4,18 @@ import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { withBase } from '../../utils/url';
 
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Capture graphique en direct',
+  name: 'Capture graphique en direct',
+  description:
+    "Pendant votre séminaire, conférence ou réunion stratégique, les échanges sont traduits en direct sous forme de fresque visuelle claire, mémorable et partageable.",
+  provider: { '@type': 'Person', name: 'Nicolas Verdot', url: new URL(withBase('/a-propos/'), Astro.site).toString() },
+  areaServed: { '@type': 'Country', name: 'France' },
+  url: new URL(withBase('/offres/capture-graphique/'), Astro.site).toString(),
+};
+
 const checks = [
   { i: '1', title: 'Écouter en temps réel', text: "Je suis les prises de parole, les échanges et les moments clés de l'événement." },
   { i: '2', title: "Extraire l'essentiel", text: 'Les idées fortes, les décisions, les tensions, les messages importants et les liens entre les sujets.' },
@@ -46,6 +58,11 @@ const faqs = [
   title="Capture graphique en direct — by Nicolas Verdot"
   description="Pendant votre séminaire, conférence ou réunion stratégique, les échanges sont traduits en direct sous forme de fresque visuelle claire, mémorable et partageable."
   path="/offres/capture-graphique/"
+  breadcrumbs={[
+    { name: 'Accueil', path: '/' },
+    { name: 'Les offres', path: '/offres/' },
+    { name: 'Capture graphique en direct', path: '/offres/capture-graphique/' },
+  ]}
 >
   <PageHero
     eyebrow="Capture graphique · Scribing · Événementiel"
@@ -146,6 +163,8 @@ const faqs = [
     title="Faisons apparaître ce qui compte."
     subtitle="Parlons de votre événement, du public, du programme et de la manière dont vous souhaitez réutiliser la fresque après le jour J."
   />
+
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 </Layout>
 
 <style>

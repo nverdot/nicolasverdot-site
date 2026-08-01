@@ -4,6 +4,18 @@ import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { withBase } from '../../utils/url';
 
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Séminaires et ateliers de facilitation',
+  name: 'Séminaires et ateliers de facilitation',
+  description:
+    "Concevoir et faciliter des séminaires qui font réellement avancer les équipes : intelligence collective, facilitation graphique, trois niveaux d'accompagnement selon ce que vous souhaitez garder en interne.",
+  provider: { '@type': 'Person', name: 'Nicolas Verdot', url: new URL(withBase('/a-propos/'), Astro.site).toString() },
+  areaServed: { '@type': 'Country', name: 'France' },
+  url: new URL(withBase('/offres/seminaires-ateliers/'), Astro.site).toString(),
+};
+
 const pains = [
   'Un programme trop chargé et peu participatif',
   'Des prises de parole interminables',
@@ -88,6 +100,11 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
   title="Séminaires et ateliers de facilitation — by Nicolas Verdot"
   description="Concevoir et faciliter des séminaires qui font réellement avancer les équipes : intelligence collective, facilitation graphique, trois niveaux d'accompagnement selon ce que vous souhaitez garder en interne."
   path="/offres/seminaires-ateliers/"
+  breadcrumbs={[
+    { name: 'Accueil', path: '/' },
+    { name: 'Les offres', path: '/offres/' },
+    { name: 'Séminaires et ateliers', path: '/offres/seminaires-ateliers/' },
+  ]}
 >
   <PageHero
     eyebrow="Séminaires · Ateliers · Facilitation"
@@ -234,6 +251,8 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
     subtitle="Pendant ce premier échange, nous clarifierons la situation, les participants, l'objectif réel, les contraintes et le niveau d'accompagnement dont vous avez besoin."
     ctaLabel="Réserver un échange de cadrage"
   />
+
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 </Layout>
 
 <style>

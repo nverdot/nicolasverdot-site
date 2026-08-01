@@ -17,6 +17,33 @@ const audiences = [
   'Scrum Masters', 'Product Owners', 'Coachs', 'Associations', 'Collectivités', "Organismes de formation",
 ];
 
+const providerRef = {
+  '@type': 'Person',
+  name: 'Nicolas Verdot',
+  url: new URL(withBase('/a-propos/'), Astro.site).toString(),
+};
+
+const coursesSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: formationGroups.flatMap((group) => group.items).map((f, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Course',
+      name: f.title,
+      description: f.summary,
+      provider: providerRef,
+      educationalLevel: f.level,
+      hasCourseInstance: {
+        '@type': 'CourseInstance',
+        courseMode: f.format,
+        courseWorkload: f.duration,
+      },
+    },
+  })),
+};
+
 const faqs = [
   { q: 'Faut-il savoir dessiner pour la facilitation graphique ?', a: "Non. L'objectif n'est pas de devenir artiste, mais d'apprendre à utiliser des formes simples pour clarifier les idées." },
   { q: 'Peut-on adapter la formation à nos métiers ?', a: "Oui, c'est même recommandé. Le contenu et les exemples sont ajustés à votre contexte." },
@@ -125,6 +152,8 @@ const faqs = [
     title="Et si vos équipes repartaient avec des outils qu'elles utilisent vraiment ?"
     subtitle="Parlons de votre besoin de formation : public, objectifs, format et calendrier."
   />
+
+  <script type="application/ld+json" set:html={JSON.stringify(coursesSchema)} />
 </Layout>
 
 <style>

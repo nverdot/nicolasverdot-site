@@ -18,14 +18,14 @@ import { SITE } from '../data/site';
   <section class="section" data-reveal>
     <div class="container prose">
       <div class="legal-todo-banner">
-        <strong>À compléter avant mise en ligne :</strong> les champs marqués <code>[à compléter]</code> ci-dessous nécessitent les informations réelles de l'entreprise (forme juridique, SIRET, adresse de correspondance, hébergeur). Cette page ne doit pas être publiée telle quelle.
+        <strong>À compléter avant mise en ligne :</strong> les champs marqués <code>[à compléter]</code> ci-dessous nécessitent les informations réelles de l'entreprise (forme juridique, adresse de correspondance, hébergeur). Cette page ne doit pas être publiée telle quelle.
       </div>
 
       <h2>Éditeur du site</h2>
       <p>
         Le site <strong>{SITE.url.replace('https://', '')}</strong> est édité par :<br />
         Nicolas Verdot, exerçant sous le nom commercial « {SITE.name} »<br />
-        Forme juridique : <code>[à compléter]</code> — SIRET : <code>[à compléter]</code><br />
+        Forme juridique : <code>[à compléter]</code> — SIRET : 102 910 882 00012<br />
         Adresse de correspondance : <code>[à compléter]</code>, {SITE.address.region}, {SITE.address.country}<br />
         Téléphone : <a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a><br />
         E-mail : <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />

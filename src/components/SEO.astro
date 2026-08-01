@@ -2,38 +2,74 @@
 import { SITE } from '../data/site';
 import { withBase } from '../utils/url';
 
+interface Breadcrumb {
+  name: string;
+  path: string;
+}
+
 interface Props {
   title: string;
   description: string;
   path: string;
   image?: string;
+  // Fil d'Ariane explicite pour les pages profondes (ex. un article de blog
+  // veut "Accueil > Blog > {titre}", pas juste "Accueil > {titre}") — si
+  // omis, on retombe sur un fil à 2 niveaux généré depuis title/path.
+  breadcrumbs?: Breadcrumb[];
 }
 
 // PNG obligatoire : LinkedIn, Facebook et WhatsApp ne rendent pas les SVG.
-const { title, description, path, image = '/og-image.png' } = Astro.props;
+const { title, description, path, image = '/og-image.png', breadcrumbs } = Astro.props;
 const canonicalURL = new URL(withBase(path), SITE.url).toString();
 const ogImageURL = new URL(withBase(image), SITE.url).toString();
+const isHome = path === '/';
 
-const localBusinessSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: SITE.name,
-  description:
-    "Facilitation d'intelligence collective, séminaires, coaching de dirigeants et formations : Nicolas Verdot aide les leaders et les équipes à transformer leurs discussions en décisions, et leurs décisions en actions qui tiennent.",
-  url: SITE.url,
-  email: SITE.email,
-  telephone: SITE.phone,
-  address: {
-    '@type': 'PostalAddress',
-    addressRegion: SITE.address.region,
-    addressCountry: SITE.address.country,
-  },
-  areaServed: {
-    '@type': 'Country',
-    name: 'France',
-  },
-  sameAs: [SITE.social.linkedin].filter(Boolean),
-};
+// Le schema ProfessionalService (identité de l'entreprise) n'a de sens
+// qu'une fois par site, pas dupliqué à l'identique sur les 76 pages : il ne
+// s'affiche que sur l'accueil. Les pages profondes reçoivent plutôt un fil
+// d'Ariane (BreadcrumbList), plus utile pour elles en résultats de recherche.
+const localBusinessSchema = isHome
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      name: SITE.name,
+      description:
+        "Facilitation d'intelligence collective, séminaires, coaching de dirigeants et formations : Nicolas Verdot aide les leaders et les équipes à transformer leurs discussions en décisions, et leurs décisions en actions qui tiennent.",
+      url: SITE.url,
+      email: SITE.email,
+      telephone: SITE.phone,
+      address: {
+        '@type': 'PostalAddress',
+        addressRegion: SITE.address.region,
+        addressCountry: SITE.address.country,
+      },
+      areaServed: {
+        '@type': 'Country',
+        name: 'France',
+      },
+      sameAs: [SITE.social.linkedin].filter(Boolean),
+    }
+  : null;
+
+// Nettoie le suffixe commun " — by Nicolas Verdot" pour un libellé de fil
+// d'Ariane lisible quand la page n'a pas fourni son propre fil.
+const cleanedTitle = title.split(' — ')[0].split(' | ')[0];
+const crumbs: Breadcrumb[] = breadcrumbs ?? [
+  { name: 'Accueil', path: '/' },
+  { name: cleanedTitle, path },
+];
+const breadcrumbSchema = !isHome
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: crumbs.map((crumb, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: crumb.name,
+        item: new URL(withBase(crumb.path), SITE.url).toString(),
+      })),
+    }
+  : null;
 ---
 
 <title>{title}</title>
@@ -55,5 +91,5 @@ const localBusinessSchema = {
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageURL} />
 
-<!-- schema.org LocalBusiness -->
-<script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+{localBusinessSchema && <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />}
+{breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}

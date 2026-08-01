@@ -51,6 +51,11 @@ const articleSchema = {
   title={`${article.data.title} — by Nicolas Verdot`}
   description={article.data.description}
   path={`/blog/${article.slug}/`}
+  breadcrumbs={[
+    { name: 'Accueil', path: '/' },
+    { name: 'Blog', path: '/blog/' },
+    { name: article.data.title, path: `/blog/${article.slug}/` },
+  ]}
 >
   <div class="reading-progress" aria-hidden="true">
     <div class="reading-progress-fill" data-reading-progress-fill></div>

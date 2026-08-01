@@ -4,6 +4,18 @@ import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { withBase } from '../../utils/url';
 
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Accompagnement de transformation',
+  name: 'Accompagnement de transformation',
+  description:
+    "Un accompagnement pour débloquer les transformations qui restent sur le papier et créer les conditions d'un changement réellement adopté par les équipes.",
+  provider: { '@type': 'Person', name: 'Nicolas Verdot', url: new URL(withBase('/a-propos/'), Astro.site).toString() },
+  areaServed: { '@type': 'Country', name: 'France' },
+  url: new URL(withBase('/offres/accompagnement-transformation/'), Astro.site).toString(),
+};
+
 const checks = [
   { i: '1', title: "Écouter le système", text: "Entretiens, observation, compréhension de l'histoire de la transformation et des attentes des parties prenantes." },
   { i: '2', title: 'Rendre visibles les blocages', text: 'Incohérences, non-dits, décisions floues et mécanismes qui entretiennent la situation.' },
@@ -47,6 +59,11 @@ const faqs = [
   title="Accompagnement de transformation — by Nicolas Verdot"
   description="Un accompagnement pour débloquer les transformations qui restent sur le papier et créer les conditions d'un changement réellement adopté par les équipes."
   path="/offres/accompagnement-transformation/"
+  breadcrumbs={[
+    { name: 'Accueil', path: '/' },
+    { name: 'Les offres', path: '/offres/' },
+    { name: 'Accompagnement de transformation', path: '/offres/accompagnement-transformation/' },
+  ]}
 >
   <PageHero
     eyebrow="Transformation · Alignement · Intelligence collective"
@@ -161,6 +178,8 @@ const faqs = [
     title="Elle a besoin d'un espace pour regarder ce qui se joue vraiment."
     subtitle="Prenons un premier temps pour comprendre le contexte, les tensions, les personnes concernées et ce que vous voulez réellement voir changer."
   />
+
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 </Layout>
 
 <style>

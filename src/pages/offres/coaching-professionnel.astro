@@ -4,6 +4,18 @@ import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { withBase } from '../../utils/url';
 
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Coaching professionnel',
+  name: 'Coaching professionnel',
+  description:
+    "Un coaching professionnel pour travailler la posture, les interactions, les croyances et la sécurité intérieure, avec une approche intégrant le corps et l'esprit.",
+  provider: { '@type': 'Person', name: 'Nicolas Verdot', url: new URL(withBase('/a-propos/'), Astro.site).toString() },
+  areaServed: { '@type': 'Country', name: 'France' },
+  url: new URL(withBase('/offres/coaching-professionnel/'), Astro.site).toString(),
+};
+
 const situations = [
   { num: 'Posture', title: 'Une posture qui ne te ressemble plus', text: 'Tu portes beaucoup, tu contrôles davantage que tu ne le voudrais ou tu as du mal à poser un cadre clair.' },
   { num: 'Tensions', title: 'Des tensions récurrentes', text: 'Une relation avec un collaborateur, un pair ou ta hiérarchie te met régulièrement sous pression.' },
@@ -49,6 +61,11 @@ const faqs = [
   title="Coaching professionnel — by Nicolas Verdot"
   description="Un coaching professionnel pour travailler la posture, les interactions, les croyances et la sécurité intérieure, avec une approche intégrant le corps et l'esprit."
   path="/offres/coaching-professionnel/"
+  breadcrumbs={[
+    { name: 'Accueil', path: '/' },
+    { name: 'Les offres', path: '/offres/' },
+    { name: 'Coaching professionnel', path: '/offres/coaching-professionnel/' },
+  ]}
 >
   <PageHero
     eyebrow="Coaching professionnel · Posture · Leadership"
@@ -166,6 +183,8 @@ const faqs = [
     title="Tu as peut-être besoin de retrouver de la marge de manœuvre."
     subtitle="Prenons un premier temps pour regarder ce qui se passe, ce que tu veux faire évoluer et si je suis la bonne personne pour t'accompagner."
   />
+
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 </Layout>
 
 <style>
