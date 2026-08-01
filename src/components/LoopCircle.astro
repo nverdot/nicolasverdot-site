@@ -1,10 +1,11 @@
 ---
-// Section "Vous tournez en rond ?" — pas d'illustrations : un cercle tracé
-// au trait, 6 situations en typographie pure disposées autour, et un signal
-// qui tourne en continu (jamais scroll-gaté) pour montrer littéralement que
-// le problème est une boucle sans fin. La rupture jaune vers le CTA est la
-// seule chose qui NE boucle PAS — c'est la sortie. Structure data-driven :
-// modifier `situations` suffit à changer contenu/ordre.
+// Section "Vous tournez en rond ?" — après trois passes sur un diagramme
+// circulaire jugées insuffisamment abouties, changement de langage visuel :
+// un bandeau plein écran, navy, où les 6 situations défilent en boucle
+// horizontale infinie. La métaphore "ça tourne en rond" devient un fait
+// physique et continu (comme un ticker) plutôt qu'un diagramme à décoder —
+// plus simple à rendre soigné, plus direct, réellement interactif (pause au
+// survol). Structure data-driven : modifier `situations` suffit.
 import { withBase } from '../utils/url';
 
 const icons: Record<string, string> = {
@@ -14,14 +15,13 @@ const icons: Record<string, string> = {
   trending: '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
 };
 
-// id · texte · angle (0 = haut, sens horaire)
 const situations = [
-  { id: 1, text: "Les réunions se multiplient, mais rien n'avance vraiment." , angle: 0 },
-  { id: 2, text: 'Tout semble prioritaire.', angle: 60 },
-  { id: 3, text: 'Les décisions sont prises, mais rarement appliquées.', angle: 120 },
-  { id: 4, text: "Les équipes ne comprennent plus où l'on va.", angle: 180 },
-  { id: 5, text: 'Quelques personnes parlent, les autres décrochent.', angle: 240 },
-  { id: 6, text: "Les transformations s'essoufflent après le lancement.", angle: 300 },
+  { id: 1, text: "Les réunions se multiplient, mais rien n'avance vraiment." },
+  { id: 2, text: 'Tout semble prioritaire.' },
+  { id: 3, text: 'Les décisions sont prises, mais rarement appliquées.' },
+  { id: 4, text: "Les équipes ne comprennent plus où l'on va." },
+  { id: 5, text: 'Quelques personnes parlent, les autres décrochent.' },
+  { id: 6, text: "Les transformations s'essoufflent après le lancement." },
 ];
 
 const benefits = [
@@ -30,27 +30,6 @@ const benefits = [
   { icon: 'target', title: 'Des décisions claires', text: "Pour sortir de l'incertitude et choisir une direction." },
   { icon: 'trending', title: 'Des actions qui comptent', text: 'Pour transformer les décisions en résultats concrets.' },
 ];
-
-// Coordonnées des 6 points sur un cercle de rayon 350 dans un viewBox
-// 1000×1000 centré en (500,500) — 0° = haut, sens horaire.
-const R = 350;
-const CX = 500;
-const CY = 500;
-const pt = (angleDeg: number) => {
-  const rad = (angleDeg * Math.PI) / 180;
-  return { x: CX + R * Math.sin(rad), y: CY - R * Math.cos(rad) };
-};
-const points = situations.map((s) => pt(s.angle));
-// Un seul tracé continu qui fait presque tout le tour, en partant juste
-// après la rupture (entre situation 3 et situation 4) et en y revenant :
-// c'est la boucle brisée, remplacée à cet endroit par la sortie jaune.
-const BREAK_AFTER = 2; // rupture entre points[2] et points[3]
-const order = [3, 4, 5, 0, 1, 2];
-let ringPath = `M${points[order[0]].x.toFixed(1)},${points[order[0]].y.toFixed(1)} `;
-for (let k = 0; k < order.length - 1; k++) {
-  const b = points[order[k + 1]];
-  ringPath += `A${R},${R} 0 0 1 ${b.x.toFixed(1)},${b.y.toFixed(1)} `;
-}
 ---
 
 <section class="loop-circle" data-reveal data-section-name="Vous tournez en rond ?">
@@ -62,70 +41,34 @@ for (let k = 0; k < order.length - 1; k++) {
       </div>
       <p data-loop-sub>Vous avez peut-être déjà vécu ça…</p>
     </div>
+  </div>
 
-    <div class="loop-stage">
-      <div class="loop-dial" aria-hidden="true"></div>
-
-      <svg class="loop-ring" viewBox="0 0 1000 1000" aria-hidden="true">
-        <circle class="loop-track" cx={CX} cy={CY} r={R} />
-        <path class="loop-arc" data-loop-arc d={ringPath} />
-      </svg>
-
-      <svg class="loop-sweep" viewBox="0 0 1000 1000" aria-hidden="true" data-loop-beacon>
-        <defs>
-          <linearGradient id="loop-sweep-gradient" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="var(--color-orange)" stop-opacity="0" />
-            <stop offset="100%" stop-color="var(--color-orange)" stop-opacity="1" />
-          </linearGradient>
-        </defs>
-        <g class="loop-sweep-spin">
-          <path class="loop-sweep-arc" d={`M${CX},${CY - R} A${R},${R} 0 0 1 ${(CX + R * Math.sin((50 * Math.PI) / 180)).toFixed(1)},${(CY - R * Math.cos((50 * Math.PI) / 180)).toFixed(1)}`} />
-        </g>
-      </svg>
-
-      <div class="loop-core" aria-hidden="true">
-        <svg class="loop-core-icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-cream)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 12a9 9 0 0 1 15.3-6.4L21 8" />
-          <path d="M21 3v5h-5" />
-          <path d="M21 12a9 9 0 0 1-15.3 6.4L3 16" />
-          <path d="M3 21v-5h5" />
-        </svg>
-      </div>
-
-      <div class="loop-orbit">
+  <div class="loop-band" data-loop-band>
+    <div class="loop-band-scan" aria-hidden="true"></div>
+    <div class="loop-marquee">
+      <div class="loop-track">
         {situations.map((s) => (
-          <div class="loop-node" style={`--angle: ${s.angle};`} data-loop-node={s.id}>
-            <div class="loop-node-inner" data-loop-node-inner>
-              <div class="loop-node-visual" style={`--angle: ${s.angle};`}>
-                <div class="loop-node-chip">
-                  <span class="loop-node-index">0{s.id}</span>
-                  <p class="loop-node-text">{s.text}</p>
-                </div>
-              </div>
-            </div>
+          <div class="loop-pill">
+            <span class="loop-pill-index">0{s.id}</span>
+            <p class="loop-pill-text">{s.text}</p>
+          </div>
+        ))}
+        {situations.map((s) => (
+          <div class="loop-pill" aria-hidden="true">
+            <span class="loop-pill-index">0{s.id}</span>
+            <p class="loop-pill-text">{s.text}</p>
           </div>
         ))}
       </div>
-
-      <svg class="loop-exit" viewBox="0 0 1000 1000" aria-hidden="true" data-loop-exit>
-        <defs>
-          <marker id="loop-exit-arrowhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0,0 L10,5 L0,10 z" fill="var(--color-orange)" />
-          </marker>
-        </defs>
-        <path
-          class="loop-exit-path"
-          data-loop-exit-path
-          d={`M${points[2].x.toFixed(1)},${points[2].y.toFixed(1)} C ${(points[2].x + 140).toFixed(1)},${(points[2].y + 40).toFixed(1)} ${(points[2].x + 160).toFixed(1)},${(points[3].y - 60).toFixed(1)} ${(points[3].x + 40).toFixed(1)},${(points[3].y + 90).toFixed(1)}`}
-          marker-end="url(#loop-exit-arrowhead)"
-        />
-      </svg>
-
-      <p class="loop-handwritten" data-loop-handwritten>Et si on sortait de ce cercle ?</p>
     </div>
+  </div>
 
-    <div class="loop-cta-wrap" data-loop-cta>
-      <a href={withBase('/contact/')} class="btn">Sortons du cercle →</a>
+  <div class="container">
+    <div class="loop-exit-wrap">
+      <p class="loop-handwritten" data-loop-handwritten>Et si on sortait de cette boucle ?</p>
+      <div class="loop-cta-wrap" data-loop-cta>
+        <a href={withBase('/contact/')} class="btn">Sortons du cercle →</a>
+      </div>
     </div>
 
     <div class="loop-benefits" data-loop-benefits>
@@ -160,32 +103,17 @@ for (let k = 0; k < order.length - 1; k++) {
 
       const title = section.querySelector('[data-loop-title]');
       const sub = section.querySelector('[data-loop-sub]');
-      const arc = section.querySelector<SVGPathElement>('[data-loop-arc]');
-      const exitPath = section.querySelector<SVGPathElement>('[data-loop-exit-path]');
-      // On anime l'opacité de `.loop-node-inner`, jamais `.loop-node` (porte
-      // le placement circulaire via transform, à ne jamais toucher) ni
-      // `.loop-node-visual` (porte le pouls CSS infini indépendant) : le
-      // moindre gsap.set({scale}) sur le mauvais élément casse soit le
-      // placement, soit se fait immédiatement écraser par l'animation CSS.
-      const nodeInners = gsap.utils.toArray<HTMLElement>('[data-loop-node-inner]');
-      const beacon = section.querySelector('[data-loop-beacon]');
+      // On anime l'opacité de `.loop-band` (le bandeau dans son ensemble),
+      // jamais `.loop-track` : ce dernier porte le défilement infini en CSS
+      // (translateX), et un gsap.set({...}) dessus écraserait ou entrerait
+      // en conflit avec cette animation qui doit tourner en continu.
+      const band = section.querySelector('[data-loop-band]');
       const handwritten = section.querySelector('[data-loop-handwritten]');
       const ctaWrap = section.querySelector('[data-loop-cta]');
       const benefits = gsap.utils.toArray<HTMLElement>('.loop-benefit');
 
-      if (arc) {
-        const len = arc.getTotalLength();
-        gsap.set(arc, { strokeDasharray: len, strokeDashoffset: reduceMotion ? 0 : len });
-      }
-      if (exitPath) {
-        const len = exitPath.getTotalLength();
-        gsap.set(exitPath, { strokeDasharray: len, strokeDashoffset: reduceMotion ? 0 : len });
-      }
-
       if (reduceMotion) {
-        // Tout est affiché immédiatement ; le signal tournant et les pouls
-        // sont coupés (voir CSS) pour ne pas imposer de mouvement continu.
-        gsap.set([title, sub, ...nodeInners, ...benefits], { opacity: 1, y: 0 });
+        gsap.set([title, sub, band, ...benefits], { opacity: 1, y: 0 });
         if (handwritten) gsap.set(handwritten, { opacity: 1 });
         if (ctaWrap) gsap.set(ctaWrap, { opacity: 1, y: 0 });
         return;
@@ -193,39 +121,24 @@ for (let k = 0; k < order.length - 1; k++) {
 
       gsap.set(title, { opacity: 0, y: 16 });
       gsap.set(sub, { opacity: 0, y: 12 });
-      gsap.set(nodeInners, { opacity: 0 });
+      gsap.set(band, { opacity: 0, y: 16 });
       gsap.set(benefits, { opacity: 0, y: 20 });
-      if (beacon) gsap.set(beacon, { opacity: 0 });
       if (handwritten) gsap.set(handwritten, { opacity: 0 });
       if (ctaWrap) gsap.set(ctaWrap, { opacity: 0, y: 12 });
 
-      // Révélation ponctuelle une seule fois au scroll. Pas de pin ni de
-      // scrub ici : le signal qui tourne en continu (CSS, toujours actif
-      // une fois la section révélée) porte à lui seul la métaphore de la
-      // boucle sans fin — bloquer le scroll par-dessus serait redondant.
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: section, start: 'top 65%', once: true },
+        scrollTrigger: { trigger: section, start: 'top 70%', once: true },
       });
 
       tl.to(title, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
-        .to(sub, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.25');
+        .to(sub, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.25')
+        .to(band, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.2');
 
-      if (arc) {
-        tl.to(arc, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, '-=0.1');
-      }
-      tl.to(nodeInners, { opacity: 1, duration: 0.4, stagger: 0.08, ease: 'power1.out' }, '-=0.9');
-
-      if (exitPath) {
-        tl.to(exitPath, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out' }, '-=0.1');
-      }
       if (handwritten) {
-        tl.to(handwritten, { opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.2');
+        tl.to(handwritten, { opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.1');
       }
       if (ctaWrap) {
         tl.to(ctaWrap, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
-      }
-      if (beacon) {
-        tl.to(beacon, { opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.3');
       }
       tl.to(benefits, { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' }, '-=0.1');
 
@@ -239,9 +152,8 @@ for (let k = 0; k < order.length - 1; k++) {
 
 <style>
   .loop-circle {
-    /* Section volontairement toujours claire, indépendamment du thème :
-       les traits fins et le texte navy sur crème perdent tout contraste
-       une fois les tokens inversés en mode sombre. */
+    /* Section volontairement toujours claire (hors bandeau), indépendamment
+       du thème : la référence n'a pas de variante sombre. */
     --color-navy: #122033;
     --color-cream: #fcf8ef;
     --color-surface: #fffdfa;
@@ -257,199 +169,98 @@ for (let k = 0; k < order.length - 1; k++) {
     overflow: hidden;
   }
 
-  .loop-stage {
+  /* --- Bandeau plein écran : rupture de contraste franche, comme le
+     bandeau "problème" d'origine, mais qui sert maintenant le contenu
+     défilant plutôt qu'une simple liste statique. --- */
+  .loop-band {
     position: relative;
-    width: 100%;
-    max-width: 640px;
-    aspect-ratio: 1;
-    margin: 0 auto;
-    --radius: clamp(160px, 24vw, 224px);
+    margin: var(--space-10) 0;
+    padding: var(--space-8) 0;
+    background: var(--color-navy);
+    overflow: hidden;
   }
-
-  /* Cadran plein : donne du poids réel au diagramme au lieu d'un simple
-     trait flottant dans le vide — dégradé doux + ombre portée. */
-  .loop-dial {
-    position: absolute;
-    inset: 7%;
-    border-radius: 50%;
-    background: radial-gradient(circle at 32% 26%, var(--color-surface), color-mix(in srgb, var(--color-cream) 92%, var(--color-navy) 3%) 60%);
-    box-shadow:
-      0 30px 70px rgba(18, 32, 51, 0.12),
-      0 0 0 1px var(--color-border);
-  }
-
-  .loop-ring {
+  .loop-band-scan {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-  .loop-track {
-    fill: none;
-    stroke: var(--color-border);
-    stroke-width: 1.5;
-  }
-  .loop-arc {
-    fill: none;
-    stroke: var(--color-navy);
-    stroke-width: 2;
-    stroke-linecap: round;
-    opacity: 0.4;
-  }
-
-  /* Signal qui tourne en continu autour de l'anneau — jamais scroll-gaté
-     une fois révélé : c'est la preuve visuelle, littérale, que ça tourne
-     en rond, plutôt qu'une simple affirmation en toutes lettres. Un arc
-     dégradé lumineux plutôt qu'un point : plus visible, plus "designé". */
-  .loop-sweep {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
+    background: linear-gradient(100deg, transparent 42%, color-mix(in srgb, var(--color-cream) 10%, transparent) 50%, transparent 58%);
+    animation: loop-scan 7s ease-in-out infinite;
     pointer-events: none;
   }
-  .loop-sweep-spin {
-    animation: loop-spin 13s linear infinite;
-    transform-box: view-box;
-    transform-origin: 500px 500px;
+
+  .loop-marquee {
+    overflow: hidden;
   }
-  .loop-sweep-arc {
-    fill: none;
-    stroke: url(#loop-sweep-gradient);
-    stroke-width: 6;
-    stroke-linecap: round;
-    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--color-orange) 65%, transparent));
+  .loop-marquee:hover .loop-track {
+    animation-play-state: paused;
   }
 
-  /* Badge central : point d'ancrage franc plutôt qu'un flou vague. */
-  .loop-core {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: clamp(76px, 12vw, 108px);
-    height: clamp(76px, 12vw, 108px);
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: linear-gradient(155deg, var(--color-navy), #0d1826);
-    box-shadow:
-      0 18px 38px rgba(18, 32, 51, 0.32),
-      0 0 0 6px color-mix(in srgb, var(--color-surface) 70%, transparent);
+  .loop-track {
+    display: flex;
+    width: max-content;
+    gap: var(--space-4);
+    animation: loop-scroll 34s linear infinite;
+  }
+
+  .loop-pill {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
-    z-index: 1;
+    gap: var(--space-3);
+    background: color-mix(in srgb, var(--color-cream) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-cream) 18%, transparent);
+    border-radius: var(--radius-pill);
+    padding: 0.6em 1.4em 0.6em 0.6em;
   }
-  .loop-core-icon {
-    width: 38%;
-    height: 38%;
-    animation: loop-spin 13s linear infinite;
-  }
-
-  .loop-orbit {
-    position: absolute;
-    inset: 0;
-  }
-  .loop-node {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(-1 * (var(--radius) + 30px)));
-  }
-  .loop-node-inner {
-    position: absolute;
-    transform: translate(-50%, -50%) rotate(calc(-1 * var(--angle) * 1deg));
-    width: 180px;
-  }
-  .loop-node-visual {
-    animation: loop-pulse 13s ease-in-out infinite;
-    animation-delay: calc(var(--angle) / 360 * -13s);
-  }
-
-  /* Chip ancré : carte posée sur l'anneau, pas du texte nu qui flotte. */
-  .loop-node-chip {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 0.45em 0.9em 0.45em 0.45em;
-    box-shadow: var(--shadow-sm);
-  }
-  .loop-node-index {
+  .loop-pill-index {
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 26px;
-    height: 26px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-    background: var(--color-navy);
-    color: var(--color-cream);
-    font-size: 0.6875rem;
+    background: var(--color-orange);
+    color: var(--color-navy);
+    font-size: 0.75rem;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
   }
-  .loop-node-text {
+  .loop-pill-text {
     margin: 0;
-    text-align: left;
-    line-height: 1.32;
-    font-size: 0.8125rem;
+    white-space: nowrap;
+    font-size: 1.05rem;
     font-weight: 600;
-    color: var(--color-navy);
+    color: var(--color-cream);
   }
 
-  @keyframes loop-spin {
+  @keyframes loop-scroll {
     to {
-      transform: rotate(360deg);
+      transform: translateX(-50%);
     }
   }
-  @keyframes loop-pulse {
-    0%, 88%, 100% {
-      opacity: 0.5;
-      transform: scale(0.97);
+  @keyframes loop-scan {
+    0%, 100% {
+      transform: translateX(-30%);
     }
-    4% {
-      opacity: 1;
-      transform: scale(1.03);
+    50% {
+      transform: translateX(30%);
     }
   }
 
-  .loop-exit {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    pointer-events: none;
+  .loop-exit-wrap {
+    text-align: center;
+    max-width: 480px;
+    margin: 0 auto;
   }
-  .loop-exit-path {
-    fill: none;
-    stroke: var(--color-orange);
-    stroke-width: 5;
-    stroke-linecap: round;
-  }
-
   .loop-handwritten {
-    position: absolute;
-    right: 2%;
-    bottom: 4%;
-    max-width: 200px;
-    margin: 0;
+    margin: 0 0 var(--space-4);
     font-family: var(--font-script);
-    font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+    font-size: clamp(1.4rem, 2.8vw, 1.9rem);
     color: var(--color-orange-ink);
-    text-align: right;
-    transform: rotate(-2deg);
   }
 
   .loop-cta-wrap {
     text-align: center;
-    margin-top: var(--space-10);
   }
 
   .loop-benefits {
@@ -478,94 +289,29 @@ for (let k = 0; k < order.length - 1; k++) {
     font-size: var(--text-sm);
   }
 
-  @media (max-width: 900px) {
-    .loop-stage {
-      --radius: clamp(145px, 22vw, 190px);
-    }
-    .loop-node {
-      transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(-1 * (var(--radius) + 22px)));
-    }
-    .loop-node-inner {
-      width: 148px;
-    }
-    .loop-node-chip {
-      padding: 0.4em 0.75em 0.4em 0.4em;
-      gap: 8px;
-    }
-    .loop-node-index {
-      width: 21px;
-      height: 21px;
-      font-size: 0.6rem;
-    }
-    .loop-node-text {
-      font-size: 0.72rem;
-    }
-  }
-
   @media (max-width: 768px) {
+    .loop-pill-text {
+      font-size: 0.92rem;
+    }
     .loop-benefits {
       grid-template-columns: 1fr 1fr;
     }
   }
 
-  /* --- Sous 480px : le cercle devient trop serré, on bascule en liste
-     verticale — même contenu, même esprit de répétition, disposition en
-     colonne avec le signal tournant retiré (il n'a plus de piste à suivre)
-     et la sortie jaune en bas. --- */
   @media (max-width: 480px) {
-    .loop-stage {
-      aspect-ratio: auto;
-      max-width: 360px;
+    .loop-band {
+      padding: var(--space-6) 0;
     }
-    .loop-dial,
-    .loop-ring,
-    .loop-sweep,
-    .loop-core,
-    .loop-exit {
-      display: none;
+    .loop-pill {
+      padding: 0.5em 1.1em 0.5em 0.5em;
     }
-    .loop-orbit {
-      position: static;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-5);
+    .loop-pill-index {
+      width: 26px;
+      height: 26px;
+      font-size: 0.68rem;
     }
-    .loop-node-chip {
-      max-width: 300px;
-    }
-    .loop-node {
-      position: static;
-      width: auto;
-      height: auto;
-      transform: none !important;
-    }
-    .loop-node-inner {
-      position: static;
-      transform: none !important;
-      width: auto;
-    }
-    .loop-node::after {
-      content: '';
-      display: block;
-      width: 2px;
-      height: 24px;
-      margin: var(--space-2) auto 0;
-      background: var(--color-navy);
-      opacity: 0.35;
-    }
-    .loop-node:last-of-type::after {
-      display: none;
-    }
-    .loop-handwritten {
-      position: static;
-      text-align: center;
-      max-width: none;
-      margin: var(--space-6) 0 0;
-      transform: none;
-    }
-    .loop-cta-wrap {
-      margin-top: var(--space-6);
+    .loop-pill-text {
+      font-size: 0.85rem;
     }
     .loop-benefits {
       grid-template-columns: 1fr;
@@ -573,21 +319,19 @@ for (let k = 0; k < order.length - 1; k++) {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .loop-arc,
-    .loop-exit-path {
-      stroke-dashoffset: 0 !important;
+    .loop-band-scan {
+      display: none;
     }
-    .loop-sweep-spin,
-    .loop-core-icon {
+    .loop-track {
       animation: none !important;
+      flex-wrap: wrap;
+      width: auto;
+      justify-content: center;
     }
-    .loop-sweep {
-      opacity: 0 !important;
-    }
-    .loop-node-visual {
-      animation: none !important;
-      opacity: 1 !important;
-      transform: none !important;
+    /* Les 6 dernières pastilles sont une copie dupliquée pour la boucle
+       infinie (voir markup) — sans l'animation, on ne garde que l'original. */
+    .loop-pill[aria-hidden='true'] {
+      display: none;
     }
   }
 </style>
