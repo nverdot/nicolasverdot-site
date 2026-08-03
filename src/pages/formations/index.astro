@@ -50,6 +50,16 @@ const faqs = [
   { q: 'Peut-on former des formateurs ?', a: "Oui. C'est un axe fort de l'activité : rendre les formations internes plus actives et engageantes." },
   { q: 'Peut-on construire un parcours sur plusieurs mois ?', a: 'Oui, plusieurs sessions peuvent être combinées pour accompagner la montée en compétences dans la durée.' },
 ];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
 <Layout
@@ -154,6 +164,7 @@ const faqs = [
   />
 
   <script type="application/ld+json" set:html={JSON.stringify(coursesSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 </Layout>
 
 <style>

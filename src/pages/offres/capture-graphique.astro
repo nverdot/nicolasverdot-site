@@ -52,6 +52,16 @@ const faqs = [
   { q: 'Peut-on garder la fresque originale ?', a: 'Oui, lorsque la capture est réalisée sur support physique et que cela est prévu dans le devis.' },
   { q: 'Est-ce que tu peux respecter notre charte graphique ?', a: 'Oui. Le style peut être adapté à votre identité, tout en conservant la lisibilité nécessaire à une capture réalisée en direct.' },
 ];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
 <Layout
@@ -165,6 +175,7 @@ const faqs = [
   />
 
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 </Layout>
 
 <style>

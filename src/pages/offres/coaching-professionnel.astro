@@ -55,6 +55,16 @@ const faqs = [
   { q: 'Le coaching peut-il être financé par mon entreprise ?', a: 'Oui, dans certains cas. Un contrat tripartite peut être mis en place avec l\'entreprise, tout en préservant la confidentialité des séances.' },
   { q: 'Est-ce confidentiel ?', a: 'Oui. Le contenu des séances reste confidentiel. Dans un accompagnement financé par une entreprise, les objectifs peuvent être partagés, mais pas le contenu des échanges sans ton accord.' },
 ];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
 <Layout
@@ -185,6 +195,7 @@ const faqs = [
   />
 
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 </Layout>
 
 <style>

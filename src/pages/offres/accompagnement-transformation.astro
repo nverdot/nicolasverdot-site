@@ -53,6 +53,16 @@ const faqs = [
   { q: "Est-ce que tu remplaces l'équipe de transformation interne ?", a: "Non. Je travaille avec elle, je l'aide à prendre de la hauteur, à lire les blocages et à renforcer son impact." },
   { q: 'Combien de temps dure l\'accompagnement ?', a: 'De quelques journées ciblées à plusieurs mois, selon le périmètre, la maturité du projet et la profondeur des changements attendus.' },
 ];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
 <Layout
@@ -180,6 +190,7 @@ const faqs = [
   />
 
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 </Layout>
 
 <style>
