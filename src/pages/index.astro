@@ -177,21 +177,26 @@ const clients = [
         <p class="value-statement">Je ne viens pas avec une solution toute faite. Je crée les conditions pour que les bonnes personnes puissent comprendre la situation, construire une réponse pertinente et s'engager réellement dans sa mise en œuvre.</p>
       </div>
       <div class="principles-grid">
-        {principles.map((p) => (
+        {principles.map((p, i) => (
           <div class="principle">
-            <svg class="principle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[p.icon]} />
+            <div class="principle-top">
+              <span class="principle-num">{String(i + 1).padStart(2, '0')}</span>
+              <svg class="principle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[p.icon]} />
+            </div>
             <h3>{p.title}</h3>
             <p>{p.text}</p>
           </div>
         ))}
       </div>
-      <div class="path-line">
-        <svg class="path-line-svg" viewBox="0 0 600 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 10 C 150 2, 300 14, 450 6 S 590 2, 596 8" /></svg>
-        <span>Comprendre</span>
-        <span class="path-arrow">→</span>
-        <span>Décider</span>
-        <span class="path-arrow">→</span>
-        <span>Agir</span>
+      <div class="path-strip">
+        <span class="path-label">Ma méthode, en une phrase</span>
+        <div class="path-steps">
+          <span class="path-step">Comprendre</span>
+          <span class="path-arrow" aria-hidden="true">→</span>
+          <span class="path-step">Décider</span>
+          <span class="path-arrow" aria-hidden="true">→</span>
+          <span class="path-step">Agir</span>
+        </div>
       </div>
     </div>
   </section>
@@ -468,18 +473,33 @@ const clients = [
   .principles-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-6);
-    max-width: 960px;
+    gap: var(--space-4);
+    max-width: 1040px;
     margin-inline: auto;
   }
   .principle {
-    text-align: center;
+    text-align: left;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+  }
+  .principle-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+  .principle-num {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-border);
   }
   .principle-icon {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     color: var(--color-orange-ink);
-    margin-bottom: var(--space-3);
   }
   .principle h3 {
     margin: 0 0 var(--space-2);
@@ -490,35 +510,43 @@ const clients = [
     color: var(--color-muted);
     font-size: var(--text-sm);
   }
-  .path-line {
-    position: relative;
+
+  /* Le cadre en une phrase : trois étiquettes reliées par des flèches,
+     posées dans leur propre bloc distinct plutôt qu'en texte flottant. */
+  .path-strip {
+    max-width: 1040px;
+    margin: var(--space-8) auto 0;
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5) var(--space-6);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .path-label {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+  .path-steps {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: var(--space-3);
-    margin-top: var(--space-12);
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: var(--text-lg);
+    font-size: var(--text-base);
     color: var(--color-navy);
   }
-  .path-line-svg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(600px, 90%);
-    height: 16px;
-    stroke: var(--color-orange);
-    stroke-width: 3;
-    fill: none;
-    z-index: 0;
-  }
-  .path-line span {
-    position: relative;
-    z-index: 1;
-    background: var(--color-cream);
-    padding: 0 var(--space-2);
+  .path-step {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: 0.4em 1em;
   }
   .path-arrow {
     color: var(--color-orange-ink);
@@ -526,9 +554,13 @@ const clients = [
   @media (max-width: 700px) {
     .principles-grid {
       grid-template-columns: 1fr;
-      gap: var(--space-8);
+      gap: var(--space-4);
     }
-    .path-line {
+    .path-strip {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .path-steps {
       flex-wrap: wrap;
     }
   }
