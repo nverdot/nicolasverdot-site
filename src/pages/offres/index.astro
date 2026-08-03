@@ -4,6 +4,7 @@ import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { offers } from '../../data/offers';
 import { withBase } from '../../utils/url';
+import heroImg from '../../assets/offres/hero-accompagnements.png';
 
 const complementary = [
   { num: 'Séminaires', title: 'Séminaires et ateliers', text: "Concevoir et faciliter des temps collectifs qui font réellement avancer les équipes — trois niveaux d'accompagnement selon ce que vous gardez en interne.", href: withBase('/offres/seminaires-ateliers/') },
@@ -23,6 +24,8 @@ const complementary = [
     eyebrow="Accompagnements"
     title="Trois façons de remettre un collectif en mouvement"
     summary="Chaque offre part d'une situation précise et comprend un mini-diagnostic pour vous aider à évaluer où vous en êtes avant de prendre rendez-vous."
+    image={heroImg}
+    imageAlt="Illustration d'un collectif au sommet d'une montagne : plusieurs groupes travaillent en parallèle - atelier autour d'une table, présentation, échange - autour d'un chemin qui bifurque, symbolisant les différentes façons d'être accompagné."
   />
 
   <section class="section" data-reveal>

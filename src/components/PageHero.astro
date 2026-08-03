@@ -1,15 +1,26 @@
 ---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
 interface Props {
   eyebrow: string;
   title: string;
   summary: string;
   pills?: string[];
+  image?: ImageMetadata;
+  imageAlt?: string;
 }
 
-const { eyebrow, title, summary, pills = [] } = Astro.props;
+const { eyebrow, title, summary, pills = [], image, imageAlt = '' } = Astro.props;
 ---
 
-<section class="page-hero" data-reveal>
+<section class={`page-hero${image ? ' has-image' : ''}`} data-reveal>
+  {image && (
+    <>
+      <Image src={image} alt="" role="presentation" widths={[640, 1200, 1920]} sizes="100vw" class="page-hero-bg" />
+      <div class="page-hero-scrim" aria-hidden="true"></div>
+    </>
+  )}
   <div class="container page-hero-inner">
     <div>
       <p class="eyebrow">{eyebrow}</p>
@@ -24,11 +35,50 @@ const { eyebrow, title, summary, pills = [] } = Astro.props;
       )}
     </div>
   </div>
+  {image && imageAlt && <p class="visually-hidden">{imageAlt}</p>}
 </section>
 
 <style>
   .page-hero {
     padding: var(--space-16) 0 var(--space-8);
+  }
+  .page-hero.has-image {
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-24) 0 var(--space-16);
+  }
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .page-hero-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(18, 32, 51, 0.15) 0%, rgba(18, 32, 51, 0.55) 100%);
+    z-index: 1;
+  }
+  .page-hero.has-image .page-hero-inner {
+    position: relative;
+    z-index: 2;
+  }
+  .page-hero.has-image .eyebrow {
+    color: var(--color-orange);
+  }
+  .page-hero.has-image h1,
+  .page-hero.has-image .page-summary {
+    color: var(--color-white);
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
   }
   .page-hero-inner {
     display: grid;
