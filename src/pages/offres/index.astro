@@ -2,14 +2,11 @@
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
-import { offers } from '../../data/offers';
+import PriorityGrid from '../../components/PriorityGrid.astro';
 import { withBase } from '../../utils/url';
 import heroImg from '../../assets/offres/hero-accompagnements.png';
 
 const complementary = [
-  { num: 'Séminaires', title: 'Séminaires et ateliers', text: "Concevoir et faciliter des temps collectifs qui font réellement avancer les équipes — trois niveaux d'accompagnement selon ce que vous gardez en interne.", href: withBase('/offres/seminaires-ateliers/') },
-  { num: 'Transformation', title: 'Accompagnement de transformation', text: 'Débloquer les transformations IA, Agile ou culturelles qui restent sur le papier.', href: withBase('/offres/accompagnement-transformation/') },
-  { num: 'Individuel', title: 'Coaching professionnel', text: 'Travailler la posture, les interactions et la sécurité intérieure du leader.', href: withBase('/offres/coaching-professionnel/') },
   { num: 'Visuel', title: 'Capture graphique en direct', text: 'Traduire vos séminaires et conférences en fresque visuelle mémorable.', href: withBase('/offres/capture-graphique/') },
   { num: 'Compétences', title: 'Formations', text: 'Facilitation graphique, intelligence collective, IA appliquée et leader facilitateur.', href: withBase('/formations/') },
 ];
@@ -17,41 +14,27 @@ const complementary = [
 
 <Layout
   title="Les offres — by Nicolas Verdot"
-  description="Trois façons de remettre un collectif en mouvement : décider ensemble, aligner l'équipe, installer une dynamique durable. Chaque offre inclut un mini-diagnostic."
+  description="Six façons de remettre un collectif en mouvement, du cadrage d'une décision à l'évolution de la posture d'un leader. Trouvez celle qui correspond à votre situation."
   path="/offres/"
 >
   <PageHero
     eyebrow="Accompagnements"
-    title="Trois façons de remettre un collectif en mouvement"
-    summary="Chaque offre part d'une situation précise et comprend un mini-diagnostic pour vous aider à évaluer où vous en êtes avant de prendre rendez-vous."
+    title="Remettre votre collectif en mouvement"
+    summary="Chaque situation est différente. Repérez ci-dessous ce qui correspond le mieux à votre contexte, ou parlons-en directement si plusieurs sujets se combinent."
     image={heroImg}
     imageAlt="Illustration d'un collectif au sommet d'une montagne : plusieurs groupes travaillent en parallèle - atelier autour d'une table, présentation, échange - autour d'un chemin qui bifurque, symbolisant les différentes façons d'être accompagné."
   />
 
-  <section class="section" data-reveal>
-    <div class="container">
-      <div class="cards">
-        {offers.map((offer, i) => (
-          <article class="card">
-            {i === 1 && <div class="ribbon">CŒUR D'OFFRE</div>}
-            <div class="num">{String(i + 1).padStart(2, '0')} · {offer.eyebrow.split(',')[0]}</div>
-            <h3>{offer.title}</h3>
-            <p>{offer.summary}</p>
-            <a class="card-link" href={withBase(`/offres/${offer.slug}/`)}>Voir l'offre et faire le diagnostic</a>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
+  <PriorityGrid sectionName="Accompagnements" />
 
   <section class="section alt" data-reveal>
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow">Compléments</p>
-          <h2>D'autres points d'entrée, sans brouiller le cœur de l'offre</h2>
+          <p class="eyebrow">Autres formats</p>
+          <h2>Deux formats complémentaires</h2>
         </div>
-        <p>Ces formats peuvent être proposés seuls ou intégrés à une mission plus large.</p>
+        <p>Utiles seuls ou intégrés à un accompagnement plus large.</p>
       </div>
       <div class="cards">
         {complementary.map((c) => (

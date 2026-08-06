@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import CTABlock from '../components/CTABlock.astro';
 import ExpertiseExplorer from '../components/ExpertiseExplorer.astro';
+import PriorityGrid from '../components/PriorityGrid.astro';
 import { withBase } from '../utils/url';
 import { SITE } from '../data/site';
 import portrait from '../assets/nicolas-portrait.png';
@@ -101,14 +102,6 @@ const journeyStepsAfterFork = [
   },
 ];
 
-const priorities = [
-  { title: 'Clarifier un sujet et décider ensemble', text: 'Transformer un sujet complexe en choix clairs, compris par les personnes concernées et suivis d\'actions concrètes.', href: withBase('/offres/decider-ensemble/') },
-  { title: 'Construire une direction commune', text: "Faire émerger une vision partagée, définir les priorités et permettre à chacun de comprendre la direction et la manière d'y contribuer.", href: withBase('/offres/aligner-equipe/') },
-  { title: 'Concevoir un temps collectif vraiment utile', text: 'Préparer et faciliter un séminaire, un atelier ou une rencontre qui permet de comprendre, décider, construire ou passer à l\'action — pas simplement de remplir un agenda.', href: withBase('/offres/seminaires-ateliers/') },
-  { title: 'Faire vivre une transformation', text: 'Donner du sens à une évolution, associer les équipes à sa construction et transformer une intention stratégique en changements concrets dans le quotidien.', href: withBase('/offres/accompagnement-transformation/') },
-  { title: "Renforcer la coopération et l'autonomie", text: "Faire évoluer les rôles, les interactions, les modes de décision et les façons de travailler pour permettre au collectif d'avancer plus efficacement dans la durée.", href: withBase('/offres/dynamique-durable/') },
-  { title: 'Faire évoluer la posture des leaders', text: 'Prendre du recul sur sa manière de diriger, décider et interagir afin de mobiliser les équipes avec davantage de clarté, de confiance et de justesse.', href: withBase('/offres/coaching-professionnel/') },
-];
 ---
 
 <Layout
@@ -268,30 +261,7 @@ const priorities = [
     </div>
   </section>
 
-  <section class="priorities section" data-reveal data-section-name="Vos priorités">
-    <div class="container">
-      <div class="priorities-intro">
-        <h2>Quelle avancée voulez-vous rendre possible ?</h2>
-        <p class="priorities-lead">Lancer un projet, prendre une décision, mobiliser une équipe, accompagner une transformation ou faire évoluer une posture…</p>
-        <p>Voici les besoins que je rencontre le plus souvent dans mes accompagnements. Ils peuvent se présenter seuls ou se combiner selon votre situation.</p>
-      </div>
-      <div class="priority-grid">
-        {priorities.map((p, i) => (
-          <a class="priority-card" href={p.href}>
-            <span class="priority-num">{String(i + 1).padStart(2, '0')}</span>
-            <h3>{p.title}</h3>
-            <p>{p.text}</p>
-            <span class="card-link">Découvrir cette offre</span>
-          </a>
-        ))}
-      </div>
-      <div class="priorities-closing">
-        <p class="priorities-closing-question">Plusieurs sujets à adresser en même temps ?</p>
-        <p>C'est fréquent — et ce n'est pas un problème. Parlons-en pour clarifier ensemble ce qui produira le plus de valeur pour votre collectif.</p>
-        <a class="btn" href={withBase('/contact/')}>Parler de votre situation →</a>
-      </div>
-    </div>
-  </section>
+  <PriorityGrid />
 
   <section class="resources section alt" data-reveal data-section-name="Les ressources">
     <div class="container">
@@ -803,97 +773,6 @@ const priorities = [
       grid-template-columns: 1fr;
     }
   }
-
-  /* --- Vos priorités --- */
-  .priorities-intro {
-    max-width: 720px;
-    margin: 0 0 var(--space-8);
-  }
-  .priorities-intro h2 {
-    margin: 0 0 var(--space-4);
-  }
-  .priorities-lead {
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    color: var(--color-navy);
-    line-height: 1.5;
-    margin: 0 0 var(--space-3);
-  }
-  .priorities-intro p:not(.priorities-lead) {
-    color: var(--color-muted);
-    line-height: 1.6;
-    margin: 0;
-  }
-  .priority-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-4);
-  }
-  .priority-card {
-    display: flex;
-    flex-direction: column;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-6);
-    text-decoration: none;
-    color: inherit;
-    transition: transform var(--duration-hover) var(--ease-out), box-shadow var(--duration-hover) var(--ease-out);
-  }
-  .priority-card .card-link {
-    margin-top: auto;
-    padding-top: var(--space-3);
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .priority-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-  }
-  .priority-num {
-    display: block;
-    font-family: var(--font-display);
-    font-size: var(--text-xl);
-    font-weight: 700;
-    color: var(--color-border);
-    margin-bottom: var(--space-3);
-  }
-  .priority-card h3 {
-    margin: 0 0 var(--space-2);
-    font-size: var(--text-lg);
-  }
-  .priority-card p {
-    margin: 0;
-    color: var(--color-muted);
-    font-size: var(--text-sm);
-  }
-  @media (max-width: 900px) {
-    .priority-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  @media (max-width: 560px) {
-    .priority-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-  .priorities-closing {
-    max-width: 720px;
-    margin-top: var(--space-8);
-  }
-  .priorities-closing-question {
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 700;
-    color: var(--color-navy);
-    margin: 0 0 var(--space-2);
-  }
-  .priorities-closing p:not(.priorities-closing-question) {
-    color: var(--color-muted);
-    line-height: 1.6;
-    margin: 0 0 var(--space-4);
-  }
-
 
   /* --- Ressources / articles --- */
   .resources {
