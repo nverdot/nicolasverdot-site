@@ -169,11 +169,14 @@ const priorities = [
           <li>Les idées émergent, se confrontent et deviennent des actions concrètes.</li>
           <li>Votre collectif avance avec davantage de clarté, d'engagement et d'autonomie.</li>
         </ul>
+      </div>
+    </div>
+    <div class="container">
+      <div class="partner-narrative">
         <p>Lancer un nouveau projet, construire une vision commune, accompagner une croissance, préparer une transformation, faire vivre une communauté ou dépasser une situation qui s'enlise : chaque contexte est différent.</p>
         <p class="partner-question-lead">Mais une même question revient souvent :</p>
         <p class="partner-question">Comment permettre aux personnes concernées de comprendre, décider et construire ensemble ?</p>
-        <p>Depuis plus de dix ans, j'accompagne les équipes et les organisations dans les moments où le collectif doit franchir une étape.</p>
-        <p>J'observe ce qui se joue dans les interactions, les rôles, les habitudes et les modes de décision. Je fais émerger les points de vue, les attentes, les désaccords et les idées qui ont besoin d'être entendus pour permettre au groupe d'avancer.</p>
+        <p>Depuis plus de dix ans, j'accompagne les équipes et les organisations dans les moments où le collectif doit franchir une étape. J'observe ce qui se joue dans les interactions, les rôles, les habitudes et les modes de décision, et je fais émerger les points de vue, les attentes, les désaccords et les idées qui ont besoin d'être entendus pour permettre au groupe d'avancer.</p>
         <p>Je conçois ensuite les espaces de travail, les conversations et les processus de collaboration adaptés à votre situation : pour explorer un sujet, partager une vision, prendre une décision, construire une solution ou passer à l'action.</p>
         <p class="partner-question-lead">Une expertise concrète au service d'un objectif simple :</p>
         <p class="partner-question">permettre à votre collectif d'avancer durablement.</p>
@@ -189,7 +192,8 @@ const priorities = [
   </section>
 
   <section class="trust-block section alt" data-reveal data-section-name="Faire confiance">
-    <div class="container trust-inner">
+    <div class="container">
+    <div class="trust-inner">
       <h2>Ensemble, mettons votre collectif en mouvement</h2>
 
       <div class="trust-timeline">
@@ -250,6 +254,7 @@ const priorities = [
       </div>
 
       <a class="btn" href={SITE.bookingUrl} target="_blank" rel="noopener">Réserver un premier échange →</a>
+    </div>
     </div>
   </section>
 
@@ -473,6 +478,13 @@ const priorities = [
   .partner-intro .tool-tags {
     margin: var(--space-2) 0 0;
   }
+  .partner-narrative {
+    max-width: 760px;
+    margin-top: var(--space-12);
+  }
+  .partner-narrative p + p {
+    margin-top: var(--space-4);
+  }
   .portrait-overlay-wrap {
     position: relative;
   }
@@ -550,7 +562,6 @@ const priorities = [
   }
   .trust-inner {
     max-width: 760px;
-    margin: 0 auto;
   }
   .trust-inner h2 {
     margin: 0 0 var(--space-8);
@@ -631,7 +642,7 @@ const priorities = [
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: var(--space-5);
+    padding: var(--space-6);
   }
   .trust-outcome-label {
     display: block;
