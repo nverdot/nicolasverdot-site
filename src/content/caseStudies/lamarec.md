@@ -1,5 +1,6 @@
 ---
 client: "LaMAREC"
+clientLogo: "/logos/lamarec.png"
 title: "Faire coopérer les acteurs d'un territoire pour construire des parcours plus fluides"
 subtitle: "Facilitation de démarches territoriales autour du handicap en Corse"
 question: "Comment permettre à des établissements et des professionnels aux réalités différentes de dépasser leurs propres contraintes pour construire ensemble des réponses plus cohérentes à l'échelle du territoire ?"

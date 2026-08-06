@@ -9,6 +9,7 @@ export interface Product {
   name: string;
   desc: string;
   url: string;
+  image?: string;
 }
 
 export interface Kit {
@@ -24,46 +25,55 @@ const p = {
     name: 'BulletProof SpotOn Edition — Notebook',
     desc: 'Carnet élégant imprimé de façon neutre en carbone, avec couverture en cuir recyclé, coins arrondis, 256 pages en papier premium blanc optimisé avec grille de points gris, numéros de page imprimés.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/bulletproof-spoton-edition?_pos=3&_psq=note&_ss=e&_v=1.0',
+    image: '/materiel/neuland-bulletproof-spoton-notebook.webp',
   },
   myNotepad: {
     name: 'myNotepad — Writing block',
     desc: 'Bloc-notes en papier blanc au format A4 avec impression en demi-teintes gris clair.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/mynotepad?_pos=1&_sid=ff89ee3ce&_ss=r',
+    image: '/materiel/neuland-mynotepad-bloc-notes.webp',
   },
   fineOneSketch: {
     name: 'Neuland FineOne® Sketch, smear-resistant — 0.5 mm',
     desc: "Encre anti-bavures : le marqueur durable en quatre épaisseurs de trait (0,1 / 0,3 / 0,5 / 0,7 mm) pour des visualisations créatives sur petits formats. Jouez avec les épaisseurs en choisissant plusieurs tailles, ou optez pour le 0,5 mm si vous n'en prenez qu'un seul.",
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/neuland-fineone-sketch-schwarz-verwischfest?variant=46778734805322',
+    image: '/materiel/neuland-fineone-sketch-05mm.jpg',
   },
   refillSketch: {
     name: 'RefillOne Ink, black smear-resistant (1SK)',
     desc: "Le flacon de recharge d'encre noire à base d'eau développé pour les Neuland FineOne® Sketch. Résistante aux bavures — particulièrement utile pour repasser sur des textes ou des lignes noires avec des couleurs claires. Un flacon de 45 ml permet jusqu'à 45 recharges.",
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/nachfulltinte-refillone-schwarz-verwischfest-1sk?_pos=1&_psq=1SK&_ss=e&_v=1.0',
+    image: '/materiel/neuland-refillone-sketch-noir.webp',
   },
   nibsSketch: {
     name: 'Pointes de rechange Neuland FineOne® Sketch',
     desc: 'Lot de 10 pointes de rechange pour le Neuland FineOne® Sketch, disponibles en épaisseurs de trait de 0,1, 0,3, 0,5 et 0,7 mm.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/ersatzspitzen-neuland-fineone%C2%AE-sketch?variant=46778734117194',
+    image: '/materiel/neuland-pointes-rechange-fineone-sketch.jpg',
   },
   fineOneOutliner: {
     name: 'Neuland FineOne® Outliner, pointe ronde 1 mm',
     desc: "Le compagnon idéal pour les sketchnotes et lettrings sur petits formats. Trait régulier de 1 mm, contours noir profond : l'encre ne traverse pas le papier et ne bave pas, même lorsqu'on repasse par-dessus avec des couleurs claires.",
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/neuland-fineone%C2%AE-outliner-rundspitze-1-mm?_pos=2&_psq=outliner&_ss=e&_v=1.0',
+    image: '/materiel/neuland-fineone-outliner-1mm.jpg',
   },
   refillOutliner: {
     name: 'RefillOne Ink, Outliner, permanent',
     desc: "Encre de recharge permanente noire à base d'eau 010, compatible avec tous les marqueurs Neuland Outliner.",
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/nachfulltinte-refillone-outliner-permanent?_pos=1&_sid=58232fd37&_ss=r',
+    image: '/materiel/neuland-refillone-outliner-noir.webp',
   },
   nibsFineOneRound: {
     name: 'Pointes de rechange Neuland FineOne® rondes 1 mm',
     desc: 'Lot de 10 pointes de rechange pour Neuland FineOne®.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/ersatzspitzen-neuland-fineone%C2%AE-rundspitze-1-mm?_pos=1&_sid=e081e4183&_ss=r',
+    image: '/materiel/neuland-pointes-rechange-fineone-rondes-1mm.jpg',
   },
   fineOneArtSet: {
     name: 'Neuland FineOne® Art, set de 5 couleurs (22)',
     desc: 'Un set de 5 feutres à pointe pinceau, parfait pour déposer de la couleur, avec la boîte pour recharger les marqueurs.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/neuland-fineone%C2%AE-5er-farbsets?variant=46778722320714',
+    image: '/materiel/neuland-fineone-art-set-5-couleurs.webp',
   },
   refillArtSet: {
     name: 'RefillOne Ink, base aqueuse, sets de 5 couleurs',
@@ -74,21 +84,25 @@ const p = {
     name: 'Pointes de rechange FineOne® Art, pinceau 0,5–5 mm',
     desc: 'Lot de 10 pointes de rechange pour Neuland FineOne® Art.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/ersatzspitzen-neuland-fineone%C2%AE-art-pinselspitze-0-5-5mm?_pos=1&_psq=Replacement+nibs+Neuland+FineOne%C2%AE+Art%2C+brush+nib+0%2C5-5+mm&_ss=e&_v=1.0',
+    image: '/materiel/neuland-pointes-rechange-fineone-art-pinceau.webp',
   },
   nibinator: {
     name: 'Nibinator 2 — pince à pointes',
     desc: 'Remplacez les pointes Neuland en quelques secondes.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/collections/nachfuelltinte-schreibspitze/products/nibinator-1',
+    image: '/materiel/neuland-nibinator-remplacement-pointes.webp',
   },
   markerboxS: {
     name: 'Novario® Markerbox S',
     desc: "La plupart des marqueurs Neuland se stockent tête vers le bas — indispensable pour les préserver dans la durée. Boîte pratique pour ranger et transporter jusqu'à 30 marqueurs Neuland FineOne®.",
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/markerbox-s-novario%C2%AE',
+    image: '/materiel/neuland-novario-markerbox-s-en-usage.webp',
   },
   flipchartPaper: {
     name: 'Papier FlipChart, lot de 5, blanc, recyclé, repères croix',
     desc: 'Cinq blocs de papier pour paperboard (20 feuilles/bloc) en papier recyclé blanc de haute qualité avec impression en repères croix. Certifié Ange Bleu, le label écologique de référence.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/collections/flipchartpapier/products/flipchart-block-weiss-recycling-mit-fadenkreuzen-5-blocks-gerollt',
+    image: '/materiel/neuland-papier-flipchart-blanc-recycle.webp',
   },
   paperQuiver: {
     name: 'FlipChart PaperQuiver',
@@ -99,31 +113,37 @@ const p = {
     name: 'TopChart — paperboard de table',
     desc: 'Un paperboard autoporteur de table en carton micro-ondulé de haute qualité. Inclut 2 blocs de papier Mini FlipChart avec repères en croix, chacun de 20 feuilles (45 × 67 cm).',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/topchart?_pos=1&_psq=topchart&_ss=e&_v=1.0',
+    image: '/materiel/neuland-topchart-paperboard-table.webp',
   },
   miniFlipchart: {
     name: 'Papier Mini FlipChart, blanc, repères croix',
     desc: 'Bloc de recharge pour TopChart. Lot : 5 blocs.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/mini-flipchart-block-weiss-mit-fadenkreuzen?_pos=4&_sid=831238517&_ss=r',
+    image: '/materiel/neuland-papier-mini-flipchart.webp',
   },
   rollerPoster: {
     name: 'Magnetic RollerPoster® V2',
     desc: "Créez vos supports sur mesure à la volée : il suffit d'insérer le rouleau de papier en haut et de le dérouler vers le bas — intelligent et facile.",
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/rollerposter%C2%AE-v2?_pos=1&_psq=roller&_ss=e&_v=1.0',
+    image: '/materiel/neuland-magnetic-rollerposter-v2.webp',
   },
   paperRoll50: {
     name: 'Rouleau de papier 50 cm',
     desc: 'Recharge de 25 mètres de papier en rouleau de 50 cm de large. Tout simplement parfait pour le RollerPoster®.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/papierrolle-50-cm?pr_prod_strat=pinned&pr_rec_id=d809588b3&pr_rec_pid=8424410874186&pr_ref_pid=14911916441983&pr_seq=uniform',
+    image: '/materiel/neuland-rouleau-papier-50cm.webp',
   },
   workshopCase: {
     name: 'Novario® WorkshopCase — vide',
     desc: 'La mallette idéale pour animer vos ateliers et formations. Je recommande de la prendre vide et de la composer selon vos besoins.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/workshopkoffer-novario%C2%AE-leer?_pos=4&_sid=1c61c9aa2&_ss=r',
+    image: '/materiel/neuland-novario-workshopcase-vide.webp',
   },
   boxSets: {
     name: 'Novario® Box Sets, noir',
     desc: 'Pour que chaque chose ait sa place dans la mallette, mais aussi pour distribuer facilement marqueurs, cartes, post-its et gommettes aux participants. Disponibles en différentes combinaisons.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/novario%C2%AE-boxen-sets-schwarz?variant=46778733330762',
+    image: '/materiel/neuland-novario-box-sets-noir.jpg',
   },
   noOneSixpack: {
     name: 'Neuland No.One® Outliner — Sixpack U5 Mix',
@@ -134,6 +154,7 @@ const p = {
     name: 'Neuland No.One® Outliner — pack de 10, pointe ronde',
     desc: "Pour les participants : un set dédié — je garde mon kit d'animateur pour moi et je répartis ces marqueurs dans les boîtes de rangement Novario®.",
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/neuland-no-one%C2%AE-outliner-verschiedene-schreibspitzen-10er-uni-farbsets?variant=56940496847231',
+    image: '/materiel/neuland-no-one-outliner-pack-10-rond.webp',
   },
   bigOneArtOutliner: {
     name: 'Neuland BigOne® Art Outliner, pinceau 2–15 mm',
@@ -159,6 +180,7 @@ const p = {
     name: 'Pointes rondes de rechange 2–3 mm, No.One® Outliner',
     desc: 'Lot de 10 pointes rondes de rechange pour le Neuland No.One® Outliner.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/ersatz-rundspitzen-2-3-mm-neuland-no-one%C2%AE-outliner?pr_prod_strat=pinned&pr_rec_id=af49278bf&pr_rec_pid=8424400617802&pr_ref_pid=8424398422346&pr_seq=uniform',
+    image: '/materiel/neuland-no-one-outliner-pointes-rondes-2-3mm.webp',
   },
   nibsNoOneWedge: {
     name: 'Pointes biseautées de rechange 2–6 mm, No.One®',
@@ -304,6 +326,7 @@ const p = {
     name: 'Sac universel pour pinboards MC et FlipCharts portables',
     desc: 'Sac de rangement pour pinboard.',
     url: 'https://www.awin1.com/cread.php?awinmid=123762&awinaffid=2824012&campaign=Website&ued=https://www.neuland.com/en/products/universaltasche-fur-pinnwande-mc-und-tragbare-flipcharts',
+    image: '/materiel/neuland-sac-universel-pinboard-flipchart.jpg',
   },
   pinboardPaper: {
     name: 'Papier Pinboard blanc — uni',

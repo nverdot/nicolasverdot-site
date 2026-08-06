@@ -82,6 +82,9 @@ const whyChecks = [
         <div class="product-grid">
           {kit.products.map((product) => (
             <article class="product-card">
+              {product.image && (
+                <img class="product-card-image" src={withBase(product.image)} alt={product.name} loading="lazy" />
+              )}
               <h3>{product.name}</h3>
               <p>{product.desc}</p>
               <a class="card-link" href={product.url} target="_blank" rel="sponsored noopener">Voir le produit</a>
@@ -143,6 +146,14 @@ const whyChecks = [
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: var(--space-4);
+  }
+  .product-card-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    background: var(--color-cream);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-1);
   }
   .product-card h3 {
     font-size: var(--text-base);
