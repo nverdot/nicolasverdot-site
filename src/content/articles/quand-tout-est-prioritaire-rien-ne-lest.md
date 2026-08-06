@@ -46,4 +46,4 @@ Ce travail ne se fait pas en ajoutant une nouvelle réunion à l'agenda. Il se f
 
 ---
 
-*Vous reconnaissez cette situation dans votre organisation ? Parlons de ce qui bloque concrètement — [prenez rendez-vous](/contact/) ou découvrez l'offre [Décider ensemble](/#accompagnements).*
+*Vous reconnaissez cette situation dans votre organisation ? Parlons de ce qui bloque concrètement — [prenez rendez-vous](/contact/) ou découvrez l'offre [Décider ensemble](/offres/decider-ensemble/).*
