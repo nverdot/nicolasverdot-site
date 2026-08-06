@@ -7,8 +7,8 @@ import { withBase } from '../../utils/url';
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  serviceType: 'Capture graphique en direct',
-  name: 'Capture graphique en direct',
+  serviceType: 'Facilitation graphique et capture graphique en direct',
+  name: 'Facilitation graphique et capture graphique en direct',
   description:
     "Pendant votre séminaire, conférence ou réunion stratégique, les échanges sont traduits en direct sous forme de fresque visuelle claire, mémorable et partageable.",
   provider: { '@type': 'Person', name: 'Nicolas Verdot', url: new URL(withBase('/a-propos/'), Astro.site).toString() },
@@ -78,18 +78,18 @@ const faqSchema = {
 ---
 
 <Layout
-  title="Capture graphique en direct — by Nicolas Verdot"
-  description="Pendant votre séminaire, conférence ou réunion stratégique, les échanges sont traduits en direct sous forme de fresque visuelle claire, mémorable et partageable."
+  title="Facilitation graphique & capture graphique en direct — by Nicolas Verdot"
+  description="Facilitation graphique et capture graphique : pendant votre séminaire, conférence ou réunion stratégique, les échanges sont traduits en direct sous forme de fresque visuelle claire, mémorable et partageable."
   path="/offres/capture-graphique/"
   breadcrumbs={[
     { name: 'Accueil', path: '/' },
     { name: 'Les offres', path: '/offres/' },
-    { name: 'Capture graphique en direct', path: '/offres/capture-graphique/' },
+    { name: 'Facilitation graphique & capture graphique', path: '/offres/capture-graphique/' },
   ]}
 >
   <PageHero
-    eyebrow="Capture graphique · Scribing · Événementiel"
-    title="Capture graphique en direct : vos idées méritent d'être vues et mémorisées"
+    eyebrow="Facilitation graphique · Capture graphique · Événementiel"
+    title="Facilitation graphique et capture graphique : vos idées méritent d'être vues et mémorisées"
     summary="Pendant votre séminaire, conférence ou réunion stratégique, je traduis visuellement en temps réel les idées, décisions et échanges. Une fresque prend forme, aide les participants à suivre, et crée une mémoire collective que vous pourrez conserver, partager et réutiliser."
     pills={['Sur devis', 'En direct', 'Partout en France']}
   />
@@ -99,7 +99,7 @@ const faqSchema = {
       <div>
         <p class="eyebrow">Ce que je fais</p>
         <h2>Écouter, clarifier et rendre visible</h2>
-        <p class="hero-copy">La capture graphique, ou scribing, est une technique de transcription visuelle en temps réel. Je sélectionne l'essentiel, je structure l'information et je la transforme en mots-clés, pictogrammes, personnages et liens visuels — sous les yeux du groupe.</p>
+        <p class="hero-copy">La facilitation graphique — dont la capture graphique (ou scribing) est la forme la plus directe — est une technique de transcription visuelle en temps réel. Je sélectionne l'essentiel, je structure l'information et je la transforme en mots-clés, pictogrammes, personnages et liens visuels — sous les yeux du groupe.</p>
         <div class="checks">
           {checks.map((c) => (
             <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
