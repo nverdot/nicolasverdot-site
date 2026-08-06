@@ -57,7 +57,11 @@ const caseStudies = await Promise.all(
     const h2s = Array.from(content.children).filter((el): el is HTMLElement => el.tagName === 'H2');
     if (h2s.length < 2) return;
 
-    const segmentsWithH3 = h2s.filter((h2, i) => {
+    // Un <h2> ne compte comme "mission" que s'il a son propre <h3> interne —
+    // un <h2> de clôture partagée (ex. "Une facilitation neutre...", "En
+    // bref") n'en a pas et doit rester visible sous les onglets, pas devenir
+    // un onglet de plus ni se faire avaler par le dernier onglet.
+    const missionH2s = h2s.filter((h2, i) => {
       const nextH2 = h2s[i + 1];
       let node = h2.nextElementSibling;
       while (node && node !== nextH2) {
@@ -65,8 +69,8 @@ const caseStudies = await Promise.all(
         node = node.nextElementSibling;
       }
       return false;
-    }).length;
-    if (segmentsWithH3 < 2) return;
+    });
+    if (missionH2s.length < 2) return;
 
     const modalRoot = content.closest<HTMLElement>('[data-case-modal]');
     const slug = modalRoot?.dataset.caseModal ?? 'x';
@@ -74,7 +78,14 @@ const caseStudies = await Promise.all(
     tabs.className = 'case-tabs';
     tabs.setAttribute('role', 'tablist');
 
-    const missions = h2s.map((h2, i) => {
+    // Marqueur stable inséré avant la première mission : les panneaux
+    // reconstruits viendront s'insérer juste devant lui, ce qui laisse tout
+    // contenu de clôture après la dernière mission exactement à sa place
+    // d'origine plutôt qu'avalé ou repoussé en fin de document.
+    const anchor = document.createComment('case-mission-anchor');
+    content.insertBefore(anchor, missionH2s[0]);
+
+    const missions = missionH2s.map((h2, i) => {
       const label = (h2.textContent || '').trim();
       const panel = document.createElement('div');
       panel.className = 'case-mission';
@@ -82,7 +93,10 @@ const caseStudies = await Promise.all(
       panel.setAttribute('role', 'tabpanel');
       panel.hidden = i !== 0;
 
-      const nextH2 = h2s[i + 1];
+      // La borne de fin est le prochain <h2> de la liste COMPLÈTE (mission
+      // ou non) — pas le prochain missionH2 — pour que le contenu s'arrête
+      // bien à la prochaine section de clôture le cas échéant.
+      const nextH2 = h2s[h2s.indexOf(h2) + 1];
       let node: ChildNode | null = h2.nextSibling;
       while (node && node !== nextH2) {
         const next: ChildNode | null = node.nextSibling;
@@ -118,7 +132,8 @@ const caseStudies = await Promise.all(
     // contenu — leur place est avec le reste de la navigation du panneau.
     const header = modalRoot?.querySelector<HTMLElement>('.case-modal-header');
     (header ?? content).appendChild(tabs);
-    missions.forEach(({ panel }) => content.appendChild(panel));
+    missions.forEach(({ panel }) => content.insertBefore(panel, anchor));
+    anchor.remove();
   }
 
   document.querySelectorAll<HTMLElement>('.case-modal-content').forEach(setupMissionTabs);
