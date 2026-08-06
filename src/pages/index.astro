@@ -153,16 +153,29 @@ const priorities = [
     </div>
   </section>
 
-  <section class="trust-block section alt" data-reveal data-section-name="Faire confiance">
-    <div class="container prose">
+  <section class="trust-block" data-reveal data-section-name="Faire confiance">
+    <div class="container trust-inner">
       <h2>Ensemble, mettons votre collectif en mouvement</h2>
-      <p class="trust-lead">Ne restez pas seul face à ce qui bloque — surtout si vous n'arrivez pas encore à en identifier clairement la cause.</p>
-      <p>Pour vous aider à avancer, je commence toujours par un premier échange approfondi pour comprendre votre situation réelle : les enjeux, les personnes concernées, ce qui a déjà été tenté. Avec mon expérience du terrain et un franc-parler que vous apprécierez vite, nous explorons ensemble des pistes d'action — et nous apprenons à nous connaître, pour travailler ensuite en confiance.</p>
-      <p>À l'issue de cet échange, deux options s'offrent à vous :</p>
-      <ul class="trust-options">
-        <li>Soit il vous a suffi à y voir clair : vous savez comment agir et n'avez plus besoin de moi. Parfait, ravi d'avoir été utile.</li>
-        <li>Soit vous souhaitez être accompagné davantage, et nous construisons ensemble un dispositif concret — séminaire, atelier, coaching, formation ou facilitation — avec un point d'étape pour ajuster ou passer au sujet suivant.</li>
-      </ul>
+      <div class="trust-timeline">
+        <div class="trust-step">
+          <span class="trust-step-num">1</span>
+          <div>
+            <h3>Un premier échange</h3>
+            <p>Je commence toujours par un temps approfondi pour comprendre votre situation réelle : les enjeux, les personnes concernées, ce qui a déjà été tenté. Avec mon expérience du terrain et un franc-parler que vous apprécierez vite, nous explorons ensemble des pistes d'action — et nous apprenons à nous connaître.</p>
+          </div>
+        </div>
+      </div>
+      <p class="trust-fork-label">Deux issues possibles</p>
+      <div class="trust-fork">
+        <div class="trust-outcome">
+          <span class="trust-outcome-label">Vous êtes autonome</span>
+          <p>Cet échange vous a suffi à y voir clair. Vous savez comment agir et n'avez plus besoin de moi. Parfait, ravi d'avoir été utile.</p>
+        </div>
+        <div class="trust-outcome">
+          <span class="trust-outcome-label">On va plus loin ensemble</span>
+          <p>Nous construisons un dispositif concret — séminaire, atelier, coaching, formation ou facilitation — avec un point d'étape pour ajuster ou passer au sujet suivant.</p>
+        </div>
+      </div>
       <p class="fine">Cet accompagnement s'adresse aux entreprises comme aux collectivités et associations. Je n'interviens pas sur des sujets techniques ou logiciels : mon terrain, c'est la manière dont un collectif décide, coopère et avance.</p>
       <a class="btn" href={SITE.bookingUrl} target="_blank" rel="noopener">Réserver un premier échange →</a>
     </div>
@@ -486,34 +499,110 @@ const priorities = [
     background: var(--color-orange);
   }
 
-  /* --- Faire confiance --- */
-  .trust-lead {
-    font-family: var(--font-display);
-    font-size: var(--text-xl);
-    color: var(--color-navy);
-    line-height: 1.4;
+  /* --- Faire confiance : frise verticale d'un seul échange qui débouche
+     sur deux issues, dans une colonne volontairement plus étroite que les
+     autres sections pour se lire comme un petit schéma, pas un pavé de texte. */
+  .trust-block {
+    padding: var(--space-16) 0;
   }
-  .trust-block p {
-    font-size: var(--text-base);
-    line-height: 1.6;
-    color: var(--color-ink);
+  .trust-inner {
+    max-width: 640px;
+    margin: 0 auto;
   }
-  .trust-options {
+  .trust-inner h2 {
+    text-align: center;
+    margin: 0 0 var(--space-8);
+  }
+  .trust-timeline {
+    margin-bottom: var(--space-6);
+  }
+  .trust-step {
+    display: flex;
+    gap: var(--space-4);
+    position: relative;
+    padding-bottom: var(--space-6);
+  }
+  .trust-step::after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 36px;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-border);
+  }
+  .trust-step-num {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-navy);
+    color: var(--color-white);
     display: grid;
-    gap: var(--space-3);
-    margin: var(--space-4) 0 var(--space-6);
-    padding: 0;
-    list-style: none;
+    place-items: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
   }
-  .trust-options li {
+  .trust-step h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-lg);
+  }
+  .trust-step p {
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+  .trust-fork-label {
+    text-align: center;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-4);
+  }
+  .trust-fork {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+  .trust-outcome {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: var(--space-4) var(--space-6);
+    padding: var(--space-5);
   }
-  .trust-block .fine {
-    max-width: 560px;
-    margin-bottom: var(--space-6);
+  .trust-outcome-label {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-orange-ink);
+    margin-bottom: var(--space-2);
+  }
+  .trust-outcome p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .trust-inner .fine {
+    text-align: center;
+    margin: 0 auto var(--space-6);
+  }
+  .trust-inner .btn {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+  }
+  @media (max-width: 560px) {
+    .trust-fork {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* --- Vos priorités --- */
