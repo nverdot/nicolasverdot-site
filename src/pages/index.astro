@@ -165,13 +165,29 @@ const priorities = [
 
   <section class="partner-intro section" data-reveal data-section-name="Nicolas Verdot, votre partenaire">
     <div class="container split">
-      <div class="split-photo portrait">
-        <Image src={portrait} alt="Portrait de Nicolas Verdot" width={640} height={853} />
+      <div>
+        <div class="split-photo portrait">
+          <Image src={portrait} alt="Portrait de Nicolas Verdot" width={640} height={853} />
+        </div>
+        <p class="portrait-caption"><strong>Nicolas VERDOT</strong> — Booster de leaders et d'équipes</p>
       </div>
       <div>
         <h2>Un partenaire pour passer un cap et remettre votre collectif en mouvement</h2>
-        <p class="partner-imagine"><strong>Imaginez…</strong> Vos décisions se prennent plus vite, parce qu'elles sont mieux préparées. Vos équipes savent ce qu'elles ont à faire et pourquoi. Les tensions se traitent avant de bloquer le travail. Et votre collectif retrouve l'énergie d'avancer, ensemble.</p>
-        <p>Mon expertise, c'est la façon dont un collectif fonctionne : comment les interactions entre les personnes, les rôles et les différentes étapes de construction d'une équipe déterminent sa capacité à s'engager sur un projet et à avancer ensemble. Je conçois les processus de collaboration et de décision qui rendent ce mouvement possible, avec ma franchise, plus de dix ans de terrain, et des expertises croisées en facilitation, coaching, intelligence collective, agilité et pensée visuelle.</p>
+        <p class="partner-lead"><strong>Imaginez…</strong></p>
+        <ul class="partner-imagine-list">
+          <li>Vos décisions se prennent plus vite, parce qu'elles sont mieux préparées.</li>
+          <li>Vos équipes savent ce qu'elles ont à faire et pourquoi.</li>
+          <li>Les tensions se traitent avant de bloquer le travail.</li>
+          <li>Votre collectif retrouve l'énergie d'avancer, ensemble.</li>
+        </ul>
+        <p>Mon expertise, c'est la façon dont un collectif fonctionne : comment les interactions entre les personnes, les rôles et les différentes étapes de construction d'une équipe déterminent sa capacité à s'engager sur un projet et à avancer ensemble. Je conçois les processus de collaboration et de décision qui rendent ce mouvement possible — avec ma franchise et plus de dix ans de terrain.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Facilitation</span>
+          <span class="tool-tag">Coaching</span>
+          <span class="tool-tag">Intelligence collective</span>
+          <span class="tool-tag">Agilité</span>
+          <span class="tool-tag">Pensée visuelle</span>
+        </div>
         <p>Dans vos projets de transformation, je fais émerger avec vous et vos équipes le chemin qui vous mène à vos objectifs — puis je vous accompagne pour le parcourir.</p>
       </div>
     </div>
@@ -485,12 +501,48 @@ const priorities = [
     font-size: var(--text-lg);
     line-height: 1.6;
   }
-  .partner-imagine {
-    font-family: var(--font-display);
-    color: var(--color-navy);
+  .partner-intro .tool-tags {
+    margin: var(--space-2) 0 var(--space-6);
   }
-  .partner-imagine strong {
+  .portrait-caption {
+    margin: var(--space-3) 0 0;
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+  .portrait-caption strong {
+    color: var(--color-navy);
+    letter-spacing: 0.02em;
+  }
+  .partner-lead {
+    font-family: var(--font-display);
     color: var(--color-orange-ink);
+    font-weight: 700;
+    margin-bottom: var(--space-3);
+  }
+  .partner-imagine-list {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-6);
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    color: var(--color-navy);
+    line-height: 1.5;
+  }
+  .partner-imagine-list li {
+    padding-left: var(--space-5);
+    position: relative;
+  }
+  .partner-imagine-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-orange);
   }
 
   /* --- Faire confiance --- */
