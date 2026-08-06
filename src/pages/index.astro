@@ -169,13 +169,8 @@ const priorities = [
           <li>Les idées émergent, se confrontent et deviennent des actions concrètes.</li>
           <li>Votre collectif avance avec davantage de clarté, d'engagement et d'autonomie.</li>
         </ul>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="partner-narrative">
         <p>Lancer un nouveau projet, construire une vision commune, accompagner une croissance, préparer une transformation, faire vivre une communauté ou dépasser une situation qui s'enlise : chaque contexte est différent.</p>
-        <p class="partner-question-lead">Mais une même question revient souvent :</p>
+        <p>Mais une même question revient souvent :</p>
       </div>
     </div>
 
@@ -498,19 +493,13 @@ const priorities = [
   .split-top {
     align-items: start;
   }
-  .partner-narrative {
-    max-width: 760px;
-    margin-top: var(--space-12);
-  }
-  .partner-narrative p + p {
-    margin-top: var(--space-4);
-  }
   .partner-question-frame {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: var(--space-8);
     margin-top: var(--space-6);
+    text-align: center;
   }
   .partner-question-frame p {
     margin: 0;
@@ -534,13 +523,13 @@ const priorities = [
     background: linear-gradient(160deg, var(--color-blue), var(--color-blue-strong));
     color: var(--color-white);
     border-radius: var(--radius-lg);
-    padding: var(--space-8);
+    padding: var(--space-4) var(--space-8) var(--space-8);
     box-shadow: var(--shadow-lg);
   }
-  .partner-approach-expertise .partner-question-lead {
+  .partner-intro .partner-approach-expertise .partner-question-lead {
     color: rgba(255, 255, 255, 0.75);
   }
-  .partner-approach-expertise .partner-question {
+  .partner-intro .partner-approach-expertise .partner-question {
     color: var(--color-white);
   }
   .partner-approach-expertise .tool-tags {
