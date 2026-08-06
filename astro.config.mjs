@@ -1,11 +1,12 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// TODO: passer BASE à '/' quand le site quittera le sous-dossier de test
-// /TESTSITENV/ pour la racine du domaine (mettre à jour le secret
-// FTP_SERVER_DIR et public/.htaccess en conséquence). Tout le reste
-// (liens markdown compris) suit automatiquement cette constante.
-const BASE = '/TESTSITENV/';
+// Site passé à la racine du domaine (2026-08) : le secret GitHub Actions
+// FTP_SERVER_DIR doit être mis à jour côté dépôt pour pointer vers la
+// racine du serveur FTP — ce n'est pas un fichier de ce repo, donc pas
+// modifiable ici. Tout le reste (liens markdown compris) suit
+// automatiquement cette constante.
+const BASE = '/';
 
 // Les liens racine écrits dans les articles markdown (ex: [contact](/contact/))
 // ne connaissent pas la base Astro : ce plugin rehype les préfixe au build,

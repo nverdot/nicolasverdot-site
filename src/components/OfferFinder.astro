@@ -1,0 +1,164 @@
+---
+import { priorities } from '../data/priorities';
+import { withBase } from '../utils/url';
+
+function findPriority(path: string) {
+  const href = withBase(path);
+  const p = priorities.find((item) => item.href === href);
+  if (!p) throw new Error(`OfferFinder: no priority found for ${path}`);
+  return p;
+}
+
+const situations = [
+  { label: 'Organiser un séminaire ou un atelier', priority: findPriority('/offres/deleguer-animation/') },
+  { label: 'Apprendre à animer moi-même', priority: findPriority('/offres/mentoring/') },
+  { label: 'Relancer l\'énergie de mon collectif', priority: findPriority('/offres/coaching-equipe/') },
+  { label: 'Faire adopter une transformation', priority: findPriority('/offres/accompagnement-transformation/') },
+  { label: 'Travailler ma posture de leader', priority: findPriority('/offres/coaching-professionnel/') },
+  { label: 'Rendre un événement mémorable', priority: findPriority('/offres/capture-graphique/') },
+];
+---
+
+<section class="offer-finder section" data-reveal data-section-name="Trouver son accompagnement">
+  <div class="container">
+    <div class="finder-panel">
+      <div class="finder-bubble finder-bubble-bot">
+        <p>Qu'est-ce que vous venez chercher ?</p>
+      </div>
+      <div class="finder-options" role="group" aria-label="Choisissez votre situation">
+        {situations.map((s) => (
+          <button type="button" class="finder-chip" data-finder-chip aria-pressed="false" data-label={s.label} data-title={s.priority.title} data-text={s.priority.text} data-href={s.priority.href}>
+            {s.label}
+          </button>
+        ))}
+      </div>
+      <div class="finder-answer" data-finder-answer hidden>
+        <div class="finder-bubble finder-bubble-user" data-finder-question></div>
+        <div class="finder-bubble finder-bubble-bot finder-bubble-result">
+          <p class="finder-result-eyebrow">Ça correspond à</p>
+          <p class="finder-result-title" data-finder-title></p>
+          <p class="finder-result-text" data-finder-text></p>
+          <a class="btn" data-finder-link href="#">Découvrir cette offre →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-finder-chip]'));
+  const answer = document.querySelector<HTMLElement>('[data-finder-answer]');
+  const questionEl = document.querySelector<HTMLElement>('[data-finder-question]');
+  const titleEl = document.querySelector<HTMLElement>('[data-finder-title]');
+  const textEl = document.querySelector<HTMLElement>('[data-finder-text]');
+  const linkEl = document.querySelector<HTMLAnchorElement>('[data-finder-link]');
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => c.setAttribute('aria-pressed', 'false'));
+      chip.setAttribute('aria-pressed', 'true');
+
+      if (!answer || !questionEl || !titleEl || !textEl || !linkEl) return;
+      questionEl.textContent = chip.dataset.label ?? '';
+      titleEl.textContent = chip.dataset.title ?? '';
+      textEl.textContent = chip.dataset.text ?? '';
+      linkEl.href = chip.dataset.href ?? '#';
+
+      answer.hidden = false;
+      answer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+</script>
+
+<style>
+  .finder-panel {
+    max-width: 720px;
+    margin: 0 auto;
+    display: grid;
+    gap: var(--space-4);
+  }
+  .finder-bubble {
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    max-width: 85%;
+  }
+  .finder-bubble-bot {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-bottom-left-radius: var(--radius-sm);
+    justify-self: start;
+  }
+  .finder-bubble-bot p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    color: var(--color-navy);
+  }
+  .finder-bubble-user {
+    background: var(--color-navy);
+    color: var(--color-white);
+    border-bottom-right-radius: var(--radius-sm);
+    justify-self: end;
+    font-weight: 600;
+  }
+  .finder-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-self: start;
+    max-width: 85%;
+  }
+  .finder-chip {
+    font-family: inherit;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border);
+    background: var(--color-cream);
+    color: var(--color-navy);
+    cursor: pointer;
+    transition: background-color 160ms ease-out, color 160ms ease-out, border-color 160ms ease-out, transform 160ms ease-out;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .finder-chip:hover {
+      border-color: var(--color-orange);
+    }
+  }
+  .finder-chip:active {
+    transform: scale(0.97);
+  }
+  .finder-chip[aria-pressed='true'] {
+    background: var(--color-orange);
+    border-color: var(--color-orange);
+    color: var(--color-ink-solid);
+  }
+  .finder-answer {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .finder-result-eyebrow {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-orange-ink);
+    margin: 0 0 var(--space-1);
+  }
+  .finder-result-title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--color-navy);
+    margin: 0 0 var(--space-2);
+  }
+  .finder-result-text {
+    color: var(--color-muted);
+    margin: 0 0 var(--space-4);
+  }
+  @media (max-width: 640px) {
+    .finder-bubble,
+    .finder-options {
+      max-width: 100%;
+    }
+  }
+</style>
