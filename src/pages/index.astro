@@ -102,12 +102,12 @@ const journeyStepsAfterFork = [
 ];
 
 const priorities = [
-  { title: 'Décider ensemble, plus vite et plus clairement', text: 'Transformer un sujet complexe en décisions claires, comprises et suivies d\'actions.', href: withBase('/offres/decider-ensemble/') },
-  { title: "Aligner l'équipe autour d'une direction commune", text: 'Créer une direction commune et remettre le collectif en mouvement autour de priorités réellement partagées.', href: withBase('/offres/aligner-equipe/') },
-  { title: 'Réussir un séminaire ou un temps collectif clé', text: 'Concevoir et faciliter un temps collectif qui produit vraiment quelque chose, pas une réunion de plus.', href: withBase('/offres/seminaires-ateliers/') },
-  { title: 'Accompagner une transformation', text: 'Donner du sens au changement, impliquer les équipes et transformer une intention stratégique en réalité opérationnelle.', href: withBase('/offres/accompagnement-transformation/') },
-  { title: 'Installer une dynamique durable', text: 'Faire évoluer la manière de travailler, de décider et de responsabiliser les équipes dans le temps.', href: withBase('/offres/dynamique-durable/') },
-  { title: 'Renforcer la posture des leaders', text: 'Travailler la posture, les interactions et la sécurité intérieure du leader.', href: withBase('/offres/coaching-professionnel/') },
+  { title: 'Clarifier un sujet et décider ensemble', text: 'Transformer un sujet complexe en choix clairs, compris par les personnes concernées et suivis d\'actions concrètes.', href: withBase('/offres/decider-ensemble/') },
+  { title: 'Construire une direction commune', text: "Faire émerger une vision partagée, définir les priorités et permettre à chacun de comprendre la direction et la manière d'y contribuer.", href: withBase('/offres/aligner-equipe/') },
+  { title: 'Concevoir un temps collectif vraiment utile', text: 'Préparer et faciliter un séminaire, un atelier ou une rencontre qui permet de comprendre, décider, construire ou passer à l\'action — pas simplement de remplir un agenda.', href: withBase('/offres/seminaires-ateliers/') },
+  { title: 'Faire vivre une transformation', text: 'Donner du sens à une évolution, associer les équipes à sa construction et transformer une intention stratégique en changements concrets dans le quotidien.', href: withBase('/offres/accompagnement-transformation/') },
+  { title: "Renforcer la coopération et l'autonomie", text: "Faire évoluer les rôles, les interactions, les modes de décision et les façons de travailler pour permettre au collectif d'avancer plus efficacement dans la durée.", href: withBase('/offres/dynamique-durable/') },
+  { title: 'Faire évoluer la posture des leaders', text: 'Prendre du recul sur sa manière de diriger, décider et interagir afin de mobiliser les équipes avec davantage de clarté, de confiance et de justesse.', href: withBase('/offres/coaching-professionnel/') },
 ];
 ---
 
@@ -270,11 +270,10 @@ const priorities = [
 
   <section class="priorities section" data-reveal data-section-name="Vos priorités">
     <div class="container">
-      <div class="section-head">
-        <div>
-          <h2>Quelle est votre priorité ?</h2>
-        </div>
-        <p>Ce sont les défis qui reviennent le plus souvent, seuls ou combinés, dans mes accompagnements. Lesquels sont les vôtres ?</p>
+      <div class="priorities-intro">
+        <h2>Quelle avancée voulez-vous rendre possible ?</h2>
+        <p class="priorities-lead">Lancer un projet, prendre une décision, mobiliser une équipe, accompagner une transformation ou faire évoluer une posture…</p>
+        <p>Voici les besoins que je rencontre le plus souvent dans mes accompagnements. Ils peuvent se présenter seuls ou se combiner selon votre situation.</p>
       </div>
       <div class="priority-grid">
         {priorities.map((p, i) => (
@@ -284,6 +283,10 @@ const priorities = [
             <p>{p.text}</p>
           </a>
         ))}
+      </div>
+      <div class="priorities-closing">
+        <p class="priorities-closing-question">Plusieurs de ces priorités vous concernent ?</p>
+        <p>C'est souvent le cas. Nous commençons par clarifier ensemble ce qui produira le plus de valeur pour votre collectif.</p>
       </div>
     </div>
   </section>
@@ -800,6 +803,25 @@ const priorities = [
   }
 
   /* --- Vos priorités --- */
+  .priorities-intro {
+    max-width: 720px;
+    margin: 0 0 var(--space-8);
+  }
+  .priorities-intro h2 {
+    margin: 0 0 var(--space-4);
+  }
+  .priorities-lead {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    color: var(--color-navy);
+    line-height: 1.5;
+    margin: 0 0 var(--space-3);
+  }
+  .priorities-intro p:not(.priorities-lead) {
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
   .priority-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -847,6 +869,22 @@ const priorities = [
     .priority-grid {
       grid-template-columns: 1fr;
     }
+  }
+  .priorities-closing {
+    max-width: 720px;
+    margin-top: var(--space-8);
+  }
+  .priorities-closing-question {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-navy);
+    margin: 0 0 var(--space-2);
+  }
+  .priorities-closing p:not(.priorities-closing-question) {
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0;
   }
 
 
