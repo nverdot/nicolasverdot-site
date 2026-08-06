@@ -338,6 +338,24 @@ const priorities = [
 
     return () => tween.scrollTrigger?.kill();
   });
+
+  // Frise "Ensemble, mettons votre collectif en mouvement" : chaque pastille
+  // numérotée passe du bleu au jaune au fil du scroll, pour donner une
+  // sensation de progression le long des étapes (et repasse au bleu en
+  // remontant, comme les traits .ink-underline).
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    const nums = gsap.utils.toArray<HTMLElement>('.trust-step-num');
+    const triggers = nums.map((num) =>
+      ScrollTrigger.create({
+        trigger: num,
+        start: 'top 75%',
+        onEnter: () => num.classList.add('is-active'),
+        onLeaveBack: () => num.classList.remove('is-active'),
+      })
+    );
+
+    return () => triggers.forEach((t) => t.kill());
+  });
 </script>
 
 <style>
@@ -519,14 +537,11 @@ const priorities = [
     margin: 0 auto;
   }
   .trust-inner h2 {
-    text-align: center;
     margin: 0 0 var(--space-4);
   }
   .trust-intro {
-    text-align: center;
-    max-width: 620px;
-    margin: 0 auto var(--space-8);
-    color: var(--color-muted);
+    margin: 0 0 var(--space-8);
+    font-size: var(--text-lg);
     line-height: 1.6;
   }
   .trust-timeline {
@@ -566,6 +581,11 @@ const priorities = [
     font-weight: 700;
     position: relative;
     z-index: 1;
+    transition: background-color 0.4s var(--ease-out), color 0.4s var(--ease-out);
+  }
+  .trust-step-num.is-active {
+    background: var(--color-orange);
+    color: var(--color-ink-solid);
   }
   .trust-step h3 {
     margin: 0 0 var(--space-2);
@@ -595,7 +615,6 @@ const priorities = [
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-4);
-    margin-top: var(--space-3);
   }
   .trust-outcome {
     background: var(--color-surface);
@@ -619,18 +638,25 @@ const priorities = [
     line-height: 1.6;
   }
   .trust-expertise {
-    text-align: center;
-    max-width: 620px;
-    margin: 0 auto var(--space-8);
+    background: linear-gradient(160deg, var(--color-blue), var(--color-blue-strong));
+    color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-lg);
+    margin: 0 0 var(--space-8);
   }
   .trust-expertise h3 {
     margin: 0 0 var(--space-3);
     font-size: var(--text-xl);
+    color: var(--color-white);
   }
   .trust-expertise p {
-    color: var(--color-muted);
+    color: #d4deef;
     line-height: 1.6;
     margin: 0 0 var(--space-3);
+  }
+  .trust-expertise p:last-child {
+    margin-bottom: 0;
   }
   .trust-inner .btn {
     display: block;
