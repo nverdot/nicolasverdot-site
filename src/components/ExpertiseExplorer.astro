@@ -19,8 +19,6 @@ import { withBase } from '../utils/url';
     ))}
   </div>
 
-  <div class="expertise-backdrop" data-expertise-backdrop hidden></div>
-
   {expertisePanels.map((p) => (
     <div
       class="expertise-panel"
@@ -67,17 +65,22 @@ import { withBase } from '../utils/url';
   const explorer = document.querySelector<HTMLElement>('.expertise-explorer');
 
   if (explorer) {
-    const backdrop = explorer.querySelector<HTMLElement>('[data-expertise-backdrop]');
     const triggers = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-expertise-trigger]'));
     const panels = Array.from(explorer.querySelectorAll<HTMLElement>('[data-expertise-panel]'));
+
+    // Déplacés en enfants directs de <body> : un ancêtre animé au scroll
+    // (data-reveal, via GSAP) garde une transform au repos, ce qui crée un
+    // "containing block" pour tout descendant en position:fixed — le
+    // panneau se retrouvait alors positionné/empilé par rapport à cet
+    // ancêtre plutôt que par rapport au viewport. Le sortir du flux de la
+    // section évite le problème quelle que soit l'animation appliquée plus haut.
+    panels.forEach((panel) => document.body.appendChild(panel));
 
     let activeSlug: string | null = null;
     let lastFocused: HTMLElement | null = null;
 
-    const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
-
     function closeActive() {
-      if (!activeSlug || !backdrop) return;
+      if (!activeSlug) return;
       const panel = panels.find((p) => p.dataset.expertisePanel === activeSlug);
       const trigger = triggers.find((t) => t.dataset.expertiseTrigger === activeSlug);
 
@@ -92,9 +95,6 @@ import { withBase } from '../utils/url';
       }
       trigger?.setAttribute('aria-expanded', 'false');
 
-      backdrop.classList.remove('is-visible');
-      window.setTimeout(() => { backdrop.hidden = true; }, 250);
-
       document.body.classList.remove('expertise-lock-scroll');
       activeSlug = null;
       lastFocused?.focus();
@@ -108,17 +108,14 @@ import { withBase } from '../utils/url';
       if (activeSlug) closeActive();
 
       const panel = panels.find((p) => p.dataset.expertisePanel === slug);
-      if (!panel || !backdrop) return;
+      if (!panel) return;
 
       lastFocused = trigger;
       panel.hidden = false;
-      backdrop.hidden = false;
       void panel.offsetHeight; // force reflow so the entrance transition plays
       panel.setAttribute('data-open', '');
-      backdrop.classList.add('is-visible');
       trigger.setAttribute('aria-expanded', 'true');
-
-      if (isMobile()) document.body.classList.add('expertise-lock-scroll');
+      document.body.classList.add('expertise-lock-scroll');
 
       activeSlug = slug;
       panel.querySelector<HTMLElement>('[data-expertise-close]')?.focus();
@@ -133,25 +130,23 @@ import { withBase } from '../utils/url';
 
     panels.forEach((panel) => {
       panel.querySelector('[data-expertise-close]')?.addEventListener('click', closeActive);
+      const inner = panel.querySelector<HTMLElement>('.expertise-panel-inner');
+      panel.addEventListener('click', (e) => {
+        if (inner && !inner.contains(e.target as Node)) closeActive();
+      });
     });
-
-    backdrop?.addEventListener('click', closeActive);
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && activeSlug) closeActive();
     });
-
-    document.addEventListener('click', (e) => {
-      if (!activeSlug) return;
-      const panel = panels.find((p) => p.dataset.expertisePanel === activeSlug);
-      const trigger = triggers.find((t) => t.dataset.expertiseTrigger === activeSlug);
-      const target = e.target as Node;
-      if (panel && !panel.contains(target) && trigger && !trigger.contains(target)) {
-        closeActive();
-      }
-    });
   }
 </script>
+
+<style is:global>
+  body.expertise-lock-scroll {
+    overflow: hidden;
+  }
+</style>
 
 <style>
   .expertise-explorer {
@@ -199,63 +194,43 @@ import { withBase } from '../utils/url';
     transform: rotate(45deg);
   }
 
-  .expertise-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(11, 22, 39, 0.55);
-    z-index: 40;
-    opacity: 0;
-    transition: opacity 200ms ease-out;
-  }
-  .expertise-backdrop.is-visible {
-    opacity: 1;
-  }
-
+  /* Même traitement partout : une vraie boîte de dialogue centrée sur un
+     fond assombri, plutôt qu'un popover ancré au clic (desktop) ou un
+     tiroir (mobile). .expertise-panel est la couche plein viewport (fond
+     assombri inclus) qui centre la carte visible via flexbox ; c'est
+     .expertise-panel-inner qui porte le fond clair/l'ombre/le scroll. */
   .expertise-panel {
     position: fixed;
+    inset: 0;
     z-index: 50;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    max-height: 85vh;
-    overflow-y: auto;
-    background: var(--color-surface);
-    color: var(--color-ink);
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    box-shadow: var(--shadow-lg);
-    transform: translateY(100%);
-    transition: transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+    background: rgba(11, 22, 39, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease-out;
   }
   .expertise-panel[data-open] {
-    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
   }
   .expertise-panel-inner {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 560px;
+    max-height: 85vh;
+    overflow-y: auto;
     padding: var(--space-6);
+    transform: scale(0.95);
+    transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
   }
-
-  @media (min-width: 768px) {
-    .expertise-backdrop {
-      display: none;
-    }
-    .expertise-panel {
-      position: absolute;
-      top: calc(100% + var(--space-3));
-      left: 0;
-      right: auto;
-      bottom: auto;
-      width: min(560px, 90vw);
-      max-height: min(70vh, 640px);
-      border-radius: var(--radius-lg);
-      transform: translateY(-8px) scale(0.97);
-      opacity: 0;
-      pointer-events: none;
-      transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1), opacity 220ms ease-out;
-    }
-    .expertise-panel[data-open] {
-      transform: translateY(0) scale(1);
-      opacity: 1;
-      pointer-events: auto;
-    }
+  .expertise-panel[data-open] .expertise-panel-inner {
+    transform: scale(1);
   }
 
   .expertise-panel-close {
