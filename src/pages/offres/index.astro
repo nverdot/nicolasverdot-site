@@ -5,16 +5,11 @@ import CTABlock from '../../components/CTABlock.astro';
 import PriorityGrid from '../../components/PriorityGrid.astro';
 import { withBase } from '../../utils/url';
 import heroImg from '../../assets/offres/hero-accompagnements.png';
-
-const complementary = [
-  { num: 'Visuel', title: 'Capture graphique en direct', text: 'Traduire vos séminaires et conférences en fresque visuelle mémorable.', href: withBase('/offres/capture-graphique/') },
-  { num: 'Compétences', title: 'Formations', text: 'Facilitation graphique, intelligence collective, IA appliquée et leader facilitateur.', href: withBase('/formations/') },
-];
 ---
 
 <Layout
   title="Les offres — by Nicolas Verdot"
-  description="Six façons de remettre un collectif en mouvement, du cadrage d'une décision à l'évolution de la posture d'un leader. Trouvez celle qui correspond à votre situation."
+  description="Sept façons de remettre un collectif en mouvement, du cadrage d'une décision à la capture graphique d'un temps fort. Trouvez celle qui correspond à votre situation."
   path="/offres/"
 >
   <PageHero
@@ -23,28 +18,20 @@ const complementary = [
     summary="Chaque situation est différente. Repérez ci-dessous ce qui correspond le mieux à votre contexte, ou parlons-en directement si plusieurs sujets se combinent."
     image={heroImg}
     imageAlt="Illustration d'un collectif au sommet d'une montagne : plusieurs groupes travaillent en parallèle - atelier autour d'une table, présentation, échange - autour d'un chemin qui bifurque, symbolisant les différentes façons d'être accompagné."
+    tall
   />
 
-  <PriorityGrid sectionName="Accompagnements" />
+  <PriorityGrid sectionName="Accompagnements" lead="" />
 
   <section class="section alt" data-reveal>
     <div class="container">
-      <div class="section-head">
+      <div class="formations-callout">
         <div>
-          <p class="eyebrow">Autres formats</p>
-          <h2>Deux formats complémentaires</h2>
+          <p class="eyebrow">Se former plutôt qu'être accompagné</p>
+          <h2>Vous préférez monter en compétences vous-même ?</h2>
+          <p>Facilitation graphique, intelligence collective, IA appliquée, posture de leader facilitateur : découvrez le catalogue de formations.</p>
         </div>
-        <p>Utiles seuls ou intégrés à un accompagnement plus large.</p>
-      </div>
-      <div class="cards">
-        {complementary.map((c) => (
-          <article class="card">
-            <div class="num">{c.num}</div>
-            <h3>{c.title}</h3>
-            <p>{c.text}</p>
-            <a class="card-link" href={c.href}>Découvrir</a>
-          </article>
-        ))}
+        <a class="btn" href={withBase('/formations/')}>Voir les formations →</a>
       </div>
     </div>
   </section>
@@ -55,3 +42,34 @@ const complementary = [
     subtitle="Un échange de cadrage permet d'identifier ce qui doit réellement être traité et le niveau d'intervention utile."
   />
 </Layout>
+
+<style>
+  .formations-callout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-8);
+  }
+  .formations-callout h2 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-2xl);
+  }
+  .formations-callout p:not(.eyebrow) {
+    margin: 0;
+    color: var(--color-muted);
+    max-width: 60ch;
+  }
+  .formations-callout .btn {
+    flex-shrink: 0;
+  }
+  @media (max-width: 700px) {
+    .formations-callout {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

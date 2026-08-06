@@ -9,12 +9,13 @@ interface Props {
   pills?: string[];
   image?: ImageMetadata;
   imageAlt?: string;
+  tall?: boolean;
 }
 
-const { eyebrow, title, summary, pills = [], image, imageAlt = '' } = Astro.props;
+const { eyebrow, title, summary, pills = [], image, imageAlt = '', tall = false } = Astro.props;
 ---
 
-<section class={`page-hero${image ? ' has-image' : ''}`} data-reveal>
+<section class={`page-hero${image ? ' has-image' : ''}${tall ? ' is-tall' : ''}`} data-reveal>
   {image && (
     <>
       <Image src={image} alt="" role="presentation" widths={[640, 1200, 1920]} sizes="100vw" class="page-hero-bg" />
@@ -46,6 +47,14 @@ const { eyebrow, title, summary, pills = [], image, imageAlt = '' } = Astro.prop
     position: relative;
     overflow: hidden;
     padding: var(--space-24) 0 var(--space-16);
+  }
+  /* Section plus haute pour laisser respirer l'illustration : object-fit:cover
+     recadre d'autant moins que la boîte se rapproche du ratio de l'image. */
+  .page-hero.is-tall {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: clamp(520px, 68vh, 780px);
   }
   .page-hero-bg {
     position: absolute;

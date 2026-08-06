@@ -5,6 +5,7 @@ import Hero from '../components/Hero.astro';
 import CTABlock from '../components/CTABlock.astro';
 import ExpertiseExplorer from '../components/ExpertiseExplorer.astro';
 import PriorityGrid from '../components/PriorityGrid.astro';
+import CaseStudyModal from '../components/CaseStudyModal.astro';
 import { withBase } from '../utils/url';
 import { SITE } from '../data/site';
 import portrait from '../assets/nicolas-portrait.png';
@@ -33,11 +34,11 @@ const resourceArticles = [
   { slug: 'daci-raci-qui-decide', title: 'Qui décide quoi : clarifier les rôles avec DACI et RACI', description: 'La matrice RACI et son cousin DACI clarifient qui décide, qui fait, qui est consulté.', visual: '' },
 ];
 
-const clients: { name: string; logo?: string; href?: string }[] = [
+const clients: { name: string; logo?: string; href?: string; caseStudySlug?: string }[] = [
   { name: 'Air France KLM', logo: '/logos/air-france-klm.png' },
   { name: 'Louis Vuitton', logo: '/logos/louis-vuitton.svg' },
   { name: 'PwC', logo: '/logos/pwc.webp' },
-  { name: 'MG2Mix', logo: '/logos/mg2mix.png', href: withBase('/cas-clients/mg2mix/') },
+  { name: 'MG2Mix', logo: '/logos/mg2mix.png', href: withBase('/cas-clients/mg2mix/'), caseStudySlug: 'mg2mix' },
   { name: 'Ressource SI', logo: '/logos/ressources.png' },
   { name: 'Mairie de Valbonne' },
   { name: 'JCI Monaco', logo: '/logos/jci-monaco.png' },
@@ -138,7 +139,7 @@ const journeyStepsAfterFork = [
         {[...clients, ...clients].map((c, i) => {
           const inner = c.logo ? <img src={withBase(c.logo)} alt={c.name} loading="lazy" /> : <span class="client-text">{c.name}</span>;
           return c.href ? (
-            <a class="client-item" href={c.href} aria-hidden={i >= clients.length ? 'true' : undefined} tabindex={i >= clients.length ? -1 : undefined}>
+            <a class="client-item" href={c.href} data-case-study-trigger={c.caseStudySlug} aria-hidden={i >= clients.length ? 'true' : undefined} tabindex={i >= clients.length ? -1 : undefined}>
               {inner}
             </a>
           ) : (
@@ -150,6 +151,8 @@ const journeyStepsAfterFork = [
       </div>
     </div>
   </section>
+
+  <CaseStudyModal />
 
   <section class="partner-intro section" data-reveal data-section-name="Nicolas Verdot, votre partenaire">
     <div class="container split split-top">

@@ -4,17 +4,23 @@ import { withBase } from '../utils/url';
 
 interface Props {
   sectionName?: string;
+  lead?: string;
+  description?: string;
 }
 
-const { sectionName = 'Vos priorités' } = Astro.props;
+const {
+  sectionName = 'Vos priorités',
+  lead = 'Lancer un projet, prendre une décision, mobiliser une équipe, accompagner une transformation ou faire évoluer une posture…',
+  description = 'Voici les besoins que je rencontre le plus souvent dans mes accompagnements. Ils peuvent se présenter seuls ou se combiner selon votre situation.',
+} = Astro.props;
 ---
 
 <section class="priorities section" data-reveal data-section-name={sectionName}>
   <div class="container">
     <div class="priorities-intro">
       <h2>Quelle avancée voulez-vous rendre possible ?</h2>
-      <p class="priorities-lead">Lancer un projet, prendre une décision, mobiliser une équipe, accompagner une transformation ou faire évoluer une posture…</p>
-      <p>Voici les besoins que je rencontre le plus souvent dans mes accompagnements. Ils peuvent se présenter seuls ou se combiner selon votre situation.</p>
+      {lead && <p class="priorities-lead">{lead}</p>}
+      {description && <p>{description}</p>}
     </div>
     <div class="priority-grid">
       {priorities.map((p, i) => (
