@@ -35,7 +35,7 @@ export const offers: Offer[] = [
     eyebrow: 'Ateliers, séminaires, coaching du manager',
     title: 'Coaching d’équipe',
     summary: 'Un dispositif combiné — séminaires, ateliers réguliers et coaching du manager — pour faire évoluer durablement la manière de travailler, de décider et de responsabiliser l’équipe.',
-    price: 'De 12 000 à 30 000 € HT',
+    price: 'À partir de 12 000 € HT',
     useCaseLead: 'Pour les organisations qui vivent régulièrement les mêmes difficultés malgré les plans d’action, les séminaires ou les réorganisations.',
     problems: [
       { title: 'Dépendance au manager', text: 'Trop de décisions remontent vers quelques personnes.' },
