@@ -13,11 +13,7 @@ const icons: Record<string, string> = {
   check: '<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
   people: '<circle cx="8" cy="8" r="3"/><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M14.5 20c.2-2.6 2.1-4.7 4.6-5"/>',
   trending: '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
-  heart: '<path d="M12 21s-7-4.4-9.5-8.6C.5 8.6 3 5 6.6 5c2 0 3.5 1 5.4 3 1.9-2 3.4-3 5.4-3 3.6 0 6.1 3.6 4.1 7.4C19 16.6 12 21 12 21z"/>',
-  eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
   target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
-  bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/>',
-  flag: '<path d="M5 21V4"/><path d="M5 4h14l-3 5 3 5H5"/>',
 };
 
 // Ce que change un accompagnement — pas de chiffre ni de témoignage inventés :
@@ -27,14 +23,6 @@ const proofItems = [
   { icon: 'check', title: 'Des décisions assumées', text: 'Pour sortir des discussions sans fin et choisir une direction.' },
   { icon: 'people', title: 'Des équipes alignées', text: "Pour que chacun comprenne où l'on va et comment contribuer." },
   { icon: 'trending', title: 'Des actions concrètes', text: 'Pour transformer les décisions en résultats visibles.' },
-];
-
-const traits = [
-  { icon: 'heart', title: 'Humaine', text: 'toujours.' },
-  { icon: 'eye', title: 'Visuelle', text: 'pour mieux comprendre.' },
-  { icon: 'target', title: 'Pragmatique', text: "au service de l'action." },
-  { icon: 'bolt', title: 'Directe', text: 'sans détour.' },
-  { icon: 'flag', title: 'Engagée', text: 'à vos côtés.' },
 ];
 
 const resourceArticles = [
@@ -146,10 +134,12 @@ const priorities = [
           <span class="tool-tag">Agilité</span>
           <span class="tool-tag">Pensée visuelle</span>
         </div>
-        <p>Une croissance à accompagner, une difficulté à traverser, un projet à lancer, une transformation à conduire ou des parties prenantes à associer à une décision : les contextes changent, mais le défi reste souvent le même — faire fonctionner l'humain pour permettre au collectif d'avancer.</p>
-        <p>J'aide les personnes concernées à se parler vraiment, à faire émerger ce qui compte, à décider, à construire un plan d'action réaliste et à tirer les enseignements de ce qui a déjà été tenté.</p>
-        <p>L'objectif n'est pas seulement de réussir un atelier ou de débloquer une situation ponctuelle. Il est aussi d'installer, dans la durée, une culture de la collaboration, de l'action et de l'apprentissage.</p>
       </div>
+    </div>
+    <div class="container partner-closing">
+      <p>Une croissance à accompagner, une difficulté à traverser, un projet à lancer, une transformation à conduire ou des parties prenantes à associer à une décision : les contextes changent, mais le défi reste souvent le même — faire fonctionner l'humain pour permettre au collectif d'avancer.</p>
+      <p>J'aide les personnes concernées à se parler vraiment, à faire émerger ce qui compte, à décider, à construire un plan d'action réaliste et à tirer les enseignements de ce qui a déjà été tenté.</p>
+      <p>L'objectif n'est pas seulement de réussir un atelier ou de débloquer une situation ponctuelle. Il est aussi d'installer, dans la durée, une culture de la collaboration, de l'action et de l'apprentissage.</p>
     </div>
   </section>
 
@@ -197,22 +187,6 @@ const priorities = [
             <p>{p.text}</p>
           </a>
         ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="working-style" data-reveal data-section-name="Ma façon de travailler">
-    <div class="container">
-      <div class="working-traits">
-        <div class="traits-grid">
-          {traits.map((t) => (
-            <div class="trait">
-              <svg class="trait-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} />
-              <strong>{t.title}</strong>
-              <span>{t.text}</span>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   </section>
@@ -419,18 +393,23 @@ const priorities = [
     line-height: 1.6;
   }
   .partner-intro .tool-tags {
-    margin: var(--space-2) 0 var(--space-6);
+    margin: var(--space-2) 0 0;
+  }
+  .partner-closing {
+    max-width: 900px;
+    margin: var(--space-8) auto 0;
+    text-align: justify;
+    text-align-last: left;
+  }
+  .partner-closing p + p {
+    margin-top: var(--space-4);
   }
   .partner-intro .accent-wrap {
     display: inline-block;
     position: relative;
   }
   .partner-accent {
-    color: var(--color-navy);
-    background: linear-gradient(180deg, transparent 60%, rgba(255, 203, 0, 0.5) 60%);
-    padding: 0 0.05em;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
+    color: var(--color-orange);
   }
   .partner-intro .ink-underline {
     position: absolute;
@@ -438,7 +417,7 @@ const priorities = [
     bottom: -0.15em;
     width: 100%;
     height: 0.3em;
-    stroke: var(--color-orange-ink);
+    stroke: var(--color-orange);
     stroke-width: 5;
     fill: none;
   }
