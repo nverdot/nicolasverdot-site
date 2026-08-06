@@ -33,11 +33,11 @@ const resourceArticles = [
   { slug: 'daci-raci-qui-decide', title: 'Qui décide quoi : clarifier les rôles avec DACI et RACI', description: 'La matrice RACI et son cousin DACI clarifient qui décide, qui fait, qui est consulté.', visual: '' },
 ];
 
-const clients = [
+const clients: { name: string; logo?: string; href?: string }[] = [
   { name: 'Air France KLM', logo: '/logos/air-france-klm.png' },
   { name: 'Louis Vuitton', logo: '/logos/louis-vuitton.svg' },
   { name: 'PwC', logo: '/logos/pwc.webp' },
-  { name: 'MG2Mix', logo: '/logos/mg2mix.png' },
+  { name: 'MG2Mix', logo: '/logos/mg2mix.png', href: withBase('/cas-clients/mg2mix/') },
   { name: 'Ressource SI', logo: '/logos/ressources.png' },
   { name: 'Mairie de Valbonne' },
   { name: 'JCI Monaco', logo: '/logos/jci-monaco.png' },
@@ -135,11 +135,18 @@ const journeyStepsAfterFork = [
   <section class="trust" data-reveal data-section-name="Logos clients">
     <div class="client-marquee">
       <div class="client-marquee-track">
-        {[...clients, ...clients].map((c, i) => (
-          <span class="client-item" aria-hidden={i >= clients.length ? 'true' : undefined}>
-            {c.logo ? <img src={withBase(c.logo)} alt={c.name} loading="lazy" /> : <span class="client-text">{c.name}</span>}
-          </span>
-        ))}
+        {[...clients, ...clients].map((c, i) => {
+          const inner = c.logo ? <img src={withBase(c.logo)} alt={c.name} loading="lazy" /> : <span class="client-text">{c.name}</span>;
+          return c.href ? (
+            <a class="client-item" href={c.href} aria-hidden={i >= clients.length ? 'true' : undefined} tabindex={i >= clients.length ? -1 : undefined}>
+              {inner}
+            </a>
+          ) : (
+            <span class="client-item" aria-hidden={i >= clients.length ? 'true' : undefined}>
+              {inner}
+            </span>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -901,6 +908,7 @@ const journeyStepsAfterFork = [
     background: var(--color-white);
     border-radius: var(--radius-sm);
     padding: var(--space-2) var(--space-4);
+    text-decoration: none;
   }
   .client-item img {
     max-height: 100%;

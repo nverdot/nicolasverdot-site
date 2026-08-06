@@ -1,0 +1,151 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { withBase } from '../../utils/url';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const caseStudies = await getCollection('caseStudies', ({ data }) => !data.draft);
+  return caseStudies.map((cs) => ({
+    params: { slug: cs.slug },
+    props: { cs },
+  }));
+}
+
+interface Props {
+  cs: CollectionEntry<'caseStudies'>;
+}
+
+const { cs } = Astro.props;
+const { Content } = await cs.render();
+
+const caseStudySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: cs.data.title,
+  description: cs.data.summary,
+  about: cs.data.client,
+  inLanguage: 'fr-FR',
+  author: {
+    '@type': 'Person',
+    name: 'Nicolas Verdot',
+    jobTitle: 'Facilitateur, coach professionnel et formateur',
+    url: new URL(withBase('/a-propos/'), Astro.site).toString(),
+  },
+  publisher: {
+    '@type': 'Person',
+    name: 'Nicolas Verdot',
+  },
+  mainEntityOfPage: new URL(withBase(`/cas-clients/${cs.slug}/`), Astro.site).toString(),
+};
+---
+
+<Layout
+  title={`${cs.data.client} — ${cs.data.title} — by Nicolas Verdot`}
+  description={cs.data.summary}
+  path={`/cas-clients/${cs.slug}/`}
+  breadcrumbs={[
+    { name: 'Accueil', path: '/' },
+    { name: 'Cas clients', path: '/cas-clients/' },
+    { name: cs.data.client, path: `/cas-clients/${cs.slug}/` },
+  ]}
+>
+  <article class="case">
+    <header class="case-hero">
+      <div class="container">
+        <a href={withBase('/cas-clients/')} class="back-link">← Tous les cas clients</a>
+        <div class="case-client">
+          {cs.data.clientLogo && <img src={withBase(cs.data.clientLogo)} alt={cs.data.client} class="case-client-logo" />}
+          <p class="eyebrow">Cas client — {cs.data.client}</p>
+        </div>
+        <h1>{cs.data.title}</h1>
+        <p class="case-subtitle">{cs.data.subtitle}</p>
+      </div>
+    </header>
+
+    <div class="container prose">
+      <div class="case-question-frame">
+        <p>{cs.data.question}</p>
+      </div>
+
+      <div class="case-content" data-case-content>
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(caseStudySchema)} />
+
+  <CTABlock
+    title="Vous souhaitez faire progresser votre équipe sans lui imposer une solution toute faite ?"
+    subtitle="Je peux vous accompagner pour concevoir un parcours de réunions ou d'ateliers, créer l'ensemble des supports et vous préparer à l'animer vous-même auprès de vos équipes."
+    {...(cs.data.offerHref ? { secondaryLabel: 'Voir l\'offre séminaires et ateliers', secondaryHref: withBase(cs.data.offerHref) } : {})}
+  />
+</Layout>
+
+<style>
+  .case-hero {
+    padding: var(--space-8) 0 var(--space-6);
+  }
+  .back-link {
+    display: inline-block;
+    margin-bottom: var(--space-6);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-navy);
+    text-decoration: none;
+  }
+  .case-client {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  .case-client-logo {
+    height: 28px;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+  }
+  .case-hero h1 {
+    max-width: 44ch;
+  }
+  .case-subtitle {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    color: var(--color-muted);
+    margin: 0;
+    max-width: 60ch;
+  }
+  .case-question-frame {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    margin: var(--space-2) 0 var(--space-8);
+  }
+  .case-question-frame p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--color-navy);
+    line-height: 1.4;
+  }
+  .case-content {
+    line-height: 1.75;
+  }
+  .case-content :global(h2) {
+    font-size: var(--text-2xl);
+    margin-top: var(--space-8);
+  }
+  .case-content :global(ul) {
+    padding-left: var(--space-6);
+  }
+  .case-content :global(li) {
+    margin-bottom: var(--space-2);
+  }
+  .case-content :global(a) {
+    color: var(--color-navy);
+    font-weight: 600;
+  }
+</style>
