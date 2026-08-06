@@ -9,6 +9,20 @@ offerHref: "/offres/capture-graphique/"
 offerLabel: "Voir l'offre capture graphique"
 ctaTitle: "Un séminaire ou un parcours à conclure en beauté ?"
 ctaSubtitle: "Je peux traduire vos temps forts en fresques visuelles qui aident votre collectif à retenir l'essentiel et à passer à l'action."
+factsheet:
+  - label: "Lieu"
+    value: "Sophia Antipolis"
+  - label: "Format"
+    value: "Deux journées d'ateliers et de conférences"
+  - label: "Partenaire"
+    value: "Osanwe — Viviane Morelle"
+    href: "https://osanwe.com/"
+  - label: "Intervention"
+    value: "Capture graphique en direct"
+  - label: "Public"
+    value: "Dirigeantes et dirigeants d'entreprise"
+  - label: "Objectif"
+    value: "Capter l'essentiel, ancrer les messages clés, favoriser les discussions et soutenir le passage à l'action"
 publishDate: 2026-08-06
 ---
 
@@ -84,13 +98,3 @@ Cette intervention a contribué à :
 - conserver une trace commune du dernier rendez-vous de la cohorte.
 
 Au-delà de la synthèse, les visuels sont devenus des supports de réflexion et d'action pour aider les participants à passer de l'inspiration à la transformation concrète de leur entreprise.
-
-**En bref**
-
-- Client : CEC
-- Lieu : Sophia Antipolis
-- Format : deux journées d'ateliers et de conférences
-- Partenaire : [Osanwe — Viviane Morelle](https://osanwe.com/)
-- Intervention : capture graphique en direct
-- Public : dirigeantes et dirigeants d'entreprise
-- Objectif : capter l'essentiel, ancrer les messages clés, favoriser les discussions et soutenir le passage à l'action autour de l'entreprise régénératrice

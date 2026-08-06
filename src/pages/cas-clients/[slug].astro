@@ -1,7 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
+import Lightbox from '../../components/Lightbox.astro';
 import { withBase } from '../../utils/url';
+import { factsheetIcon } from '../../utils/factsheetIcons';
+import { findPriorityByHref } from '../../data/priorities';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -22,6 +25,7 @@ const { Content } = await cs.render();
 const ctaTitle = cs.data.ctaTitle ?? 'Un besoin similaire dans votre organisation ?';
 const ctaSubtitle = cs.data.ctaSubtitle ?? "Parlons de votre contexte pour identifier l'accompagnement le plus utile.";
 const offerLabel = cs.data.offerLabel ?? "Voir l'offre";
+const relatedPriority = cs.data.offerHref ? findPriorityByHref(cs.data.offerHref) : undefined;
 
 const caseStudySchema = {
   '@context': 'https://schema.org',
@@ -64,6 +68,25 @@ const caseStudySchema = {
         </div>
         <h1>{cs.data.title}</h1>
         <p class="case-subtitle">{cs.data.subtitle}</p>
+
+        {relatedPriority && (
+          <a class="case-offer-tag" href={withBase(cs.data.offerHref!)}>
+            # {relatedPriority.title}
+          </a>
+        )}
+
+        {cs.data.factsheet && cs.data.factsheet.length > 0 && (
+          <dl class="case-factsheet">
+            {cs.data.factsheet.map((item) => (
+              <div class="case-factsheet-item">
+                <dt><span aria-hidden="true">{factsheetIcon(item.label)}</span> {item.label}</dt>
+                <dd>
+                  {item.href ? <a href={item.href} target="_blank" rel="noopener noreferrer">{item.value}</a> : item.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        )}
       </div>
     </header>
 
@@ -72,11 +95,13 @@ const caseStudySchema = {
         <p>{cs.data.question}</p>
       </div>
 
-      <div class="case-content" data-case-content>
+      <div class="case-content" data-case-content data-lightbox-scope>
         <Content />
       </div>
     </div>
   </article>
+
+  <Lightbox />
 
   <script type="application/ld+json" set:html={JSON.stringify(caseStudySchema)} />
 
@@ -120,6 +145,58 @@ const caseStudySchema = {
     color: var(--color-muted);
     margin: 0;
     max-width: 60ch;
+  }
+  .case-offer-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    margin: var(--space-3) 0 0;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-navy);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 160ms ease-out, border-color 160ms ease-out;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .case-offer-tag:hover {
+      background: var(--color-cream);
+      border-color: var(--color-navy);
+    }
+  }
+  .case-factsheet {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-4) var(--space-6);
+    margin: var(--space-8) 0 0;
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+  .case-factsheet-item dt {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: var(--space-1);
+  }
+  .case-factsheet-item dd {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-ink);
+    line-height: 1.4;
+  }
+  .case-factsheet-item dd a {
+    color: var(--color-navy);
+    font-weight: 600;
   }
   .case-question-frame {
     background: var(--color-surface);
@@ -189,6 +266,14 @@ const caseStudySchema = {
     display: block;
     border-radius: var(--radius-md);
     border: 1px solid var(--color-border);
+    cursor: zoom-in;
+    transition: opacity 160ms ease-out;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .case-content :global(.case-gallery img:hover),
+    .case-content :global(.case-gallery-wide img:hover) {
+      opacity: 0.85;
+    }
   }
   .case-content :global(figcaption) {
     margin-top: var(--space-2);
@@ -199,6 +284,14 @@ const caseStudySchema = {
   @media (max-width: 700px) {
     .case-content :global(.case-gallery) {
       grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .case-question-frame {
+      padding: var(--space-4);
+    }
+    .case-question-frame p {
+      font-size: var(--text-lg);
     }
   }
 </style>

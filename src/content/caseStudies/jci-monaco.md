@@ -9,6 +9,19 @@ offerHref: "/offres/deleguer-animation/"
 offerLabel: "Voir l'offre déléguer l'animation"
 ctaTitle: "Une prise de fonction ou un nouveau cycle à lancer avec votre équipe ?"
 ctaSubtitle: "Je peux concevoir et animer le séminaire qui permettra à votre collectif de mieux se connaître et de construire une direction commune."
+factsheet:
+  - label: "Organisation"
+    value: "Jeune Chambre Économique de Monaco"
+  - label: "Commanditaire"
+    value: "La présidente 2025"
+  - label: "Format"
+    value: "Séminaire de prise de présidence"
+  - label: "Intervention"
+    value: "Conception et facilitation de l'atelier"
+  - label: "Enjeux"
+    value: "Faire équipe, mieux se connaître et construire une vision stratégique commune"
+  - label: "Finalité"
+    value: "Donner au collectif une direction partagée pour le nouveau cycle de présidence"
 publishDate: 2026-08-06
 ---
 
@@ -84,12 +97,3 @@ Au-delà de la vision produite, le séminaire a permis aux participants de vivre
   <img src="/cas-clients/jci-monaco-nicolas-verdot-facilitation-graphique.jpg" alt="Nicolas Verdot devant la fresque graphique de l'agenda pendant le séminaire de prise de présidence JCI Monaco" loading="lazy" />
   <figcaption>En cours de séminaire, devant l'agenda mis à jour au fil de la journée.</figcaption>
 </figure>
-
-**En bref**
-
-- Client : JCI Monaco — Jeune Chambre Économique de Monaco
-- Commanditaire : la présidente 2025
-- Format : séminaire de prise de présidence
-- Intervention : conception et facilitation de l'atelier
-- Enjeux : faire équipe, mieux se connaître et construire une vision stratégique commune
-- Finalité : donner au collectif une direction partagée pour le nouveau cycle de présidence

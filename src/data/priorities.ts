@@ -14,3 +14,8 @@ export const priorities: Priority[] = [
   { title: 'Accompagnement des transformations', text: 'Débloquer une transformation qui reste sur le papier en créant les conditions d\'un changement réellement adopté.', href: withBase('/offres/accompagnement-transformation/') },
   { title: "Coaching d'équipe", text: "Un dispositif combiné dans la durée — séminaires, ateliers réguliers et coaching du manager — pour faire évoluer la façon de travailler et de décider.", href: withBase('/offres/coaching-equipe/') },
 ];
+
+export function findPriorityByHref(rawHref: string): Priority | undefined {
+  const target = withBase(rawHref);
+  return priorities.find((p) => p.href === target);
+}

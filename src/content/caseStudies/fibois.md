@@ -8,6 +8,16 @@ offerHref: "/offres/capture-graphique/"
 offerLabel: "Voir l'offre capture graphique"
 ctaTitle: "Un événement ou un colloque à rendre plus vivant ?"
 ctaSubtitle: "Je peux traduire vos temps forts en fresques visuelles claires et mémorables, en solo ou en partenariat selon l'ampleur de l'événement."
+factsheet:
+  - label: "Format"
+    value: "Colloque technique de restitution"
+  - label: "Partenaire"
+    value: "Osanwe — Viviane Morelle"
+    href: "https://osanwe.com/"
+  - label: "Intervention"
+    value: "Capture graphique en direct"
+  - label: "Sujet"
+    value: "« Le Cèdre de l'Atlas, de la graine aux produits finis »"
 publishDate: 2026-08-06
 ---
 

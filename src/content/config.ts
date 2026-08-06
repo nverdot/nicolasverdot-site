@@ -31,6 +31,11 @@ const caseStudies = defineCollection({
     offerLabel: z.string().optional(),
     ctaTitle: z.string().optional(),
     ctaSubtitle: z.string().optional(),
+    factsheet: z.array(z.object({
+      label: z.string(),
+      value: z.string(),
+      href: z.string().optional(),
+    })).optional(),
     publishDate: z.date(),
     draft: z.boolean().optional().default(false),
   }),

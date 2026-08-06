@@ -8,6 +8,19 @@ offerHref: "/offres/deleguer-animation/"
 offerLabel: "Voir l'offre déléguer l'animation"
 ctaTitle: "Un territoire ou un collectif d'acteurs à faire coopérer ?"
 ctaSubtitle: "Je peux concevoir et animer, avec mon équipe, les ateliers qui permettront à vos acteurs de construire ensemble des réponses concrètes."
+factsheet:
+  - label: "Organisation"
+    value: "Mission d'Appui et de Ressources aux ESMS de Corse"
+  - label: "Format"
+    value: "Deux ateliers de deux jours"
+  - label: "Équipe"
+    value: "Deux facilitateurs et une facilitatrice graphique"
+  - label: "Public"
+    value: "Établissements, institutions et professionnels du secteur du handicap"
+  - label: "Approche"
+    value: "Intelligence collective, cartographie, conception de parcours et facilitation graphique"
+  - label: "Finalité"
+    value: "Mobiliser l'expertise du territoire pour faire émerger des solutions concrètes au service des enfants et de leurs familles"
 publishDate: 2026-08-06
 ---
 
@@ -117,14 +130,3 @@ Nous n'étions pas là pour apporter des solutions médico-sociales toutes faite
 - transformer les constats en propositions concrètes.
 
 Cette neutralité sur le contenu nous permettait de nous concentrer pleinement sur la qualité du processus collectif et sur la capacité du groupe à construire ses propres réponses.
-
-**En bref**
-
-- Client : LaMAREC — Mission d'Appui et de Ressources aux ESMS de Corse
-- Format : deux ateliers de deux jours
-- Équipe : deux facilitateurs et une facilitatrice graphique
-- Public : établissements, institutions et professionnels du secteur du handicap
-- Mission 1 : faire évoluer les IME vers une offre plus territoriale, modulaire et inclusive
-- Mission 2 : améliorer le diagnostic précoce et la continuité des parcours
-- Approche : intelligence collective, cartographie, conception de parcours et facilitation graphique
-- Finalité : mobiliser l'expertise du territoire pour faire émerger des solutions concrètes au service des enfants et de leurs familles
