@@ -241,6 +241,13 @@ const caseStudies = await Promise.all(
   body.case-modal-lock-scroll {
     overflow: hidden;
   }
+  /* Astro n'expanse pas :global() imbriqué dans :has() — cette règle doit
+     donc vivre dans un bloc is:global plutôt que dans le <style> scopé
+     ci-dessous, sans quoi le sélecteur compilé reste invalide et le
+     navigateur l'ignore silencieusement. */
+  .case-modal-header:has(.case-tabs) {
+    padding-bottom: 0;
+  }
 </style>
 
 <style>
@@ -475,10 +482,14 @@ const caseStudies = await Promise.all(
       grid-template-columns: 1fr;
     }
   }
+  /* Quand des onglets sont présents, le bandeau perd son padding bas (règle
+     dans le <style is:global> plus haut) : les onglets viennent se coller
+     exactement à la charnière avec le corps clair, pour qu'ils aient l'air
+     de vrais onglets de classeur plutôt que des puces flottantes. */
   .case-modal-header :global(.case-tabs) {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2);
+    gap: 3px;
     margin-top: var(--space-4);
   }
   .case-modal-header :global(.case-tab) {
@@ -488,33 +499,47 @@ const caseStudies = await Promise.all(
     text-align: left;
     line-height: 1.3;
     padding: var(--space-2) var(--space-3);
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.8);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-bottom: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
-    transition: background-color 160ms ease-out, color 160ms ease-out, border-color 160ms ease-out;
+    transition: background-color 160ms ease-out, color 160ms ease-out;
   }
   @media (hover: hover) and (pointer: fine) {
     .case-modal-header :global(.case-tab:hover) {
-      background: rgba(255, 255, 255, 0.18);
-      color: var(--color-white);
+      background: rgba(255, 255, 255, 0.16);
+      color: rgba(255, 255, 255, 0.88);
     }
   }
+  /* Même hauteur pour tous les onglets : c'est le conteneur (flush contre
+     la charnière via padding-bottom:0 sur le bandeau) qui garantit que la
+     dernière ligne touche le corps clair, quel que soit le nombre de
+     lignes — robuste même quand des libellés longs forcent un retour à
+     la ligne (ex. 3 onglets Air France-KLM). */
   .case-modal-header :global(.case-tab[aria-selected='true']) {
-    background: var(--color-orange);
-    border-color: var(--color-orange);
-    color: var(--color-ink-solid);
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    color: var(--color-navy);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .case-modal-header :global(.case-tab[aria-selected='true']:hover) {
+      background: var(--color-surface);
+      color: var(--color-navy);
+    }
   }
   .case-modal-content :global(.case-mission) {
-    animation: case-mission-fade 160ms ease-out;
+    animation: case-mission-fade 200ms ease-out;
   }
   @keyframes case-mission-fade {
     from {
       opacity: 0;
+      transform: translateY(6px);
     }
     to {
       opacity: 1;
+      transform: translateY(0);
     }
   }
 </style>
