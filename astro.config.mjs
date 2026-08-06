@@ -41,5 +41,13 @@ export default defineConfig({
     '/secteurs/cannes': '/seminaires-alpes-maritimes/',
     '/secteurs/antibes': '/seminaires-alpes-maritimes/',
     '/secteurs/monaco': '/seminaires-alpes-maritimes/',
+    // Refonte de l'offre (2026-08) : 7 offres → 6 prestations. Décider
+    // ensemble/Aligner l'équipe deviennent des thématiques traitées via
+    // Déléguer l'animation ; Séminaires et ateliers est scindé en deux
+    // pages ; Dynamique durable devient Coaching d'équipe.
+    '/offres/decider-ensemble': '/offres/deleguer-animation/',
+    '/offres/aligner-equipe': '/offres/deleguer-animation/',
+    '/offres/seminaires-ateliers': '/offres/deleguer-animation/',
+    '/offres/dynamique-durable': '/offres/coaching-equipe/',
   },
 });

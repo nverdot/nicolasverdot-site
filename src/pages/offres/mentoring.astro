@@ -1,0 +1,311 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { withBase } from '../../utils/url';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Mentoring de facilitateur',
+  name: 'Mentoring de facilitateur',
+  description:
+    "Je co-construis votre séminaire ou atelier avec vous, et je vous prépare à l'animer vous-même : posture, déroulé, méthodes et répétition des moments sensibles.",
+  provider: { '@type': 'Person', name: 'Nicolas Verdot', url: new URL(withBase('/a-propos/'), Astro.site).toString() },
+  areaServed: { '@type': 'Country', name: 'France' },
+  url: new URL(withBase('/offres/mentoring/'), Astro.site).toString(),
+};
+
+const pains = [
+  'Un programme trop chargé et peu participatif',
+  'Des prises de parole interminables',
+  'Beaucoup d\'idées, mais aucune vraie décision',
+  'Des participants qui décrochent',
+  'Une énergie positive qui retombe dès le lendemain',
+  'Des engagements qui ne sont jamais suivis',
+];
+
+const bring = [
+  {
+    title: "Facilitation d'intelligence collective",
+    text: "Je construis avec vous un processus qui permet aux participants de comprendre, contribuer, confronter leurs points de vue, décider et agir. Ce n'est pas simplement « faire participer » : chaque méthode est choisie en fonction de l'objectif recherché.",
+  },
+  {
+    title: 'Une posture de facilitateur qui se travaille',
+    text: "Concevoir un déroulé est une chose. Tenir le cadre devant le groupe, encaisser un silence ou une tension, en est une autre. C'est cette posture que nous travaillons ensemble avant le jour J.",
+  },
+  {
+    title: 'Une approche ancrée dans le terrain',
+    text: "Je ne propose pas un déroulé théorique déconnecté de la réalité : les contraintes des managers, les tensions dans les équipes, les décisions difficiles à faire vivre, les imprévus du jour J.",
+  },
+];
+
+const buildTogether = {
+  title: 'La conception',
+  bullets: ["L'intention du séminaire", 'Les résultats attendus', 'Le niveau de participation', 'Le macro-déroulé', 'Les séquences et méthodes', 'Les rôles de chacun', 'Les modalités de suivi'],
+};
+
+const prepAnimate = {
+  title: 'Votre préparation à l\'animation',
+  bullets: ['Clarifier votre objectif', 'Choisir les bonnes méthodes', 'Préparer les consignes', 'Anticiper les réactions du groupe', 'Travailler votre posture', 'Répéter les moments sensibles', "Débriefer après l'animation"],
+};
+
+const process = [
+  { title: 'Cadrer', text: "Nous clarifions le contexte, les participants, les tensions, les objectifs et ce qui devra être différent à la fin." },
+  { title: 'Concevoir', text: 'Nous transformons l\'intention en processus : rythme, séquences, méthodes, consignes, supports et modalités de décision.' },
+  { title: 'Préparer', text: 'Nous sécurisons les rôles, la logistique, les prises de parole, les supports, les situations sensibles — et votre posture.' },
+  { title: 'Faciliter', text: "Le jour J, c'est vous qui animez. Je reste en soutien sur le processus, disponible si besoin selon la formule choisie." },
+  { title: 'Ancrer', text: 'Nous débriefons ensemble : ce qui a fonctionné, ce qui était difficile, ce qui nourrit votre prochaine animation.' },
+];
+
+const formats = [
+  { title: "Séminaire d'alignement", text: 'Clarifier une direction commune, les priorités et les contributions de chacun.' },
+  { title: 'Réunion d\'équipe régulière', text: 'Faire monter en compétence un manager qui anime déjà ses propres temps collectifs.' },
+  { title: 'Atelier de résolution', text: 'Débloquer une situation complexe, analyser les causes et construire des réponses.' },
+  { title: 'Atelier de transformation', text: 'Faire participer les équipes à une évolution organisationnelle, culturelle ou managériale.' },
+  { title: 'Journée de cohésion utile', text: 'Renforcer les relations tout en travaillant sur un véritable enjeu collectif.' },
+  { title: 'Formation-action', text: "Apprendre à faciliter en concevant et en animant un vrai sujet, pas un cas d'école." },
+];
+
+const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fishbowl', 'Les Liberating Structures', 'Les ateliers de priorisation', 'Les conversations structurées', 'La facilitation graphique', 'Les métaphores et supports visuels'];
+---
+
+<Layout
+  title="Mentoring de facilitateur — by Nicolas Verdot"
+  description="Je co-construis votre séminaire ou atelier avec vous, et je vous prépare à l'animer vous-même : posture, déroulé, méthodes et répétition des moments sensibles."
+  path="/offres/mentoring/"
+  breadcrumbs={[
+    { name: 'Accueil', path: '/' },
+    { name: 'Les offres', path: '/offres/' },
+    { name: 'Mentoring', path: '/offres/mentoring/' },
+  ]}
+>
+  <PageHero
+    eyebrow="Mentoring · Co-construction · Posture de facilitateur"
+    title="Vous concevez et animez, je vous accompagne à chaque étape"
+    summary="Je co-construis votre séminaire ou atelier avec vous, et je vous prépare à l'animer vous-même — posture, déroulé, méthodes, répétition des moments sensibles."
+    pills={['Séminaires', 'Ateliers stratégiques', "Journées d'équipe", 'Formation-action']}
+  />
+
+  <div class="container hero-cta-row">
+    <a href={withBase('/contact/')} class="btn">Être accompagné pour faciliter →</a>
+    <a href={withBase('/offres/deleguer-animation/')} class="btn-outline">Le sujet est trop sensible ? Déléguez-moi la facilitation</a>
+  </div>
+
+  <section class="section" data-reveal>
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Le problème</p>
+        <h2>Un séminaire ne devrait pas être une réunion en plus</h2>
+        <ul class="pain-list">
+          {pains.map((p) => <li>{p}</li>)}
+        </ul>
+      </div>
+      <div class="quote">
+        <blockquote>Vous connaissez votre contexte, vos équipes et vos enjeux. J'apporte mon expertise de la facilitation, du processus et de la dynamique collective.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Ce que j'apporte</p>
+          <h2>Trois choses que vous ne trouverez pas ensemble ailleurs</h2>
+        </div>
+      </div>
+      <div class="cards">
+        {bring.map((b) => (
+          <article class="card">
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Ce qu'on construit ensemble</p>
+          <h2>De la conception à la posture, jusqu'au jour J</h2>
+        </div>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <h3>{buildTogether.title}</h3>
+          <ul class="build-bullets">
+            {buildTogether.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        </article>
+        <article class="card">
+          <h3>{prepAnimate.title}</h3>
+          <ul class="build-bullets">
+            {prepAnimate.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        </article>
+      </div>
+      <p class="muted ideal-note"><strong>Idéal si :</strong> un manager, un chef de projet ou un facilitateur interne souhaite garder l'animation, avec ou sans rester impliqué dans la conception.</p>
+    </div>
+  </section>
+
+  <section class="section dark" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Mon processus</p>
+          <h2>Cadrer → Concevoir → Préparer → Faciliter → Ancrer</h2>
+        </div>
+      </div>
+      <div class="method process-method">
+        {process.map((s, i) => (
+          <div class="step">
+            <b>{String(i + 1).padStart(2, '0')}</b>
+            <strong>{s.title}</strong>
+            <span>{s.text}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Les formats</p>
+          <h2>Des situations concrètes, pas une liste de prestations</h2>
+        </div>
+      </div>
+      <div class="cards">
+        {formats.map((f) => (
+          <article class="card">
+            <h3>{f.title}</h3>
+            <p>{f.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="panel">
+        <p class="eyebrow">Les méthodes</p>
+        <h2>Des méthodes choisies pour leur utilité, pas pour suivre une mode</h2>
+        <ul class="methods-list">
+          {methods.map((m) => <li>{m}</li>)}
+        </ul>
+        <p class="muted">La méthode n'est jamais le point de départ. Je pars du résultat attendu, puis je construis le processus adapté.</p>
+      </div>
+    </div>
+  </section>
+
+  <CTABlock
+    eyebrow="Un séminaire à concevoir et à animer vous-même ?"
+    title="Vous n'avez pas besoin d'être déjà un facilitateur expérimenté."
+    subtitle="Pendant ce premier échange, nous clarifierons la situation, le sujet et le niveau de préparation dont vous avez besoin."
+    ctaLabel="Être accompagné pour faciliter"
+  />
+
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+</Layout>
+
+<style>
+  .hero-cta-row {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    margin-top: calc(var(--space-8) * -1);
+    margin-bottom: var(--space-8);
+  }
+  .pain-list {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .pain-list li {
+    position: relative;
+    padding-left: var(--space-6);
+    color: var(--color-ink);
+  }
+  .pain-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 10px;
+    height: 3px;
+    background: var(--color-clay);
+    border-radius: 2px;
+  }
+  .muted {
+    color: var(--color-muted);
+  }
+  .build-bullets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+  .build-bullets li::before {
+    content: '— ';
+    color: var(--color-orange-ink);
+  }
+  .ideal-note {
+    margin-top: var(--space-6);
+  }
+  .process-method {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .process-method .step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .process-method .step strong {
+    color: var(--color-white);
+  }
+  .process-method .step span {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.75);
+  }
+  .methods-list {
+    list-style: none;
+    margin: var(--space-6) 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2) var(--space-4);
+  }
+  .methods-list li {
+    position: relative;
+    padding-left: var(--space-4);
+    font-weight: 600;
+    color: var(--color-navy);
+  }
+  .methods-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-orange-ink);
+  }
+  @media (max-width: 900px) {
+    .process-method {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .methods-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -56,7 +56,7 @@ export const expertisePanels: ExpertisePanel[] = [
       },
     ],
     actions: [
-      { label: 'Déléguer la facilitation de votre séminaire ou atelier', href: '/offres/seminaires-ateliers/' },
+      { label: 'Déléguer la facilitation de votre séminaire ou atelier', href: '/offres/deleguer-animation/' },
       { label: 'Se former à la posture de leader facilitateur', href: '/formations/' },
       { label: 'Parler de votre projet', href: '/contact/' },
     ],
@@ -167,8 +167,8 @@ export const expertisePanels: ExpertisePanel[] = [
       },
     ],
     actions: [
-      { label: 'Construire une démarche collective', href: '/offres/aligner-equipe/' },
-      { label: "Déléguer la facilitation d'un temps collectif", href: '/offres/seminaires-ateliers/' },
+      { label: 'Construire une démarche collective', href: '/offres/deleguer-animation/' },
+      { label: "Déléguer la facilitation d'un temps collectif", href: '/offres/deleguer-animation/' },
       { label: 'Parler de votre enjeu', href: '/contact/' },
     ],
   },
@@ -241,8 +241,8 @@ export const expertisePanels: ExpertisePanel[] = [
       },
     ],
     actions: [
-      { label: 'Faire évoluer la coopération de votre collectif', href: '/offres/dynamique-durable/' },
-      { label: "Organiser un temps de travail d'équipe", href: '/offres/seminaires-ateliers/' },
+      { label: 'Faire évoluer la coopération de votre collectif', href: '/offres/coaching-equipe/' },
+      { label: "Organiser un temps de travail d'équipe", href: '/offres/deleguer-animation/' },
       { label: 'Parler de votre situation', href: '/contact/' },
     ],
   },
@@ -278,7 +278,7 @@ export const expertisePanels: ExpertisePanel[] = [
       },
     ],
     actions: [
-      { label: 'Faire évoluer vos pratiques de travail', href: '/offres/dynamique-durable/' },
+      { label: 'Faire évoluer vos pratiques de travail', href: '/offres/coaching-equipe/' },
       { label: 'Former vos équipes à l\'agilité', href: '/formations/' },
       { label: 'Parler de votre contexte', href: '/contact/' },
     ],

@@ -7,11 +7,10 @@ export interface Priority {
 }
 
 export const priorities: Priority[] = [
-  { title: 'Clarifier un sujet et décider ensemble', text: 'Transformer un sujet complexe en choix clairs, compris par les personnes concernées et suivis d\'actions concrètes.', href: withBase('/offres/decider-ensemble/') },
-  { title: 'Construire une direction commune', text: "Faire émerger une vision partagée, définir les priorités et permettre à chacun de comprendre la direction et la manière d'y contribuer.", href: withBase('/offres/aligner-equipe/') },
-  { title: 'Concevoir un temps collectif vraiment utile', text: 'Préparer et faciliter un séminaire, un atelier ou une rencontre qui permet de comprendre, décider, construire ou passer à l\'action — pas simplement de remplir un agenda.', href: withBase('/offres/seminaires-ateliers/') },
-  { title: 'Faire vivre une transformation', text: 'Donner du sens à une évolution, associer les équipes à sa construction et transformer une intention stratégique en changements concrets dans le quotidien.', href: withBase('/offres/accompagnement-transformation/') },
-  { title: "Renforcer la coopération et l'autonomie", text: "Faire évoluer les rôles, les interactions, les modes de décision et les façons de travailler pour permettre au collectif d'avancer plus efficacement dans la durée.", href: withBase('/offres/dynamique-durable/') },
-  { title: 'Faire évoluer la posture des leaders', text: 'Prendre du recul sur sa manière de diriger, décider et interagir afin de mobiliser les équipes avec davantage de clarté, de confiance et de justesse.', href: withBase('/offres/coaching-professionnel/') },
-  { title: 'Rendre une réflexion collective visible et mémorable', text: "Grâce à la facilitation graphique et à la capture graphique, traduire en direct vos séminaires, ateliers ou conférences en fresques visuelles qui aident à comprendre, se souvenir et embarquer ceux qui n'étaient pas là.", href: withBase('/offres/capture-graphique/') },
+  { title: "Déléguer l'animation d'un temps collectif", text: "Je conçois et j'anime votre séminaire ou atelier de bout en bout — cadrage, facilitation graphique, synthèse et prochaines étapes.", href: withBase('/offres/deleguer-animation/') },
+  { title: 'Mentoring', text: "Je co-construis avec vous, et je vous prépare à animer vous-même : posture, déroulé, méthodes, répétition des moments sensibles.", href: withBase('/offres/mentoring/') },
+  { title: 'Facilitation graphique / Capture graphique', text: "Grâce à la facilitation graphique et à la capture graphique, traduire en direct vos séminaires, ateliers ou conférences en fresques visuelles qui aident à comprendre, se souvenir et embarquer ceux qui n'étaient pas là.", href: withBase('/offres/capture-graphique/') },
+  { title: 'Coaching individuel', text: 'Travailler la posture, les interactions et la sécurité intérieure du leader facilitateur, en tête-à-tête.', href: withBase('/offres/coaching-professionnel/') },
+  { title: 'Accompagnement des transformations', text: 'Débloquer une transformation qui reste sur le papier en créant les conditions d\'un changement réellement adopté.', href: withBase('/offres/accompagnement-transformation/') },
+  { title: "Coaching d'équipe", text: "Un dispositif combiné dans la durée — séminaires, ateliers réguliers et coaching du manager — pour faire évoluer la façon de travailler et de décider.", href: withBase('/offres/coaching-equipe/') },
 ];

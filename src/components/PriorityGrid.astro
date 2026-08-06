@@ -9,16 +9,16 @@ interface Props {
 }
 
 const {
-  sectionName = 'Vos priorités',
-  lead = 'Lancer un projet, prendre une décision, mobiliser une équipe, accompagner une transformation ou faire évoluer une posture…',
-  description = 'Voici les besoins que je rencontre le plus souvent dans mes accompagnements. Ils peuvent se présenter seuls ou se combiner selon votre situation.',
+  sectionName = 'Comment travailler ensemble',
+  lead = "Six façons de vous accompagner, du séminaire clé en main à l'accompagnement individuel.",
+  description = "Chacune répond à un mode d'intervention différent. Elles peuvent se combiner selon votre situation.",
 } = Astro.props;
 ---
 
 <section class="priorities section" data-reveal data-section-name={sectionName}>
   <div class="container">
     <div class="priorities-intro">
-      <h2>Quelle avancée voulez-vous rendre possible ?</h2>
+      <h2>Comment travailler ensemble ?</h2>
       {lead && <p class="priorities-lead">{lead}</p>}
       {description && <p>{description}</p>}
     </div>

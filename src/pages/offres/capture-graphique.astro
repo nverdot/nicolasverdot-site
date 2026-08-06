@@ -16,6 +16,19 @@ const serviceSchema = {
   url: new URL(withBase('/offres/capture-graphique/'), Astro.site).toString(),
 };
 
+const variants = [
+  {
+    title: 'Capture graphique',
+    text: "J'écoute et je synthétise visuellement vos tables rondes, conférences ou réunions stratégiques en temps réel. Vous repartez avec une fresque claire, mémorable et partageable — sans changer l'organisation de votre événement.",
+    ideal: 'un événement déjà cadré, où vous voulez une trace visuelle forte du contenu.',
+  },
+  {
+    title: 'Facilitation graphique du process',
+    text: "J'intègre l'équipe d'organisation en amont pour co-concevoir le déroulé, puis je rends visuelles toutes les étapes de la réflexion collective. Vous repartez avec un processus qui permet de voir les idées émerger et les décisions se construire, pas seulement un résumé après coup.",
+    ideal: "vous voulez que le visuel serve aussi à faire réfléchir et décider le groupe, pas uniquement à en garder une trace.",
+  },
+];
+
 const checks = [
   { i: '1', title: 'Écouter en temps réel', text: "Je suis les prises de parole, les échanges et les moments clés de l'événement." },
   { i: '2', title: "Extraire l'essentiel", text: 'Les idées fortes, les décisions, les tensions, les messages importants et les liens entre les sujets.' },
@@ -47,7 +60,7 @@ const steps = [
 
 const faqs = [
   { q: 'Est-ce que la capture graphique peut être projetée en direct ?', a: 'Oui. Une capture digitale peut être projetée en temps réel selon la configuration technique de l\'événement.' },
-  { q: 'Quelle est la différence avec la facilitation graphique ?', a: 'La capture graphique consiste principalement à écouter et synthétiser visuellement les échanges. La facilitation graphique peut aller plus loin en aidant directement le groupe à réfléchir, contribuer ou décider.' },
+  { q: 'Quelle est la différence entre capture graphique et facilitation graphique ?', a: "La capture graphique consiste principalement à écouter et synthétiser visuellement les échanges d'un événement déjà cadré. La facilitation graphique du process va plus loin : j'interviens en amont sur la conception du déroulé, et le visuel aide directement le groupe à réfléchir, contribuer et décider — pas seulement à en garder une trace. Les deux options sont détaillées plus haut sur cette page." },
   { q: 'Peux-tu capturer plusieurs ateliers en parallèle ?', a: 'Seul, non. Pour plusieurs salles simultanées, je peux mobiliser un réseau de facilitateurs graphiques de confiance.' },
   { q: 'Peut-on garder la fresque originale ?', a: 'Oui, lorsque la capture est réalisée sur support physique et que cela est prévu dans le devis.' },
   { q: 'Est-ce que tu peux respecter notre charte graphique ?', a: 'Oui. Le style peut être adapté à votre identité, tout en conservant la lisibilité nécessaire à une capture réalisée en direct.' },
@@ -103,6 +116,27 @@ const faqSchema = {
     <div class="container">
       <div class="section-head">
         <div>
+          <p class="eyebrow">Deux façons de travailler ensemble</p>
+          <h2>Capture pure, ou co-conception du process</h2>
+        </div>
+        <p>Selon si vous voulez une trace visuelle du contenu, ou que le visuel serve aussi à faire avancer la réflexion du groupe.</p>
+      </div>
+      <div class="cards">
+        {variants.map((v) => (
+          <article class="card">
+            <h3>{v.title}</h3>
+            <p>{v.text}</p>
+            <p class="muted variant-ideal"><strong>Idéal si :</strong> {v.ideal}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
           <p class="eyebrow">Bénéfices</p>
           <h2>Pourquoi intégrer une capture graphique ?</h2>
         </div>
@@ -119,7 +153,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section" data-reveal>
+  <section class="section alt" data-reveal>
     <div class="container prose">
       <p class="eyebrow">Événements</p>
       <h2>Pour quels événements ?</h2>
@@ -129,7 +163,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section alt" data-reveal>
+  <section class="section" data-reveal>
     <div class="container">
       <p class="eyebrow">Déroulé</p>
       <h2>Comment cela fonctionne ?</h2>
@@ -141,7 +175,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section" data-reveal>
+  <section class="section alt" data-reveal>
     <div class="container">
       <div class="panel">
         <p class="eyebrow">Zone d'intervention & tarif</p>
@@ -153,7 +187,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section alt" data-reveal>
+  <section class="section" data-reveal>
     <div class="container prose">
       <p class="eyebrow">FAQ</p>
       <h2>Questions fréquentes</h2>
@@ -184,5 +218,10 @@ const faqSchema = {
   }
   .panel .btn {
     margin-top: var(--space-4);
+  }
+  .variant-ideal {
+    font-size: var(--text-sm);
+    margin-top: var(--space-3);
+    margin-bottom: 0;
   }
 </style>
