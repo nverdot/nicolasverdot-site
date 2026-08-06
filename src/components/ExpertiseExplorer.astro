@@ -30,31 +30,37 @@ import { withBase } from '../utils/url';
       hidden
     >
       <div class="expertise-panel-inner">
-        <button type="button" class="expertise-panel-close" data-expertise-close aria-label="Fermer">✕</button>
-        <p class="expertise-panel-eyebrow">Expertise</p>
-        <h4 id={`expertise-panel-title-${p.slug}`}>{p.label}</h4>
-        <p class="expertise-panel-definition">{p.definition}</p>
-        <p class="expertise-panel-description">{p.description}</p>
-
-        <p class="expertise-panel-subhead">Utile pour</p>
-        <ul class="expertise-panel-list">
-          {p.usefulFor.map((u) => <li>{u}</li>)}
-        </ul>
-
-        <p class="expertise-panel-subhead">Manières de travailler ensemble</p>
-        <div class="expertise-panel-approaches">
-          {p.approaches.map((a) => (
-            <div class="expertise-approach">
-              <strong>{a.title}</strong>
-              <span>{a.text}</span>
-            </div>
-          ))}
+        <div class="expertise-panel-header">
+          <button type="button" class="expertise-panel-close" data-expertise-close aria-label="Fermer">✕</button>
+          <p class="expertise-panel-eyebrow">Expertise</p>
+          <h4 id={`expertise-panel-title-${p.slug}`}>{p.label}</h4>
         </div>
+        <div class="expertise-panel-body">
+          <p class="expertise-panel-definition">{p.definition}</p>
+          <p class="expertise-panel-description">{p.description}</p>
 
-        <div class="expertise-panel-actions">
-          {p.actions.map((action, i) => (
-            <a class={i === 0 ? 'btn' : 'btn-outline'} href={withBase(action.href)}>{action.label}</a>
-          ))}
+          <div class="expertise-panel-block">
+            <p class="expertise-panel-subhead">Utile pour</p>
+            <ul class="expertise-panel-list">
+              {p.usefulFor.map((u) => <li>{u}</li>)}
+            </ul>
+          </div>
+
+          <p class="expertise-panel-subhead">Manières de travailler ensemble</p>
+          <div class="expertise-panel-approaches">
+            {p.approaches.map((a) => (
+              <div class="expertise-approach">
+                <strong>{a.title}</strong>
+                <span>{a.text}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="expertise-panel-actions">
+            {p.actions.map((action, i) => (
+              <a class={i === 0 ? 'btn' : 'btn-outline'} href={withBase(action.href)}>{action.label}</a>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -225,12 +231,23 @@ import { withBase } from '../utils/url';
     max-width: 560px;
     max-height: 85vh;
     overflow-y: auto;
-    padding: var(--space-6);
     transform: scale(0.95);
     transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
   }
   .expertise-panel[data-open] .expertise-panel-inner {
     transform: scale(1);
+  }
+
+  /* En-tête coloré façon carte d'information : distingue nettement le
+     "quoi" (titre) du contenu détaillé qui suit. */
+  .expertise-panel-header {
+    position: relative;
+    background: var(--color-ink-solid);
+    color: var(--color-white);
+    padding: var(--space-6);
+  }
+  .expertise-panel-body {
+    padding: var(--space-6);
   }
 
   .expertise-panel-close {
@@ -240,9 +257,9 @@ import { withBase } from '../utils/url';
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1px solid var(--color-border);
-    background: var(--color-cream);
-    color: var(--color-navy);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--color-white);
     font-size: var(--text-sm);
     cursor: pointer;
     display: grid;
@@ -250,7 +267,7 @@ import { withBase } from '../utils/url';
     transition: transform 160ms ease-out, background-color 160ms ease-out;
   }
   .expertise-panel-close:hover {
-    background: var(--color-border);
+    background: rgba(255, 255, 255, 0.24);
   }
   .expertise-panel-close:active {
     transform: scale(0.94);
@@ -261,14 +278,14 @@ import { withBase } from '../utils/url';
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-orange-ink);
+    color: var(--color-orange);
     margin: 0 0 var(--space-1);
   }
   .expertise-panel h4 {
-    margin: 0 0 var(--space-3);
+    margin: 0;
     font-size: var(--text-2xl);
     font-family: var(--font-display);
-    color: var(--color-navy);
+    color: var(--color-white);
     padding-right: var(--space-8);
   }
   .expertise-panel-definition {
@@ -291,11 +308,23 @@ import { withBase } from '../utils/url';
     color: var(--color-muted);
     margin: 0 0 var(--space-3);
   }
+  /* "Utile pour" reçoit son propre fond pour se détacher visuellement du
+     reste du texte, plutôt que de se fondre dans la description au-dessus. */
+  .expertise-panel-block {
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-5);
+    margin: 0 0 var(--space-6);
+  }
+  .expertise-panel-block .expertise-panel-subhead {
+    margin-bottom: var(--space-2);
+  }
   .expertise-panel-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-2) var(--space-4);
-    margin: 0 0 var(--space-6);
+    margin: 0;
     padding: 0;
     list-style: none;
   }
