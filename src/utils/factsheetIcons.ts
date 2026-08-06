@@ -12,6 +12,7 @@ const ICONS: Record<string, string> = {
   'Équipe': '🧑‍🤝‍🧑',
   'Approche': '🧭',
   'Sujet': '💬',
+  'Séminaires': '🎤',
 };
 
 const DEFAULT_ICON = '🔹';

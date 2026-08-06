@@ -142,8 +142,10 @@ const icons = {
     font-size: var(--text-sm);
     padding: var(--space-1) 0;
     min-width: 0;
-    overflow-wrap: anywhere;
     transition: color 0.15s ease;
+  }
+  .footer-col a[href^='mailto:'] {
+    white-space: nowrap;
   }
   .footer-col a:hover {
     color: var(--color-white);
@@ -189,7 +191,8 @@ const icons = {
     .footer-grid {
       grid-template-columns: 1fr 1fr;
     }
-    .footer-brand {
+    .footer-brand,
+    .footer-col:last-child {
       grid-column: 1 / -1;
       margin-bottom: var(--space-4);
     }
