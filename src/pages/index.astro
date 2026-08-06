@@ -24,11 +24,6 @@ const icons: Record<string, string> = {
   target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
   bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/>',
   flag: '<path d="M5 21V4"/><path d="M5 4h14l-3 5 3 5H5"/>',
-  compass: '<circle cx="12" cy="12" r="9"/><path d="M14.5 9.5l-2 5-5 2 2-5z"/>',
-  knot: '<path d="M9 9a3 3 0 1 0 3 3V9a3 3 0 1 1 3 3"/><path d="M9 15a3 3 0 1 1 3-3v6a3 3 0 1 0 3-3"/>',
-  bridge: '<path d="M2 18h20"/><path d="M4 18v-4a8 8 0 0 1 16 0v4"/><path d="M8 18v-3M12 18v-4M16 18v-3"/>',
-  lighthouse: '<path d="M10 21h4M9 21l1-14h4l1 14"/><path d="M9.5 11h5M10 7h4"/><path d="M12 3v2M8 4.5l1.3 1M16 4.5l-1.3 1"/>',
-  path: '<path d="M4 20C8 15 6 11 10 9s6 2 10-5"/><circle cx="4" cy="20" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="4" r="1" fill="currentColor" stroke="none"/>',
 };
 
 // Ce que change un accompagnement — pas de chiffre ni de témoignage inventés :
@@ -86,15 +81,6 @@ const principles = [
   { icon: 'trending', title: 'Transformer en action', text: 'Chaque accompagnement doit produire des décisions, des priorités et une suite concrète.' },
 ];
 
-const situations = [
-  { icon: 'compass', title: 'Préparer un séminaire qui produit quelque chose' },
-  { icon: 'knot', title: 'Aligner une équipe autour d\'une direction commune' },
-  { icon: 'bridge', title: 'Faire avancer un projet complexe ou bloqué' },
-  { icon: 'people', title: 'Accompagner une transformation' },
-  { icon: 'lighthouse', title: 'Remobiliser une équipe' },
-  { icon: 'path', title: 'Aider un leader à prendre du recul' },
-];
-
 const processSteps = [
   { title: "Clarifier l'intention", text: 'Pourquoi réunir ces personnes ? Qu\'est-ce qui doit réellement changer ?' },
   { title: 'Concevoir le bon processus', text: 'Choisir les étapes, les méthodes et le niveau de participation adapté.' },
@@ -130,6 +116,8 @@ const clients = [
 const priorities = [
   { title: 'Décider ensemble, plus vite et plus clairement', text: 'Transformer un sujet complexe en décisions claires, comprises et suivies d\'actions.', href: withBase('/offres/decider-ensemble/') },
   { title: "Aligner l'équipe autour d'une direction commune", text: 'Créer une direction commune et remettre le collectif en mouvement autour de priorités réellement partagées.', href: withBase('/offres/aligner-equipe/') },
+  { title: 'Réussir un séminaire ou un temps collectif clé', text: 'Concevoir et faciliter un temps collectif qui produit vraiment quelque chose, pas une réunion de plus.', href: withBase('/offres/seminaires-ateliers/') },
+  { title: 'Accompagner une transformation', text: 'Donner du sens au changement, impliquer les équipes et transformer une intention stratégique en réalité opérationnelle.', href: withBase('/offres/accompagnement-transformation/') },
   { title: 'Installer une dynamique durable', text: 'Faire évoluer la manière de travailler, de décider et de responsabiliser les équipes dans le temps.', href: withBase('/offres/dynamique-durable/') },
   { title: 'Renforcer la posture des leaders', text: 'Travailler la posture, les interactions et la sécurité intérieure du leader.', href: withBase('/offres/coaching-professionnel/') },
 ];
@@ -249,22 +237,6 @@ const priorities = [
           <span class="path-arrow" aria-hidden="true">→</span>
           <span class="path-step">Agir</span>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="situations" data-reveal data-section-name="Vos situations">
-    <div class="container">
-      <div class="section-head">
-        <h2>À quel moment avez-vous besoin de remettre votre collectif en mouvement ?</h2>
-      </div>
-      <div class="situations-grid">
-        {situations.map((s) => (
-          <div class="situation-card">
-            <svg class="situation-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[s.icon]} />
-            <p>{s.title}</p>
-          </div>
-        ))}
       </div>
     </div>
   </section>
@@ -557,7 +529,7 @@ const priorities = [
   /* --- Vos priorités --- */
   .priority-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-4);
   }
   .priority-card {
@@ -593,7 +565,12 @@ const priorities = [
     color: var(--color-muted);
     font-size: var(--text-sm);
   }
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
+    .priority-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
     .priority-grid {
       grid-template-columns: 1fr;
     }
@@ -706,51 +683,6 @@ const priorities = [
     }
     .path-steps {
       flex-wrap: wrap;
-    }
-  }
-
-  /* --- Situations --- */
-  .situations {
-    padding: var(--space-16) 0;
-    background: var(--color-surface-alt, var(--color-cream));
-  }
-  .situations .section-head h2 {
-    max-width: 760px;
-  }
-  .situations-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-4);
-  }
-  .situation-card {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-    padding: var(--space-5);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-  }
-  .situation-icon {
-    width: 30px;
-    height: 30px;
-    color: var(--color-orange-ink);
-    flex-shrink: 0;
-  }
-  .situation-card p {
-    margin: 0;
-    font-weight: 700;
-    color: var(--color-navy);
-    font-size: var(--text-sm);
-  }
-  @media (max-width: 900px) {
-    .situations-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  @media (max-width: 560px) {
-    .situations-grid {
-      grid-template-columns: 1fr;
     }
   }
 
