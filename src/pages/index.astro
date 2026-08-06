@@ -49,6 +49,57 @@ const clients = [
   { name: 'MediaSchool' },
 ];
 
+const journeyStepsBeforeFork = [
+  {
+    title: 'Vous me partagez votre situation',
+    lead: "Vous m'expliquez votre contexte, votre intention et ce que vous aimeriez voir émerger. Votre besoin peut déjà être très clair, ou encore difficile à formuler. Vous pouvez vouloir :",
+    items: [
+      'lancer un nouveau projet',
+      'construire collectivement la suite',
+      "mobiliser des collaborateurs autour d'un enjeu",
+      'associer des parties prenantes à une décision',
+      'créer ou faire vivre une communauté',
+      'préparer un séminaire ou une rencontre',
+      'accompagner une transformation',
+      'dépasser une difficulté ou un blocage',
+    ],
+    closing: 'Nous partons simplement de là où vous en êtes.',
+  },
+  {
+    title: 'Nous clarifions ce qui compte vraiment',
+    lead: "Lors d'un premier échange approfondi, nous explorons ensemble :",
+    items: [
+      'ce que vous souhaitez obtenir',
+      'les personnes à associer',
+      'les enjeux et les contraintes',
+      'ce qui existe déjà',
+      'ce qui a éventuellement été tenté',
+      'les conditions nécessaires pour avancer',
+    ],
+    closing: 'Je vous apporte mon regard extérieur, mon expérience du terrain et mon franc-parler pour vous aider à prendre du recul, poser les bonnes questions et faire émerger ce qui compte réellement.',
+  },
+  {
+    title: 'Nous faisons émerger les premières pistes',
+    lead: 'Nous identifions les prochaines étapes possibles : les personnes à réunir, les conversations à provoquer, les décisions à préparer et le niveau de participation à créer.',
+    closing: "Cet échange permet souvent d'y voir déjà beaucoup plus clair. Il nous permet aussi de faire connaissance et de vérifier que nous avons envie de travailler ensemble, dans une relation simple, directe et de confiance.",
+  },
+];
+
+const journeyStepsAfterFork = [
+  {
+    title: 'Nous avançons, apprenons et ajustons',
+    lead: "Nous mettons en œuvre l'accompagnement, puis nous prenons le temps d'observer ce qu'il a réellement produit. Un point d'étape permet de :",
+    items: [
+      'mesurer les avancées',
+      "tirer les enseignements de l'expérience",
+      'ajuster la démarche',
+      'préparer la suite',
+      'ou permettre au collectif de continuer en autonomie',
+    ],
+    closing: "L'objectif n'est pas seulement de réussir un atelier, un séminaire ou une rencontre. Il est aussi d'aider votre organisation à mieux coopérer, décider et apprendre dans la durée.",
+  },
+];
+
 const priorities = [
   { title: 'Décider ensemble, plus vite et plus clairement', text: 'Transformer un sujet complexe en décisions claires, comprises et suivies d\'actions.', href: withBase('/offres/decider-ensemble/') },
   { title: "Aligner l'équipe autour d'une direction commune", text: 'Créer une direction commune et remettre le collectif en mouvement autour de priorités réellement partagées.', href: withBase('/offres/aligner-equipe/') },
@@ -136,37 +187,70 @@ const priorities = [
         </div>
       </div>
     </div>
-    <div class="container partner-closing">
-      <p>Une croissance à accompagner, une difficulté à traverser, un projet à lancer, une transformation à conduire ou des parties prenantes à associer à une décision : les contextes changent, mais le défi reste souvent le même — faire fonctionner l'humain pour permettre au collectif d'avancer.</p>
-      <p>J'aide les personnes concernées à se parler vraiment, à faire émerger ce qui compte, à décider, à construire un plan d'action réaliste et à tirer les enseignements de ce qui a déjà été tenté.</p>
-      <p>L'objectif n'est pas seulement de réussir un atelier ou de débloquer une situation ponctuelle. Il est aussi d'installer, dans la durée, une culture de la collaboration, de l'action et de l'apprentissage.</p>
-    </div>
   </section>
 
   <section class="trust-block" data-reveal data-section-name="Faire confiance">
     <div class="container trust-inner">
       <h2>Ensemble, mettons votre collectif en mouvement</h2>
+      <p class="trust-intro">Lancer un nouveau projet, construire une vision commune, préparer une transformation, rassembler une communauté, organiser une rencontre importante ou débloquer une situation qui n'avance plus… Quel que soit votre point de départ, vous n'avez pas besoin d'avoir déjà identifié la bonne méthode ou le bon format. Nous commençons par comprendre ce que vous souhaitez réellement rendre possible avec les personnes concernées.</p>
+
       <div class="trust-timeline">
+        {journeyStepsBeforeFork.map((step, i) => (
+          <div class="trust-step">
+            <span class="trust-step-num">{i + 1}</span>
+            <div>
+              <h3>{step.title}</h3>
+              <p>{step.lead}</p>
+              {step.items && (
+                <ul class="trust-step-list">
+                  {step.items.map((item) => <li>{item}</li>)}
+                </ul>
+              )}
+              <p class="trust-step-closing">{step.closing}</p>
+            </div>
+          </div>
+        ))}
+
         <div class="trust-step">
-          <span class="trust-step-num">1</span>
+          <span class="trust-step-num">4</span>
           <div>
-            <h3>Un premier échange</h3>
-            <p>Je commence toujours par un temps approfondi pour comprendre votre situation réelle : les enjeux, les personnes concernées, ce qui a déjà été tenté. Avec mon expérience du terrain et un franc-parler que vous apprécierez vite, nous explorons ensemble des pistes d'action — et nous apprenons à nous connaître.</p>
+            <h3>Vous choisissez la suite</h3>
+            <div class="trust-fork">
+              <div class="trust-outcome">
+                <span class="trust-outcome-label">Vous avancez en autonomie</span>
+                <p>L'échange vous a permis de clarifier votre intention, d'identifier les prochaines étapes ou de trouver une manière concrète d'agir. Vous avez ce qu'il vous faut pour poursuivre sans moi. Parfait, je suis ravi d'avoir pu vous être utile.</p>
+              </div>
+              <div class="trust-outcome">
+                <span class="trust-outcome-label">Nous construisons un accompagnement</span>
+                <p>Nous concevons ensemble un dispositif adapté à votre contexte et au résultat recherché : séminaire, atelier, facilitation, coaching, formation, accompagnement de communauté. Pas de solution toute faite ni de format plaqué à l'avance.</p>
+              </div>
+            </div>
           </div>
         </div>
+
+        {journeyStepsAfterFork.map((step, i) => (
+          <div class="trust-step">
+            <span class="trust-step-num">{i + 5}</span>
+            <div>
+              <h3>{step.title}</h3>
+              <p>{step.lead}</p>
+              {step.items && (
+                <ul class="trust-step-list">
+                  {step.items.map((item) => <li>{item}</li>)}
+                </ul>
+              )}
+              <p class="trust-step-closing">{step.closing}</p>
+            </div>
+          </div>
+        ))}
       </div>
-      <p class="trust-fork-label">Deux issues possibles</p>
-      <div class="trust-fork">
-        <div class="trust-outcome">
-          <span class="trust-outcome-label">Vous êtes autonome</span>
-          <p>Cet échange vous a suffi à y voir clair. Vous savez comment agir et n'avez plus besoin de moi. Parfait, ravi d'avoir été utile.</p>
-        </div>
-        <div class="trust-outcome">
-          <span class="trust-outcome-label">On va plus loin ensemble</span>
-          <p>Nous construisons un dispositif concret — séminaire, atelier, coaching, formation ou facilitation — avec un point d'étape pour ajuster ou passer au sujet suivant.</p>
-        </div>
+
+      <div class="trust-expertise">
+        <h3>Une expertise centrée sur l'humain</h3>
+        <p>J'accompagne les entreprises, les collectivités et les associations, quels que soient leur secteur et la nature de leurs projets. Science, industrie, technologie, intelligence artificielle, vente, conseil ou services : les métiers et les expertises changent, mais les enjeux humains restent souvent les mêmes.</p>
+        <p>Mon terrain se situe là où les personnes doivent se comprendre, contribuer, décider, coopérer et construire ensemble pour faire avancer un projet, une équipe, une communauté ou une organisation.</p>
       </div>
-      <p class="fine">Cet accompagnement s'adresse aux entreprises comme aux collectivités et associations. Je n'interviens pas sur des sujets techniques ou logiciels : mon terrain, c'est la manière dont un collectif décide, coopère et avance.</p>
+
       <a class="btn" href={SITE.bookingUrl} target="_blank" rel="noopener">Réserver un premier échange →</a>
     </div>
   </section>
@@ -395,15 +479,6 @@ const priorities = [
   .partner-intro .tool-tags {
     margin: var(--space-2) 0 0;
   }
-  .partner-closing {
-    max-width: 900px;
-    margin: var(--space-8) auto 0;
-    text-align: justify;
-    text-align-last: left;
-  }
-  .partner-closing p + p {
-    margin-top: var(--space-4);
-  }
   .partner-intro .accent-wrap {
     display: inline-block;
     position: relative;
@@ -485,21 +560,31 @@ const priorities = [
     padding: var(--space-16) 0;
   }
   .trust-inner {
-    max-width: 640px;
+    max-width: 760px;
     margin: 0 auto;
   }
   .trust-inner h2 {
     text-align: center;
-    margin: 0 0 var(--space-8);
+    margin: 0 0 var(--space-4);
+  }
+  .trust-intro {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto var(--space-8);
+    color: var(--color-muted);
+    line-height: 1.6;
   }
   .trust-timeline {
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-8);
   }
   .trust-step {
     display: flex;
     gap: var(--space-4);
     position: relative;
-    padding-bottom: var(--space-6);
+    padding-bottom: var(--space-8);
+  }
+  .trust-step:last-child {
+    padding-bottom: 0;
   }
   .trust-step::after {
     content: '';
@@ -509,6 +594,9 @@ const priorities = [
     bottom: 0;
     width: 2px;
     background: var(--color-border);
+  }
+  .trust-step:last-child::after {
+    display: none;
   }
   .trust-step-num {
     flex-shrink: 0;
@@ -528,25 +616,31 @@ const priorities = [
     margin: 0 0 var(--space-2);
     font-size: var(--text-lg);
   }
-  .trust-step p {
-    margin: 0;
+  .trust-step > div > p {
+    margin: 0 0 var(--space-3);
     color: var(--color-muted);
     line-height: 1.6;
   }
-  .trust-fork-label {
-    text-align: center;
-    font-size: var(--text-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+  .trust-step-list {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-3);
+    padding-left: var(--space-6);
     color: var(--color-muted);
-    margin: 0 0 var(--space-4);
+    line-height: 1.5;
+  }
+  .trust-step-list li {
+    font-size: var(--text-sm);
+  }
+  .trust-step-closing {
+    font-style: italic;
+    color: var(--color-navy) !important;
   }
   .trust-fork {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-4);
-    margin-bottom: var(--space-6);
+    margin-top: var(--space-3);
   }
   .trust-outcome {
     background: var(--color-surface);
@@ -569,9 +663,19 @@ const priorities = [
     font-size: var(--text-sm);
     line-height: 1.6;
   }
-  .trust-inner .fine {
+  .trust-expertise {
     text-align: center;
-    margin: 0 auto var(--space-6);
+    max-width: 620px;
+    margin: 0 auto var(--space-8);
+  }
+  .trust-expertise h3 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-xl);
+  }
+  .trust-expertise p {
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0 0 var(--space-3);
   }
   .trust-inner .btn {
     display: block;
