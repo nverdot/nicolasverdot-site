@@ -26,9 +26,9 @@ const proofItems = [
 ];
 
 const resourceArticles = [
-  { slug: 'reunionite-sept-signes', title: 'Réunionite : sept signes que vos réunions tournent à vide', description: 'Sept signes concrets que vos réunions tournent à vide, et un remède actionnable pour chacun.' },
-  { slug: 'organiser-seminaire-equipe', title: 'Organiser un séminaire d\'équipe qui change vraiment quelque chose', description: "Intention, déroulé, lieu, facilitation, suites : la méthode pour un séminaire qui produit des effets durables." },
-  { slug: 'daci-raci-qui-decide', title: 'Qui décide quoi : clarifier les rôles avec DACI et RACI', description: 'La matrice RACI et son cousin DACI clarifient qui décide, qui fait, qui est consulté.' },
+  { slug: 'reunionite-sept-signes', title: 'Réunionite : sept signes que vos réunions tournent à vide', description: 'Sept signes concrets que vos réunions tournent à vide, et un remède actionnable pour chacun.', visual: 'orange' },
+  { slug: 'organiser-seminaire-equipe', title: 'Organiser un séminaire d\'équipe qui change vraiment quelque chose', description: "Intention, déroulé, lieu, facilitation, suites : la méthode pour un séminaire qui produit des effets durables.", visual: 'orange' },
+  { slug: 'daci-raci-qui-decide', title: 'Qui décide quoi : clarifier les rôles avec DACI et RACI', description: 'La matrice RACI et son cousin DACI clarifient qui décide, qui fait, qui est consulté.', visual: '' },
 ];
 
 const clients = [
@@ -160,13 +160,7 @@ const priorities = [
         </div>
       </div>
       <div>
-        <h2>
-          Un partenaire pour passer un cap et
-          <span class="accent-wrap partner-accent">
-            (re)mettre votre collectif en mouvement
-            <svg class="ink-underline" viewBox="0 0 600 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 10 C 140 2, 300 14, 460 6 S 590 2, 596 8" /></svg>
-          </span>
-        </h2>
+        <h2>Un partenaire pour passer un cap et (re)mettre votre collectif en mouvement</h2>
         <p class="partner-lead"><strong>Imaginez…</strong></p>
         <ul class="partner-imagine-list">
           <li>Vos décisions se prennent plus vite, parce qu'elles sont mieux préparées.</li>
@@ -283,9 +277,12 @@ const priorities = [
       <div class="resources-grid">
         {resourceArticles.map((a) => (
           <a class="resource-card" href={withBase(`/blog/${a.slug}/`)}>
-            <h3>{a.title}</h3>
-            <p>{a.description}</p>
-            <span class="card-link">Lire l'article</span>
+            <div class={`article-visual resource-visual ${a.visual}`}></div>
+            <div class="resource-body">
+              <h3>{a.title}</h3>
+              <p>{a.description}</p>
+              <span class="card-link">Lire l'article</span>
+            </div>
           </a>
         ))}
       </div>
@@ -322,31 +319,6 @@ const priorities = [
   mm.add('(prefers-reduced-motion: no-preference)', () => {
     const section = document.querySelector<HTMLElement>('.proof-band');
     const path = document.querySelector<SVGPathElement>('.proof-inner .ink-underline path');
-    if (!section || !path) return;
-
-    const length = path.getTotalLength();
-    gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
-
-    const tween = gsap.to(path, {
-      strokeDashoffset: 0,
-      duration: 1,
-      delay: 0.15,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 65%',
-        toggleActions: 'play none none reverse',
-      },
-    });
-
-    return () => tween.scrollTrigger?.kill();
-  });
-
-  // Même motif .ink-underline, deuxième exemplaire indépendant : le trait sous
-  // "(re)mettre votre collectif en mouvement" dans le bloc partenaire.
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.querySelector<HTMLElement>('.partner-intro');
-    const path = document.querySelector<SVGPathElement>('.partner-intro .ink-underline path');
     if (!section || !path) return;
 
     const length = path.getTotalLength();
@@ -478,23 +450,6 @@ const priorities = [
   }
   .partner-intro .tool-tags {
     margin: var(--space-2) 0 0;
-  }
-  .partner-intro .accent-wrap {
-    display: inline-block;
-    position: relative;
-  }
-  .partner-accent {
-    color: var(--color-orange);
-  }
-  .partner-intro .ink-underline {
-    position: absolute;
-    left: 0;
-    bottom: -0.15em;
-    width: 100%;
-    height: 0.3em;
-    stroke: var(--color-orange);
-    stroke-width: 5;
-    fill: none;
   }
   .portrait-overlay-wrap {
     position: relative;
@@ -751,10 +706,9 @@ const priorities = [
   .resource-card {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
-    padding: var(--space-6);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
+    overflow: hidden;
     background: var(--color-surface);
     text-decoration: none;
     transition: transform var(--duration-hover) var(--ease-out), box-shadow var(--duration-hover) ease;
@@ -764,6 +718,16 @@ const priorities = [
       transform: translateY(-4px);
       box-shadow: var(--shadow-sm);
     }
+  }
+  .resource-visual {
+    height: 120px;
+  }
+  .resource-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    flex: 1;
   }
   .resource-card h3 {
     margin: 0;
