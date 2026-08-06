@@ -56,6 +56,16 @@ const { eyebrow, title, summary, pills = [], image, imageAlt = '', tall = false 
     justify-content: flex-end;
     min-height: clamp(520px, 68vh, 780px);
   }
+  /* Un seul bloc de texte, empilé et pleine largeur, plutôt qu'un résumé
+     étriqué dans une colonne étroite à droite du titre. */
+  .page-hero.is-tall .page-hero-inner {
+    display: block;
+  }
+  .page-hero.is-tall .page-summary {
+    margin-top: var(--space-4);
+    max-width: 56ch;
+    font-size: var(--text-xl);
+  }
   .page-hero-bg {
     position: absolute;
     inset: 0;

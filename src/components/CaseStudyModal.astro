@@ -33,7 +33,7 @@ const caseStudies = await Promise.all(
         <div class="case-modal-content">
           <Content />
         </div>
-        <a class="btn" href={withBase(`/cas-clients/${cs.slug}/`)}>Voir la page complète →</a>
+        <a class="btn" href={withBase('/cas-clients/')}>Voir les autres cas clients →</a>
       </div>
     </div>
   </div>
@@ -234,6 +234,23 @@ const caseStudies = await Promise.all(
   .case-modal-content :global(h2) {
     font-size: var(--text-xl);
     margin-top: var(--space-6);
+  }
+  .case-modal-content :global(h3) {
+    font-size: var(--text-base);
+    color: var(--color-ink);
+    margin-top: var(--space-4);
+  }
+  .case-modal-content :global(blockquote) {
+    margin: var(--space-3) 0;
+    padding-left: var(--space-3);
+    border-left: 3px solid var(--color-orange);
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    color: var(--color-navy);
+    font-style: italic;
+  }
+  .case-modal-content :global(blockquote p) {
+    margin: 0;
   }
   .case-modal-content :global(ul) {
     padding-left: var(--space-6);

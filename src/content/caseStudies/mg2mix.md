@@ -6,6 +6,9 @@ subtitle: "Conception d'un parcours d'ateliers commerciaux réplicables"
 question: "Comment aider une communauté de commerciaux à améliorer ses pratiques, augmenter ses conversions et développer son chiffre d'affaires, sans lui imposer une méthode descendante ?"
 summary: "MG2MIX voulait sortir des réunions commerciales habituelles pour proposer à ses équipes des ateliers participatifs, concrets et réplicables — sans imposer une méthode depuis le haut."
 offerHref: "/offres/seminaires-ateliers/"
+offerLabel: "Voir l'offre séminaires et ateliers"
+ctaTitle: "Vous souhaitez faire progresser votre équipe sans lui imposer une solution toute faite ?"
+ctaSubtitle: "Je peux vous accompagner pour concevoir un parcours de réunions ou d'ateliers, créer l'ensemble des supports et vous préparer à l'animer vous-même auprès de vos équipes."
 publishDate: 2026-08-06
 ---
 
