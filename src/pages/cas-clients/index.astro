@@ -29,7 +29,11 @@ const caseStudies = (await getCollection('caseStudies', ({ data }) => !data.draf
       <div class="cards">
         {caseStudies.map((cs) => (
           <article class="card">
-            <div class="num">{cs.data.client}</div>
+            {cs.data.clientLogo ? (
+              <img src={withBase(cs.data.clientLogo)} alt={cs.data.client} class="case-card-logo" />
+            ) : (
+              <div class="num">{cs.data.client}</div>
+            )}
             <h3>{cs.data.title}</h3>
             <p>{cs.data.summary}</p>
             <a class="card-link" href={withBase(`/cas-clients/${cs.slug}/`)}>Découvrir le cas client</a>
@@ -45,3 +49,14 @@ const caseStudies = (await getCollection('caseStudies', ({ data }) => !data.draf
     subtitle="Chaque accompagnement part d'une situation précise, jamais d'une méthode plaquée à l'avance."
   />
 </Layout>
+
+<style>
+  .case-card-logo {
+    display: block;
+    height: 32px;
+    width: auto;
+    max-width: 160px;
+    object-fit: contain;
+    margin-bottom: var(--space-3);
+  }
+</style>
