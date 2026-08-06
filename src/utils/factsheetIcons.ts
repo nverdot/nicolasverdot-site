@@ -13,6 +13,8 @@ const ICONS: Record<string, string> = {
   'Approche': '🧭',
   'Sujet': '💬',
   'Séminaires': '🎤',
+  'Périmètres': '🗂️',
+  'Formations': '🎓',
 };
 
 const DEFAULT_ICON = '🔹';
