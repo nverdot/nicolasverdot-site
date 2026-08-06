@@ -46,12 +46,27 @@ const caseStudies = await Promise.all(
   // Certains cas clients regroupent plusieurs missions distinctes (cf.
   // Ressources : formation des formateurs / posture DSI / organisation RH-
   // finance), chacune structurée en <h2>mission</h2> puis des <h3> internes
-  // (Le contexte, Le défi...). Un cas client à mission unique (MG2MIX) n'a
-  // que des <h2> à plat, sans <h3> — c'est ce qui distingue les deux cas
-  // sans avoir besoin d'un champ dédié dans le contenu Markdown.
+  // (Le contexte, Le défi...). Un cas client à mission unique peut très bien
+  // avoir lui aussi des <h3> (cf. Louis Vuitton : "Construire le bon
+  // processus" etc., tous à l'intérieur d'une seule section "L'accompagnement
+  // proposé") — la simple présence de <h3> ne suffit donc pas à distinguer
+  // les deux cas. Le vrai signal : dans un cas multi-missions, le motif
+  // <h2>+<h3> se répète sous au moins deux <h2> différents ; dans un cas à
+  // mission unique, les <h3> ne vivent que sous une seule section.
   function setupMissionTabs(content: HTMLElement) {
     const h2s = Array.from(content.children).filter((el): el is HTMLElement => el.tagName === 'H2');
-    if (!content.querySelector('h3') || h2s.length < 2) return;
+    if (h2s.length < 2) return;
+
+    const segmentsWithH3 = h2s.filter((h2, i) => {
+      const nextH2 = h2s[i + 1];
+      let node = h2.nextElementSibling;
+      while (node && node !== nextH2) {
+        if (node.tagName === 'H3') return true;
+        node = node.nextElementSibling;
+      }
+      return false;
+    }).length;
+    if (segmentsWithH3 < 2) return;
 
     const modalRoot = content.closest<HTMLElement>('[data-case-modal]');
     const slug = modalRoot?.dataset.caseModal ?? 'x';
