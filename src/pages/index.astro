@@ -151,7 +151,7 @@ const priorities = [
   </section>
 
   <section class="partner-intro section" data-reveal data-section-name="Nicolas Verdot, votre partenaire">
-    <div class="container split">
+    <div class="container split split-top">
       <div class="split-photo portrait portrait-overlay-wrap">
         <Image src={portrait} alt="Portrait de Nicolas Verdot" width={640} height={853} />
         <div class="portrait-overlay">
@@ -171,21 +171,38 @@ const priorities = [
         </ul>
       </div>
     </div>
+
     <div class="container">
       <div class="partner-narrative">
         <p>Lancer un nouveau projet, construire une vision commune, accompagner une croissance, préparer une transformation, faire vivre une communauté ou dépasser une situation qui s'enlise : chaque contexte est différent.</p>
         <p class="partner-question-lead">Mais une même question revient souvent :</p>
-        <p class="partner-question">Comment permettre aux personnes concernées de comprendre, décider et construire ensemble ?</p>
-        <p>Depuis plus de dix ans, j'accompagne les équipes et les organisations dans les moments où le collectif doit franchir une étape. J'observe ce qui se joue dans les interactions, les rôles, les habitudes et les modes de décision, et je fais émerger les points de vue, les attentes, les désaccords et les idées qui ont besoin d'être entendus pour permettre au groupe d'avancer.</p>
-        <p>Je conçois ensuite les espaces de travail, les conversations et les processus de collaboration adaptés à votre situation : pour explorer un sujet, partager une vision, prendre une décision, construire une solution ou passer à l'action.</p>
-        <p class="partner-question-lead">Une expertise concrète au service d'un objectif simple :</p>
-        <p class="partner-question">permettre à votre collectif d'avancer durablement.</p>
-        <div class="tool-tags">
-          <span class="tool-tag">Facilitation</span>
-          <span class="tool-tag">Coaching</span>
-          <span class="tool-tag">Intelligence collective</span>
-          <span class="tool-tag">Agilité</span>
-          <span class="tool-tag">Pensée visuelle</span>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="partner-question-frame">
+        <p>Comment permettre aux personnes concernées de comprendre, décider et construire ensemble ?</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="partner-approach">
+        <div class="partner-approach-text">
+          <p>Depuis plus de dix ans, j'accompagne les équipes et les organisations dans les moments où le collectif doit franchir une étape. J'observe ce qui se joue dans les interactions, les rôles, les habitudes et les modes de décision, et je fais émerger les points de vue, les attentes, les désaccords et les idées qui ont besoin d'être entendus pour permettre au groupe d'avancer.</p>
+          <p>Je conçois ensuite les espaces de travail, les conversations et les processus de collaboration adaptés à votre situation : pour explorer un sujet, partager une vision, prendre une décision, construire une solution ou passer à l'action.</p>
+        </div>
+        <div class="partner-approach-expertise">
+          <p class="partner-question-lead">Une expertise concrète au service d'un objectif simple :</p>
+          <p class="partner-question">permettre à votre collectif d'avancer durablement.</p>
+          <div class="tool-tags">
+            <span class="tool-tag">Facilitation</span>
+            <span class="tool-tag">Coaching</span>
+            <span class="tool-tag">Formation</span>
+            <span class="tool-tag">Intelligence collective</span>
+            <span class="tool-tag">Facilitation graphique</span>
+            <span class="tool-tag">Agilité</span>
+            <span class="tool-tag">Pensée visuelle</span>
+          </div>
         </div>
       </div>
     </div>
@@ -218,11 +235,11 @@ const priorities = [
           <div>
             <h3>Vous choisissez la suite</h3>
             <div class="trust-fork">
-              <div class="trust-outcome">
+              <div class="trust-outcome trust-outcome-closed">
                 <span class="trust-outcome-label">Vous avancez en autonomie</span>
                 <p>L'échange vous a permis de clarifier votre intention, d'identifier les prochaines étapes ou de trouver une manière concrète d'agir. Vous avez ce qu'il vous faut pour poursuivre sans moi. Parfait, je suis ravi d'avoir pu vous être utile.</p>
               </div>
-              <div class="trust-outcome">
+              <div class="trust-outcome trust-outcome-featured">
                 <span class="trust-outcome-label">Nous construisons un accompagnement</span>
                 <p>Nous concevons ensemble un dispositif adapté à votre contexte et au résultat recherché : séminaire, atelier, facilitation, coaching, formation, accompagnement de communauté. Pas de solution toute faite ni de format plaqué à l'avance.</p>
               </div>
@@ -478,12 +495,66 @@ const priorities = [
   .partner-intro .tool-tags {
     margin: var(--space-2) 0 0;
   }
+  .split-top {
+    align-items: start;
+  }
   .partner-narrative {
     max-width: 760px;
     margin-top: var(--space-12);
   }
   .partner-narrative p + p {
     margin-top: var(--space-4);
+  }
+  .partner-question-frame {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin-top: var(--space-6);
+  }
+  .partner-question-frame p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-navy);
+    line-height: 1.35;
+  }
+  .partner-approach {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--space-8);
+    align-items: start;
+    margin-top: var(--space-12);
+  }
+  .partner-approach-text p + p {
+    margin-top: var(--space-4);
+  }
+  .partner-approach-expertise {
+    background: linear-gradient(160deg, var(--color-blue), var(--color-blue-strong));
+    color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-lg);
+  }
+  .partner-approach-expertise .partner-question-lead {
+    color: rgba(255, 255, 255, 0.75);
+  }
+  .partner-approach-expertise .partner-question {
+    color: var(--color-white);
+  }
+  .partner-approach-expertise .tool-tags {
+    margin-top: var(--space-6);
+  }
+  .partner-approach-expertise .tool-tag {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--color-white);
+  }
+  @media (max-width: 900px) {
+    .partner-approach {
+      grid-template-columns: 1fr;
+    }
   }
   .portrait-overlay-wrap {
     position: relative;
@@ -659,6 +730,18 @@ const priorities = [
     font-size: var(--text-sm);
     line-height: 1.6;
   }
+  .trust-outcome-closed {
+    background: var(--color-cream);
+    opacity: 0.7;
+  }
+  .trust-outcome-featured {
+    background: var(--color-surface);
+    border: 2px solid var(--color-orange);
+    box-shadow: var(--shadow-md);
+  }
+  .trust-outcome-featured .trust-outcome-label {
+    color: var(--color-navy);
+  }
   .trust-expertise {
     background: linear-gradient(160deg, var(--color-blue), var(--color-blue-strong));
     color: var(--color-white);
@@ -666,6 +749,7 @@ const priorities = [
     padding: var(--space-8);
     box-shadow: var(--shadow-lg);
     margin: 0 0 var(--space-8);
+    text-align: center;
   }
   .trust-expertise h3 {
     margin: 0 0 var(--space-3);
