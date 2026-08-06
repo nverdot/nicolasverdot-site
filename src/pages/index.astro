@@ -187,8 +187,13 @@ const priorities = [
           <p>Je conçois ensuite les espaces de travail, les conversations et les processus de collaboration adaptés à votre situation : pour explorer un sujet, partager une vision, prendre une décision, construire une solution ou passer à l'action.</p>
         </div>
         <div class="partner-approach-expertise">
-          <p class="partner-question-lead">Une expertise concrète au service d'un objectif simple :</p>
-          <p class="partner-question">permettre à votre collectif d'avancer durablement.</p>
+          <p class="partner-expertise-title">
+            Une expertise concrète au service d'un objectif simple : permettre à votre collectif d'
+            <span class="accent-wrap">
+              avancer durablement.
+              <svg class="ink-underline" viewBox="0 0 260 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 10 C 60 2, 200 14, 256 6" /></svg>
+            </span>
+          </p>
           <div class="tool-tags">
             <span class="tool-tag">Facilitation</span>
             <span class="tool-tag">Coaching</span>
@@ -354,6 +359,31 @@ const priorities = [
       scrollTrigger: {
         trigger: section,
         start: 'top 65%',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    return () => tween.scrollTrigger?.kill();
+  });
+
+  // Même motif .ink-underline, troisième exemplaire indépendant : le trait sous
+  // "avancer durablement." dans le panneau d'expertise.
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    const section = document.querySelector<HTMLElement>('.partner-approach-expertise');
+    const path = document.querySelector<SVGPathElement>('.partner-approach-expertise .ink-underline path');
+    if (!section || !path) return;
+
+    const length = path.getTotalLength();
+    gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+
+    const tween = gsap.to(path, {
+      strokeDashoffset: 0,
+      duration: 1,
+      delay: 0.15,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 75%',
         toggleActions: 'play none none reverse',
       },
     });
@@ -527,11 +557,27 @@ const priorities = [
     padding: var(--space-4) var(--space-8) var(--space-8);
     box-shadow: var(--shadow-lg);
   }
-  .partner-intro .partner-approach-expertise .partner-question-lead {
-    color: rgba(255, 255, 255, 0.75);
-  }
-  .partner-intro .partner-approach-expertise .partner-question {
+  .partner-expertise-title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
     color: var(--color-white);
+    line-height: 1.4;
+    margin: 0;
+  }
+  .partner-approach-expertise .accent-wrap {
+    display: inline-block;
+    position: relative;
+  }
+  .partner-approach-expertise .ink-underline {
+    position: absolute;
+    left: 0;
+    bottom: -0.1em;
+    width: 100%;
+    height: 0.25em;
+    stroke: var(--color-orange);
+    stroke-width: 5;
+    fill: none;
   }
   .partner-approach-expertise .tool-tags {
     margin-top: var(--space-6);
