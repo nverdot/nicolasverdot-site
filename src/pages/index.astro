@@ -165,11 +165,12 @@ const priorities = [
 
   <section class="partner-intro section" data-reveal data-section-name="Nicolas Verdot, votre partenaire">
     <div class="container split">
-      <div>
-        <div class="split-photo portrait">
-          <Image src={portrait} alt="Portrait de Nicolas Verdot" width={640} height={853} />
+      <div class="split-photo portrait portrait-overlay-wrap">
+        <Image src={portrait} alt="Portrait de Nicolas Verdot" width={640} height={853} />
+        <div class="portrait-overlay">
+          <p class="portrait-name">Nicolas VERDOT</p>
+          <p class="portrait-role">Booster de leaders et d'équipes</p>
         </div>
-        <p class="portrait-caption"><strong>Nicolas VERDOT</strong> — Booster de leaders et d'équipes</p>
       </div>
       <div>
         <h2>Un partenaire pour passer un cap et (re)mettre votre collectif en mouvement</h2>
@@ -180,7 +181,7 @@ const priorities = [
           <li>Les tensions se traitent avant de bloquer le travail.</li>
           <li>Votre collectif retrouve l'énergie d'avancer, ensemble.</li>
         </ul>
-        <p>Mon expertise, c'est la façon dont un collectif fonctionne : comment les interactions entre les personnes, les rôles et les différentes étapes de construction d'une équipe déterminent sa capacité à s'engager sur un projet et à avancer ensemble. Je conçois les processus de collaboration et de décision qui rendent ce mouvement possible — avec ma franchise et plus de dix ans de terrain.</p>
+        <p>Un collectif qui patine n'a pas besoin d'une méthode de plus : il a besoin qu'on comprenne pourquoi il patine. C'est mon métier depuis plus de dix ans — lire les interactions, les rôles et les non-dits qui freinent une équipe, puis concevoir le processus de collaboration et de décision qui la remet en mouvement. Une expertise concrète, au service d'un seul objectif : faire avancer votre organisation.</p>
         <div class="tool-tags">
           <span class="tool-tag">Facilitation</span>
           <span class="tool-tag">Coaching</span>
@@ -188,7 +189,7 @@ const priorities = [
           <span class="tool-tag">Agilité</span>
           <span class="tool-tag">Pensée visuelle</span>
         </div>
-        <p>Dans vos projets de transformation, je fais émerger avec vous et vos équipes le chemin qui vous mène à vos objectifs — puis je vous accompagne pour le parcourir.</p>
+        <p>Peu importe le moment — une croissance à accompagner, un coup dur à traverser, un nouveau projet à lancer, une communauté à associer à une décision. Peu importe le secteur — IT, IA, industrie, association ou collectivité. Le vrai sujet reste le même : faire fonctionner l'humain. Je fais discuter, émerger ce qui compte, construire un plan d'action et apprendre de ce qui a été tenté — pour installer une vraie culture apprenante dans la durée.</p>
       </div>
     </div>
   </section>
@@ -504,14 +505,30 @@ const priorities = [
   .partner-intro .tool-tags {
     margin: var(--space-2) 0 var(--space-6);
   }
-  .portrait-caption {
-    margin: var(--space-3) 0 0;
-    font-size: var(--text-sm);
-    color: var(--color-muted);
+  .portrait-overlay-wrap {
+    position: relative;
   }
-  .portrait-caption strong {
-    color: var(--color-navy);
-    letter-spacing: 0.02em;
+  .portrait-overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: var(--space-8) var(--space-4) var(--space-4);
+    background: linear-gradient(180deg, rgba(18, 32, 51, 0) 0%, rgba(18, 32, 51, 0.9) 65%);
+    text-align: center;
+  }
+  .portrait-name {
+    margin: 0;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: rgba(255, 253, 250, 0.75);
+  }
+  .portrait-role {
+    margin: var(--space-1) 0 0;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-orange);
+    line-height: 1.2;
   }
   .partner-lead {
     font-family: var(--font-display);
@@ -531,7 +548,7 @@ const priorities = [
     line-height: 1.5;
   }
   .partner-imagine-list li {
-    padding-left: var(--space-5);
+    padding-left: var(--space-6);
     position: relative;
   }
   .partner-imagine-list li::before {
@@ -568,7 +585,7 @@ const priorities = [
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: var(--space-4) var(--space-5);
+    padding: var(--space-4) var(--space-6);
   }
   .trust-block .fine {
     max-width: 560px;
@@ -631,7 +648,7 @@ const priorities = [
   }
   .value-intro {
     max-width: 760px;
-    margin: 0 auto var(--space-10);
+    margin: 0 auto var(--space-8);
     text-align: center;
   }
   .value-statement {
@@ -689,7 +706,7 @@ const priorities = [
     background: var(--color-cream);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: var(--space-5) var(--space-6);
+    padding: var(--space-4) var(--space-6);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -739,7 +756,7 @@ const priorities = [
   .offer-rows {
     display: flex;
     flex-direction: column;
-    gap: var(--space-10);
+    gap: var(--space-8);
     margin-top: var(--space-8);
   }
   .offer-row {
@@ -799,7 +816,7 @@ const priorities = [
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--space-4);
-    margin-top: var(--space-14);
+    margin-top: var(--space-12);
   }
   .process-line {
     position: absolute;
