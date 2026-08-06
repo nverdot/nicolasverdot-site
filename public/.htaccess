@@ -1,2 +1,9 @@
 # Page 404 personnalisée.
 ErrorDocument 404 /404.html
+
+# Ancien dossier de test (avant bascule du site à la racine du domaine,
+# 2026-08) : redirige toute URL /TESTSITENV/... vers son équivalent à la
+# racine, pour éviter le contenu dupliqué tant que le dossier périmé n'a
+# pas été supprimé côté FTP.
+RewriteEngine On
+RewriteRule ^TESTSITENV/(.*)$ /$1 [R=301,L]
