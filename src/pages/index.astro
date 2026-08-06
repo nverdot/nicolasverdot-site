@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import CTABlock from '../components/CTABlock.astro';
+import ExpertiseExplorer from '../components/ExpertiseExplorer.astro';
 import { withBase } from '../utils/url';
 import { SITE } from '../data/site';
 import portrait from '../assets/nicolas-portrait.png';
@@ -194,16 +195,7 @@ const priorities = [
               <svg class="ink-underline" viewBox="0 0 260 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 10 C 60 2, 200 14, 256 6" /></svg>
             </span>
           </p>
-          <div class="tool-tags">
-            <span class="tool-tag">Facilitation</span>
-            <span class="tool-tag">Coaching</span>
-            <span class="tool-tag">Formation</span>
-            <span class="tool-tag">Intelligence collective</span>
-            <span class="tool-tag">Accompagnement du changement</span>
-            <span class="tool-tag">Coopération</span>
-            <span class="tool-tag">Agilité</span>
-            <span class="tool-tag">Facilitation graphique</span>
-          </div>
+          <ExpertiseExplorer />
         </div>
       </div>
     </div>
@@ -579,13 +571,8 @@ const priorities = [
     stroke-width: 5;
     fill: none;
   }
-  .partner-approach-expertise .tool-tags {
+  .partner-approach-expertise :global(.expertise-explorer) {
     margin-top: var(--space-6);
-  }
-  .partner-approach-expertise .tool-tag {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: var(--color-white);
   }
   @media (max-width: 900px) {
     .partner-approach {

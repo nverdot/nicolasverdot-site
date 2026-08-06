@@ -1,0 +1,376 @@
+---
+import { expertisePanels } from '../data/expertise';
+import { withBase } from '../utils/url';
+---
+
+<div class="expertise-explorer">
+  <div class="expertise-tags">
+    {expertisePanels.map((p) => (
+      <button
+        type="button"
+        class="expertise-tag"
+        data-expertise-trigger={p.slug}
+        aria-expanded="false"
+        aria-controls={`expertise-panel-${p.slug}`}
+      >
+        {p.label}
+        <span class="expertise-tag-icon" aria-hidden="true">+</span>
+      </button>
+    ))}
+  </div>
+
+  <div class="expertise-backdrop" data-expertise-backdrop hidden></div>
+
+  {expertisePanels.map((p) => (
+    <div
+      class="expertise-panel"
+      id={`expertise-panel-${p.slug}`}
+      data-expertise-panel={p.slug}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`expertise-panel-title-${p.slug}`}
+      hidden
+    >
+      <div class="expertise-panel-inner">
+        <button type="button" class="expertise-panel-close" data-expertise-close aria-label="Fermer">✕</button>
+        <p class="expertise-panel-eyebrow">Expertise</p>
+        <h4 id={`expertise-panel-title-${p.slug}`}>{p.label}</h4>
+        <p class="expertise-panel-definition">{p.definition}</p>
+        <p class="expertise-panel-description">{p.description}</p>
+
+        <p class="expertise-panel-subhead">Utile pour</p>
+        <ul class="expertise-panel-list">
+          {p.usefulFor.map((u) => <li>{u}</li>)}
+        </ul>
+
+        <p class="expertise-panel-subhead">Manières de travailler ensemble</p>
+        <div class="expertise-panel-approaches">
+          {p.approaches.map((a) => (
+            <div class="expertise-approach">
+              <strong>{a.title}</strong>
+              <span>{a.text}</span>
+            </div>
+          ))}
+        </div>
+
+        <div class="expertise-panel-actions">
+          {p.actions.map((action, i) => (
+            <a class={i === 0 ? 'btn' : 'btn-outline'} href={withBase(action.href)}>{action.label}</a>
+          ))}
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<script>
+  const explorer = document.querySelector<HTMLElement>('.expertise-explorer');
+
+  if (explorer) {
+    const backdrop = explorer.querySelector<HTMLElement>('[data-expertise-backdrop]');
+    const triggers = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-expertise-trigger]'));
+    const panels = Array.from(explorer.querySelectorAll<HTMLElement>('[data-expertise-panel]'));
+
+    let activeSlug: string | null = null;
+    let lastFocused: HTMLElement | null = null;
+
+    const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
+
+    function closeActive() {
+      if (!activeSlug || !backdrop) return;
+      const panel = panels.find((p) => p.dataset.expertisePanel === activeSlug);
+      const trigger = triggers.find((t) => t.dataset.expertiseTrigger === activeSlug);
+
+      if (panel) {
+        panel.removeAttribute('data-open');
+        const onEnd = (e: TransitionEvent) => {
+          if (e.target !== panel) return;
+          panel.hidden = true;
+          panel.removeEventListener('transitionend', onEnd);
+        };
+        panel.addEventListener('transitionend', onEnd);
+      }
+      trigger?.setAttribute('aria-expanded', 'false');
+
+      backdrop.classList.remove('is-visible');
+      window.setTimeout(() => { backdrop.hidden = true; }, 250);
+
+      document.body.classList.remove('expertise-lock-scroll');
+      activeSlug = null;
+      lastFocused?.focus();
+    }
+
+    function openPanel(slug: string, trigger: HTMLButtonElement) {
+      if (activeSlug === slug) {
+        closeActive();
+        return;
+      }
+      if (activeSlug) closeActive();
+
+      const panel = panels.find((p) => p.dataset.expertisePanel === slug);
+      if (!panel || !backdrop) return;
+
+      lastFocused = trigger;
+      panel.hidden = false;
+      backdrop.hidden = false;
+      void panel.offsetHeight; // force reflow so the entrance transition plays
+      panel.setAttribute('data-open', '');
+      backdrop.classList.add('is-visible');
+      trigger.setAttribute('aria-expanded', 'true');
+
+      if (isMobile()) document.body.classList.add('expertise-lock-scroll');
+
+      activeSlug = slug;
+      panel.querySelector<HTMLElement>('[data-expertise-close]')?.focus();
+    }
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const slug = trigger.dataset.expertiseTrigger;
+        if (slug) openPanel(slug, trigger);
+      });
+    });
+
+    panels.forEach((panel) => {
+      panel.querySelector('[data-expertise-close]')?.addEventListener('click', closeActive);
+    });
+
+    backdrop?.addEventListener('click', closeActive);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && activeSlug) closeActive();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!activeSlug) return;
+      const panel = panels.find((p) => p.dataset.expertisePanel === activeSlug);
+      const trigger = triggers.find((t) => t.dataset.expertiseTrigger === activeSlug);
+      const target = e.target as Node;
+      if (panel && !panel.contains(target) && trigger && !trigger.contains(target)) {
+        closeActive();
+      }
+    });
+  }
+</script>
+
+<style>
+  .expertise-explorer {
+    position: relative;
+  }
+  .expertise-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .expertise-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-white);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 160ms ease-out, transform 160ms ease-out, color 160ms ease-out, border-color 160ms ease-out;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .expertise-tag:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+  }
+  .expertise-tag:active {
+    transform: scale(0.97);
+  }
+  .expertise-tag[aria-expanded='true'] {
+    background: var(--color-orange);
+    border-color: var(--color-orange);
+    color: var(--color-ink-solid);
+  }
+  .expertise-tag-icon {
+    font-size: 0.85em;
+    opacity: 0.75;
+    transition: transform 200ms ease-out;
+  }
+  .expertise-tag[aria-expanded='true'] .expertise-tag-icon {
+    transform: rotate(45deg);
+  }
+
+  .expertise-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 22, 39, 0.55);
+    z-index: 40;
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+  }
+  .expertise-backdrop.is-visible {
+    opacity: 1;
+  }
+
+  .expertise-panel {
+    position: fixed;
+    z-index: 50;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(100%);
+    transition: transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .expertise-panel[data-open] {
+    transform: translateY(0);
+  }
+  .expertise-panel-inner {
+    padding: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .expertise-backdrop {
+      display: none;
+    }
+    .expertise-panel {
+      position: absolute;
+      top: calc(100% + var(--space-3));
+      left: 0;
+      right: auto;
+      bottom: auto;
+      width: min(560px, 90vw);
+      max-height: min(70vh, 640px);
+      border-radius: var(--radius-lg);
+      transform: translateY(-8px) scale(0.97);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1), opacity 220ms ease-out;
+    }
+    .expertise-panel[data-open] {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  .expertise-panel-close {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: var(--color-cream);
+    color: var(--color-navy);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: transform 160ms ease-out, background-color 160ms ease-out;
+  }
+  .expertise-panel-close:hover {
+    background: var(--color-border);
+  }
+  .expertise-panel-close:active {
+    transform: scale(0.94);
+  }
+
+  .expertise-panel-eyebrow {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-orange-ink);
+    margin: 0 0 var(--space-1);
+  }
+  .expertise-panel h4 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-2xl);
+    font-family: var(--font-display);
+    color: var(--color-navy);
+    padding-right: var(--space-8);
+  }
+  .expertise-panel-definition {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    color: var(--color-navy);
+    line-height: 1.4;
+    margin: 0 0 var(--space-3);
+  }
+  .expertise-panel-description {
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0 0 var(--space-6);
+  }
+  .expertise-panel-subhead {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-3);
+  }
+  .expertise-panel-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2) var(--space-4);
+    margin: 0 0 var(--space-6);
+    padding: 0;
+    list-style: none;
+  }
+  .expertise-panel-list li {
+    position: relative;
+    padding-left: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-ink);
+  }
+  .expertise-panel-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-orange-ink);
+  }
+  .expertise-panel-approaches {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0 0 var(--space-6);
+  }
+  .expertise-approach {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .expertise-approach strong {
+    font-size: var(--text-sm);
+    color: var(--color-navy);
+  }
+  .expertise-approach span {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+  .expertise-panel-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .expertise-panel-actions .btn,
+  .expertise-panel-actions .btn-outline {
+    text-align: center;
+  }
+
+  @media (max-width: 560px) {
+    .expertise-panel-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
