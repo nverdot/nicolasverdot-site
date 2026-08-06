@@ -341,6 +341,38 @@ const caseStudies = await Promise.all(
   .case-modal-content :global(p) {
     margin: 0 0 var(--space-3);
   }
+  .case-modal-content :global(.case-gallery) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    margin: var(--space-4) 0;
+  }
+  .case-modal-content :global(.case-gallery-wide) {
+    margin: var(--space-4) 0;
+  }
+  .case-modal-content :global(.case-gallery figure),
+  .case-modal-content :global(figure.case-gallery-wide) {
+    margin: 0;
+  }
+  .case-modal-content :global(.case-gallery img),
+  .case-modal-content :global(.case-gallery-wide img) {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+  }
+  .case-modal-content :global(figcaption) {
+    margin-top: var(--space-1);
+    font-size: 0.7rem;
+    color: var(--color-muted);
+    font-style: italic;
+  }
+  @media (max-width: 480px) {
+    .case-modal-content :global(.case-gallery) {
+      grid-template-columns: 1fr;
+    }
+  }
   .case-modal-header :global(.case-tabs) {
     display: flex;
     flex-wrap: wrap;
