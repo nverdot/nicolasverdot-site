@@ -74,10 +74,16 @@ const { eyebrow, title, summary, pills = [], image, imageAlt = '', tall = false 
     object-fit: cover;
     z-index: 0;
   }
+  /* Renforcé par rapport à un simple assombrissement léger : sur une
+     illustration claire (ciel, montagne), un texte blanc ou jaune avec un
+     scrim à 55% ne passe pas les seuils de contraste WCAG. Le dégradé
+     monte à 85% en bas de la zone (là où le texte se pose en variante
+     "tall") pour garantir une lecture correcte quel que soit le contenu
+     de l'image. */
   .page-hero-scrim {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(18, 32, 51, 0.15) 0%, rgba(18, 32, 51, 0.55) 100%);
+    background: linear-gradient(180deg, rgba(11, 22, 39, 0.35) 0%, rgba(11, 22, 39, 0.85) 100%);
     z-index: 1;
   }
   .page-hero.has-image .page-hero-inner {
@@ -86,10 +92,12 @@ const { eyebrow, title, summary, pills = [], image, imageAlt = '', tall = false 
   }
   .page-hero.has-image .eyebrow {
     color: var(--color-orange);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
   }
   .page-hero.has-image h1,
   .page-hero.has-image .page-summary {
     color: var(--color-white);
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
   }
   .visually-hidden {
     position: absolute;
