@@ -50,5 +50,7 @@ export default defineConfig({
     '/offres/aligner-equipe': '/offres/deleguer-animation/',
     '/offres/seminaires-ateliers': '/offres/deleguer-animation/',
     '/offres/dynamique-durable': '/offres/coaching-equipe/',
+    // Fusion des pages "Qui suis-je" et "Approche" en une seule (2026-08).
+    '/approche': '/a-propos/',
   },
 });

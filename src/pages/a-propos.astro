@@ -1,10 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import ApproachTimeline from '../components/ApproachTimeline.astro';
 import EcosystemBlock from '../components/EcosystemBlock.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { Image } from 'astro:assets';
 import portrait from '../assets/nicolas-portrait.png';
+import { SITE } from '../data/site';
+import { withBase } from '../utils/url';
 
 const aboutFacts = [
   { label: 'Posture', text: 'Facilitateur, coach et formateur' },
@@ -18,17 +21,73 @@ const convictions = [
   { title: "L'autonomie a besoin d'un cadre.", text: 'Une équipe agit mieux lorsqu\'elle sait ce qu\'elle peut décider et dans quelles limites.' },
   { title: 'La forme influence le fond.', text: 'Le rythme, la qualité des questions et la manière de restituer changent la qualité de la réflexion.' },
 ];
+
+const shifts = [
+  'de réunions qui tournent en rond à des conversations qui débouchent sur une décision',
+  "de décisions qui reviennent sur la table chaque mois à des choix qui tiennent",
+  "de participants qui hochent la tête à des équipes qui s'engagent vraiment",
+  "d'une stratégie que trois personnes comprennent à une direction que tout le monde partage",
+  "d'une énergie dispersée sur dix sujets à un plan d'action que le collectif porte",
+];
+
+const diffs = [
+  {
+    title: 'Vous gardez la main',
+    text: "Le collectif enrichit la décision, il ne la prend pas à votre place. Vous restez décideur — en sachant enfin sur quoi vous appuyer.",
+  },
+  {
+    title: 'Ça se voit tout de suite',
+    text: 'Chaque échange est capturé et rendu visible en direct, grâce à la facilitation graphique. Personne ne repart en se demandant ce qui a été dit.',
+  },
+  {
+    title: 'Vos équipes continuent sans moi',
+    text: "Mon objectif n'est pas de revenir animer votre prochaine réunion. C'est que vous n'en ayez plus besoin.",
+  },
+];
+
+const approachSteps = [
+  {
+    title: 'Comprendre le système',
+    text: 'Avant toute proposition, je prends le temps de comprendre votre contexte réel : qui porte quoi, ce qui a déjà été essayé, ce qui bloque en silence.',
+    bullets: ['Écouter les acteurs clés', 'Repérer les tensions sous-jacentes', 'Voir ce qui a déjà été tenté'],
+  },
+  {
+    title: "Clarifier l'intention",
+    text: "On ne conçoit rien tant que le résultat attendu n'est pas nommé noir sur blanc — et partagé par ceux qui doivent trancher.",
+    bullets: ['Nommer le résultat attendu', 'Aligner les parties prenantes', 'Prioriser ce qui compte'],
+  },
+  {
+    title: 'Concevoir le dispositif',
+    text: "Le format se choisit après le diagnostic, jamais avant. Un séminaire de direction ne se prépare pas comme un atelier d'équipe.",
+    bullets: ['Choisir le bon format', 'Séquencer les temps forts', 'Prévoir la restitution'],
+  },
+  {
+    title: 'Créer les conditions du dialogue',
+    text: 'Un cadre suffisamment sécurisant pour que les désaccords sortent — et se traitent — plutôt que de couver après la réunion.',
+    bullets: ['Poser un cadre clair', 'Autoriser le désaccord', "Préparer l'arbitrage"],
+  },
+  {
+    title: 'Rendre visible',
+    text: "Les idées, les liens et les choix se matérialisent en direct grâce à la facilitation graphique — la mémoire du collectif ne dépend plus d'un compte rendu.",
+    bullets: ['Capturer en direct', 'Relier les idées entre elles', 'Garder une trace partagée'],
+  },
+  {
+    title: 'Ancrer la suite',
+    text: "Une intervention réussie se juge à ce qui se passe après. Responsables, échéances, rituels de suivi : rien ne repart flou.",
+    bullets: ['Attribuer les responsabilités', 'Fixer les échéances', 'Installer un suivi'],
+  },
+];
 ---
 
 <Layout
-  title="Nicolas Verdot — Facilitateur professionnel, coach et formateur"
-  description="Découvrez Nicolas Verdot : coach agile, facilitateur, facilitateur graphique et formateur. Sa vision, sa mission et son parcours au service des collectifs."
+  title="Qui suis-je et comment je travaille — by Nicolas Verdot"
+  description="Découvrez Nicolas Verdot : coach agile, facilitateur, facilitateur graphique et formateur. Son parcours, ses convictions, et la méthode derrière chaque intervention."
   path="/a-propos/"
 >
   <PageHero
     eyebrow="Qui suis-je ?"
     title="Je fais bouger ce qui est bloqué."
-    summary="Ancien développeur, coach agile, facilitateur, formateur, facilitateur graphique et moniteur de plongée : un parcours qui relie structure, observation, sécurité, transmission et mise en mouvement."
+    summary="Ancien développeur, coach agile, facilitateur, formateur, facilitateur graphique et moniteur de plongée : un parcours qui relie structure, observation, sécurité, transmission et mise en mouvement. Cette page vous dit qui je suis, ce en quoi je crois, et comment je conçois chaque intervention."
   />
 
   <section class="section" data-reveal>
@@ -57,7 +116,7 @@ const convictions = [
     </div>
   </section>
 
-  <section class="section" data-reveal>
+  <section class="section alt" data-reveal>
     <div class="container">
       <div class="section-head">
         <div>
@@ -73,6 +132,49 @@ const convictions = [
           </article>
         ))}
       </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Ma méthode</p>
+      <h2>Le symptôme n'est presque jamais celui qu'on croit.</h2>
+      <p>« On manque de temps », « l'équipe n'est pas assez engagée », « la com' est mauvaise » : ce sont rarement les vraies causes. Le plus souvent, c'est l'absence d'un cadre qui permette aux discussions de déboucher sur quelque chose. Voici ce que ça change, concrètement :</p>
+      <ul class="shift-list">
+        {shifts.map((shift) => <li>{shift}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Pourquoi ça marche</p>
+          <h2>Trois choses que je ne fais jamais à votre place</h2>
+        </div>
+      </div>
+      <div class="diffs-grid">
+        {diffs.map((d) => (
+          <article class="value-card">
+            <h3>{d.title}</h3>
+            <p>{d.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Le déroulé</p>
+          <h2>Six étapes, jamais un format imposé</h2>
+        </div>
+        <p>La méthode se choisit après avoir compris votre contexte — jamais avant. World Café, atelier de décision, séminaire de direction : le bon format dépend d'où vous en êtes, pas de mes préférences.</p>
+      </div>
+      <ApproachTimeline steps={approachSteps} />
     </div>
   </section>
 
@@ -97,6 +199,31 @@ const convictions = [
         <p>Au-delà des missions clients, je contribue au développement des pratiques de facilitation et d'intelligence collective.</p>
       </div>
       <EcosystemBlock variant="full" />
+    </div>
+  </section>
+
+  <section class="section alt dual-cta-section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Prochaine étape</p>
+          <h2>Deux façons d'avancer</h2>
+        </div>
+      </div>
+      <div class="dual-cta">
+        <a href={SITE.bookingUrl} class="dual-cta-card" target="_blank" rel="noopener">
+          <p class="eyebrow">Vous hésitez encore</p>
+          <h3>Réservez un appel découverte</h3>
+          <p>30 minutes pour poser votre contexte à plat et voir, ensemble, si je peux vous aider. Sans engagement.</p>
+          <span class="dual-cta-link">Choisir un créneau →</span>
+        </a>
+        <a href={withBase('/contact/')} class="dual-cta-card">
+          <p class="eyebrow">Vous savez déjà ce qu'il vous faut</p>
+          <h3>Lancez votre projet ou votre séminaire</h3>
+          <p>Décrivez votre contexte en quelques lignes, je reviens vers vous avec une proposition concrète.</p>
+          <span class="dual-cta-link">Décrire mon projet →</span>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -145,11 +272,76 @@ const convictions = [
     transform: rotate(-2deg);
   }
 
+  .shift-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-6) 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .shift-list li {
+    padding-left: var(--space-6);
+    position: relative;
+  }
+  .shift-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-orange);
+    font-weight: 700;
+  }
+
+  .diffs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .dual-cta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .dual-cta-card {
+    display: block;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out), border-color 200ms var(--ease-out);
+  }
+  .dual-cta-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-orange);
+  }
+  .dual-cta-card h3 {
+    margin: var(--space-2) 0 var(--space-3);
+    font-size: var(--text-xl);
+  }
+  .dual-cta-card p:not(.eyebrow) {
+    color: var(--color-muted);
+    margin: 0 0 var(--space-4);
+  }
+  .dual-cta-link {
+    font-weight: 700;
+    color: var(--color-orange-ink);
+  }
+
   @media (max-width: 800px) {
     .bubble {
       position: static;
       transform: none;
       margin-top: var(--space-4);
+    }
+    .diffs-grid {
+      grid-template-columns: 1fr;
+    }
+    .dual-cta {
+      grid-template-columns: 1fr;
     }
   }
 </style>

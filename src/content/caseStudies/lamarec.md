@@ -29,7 +29,7 @@ La Mission d'Appui et de Ressources aux ESMS de Corse — LaMAREC — souhaitait
 
 Deux ateliers de deux jours ont été conçus et animés par une équipe composée de deux facilitateurs et d'une facilitatrice graphique. Notre rôle était de créer le cadre et le processus permettant aux participants de partager leur connaissance du terrain, de rendre visibles les ressources existantes, d'identifier les ruptures dans les parcours et de construire des pistes d'action concrètes.
 
-## 1. Imaginer l'IME de demain
+## 1. Imaginer l'IME de demain {Offre de soin}
 
 **Faire évoluer l'offre d'accompagnement au plus près des lieux de vie**
 
@@ -75,7 +75,7 @@ L'accompagnement a contribué à :
 
 La facilitation graphique a permis de structurer les nombreuses contributions et de conserver une représentation commune des réflexions du collectif.
 
-## 2. Diagnostic précoce et intervention rapide
+## 2. Diagnostic précoce et intervention rapide {Diagnostic précoce}
 
 **Réduire les ruptures dans le parcours des enfants**
 

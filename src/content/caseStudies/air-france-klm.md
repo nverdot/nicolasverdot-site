@@ -33,7 +33,7 @@ Cette mission internationale, menée en France et aux Pays-Bas, associait accomp
 
 L'objectif n'était pas uniquement de déployer des méthodes ou des rituels, mais d'aider les équipes à mieux coopérer, se synchroniser et délivrer de la valeur.
 
-## 1. Transformation agile à l'échelle
+## 1. Transformation agile à l'échelle {Transformation}
 
 **Faire évoluer l'organisation, les équipes et les rôles agiles**
 
@@ -101,7 +101,7 @@ L'accompagnement a contribué à :
 - adapter les pratiques agiles aux réalités de chaque périmètre ;
 - installer progressivement une culture d'apprentissage et d'amélioration continue.
 
-## 2. Formation et développement des compétences
+## 2. Formation et développement des compétences {Formation}
 
 **Construire des repères communs et renforcer la capacité d'action**
 
@@ -151,7 +151,7 @@ Les formations ont contribué à :
 - faire évoluer la posture des managers et des leaders ;
 - favoriser l'application concrète des apprentissages dans les équipes.
 
-## 3. Contribuer à la transformation globale
+## 3. Contribuer à la transformation globale {Communauté}
 
 **Apprendre entre coachs et construire une cohérence d'ensemble**
 

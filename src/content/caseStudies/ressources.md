@@ -18,7 +18,7 @@ Trois accompagnements complémentaires ont été mis en place :
 - l'accompagnement du responsable de la DSI dans sa posture de leader ;
 - l'accompagnement individuel de responsables RH et finance dans leur organisation quotidienne.
 
-## 1. Transformer des formations descendantes en expériences participatives
+## 1. Transformer des formations descendantes en expériences participatives {Formation}
 
 **Formation des formateurs aux nouvelles techniques d'animation**
 
@@ -81,7 +81,7 @@ La formation alternait apports méthodologiques, expérimentations, mises en pra
 
 Les formations sont ainsi devenues plus interactives, tout en conservant la rigueur nécessaire à la transmission des processus, des outils et de la réglementation.
 
-## 2. Renforcer la posture du leader de l'équipe IT
+## 2. Renforcer la posture du leader de l'équipe IT {Coaching}
 
 **Accompagnement individuel du responsable de la DSI**
 
@@ -147,7 +147,7 @@ L'accompagnement lui a permis de renforcer progressivement sa posture de leader 
 
 L'objectif n'était pas de l'éloigner des réalités opérationnelles, mais de lui permettre d'occuper pleinement son rôle de responsable, au service de l'équipe et de l'organisation.
 
-## 3. Reprendre la maîtrise de son organisation et de son temps
+## 3. Reprendre la maîtrise de son organisation et de son temps {Organisation}
 
 **Accompagnement individuel des fonctions RH et finance**
 

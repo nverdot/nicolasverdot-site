@@ -114,7 +114,15 @@ const caseStudies = await Promise.all(
     content.insertBefore(anchor, missionH2s[0]);
 
     const missions = missionH2s.map((h2, i) => {
-      const label = (h2.textContent || '').trim();
+      // Le libellé de l'onglet peut être raccourci en ajoutant un tag entre
+      // accolades à la fin du titre — ex. "## 1. Transformation agile à
+      // l'échelle {Transformation}" affiche juste "Transformation" sur
+      // l'onglet, tout en gardant le titre complet comme sous-titre du
+      // panneau (le <h2> est de toute façon retiré de l'affichage). Sans
+      // tag, on retombe sur le texte intégral du titre (tronqué en CSS).
+      const rawLabel = (h2.textContent || '').trim();
+      const tagMatch = rawLabel.match(/\{([^}]+)\}\s*$/);
+      const label = tagMatch ? tagMatch[1].trim() : rawLabel;
       const panel = document.createElement('div');
       panel.className = 'case-mission';
       panel.id = `case-mission-${slug}-${i}`;
