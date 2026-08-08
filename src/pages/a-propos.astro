@@ -16,6 +16,45 @@ const aboutFacts = [
   { label: 'Ancrage', text: 'Nice et Côte d\'Azur, interventions en France' },
 ];
 
+const career = [
+  {
+    role: 'Développeur',
+    company: 'BPI France — cellule architecture logicielle',
+    text: "Mes débuts dans la tech : comprendre comment un système tient debout, bien avant d'apprendre à faire tenir un collectif.",
+  },
+  {
+    role: 'Développeur front-end',
+    company: 'Direct Assurance',
+    text: "Au plus près du produit, à voir concrètement ce qu'une bonne — ou une mauvaise — décision change pour la personne qui l'utilise.",
+  },
+  {
+    role: 'Scrum Master',
+    company: 'Bouygues Telecom — lancement de B&YOU',
+    text: "Un delivery chaque semaine, sans exception. J'y ai appris ce qu'un rythme tenu fait à la confiance d'une équipe.",
+  },
+  {
+    role: 'Coach agile',
+    company: 'Axa — via Goood',
+    text: "Mon entrée dans le coaching agile à grande échelle, sur un grand compte.",
+  },
+  {
+    role: 'Animateur & conférencier',
+    company: "Agile Playground Paris, Scrum Day, Agile France, Agile Tour",
+    text: "En parallèle des missions, contribuer aux communautés de pratique agile — animer, partager, débattre avec les pairs.",
+  },
+  {
+    role: 'Coach agile',
+    company: 'Via Goood',
+    tags: ['Amadeus', 'Air France-KLM', 'CrossKnowledge', 'EasyParapharmacie', 'Schneider Electric', 'Essilor', 'CNAM', 'SNCF', 'Relyens', 'Engie'],
+    text: "Des secteurs très différents — voyage, énergie, santé, assurance, formation — pour une même conviction : la méthode s'adapte au terrain, jamais l'inverse.",
+  },
+  {
+    role: 'Facilitateur — mission humanitaire',
+    company: "ICA Bénin & ICA Côte d'Ivoire",
+    text: "Transmettre les pratiques de facilitation là où les moyens changent, mais où l'enjeu de coopération, lui, reste le même.",
+  },
+];
+
 const convictions = [
   { title: 'Le collectif ne remplace pas la responsabilité.', text: "Faire participer ne veut pas dire demander son avis à tout le monde sur tout." },
   { title: "L'autonomie a besoin d'un cadre.", text: 'Une équipe agit mieux lorsqu\'elle sait ce qu\'elle peut décider et dans quelles limites.' },
@@ -120,6 +159,43 @@ const approachSteps = [
     <div class="container">
       <div class="section-head">
         <div>
+          <p class="eyebrow">Parcours</p>
+          <h2>D'un système qui tient debout à un collectif qui avance</h2>
+        </div>
+        <p>Développeur, Scrum Master, coach agile, facilitateur : pas un plan de carrière tracé d'avance, mais un fil conducteur — comprendre comment les choses tiennent, pour aider à les faire avancer.</p>
+      </div>
+      <div class="career-timeline">
+        {career.map((c) => (
+          <div class="career-item">
+            <div class="career-marker"></div>
+            <div class="career-body">
+              <p class="career-role">{c.role}</p>
+              <p class="career-company">{c.company}</p>
+              {c.tags && (
+                <div class="career-tags">
+                  {c.tags.map((tag) => <span class="career-tag">{tag}</span>)}
+                </div>
+              )}
+              <p class="career-text">{c.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section quote-section" data-reveal>
+    <div class="container prose">
+      <p class="eyebrow">Ce qui m'anime</p>
+      <blockquote class="big-quote">Chacun fait du mieux qu'il peut, avec l'information qu'il a et l'énergie qu'il a ce jour-là.</blockquote>
+      <p>C'est cette conviction qui me pousse à accompagner l'humain en dehors des sentiers battus — pas seulement dans des organisations, mais aussi dans des missions humanitaires ou des contextes où les repères habituels ne s'appliquent plus.</p>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
           <p class="eyebrow">Convictions</p>
           <h2>Ce qui guide mes interventions</h2>
         </div>
@@ -183,8 +259,9 @@ const approachSteps = [
       <p class="eyebrow">Une touche personnelle</p>
       <h2>Ce que la plongée m'a appris</h2>
       <div class="article-callout">
-        <p>Je suis aussi moniteur de plongée. Ce n'est pas un détail anecdotique : la plongée m'a appris des choses essentielles sur la posture, la sécurité, l'attention, la respiration, le cadre et la confiance.</p>
-        <p>Sous l'eau, comme dans un collectif, la qualité du cadre change tout. Quand le cadre est clair, les personnes peuvent explorer avec plus de confiance.</p>
+        <p>Je suis aussi moniteur de plongée. Emmener quelqu'un dans un monde qui n'est pas le sien change tout : sous l'eau, une personne en insécurité ne pense plus clairement. Son attention se referme, elle n'explore plus, elle survit.</p>
+        <p>Le rôle du moniteur n'est pas de supprimer le risque. C'est de construire assez de sécurité pour que la personne puisse rester présente, observer, apprendre — et prendre plaisir à découvrir un monde qui l'intimidait une minute plus tôt.</p>
+        <p>C'est exactement ce qui se joue quand j'emmène un collectif dans une conversation qui sort de ses habitudes. Un groupe en insécurité ne délibère plus vraiment : il se protège, se referme, ou se tait. Construire un cadre suffisamment sûr, c'est ce qui permet à un collectif de sortir de ses sentiers battus — et d'y voir clair.</p>
       </div>
     </div>
   </section>
@@ -270,6 +347,84 @@ const approachSteps = [
     margin: 0;
     box-shadow: var(--shadow-md);
     transform: rotate(-2deg);
+  }
+
+  .career-timeline {
+    position: relative;
+    margin-top: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  .career-timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--color-border);
+  }
+  .career-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--space-8) 1fr;
+    gap: 0 var(--space-4);
+  }
+  .career-marker {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--color-orange);
+    box-shadow: 0 0 0 4px var(--color-cream);
+    margin-top: 2px;
+  }
+  .career-role {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-navy);
+  }
+  .career-company {
+    margin: 2px 0 var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-orange-ink);
+  }
+  .career-text {
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.6;
+    max-width: 60ch;
+  }
+  .career-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+  .career-tag {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-ink);
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: 2px var(--space-2);
+  }
+
+  .quote-section .big-quote {
+    margin: var(--space-2) 0 var(--space-4);
+    padding: 0 0 0 var(--space-6);
+    border-left: 3px solid var(--color-orange);
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-navy);
+    line-height: 1.4;
+    font-style: normal;
   }
 
   .shift-list {
