@@ -16,7 +16,7 @@ factsheet:
     value: "Deux journées d'ateliers et de conférences"
   - label: "Partenaire"
     value: "Osanwe — Viviane Morelle"
-    href: "https://osanwe.com/"
+    href: "https://osanwe.fr/"
   - label: "Intervention"
     value: "Capture graphique en direct"
   - label: "Public"
@@ -28,7 +28,7 @@ publishDate: 2026-08-06
 
 La CEC accompagne des collectifs de dirigeantes et de dirigeants dans la transformation de leur modèle d'affaires face aux défis environnementaux et sociaux du XXIᵉ siècle.
 
-À l'occasion du dernier rendez-vous d'une cohorte organisé à Sophia Antipolis, j'ai réalisé, en collaboration avec [Osanwe — Viviane Morelle](https://osanwe.com/), la capture graphique en direct de deux journées d'ateliers et de conférences.
+À l'occasion du dernier rendez-vous d'une cohorte organisé à Sophia Antipolis, j'ai réalisé, en collaboration avec [Osanwe — Viviane Morelle](https://osanwe.fr/), la capture graphique en direct de deux journées d'ateliers et de conférences.
 
 ## Le contexte
 

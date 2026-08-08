@@ -13,7 +13,7 @@ factsheet:
     value: "Colloque technique de restitution"
   - label: "Partenaire"
     value: "Osanwe — Viviane Morelle"
-    href: "https://osanwe.com/"
+    href: "https://osanwe.fr/"
   - label: "Intervention"
     value: "Capture graphique en direct"
   - label: "Sujet"
@@ -21,7 +21,7 @@ factsheet:
 publishDate: 2026-08-06
 ---
 
-En partenariat avec [Osanwe — Viviane Morelle](https://osanwe.com/), j'ai réalisé la capture graphique en direct du colloque de restitution du projet « Le Cèdre de l'Atlas, de la graine aux produits finis », organisé par FIBOIS SUD, FIBOIS Occitanie, la FNB Provence-Alpes et France Forêt PACA.
+En partenariat avec [Osanwe — Viviane Morelle](https://osanwe.fr/), j'ai réalisé la capture graphique en direct du colloque de restitution du projet « Le Cèdre de l'Atlas, de la graine aux produits finis », organisé par FIBOIS SUD, FIBOIS Occitanie, la FNB Provence-Alpes et France Forêt PACA.
 
 Cette journée, organisée le 17 septembre 2024 à ViaVino, avait pour objectif de présenter les résultats de trois années de travaux autour du Cèdre de l'Atlas : ressource actuelle et future, comportement face au changement climatique, performances techniques du bois et perspectives d'usage.
 
@@ -55,7 +55,7 @@ Le défi consistait donc à transformer une succession d'interventions expertes 
 
 ## L'accompagnement proposé
 
-En partenariat avec [Osanwe — Viviane Morelle](https://osanwe.com/), j'ai réalisé une capture graphique en direct tout au long du colloque. L'objectif était de traduire visuellement, au fil des interventions, les éléments essentiels abordés par les différents experts. Le travail a consisté à :
+En partenariat avec [Osanwe — Viviane Morelle](https://osanwe.fr/), j'ai réalisé une capture graphique en direct tout au long du colloque. L'objectif était de traduire visuellement, au fil des interventions, les éléments essentiels abordés par les différents experts. Le travail a consisté à :
 
 - écouter et synthétiser les présentations en temps réel ;
 - identifier les messages clés ;
@@ -106,11 +106,3 @@ Cette intervention a permis de produire :
 - une manière plus accessible de valoriser trois années de travaux autour du Cèdre de l'Atlas.
 
 Au-delà de la trace produite, la capture graphique a contribué à rendre la journée plus lisible, plus vivante et plus utile pour les personnes présentes.
-
-**En bref**
-
-- Client : FIBOIS
-- Partenaire : [Osanwe — Viviane Morelle](https://osanwe.com/)
-- Type d'accompagnement : capture graphique en direct
-- Format : colloque technique de restitution
-- Sujet : « Le Cèdre de l'Atlas, de la graine aux produits finis »

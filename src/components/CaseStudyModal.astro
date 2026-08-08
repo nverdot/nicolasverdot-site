@@ -141,6 +141,7 @@ const caseStudies = await Promise.all(
       btn.className = 'case-tab';
       btn.id = `case-tab-${slug}-${i}`;
       btn.textContent = label;
+      btn.title = label;
       btn.setAttribute('role', 'tab');
       btn.setAttribute('aria-selected', String(i === 0));
       btn.setAttribute('aria-controls', panel.id);
@@ -293,14 +294,22 @@ const caseStudies = await Promise.all(
   .case-modal-body {
     padding: var(--space-6);
   }
+  /* Pas de filtre monochrome : brightness(0)+invert(1) aplatit tout logo à
+     plusieurs tons (ex. LaMAREC, texte blanc sur forme colorée) en une
+     silhouette blanche illisible, et rend carrément invisible un logo à
+     fond opaque (ex. CEC, sans transparence) puisque fond et marque
+     deviennent alors identiques. Un badge blanc affiche chaque logo dans
+     ses couleurs d'origine, quel que soit son fond source. */
   .case-modal-logo {
-    height: 24px;
+    display: block;
+    height: 28px;
     width: auto;
-    max-width: 130px;
+    max-width: 140px;
     object-fit: contain;
     margin-bottom: var(--space-3);
-    filter: brightness(0) invert(1);
-    opacity: 0.9;
+    padding: 6px 10px;
+    background: var(--color-white);
+    border-radius: var(--radius-sm);
   }
   .case-modal-close {
     position: absolute;
@@ -506,6 +515,13 @@ const caseStudies = await Promise.all(
     color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
     transition: background-color 160ms ease-out, color 160ms ease-out;
+    /* Libellés longs tronqués sur une seule ligne plutôt que d'empiler le
+       texte dans la pastille — garde les onglets compacts et lisibles,
+       et augmente les chances qu'ils tiennent tous sur une seule ligne. */
+    max-width: min(190px, 45vw);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   @media (hover: hover) and (pointer: fine) {
     .case-modal-header :global(.case-tab:hover) {
