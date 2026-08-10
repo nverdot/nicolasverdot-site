@@ -42,8 +42,6 @@ const problems = [
   { icon: 'flag', title: "Trop d'enjeux pour improviser", text: 'Énergie, budget, temps : vous ne pouvez pas vous permettre un faux pas.' },
 ];
 
-const includes = ['Les entretiens de cadrage', 'La conception du déroulé', 'Le choix des méthodes', 'La préparation des supports', 'La facilitation du jour J', 'La facilitation graphique', 'La synthèse des résultats', 'Le débrief et les prochaines étapes'];
-
 const basics = [
   { icon: 'people', title: 'Un bon ratio de facilitation', text: "Je facilite seul jusqu'à environ 15 personnes, pour que chacun soit vraiment vu et entendu." },
   { icon: 'clock', title: 'Un bon temps de préparation', text: "En général, une journée et demie de préparation pour une journée d'animation." },
@@ -74,7 +72,7 @@ const costPoints = [
 const meetingStats = [
   { color: 'navy', number: '72 %', text: 'des réunions jugées inefficaces', source: 'Atlassian' },
   { color: 'blue', number: '55 %', text: 'sans prochaines étapes claires', source: 'Microsoft' },
-  { color: 'orange', number: '77 %', text: "se terminent par… une nouvelle réunion", source: 'Atlassian' },
+  { color: 'clay', number: '77 %', text: "se terminent par… une nouvelle réunion", source: 'Atlassian' },
   { color: 'brick', number: '43 %', text: 'dominées par quelques personnes', source: 'Atlassian' },
 ];
 
@@ -134,7 +132,7 @@ const takeCharge = [
     </div>
   </section>
 
-  <section class="section" data-reveal>
+  <section class="section alt" data-reveal>
     <div class="container">
       <div class="section-head">
         <div>
@@ -182,7 +180,7 @@ const takeCharge = [
     </div>
   </section>
 
-  <section class="section alt" data-reveal>
+  <section class="section" data-reveal>
     <div class="container">
       <div class="section-head">
         <div>
@@ -199,17 +197,11 @@ const takeCharge = [
           </div>
         ))}
       </div>
-      <div class="panel includes-panel">
-        <h3>Ce que vous me déléguez</h3>
-        <ul class="includes-list">
-          {includes.map((i) => <li>{i}</li>)}
-        </ul>
-        <p class="muted"><strong>Idéal si :</strong> le sujet est stratégique, sensible ou complexe, ou si vous souhaitez qu'une personne neutre garantisse le processus.</p>
-      </div>
+      <p class="ideal-if"><strong>Idéal si :</strong> le sujet est stratégique, sensible ou complexe, ou si vous souhaitez qu'une personne neutre garantisse le processus.</p>
     </div>
   </section>
 
-  <section class="section" data-reveal>
+  <section class="section alt" data-reveal>
     <div class="container">
       <div class="section-head">
         <div>
@@ -229,7 +221,7 @@ const takeCharge = [
     </div>
   </section>
 
-  <section class="section alt" data-reveal>
+  <section class="section" data-reveal>
     <div class="container">
       <div class="section-head">
         <div>
@@ -248,7 +240,7 @@ const takeCharge = [
     </div>
   </section>
 
-  <section class="section" data-reveal>
+  <section class="section alt" data-reveal>
     <div class="container">
       <div class="panel">
         <p class="eyebrow">Les méthodes</p>
@@ -286,25 +278,12 @@ const takeCharge = [
   .muted {
     color: var(--color-muted);
   }
-  .includes-list {
-    list-style: none;
-    margin: var(--space-6) 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-2) var(--space-4);
+  .ideal-if {
+    margin-top: var(--space-6);
+    color: var(--color-muted);
   }
-  .includes-list li {
-    position: relative;
-    padding-left: var(--space-4);
-    color: var(--color-ink);
-  }
-  .includes-list li::before {
-    content: '— ';
-    color: var(--color-orange-ink);
-  }
-  .includes-panel {
-    margin-top: var(--space-8);
+  .ideal-if strong {
+    color: var(--color-navy);
   }
 
   /* --- Icônes de carte (Le problème, Bon à savoir) --- */
@@ -316,7 +295,7 @@ const takeCharge = [
     height: 44px;
     margin-bottom: var(--space-3);
     border-radius: var(--radius-md);
-    background: var(--color-cream);
+    background: color-mix(in srgb, var(--color-navy) 7%, var(--color-white));
     color: var(--color-navy);
   }
   .card-icon svg {
@@ -335,8 +314,8 @@ const takeCharge = [
     gap: var(--space-4);
     padding: var(--space-6);
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-orange);
-    background: color-mix(in srgb, var(--color-orange) 8%, var(--color-surface));
+    border: 1px solid var(--color-blue-soft);
+    background: color-mix(in srgb, var(--color-navy) 4%, var(--color-surface));
   }
   .callout-box-icon {
     flex-shrink: 0;
@@ -346,8 +325,8 @@ const takeCharge = [
     width: 40px;
     height: 40px;
     border-radius: 999px;
-    background: var(--color-white);
-    color: var(--color-orange-ink);
+    background: var(--color-navy);
+    color: var(--color-white);
   }
   .callout-box-icon svg {
     width: 20px;
@@ -360,7 +339,7 @@ const takeCharge = [
     line-height: 1.5;
   }
   .callout-box .accent {
-    color: var(--color-orange-ink);
+    color: var(--color-clay-ink);
   }
   .callout-box-row {
     border-color: var(--color-blue);
@@ -368,7 +347,8 @@ const takeCharge = [
     flex-wrap: wrap;
   }
   .callout-box-row .callout-box-icon {
-    color: var(--color-blue);
+    background: var(--color-blue);
+    color: var(--color-white);
   }
   .callout-box-row p {
     flex: 1;
@@ -401,8 +381,8 @@ const takeCharge = [
     color: var(--color-muted);
   }
   .cost-col-highlight {
-    background: color-mix(in srgb, var(--color-orange) 10%, var(--color-surface));
-    border-color: var(--color-orange);
+    background: color-mix(in srgb, var(--color-navy) 5%, var(--color-surface));
+    border-color: var(--color-blue-soft);
     text-align: center;
   }
   .cost-col-highlight h3,
@@ -415,7 +395,7 @@ const takeCharge = [
     justify-content: center;
     gap: 2px;
     margin: var(--space-4) 0;
-    color: var(--color-orange-ink);
+    color: var(--color-clay);
   }
   .people-row svg {
     width: 16px;
@@ -428,15 +408,19 @@ const takeCharge = [
     color: var(--color-navy);
     line-height: 1.6;
   }
-  .cost-total {
+  .cost-col-highlight .cost-total {
+    display: inline-block;
     margin: 0;
+    padding: var(--space-1) var(--space-4);
+    border-radius: var(--radius-pill);
+    background: var(--color-orange);
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: var(--text-3xl);
-    color: var(--color-orange-ink);
+    font-size: var(--text-2xl);
+    color: var(--color-navy);
   }
   .cost-total-label {
-    margin: 0;
+    margin: var(--space-2) 0 0;
     font-size: var(--text-sm);
     color: var(--color-muted);
   }
@@ -451,7 +435,7 @@ const takeCharge = [
     gap: var(--space-3);
     padding: var(--space-3);
     border-left: 3px solid var(--color-border);
-    background: var(--color-cream);
+    background: color-mix(in srgb, var(--color-ink) 3%, var(--color-white));
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   }
   .meeting-stat-number {
@@ -478,8 +462,8 @@ const takeCharge = [
   .meeting-stat-navy .meeting-stat-number { color: var(--color-navy); }
   .meeting-stat-blue { border-left-color: var(--color-blue); }
   .meeting-stat-blue .meeting-stat-number { color: var(--color-blue); }
-  .meeting-stat-orange { border-left-color: var(--color-orange); }
-  .meeting-stat-orange .meeting-stat-number { color: var(--color-orange-ink); }
+  .meeting-stat-clay { border-left-color: var(--color-clay); }
+  .meeting-stat-clay .meeting-stat-number { color: var(--color-clay); }
   .meeting-stat-brick { border-left-color: var(--color-brick); }
   .meeting-stat-brick .meeting-stat-number { color: var(--color-brick); }
   .cost-numbered {
@@ -593,7 +577,7 @@ const takeCharge = [
     content: '✓';
     position: absolute;
     left: 0;
-    color: var(--color-orange-ink);
+    color: var(--color-clay-ink);
   }
   @media (max-width: 900px) {
     .includes-list,
