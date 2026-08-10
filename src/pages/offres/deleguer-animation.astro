@@ -1,9 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
-import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import ClientLogoStrip from '../../components/ClientLogoStrip.astro';
 import { withBase } from '../../utils/url';
+import heroImg from '../../assets/offres/hero-deleguer-animation.png';
 
 const serviceSchema = {
   '@context': 'https://schema.org',
@@ -31,7 +32,16 @@ const icons: Record<string, string> = {
   network: '<circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="6" r="2.3"/><circle cx="12" cy="18" r="2.3"/><path d="M8 7l3.2 9M16 7l-3.2 9M8.3 6h7.4"/>',
   target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
   star: '<path d="M12 3l2.4 5.3 5.8.6-4.3 4 1.2 5.7L12 15.9 6.9 18.6l1.2-5.7-4.3-4 5.8-.6L12 3z"/>',
+  check: '<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
+  trending: '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
 };
+
+const valueItems = [
+  { icon: 'target', title: 'Des priorités claires', text: "Pour concentrer l'énergie là où elle compte vraiment." },
+  { icon: 'check', title: 'Des décisions assumées', text: 'Pour sortir des discussions sans fin et choisir une direction.' },
+  { icon: 'people', title: 'Des équipes alignées', text: "Pour que chacun comprenne où l'on va et comment contribuer." },
+  { icon: 'trending', title: 'Des actions concrètes', text: 'Pour transformer les décisions en résultats visibles.' },
+];
 
 const problems = [
   { icon: 'compass', title: "Le processus n'est pas clair", text: 'Vous marchez sur un terrain flou : le résultat final ne correspond pas toujours aux attentes du collectif.' },
@@ -150,21 +160,44 @@ const takeCharge = [
     { name: "Déléguer l'animation", path: '/offres/deleguer-animation/' },
   ]}
 >
-  <PageHero
-    eyebrow="Déléguer l'animation · Facilitation complète"
-    title="Vous me déléguez la facilitation, je conçois et j'anime de bout en bout"
-    summary="Intelligence collective, facilitation graphique et expérience du terrain pour transformer un temps collectif en décisions claires et en actions concrètes — sans que vous ayez à porter l'animation."
-    pills={['Séminaires', 'Ateliers stratégiques', "Journées d'équipe", 'Conventions']}
-  />
-
-  <div class="container hero-cta-row">
-    <a href={withBase('/contact/')} class="btn">Parler de votre séminaire →</a>
-    <a href={withBase('/offres/mentoring/')} class="btn-outline">Vous préférez garder l'animation ? Voir le Mentoring</a>
-  </div>
+  <section class="hero-split" data-reveal>
+    <div class="container hero-split-inner">
+      <div class="hero-split-text">
+        <p class="eyebrow">Déléguer l'animation · Facilitation complète</p>
+        <h1>Vous me déléguez la facilitation, je conçois et j'anime de bout en bout</h1>
+        <p class="page-summary">Intelligence collective, facilitation graphique et expérience du terrain pour transformer un temps collectif en décisions claires et en actions concrètes — sans que vous ayez à porter l'animation.</p>
+        <div class="meta-pills">
+          {['Séminaires', 'Ateliers stratégiques', "Journées d'équipe", 'Conventions'].map((pill) => <span>{pill}</span>)}
+        </div>
+        <div class="hero-cta-row">
+          <a href={withBase('/contact/')} class="btn">Parler de votre séminaire →</a>
+          <a href={withBase('/offres/mentoring/')} class="btn-outline">Vous préférez garder l'animation ? Voir le Mentoring</a>
+        </div>
+      </div>
+      <div class="hero-split-image">
+        <Image src={heroImg} alt="Un facilitateur anime un atelier collaboratif devant un groupe de participants, avec un support visuel couvert de notes autocollantes." widths={[400, 800, 1200]} sizes="(max-width: 900px) 100vw, 640px" />
+      </div>
+    </div>
+  </section>
 
   <section class="value-band" data-reveal data-section-name="Investissement sécurisé">
     <div class="container value-band-inner">
-      <h2>Vous investissez déjà du temps et de l'énergie pour réunir les bonnes personnes.<br /><span class="accent">Je vous aide à sécuriser cet investissement en le transformant en décisions et en actions concrètes.</span></h2>
+      <h2>
+        Vous investissez déjà du temps et de l'énergie pour réunir les bonnes personnes.
+        <span class="accent-wrap">
+          Sécurisons cet investissement.
+          <svg class="ink-underline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 10 C 70 2, 150 14, 296 6" /></svg>
+        </span>
+      </h2>
+      <div class="value-grid">
+        {valueItems.map((v) => (
+          <div class="value-item">
+            <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[v.icon]} />
+            <strong>{v.title}</strong>
+            <p>{v.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -246,13 +279,21 @@ const takeCharge = [
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow">Ce que je prends en charge</p>
+          <p class="eyebrow">L'accompagnement</p>
+          <h2>Ce que comprend l'accompagnement</h2>
         </div>
+      </div>
+      <div class="phase-timeline" aria-hidden="true">
+        {takeCharge.map((t, i) => (
+          <>
+            <span class="phase-timeline-dot">{i + 1}</span>
+            {i < takeCharge.length - 1 && <span class="phase-timeline-line"></span>}
+          </>
+        ))}
       </div>
       <div class="take-charge-grid">
         {takeCharge.map((t, i) => (
           <button type="button" class="take-charge-card" data-phase-trigger={t.title}>
-            <span class="take-charge-num">{i + 1}</span>
             <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} /></span>
             <h3>{t.title}</h3>
             <p>{t.text}</p>
@@ -309,12 +350,66 @@ const takeCharge = [
 </Layout>
 
 <style>
+  /* --- Hero à deux colonnes : texte + illustration --- */
+  .hero-split {
+    padding: var(--space-16) 0 var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+  .hero-split-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: var(--space-8);
+    align-items: center;
+  }
+  .hero-split h1 {
+    font-size: clamp(2.5rem, 4.2vw, 3.75rem);
+    margin: 0;
+  }
+  .hero-split .page-summary {
+    margin: var(--space-4) 0 0;
+    max-width: 56ch;
+    font-size: var(--text-lg);
+    color: var(--color-muted);
+  }
+  .hero-split .meta-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+  .hero-split .meta-pills span {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-xs);
+    font-weight: 700;
+  }
+  .hero-split-image {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .hero-split-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media (max-width: 900px) {
+    .hero-split-inner {
+      grid-template-columns: 1fr;
+    }
+    .hero-split-image {
+      order: -1;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+  }
   .hero-cta-row {
     display: flex;
     gap: var(--space-4);
     flex-wrap: wrap;
-    margin-top: var(--space-2);
-    margin-bottom: var(--space-8);
+    margin-top: var(--space-6);
   }
 
   /* --- Bandeau sombre entre le hero et les logos, même traitement que
@@ -327,14 +422,65 @@ const takeCharge = [
     text-align: center;
   }
   .value-band h2 {
-    margin: 0 auto;
-    max-width: 46ch;
+    margin: 0 0 var(--space-8);
     color: var(--color-white);
-    font-size: var(--text-2xl);
-    line-height: 1.35;
   }
-  .value-band h2 .accent {
+  .value-band .accent-wrap {
+    display: inline-block;
+    position: relative;
+  }
+  .value-band .ink-underline {
+    position: absolute;
+    left: 0;
+    bottom: -0.15em;
+    width: 100%;
+    height: 0.25em;
+    stroke: var(--color-orange);
+    stroke-width: 5;
+    fill: none;
+  }
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-6);
+    max-width: 1040px;
+    margin-inline: auto;
+  }
+  .value-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 0 var(--space-2);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .value-item:first-child {
+    border-left: none;
+  }
+  .value-icon {
+    width: 28px;
+    height: 28px;
     color: var(--color-orange);
+  }
+  .value-item p {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .value-item strong {
+    display: block;
+    color: var(--color-white);
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+  }
+  @media (max-width: 800px) {
+    .value-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8) var(--space-4);
+    }
+    .value-item {
+      border-left: none;
+    }
   }
   .card p:not(:last-child) {
     margin-bottom: var(--space-3);
@@ -445,8 +591,8 @@ const takeCharge = [
     color: var(--color-muted);
   }
   .cost-col-highlight {
-    background: color-mix(in srgb, var(--color-navy) 5%, var(--color-surface));
-    border-color: var(--color-blue-soft);
+    background: color-mix(in srgb, var(--color-orange) 12%, var(--color-surface));
+    border-color: var(--color-orange);
     text-align: center;
   }
   .cost-col-highlight h3,
@@ -522,13 +668,25 @@ const takeCharge = [
     letter-spacing: 0.04em;
     color: var(--color-muted);
   }
-  .meeting-stat-navy { border-left-color: var(--color-navy); }
+  .meeting-stat-navy {
+    border-left-color: var(--color-navy);
+    background: color-mix(in srgb, var(--color-navy) 8%, var(--color-white));
+  }
   .meeting-stat-navy .meeting-stat-number { color: var(--color-navy); }
-  .meeting-stat-blue { border-left-color: var(--color-blue); }
+  .meeting-stat-blue {
+    border-left-color: var(--color-blue);
+    background: var(--color-blue-soft);
+  }
   .meeting-stat-blue .meeting-stat-number { color: var(--color-blue); }
-  .meeting-stat-clay { border-left-color: var(--color-clay); }
+  .meeting-stat-clay {
+    border-left-color: var(--color-clay);
+    background: color-mix(in srgb, var(--color-clay) 12%, var(--color-white));
+  }
   .meeting-stat-clay .meeting-stat-number { color: var(--color-clay); }
-  .meeting-stat-brick { border-left-color: var(--color-brick); }
+  .meeting-stat-brick {
+    border-left-color: var(--color-brick);
+    background: color-mix(in srgb, var(--color-brick) 8%, var(--color-white));
+  }
   .meeting-stat-brick .meeting-stat-number { color: var(--color-brick); }
   .cost-numbered {
     margin: var(--space-4) 0 0;
@@ -570,9 +728,36 @@ const takeCharge = [
     }
   }
 
-  /* --- "Ce que je prends en charge" : 4 colonnes numérotées --- */
+  /* --- "Ce que comprend l'accompagnement" : timeline + 4 colonnes --- */
+  .phase-timeline {
+    display: flex;
+    align-items: center;
+    margin: var(--space-8) auto 0;
+    max-width: 1040px;
+  }
+  .phase-timeline-dot {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: var(--color-orange);
+    color: var(--color-navy);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-sm);
+    box-shadow: var(--shadow-sm);
+  }
+  .phase-timeline-line {
+    flex: 1;
+    height: 2px;
+    background: var(--color-border);
+    margin: 0 var(--space-1);
+  }
   .take-charge-grid {
-    margin-top: var(--space-8);
+    margin-top: var(--space-3);
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-4);
