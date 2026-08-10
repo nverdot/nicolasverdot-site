@@ -5,6 +5,13 @@ import { factsheetIcon } from '../utils/factsheetIcons';
 import { findPriorityByHref } from '../data/priorities';
 import Lightbox from './Lightbox.astro';
 
+const icons: Record<string, string> = {
+  checkmark: '<path d="M5 12l5 5L20 7"/>',
+  compass: '<circle cx="12" cy="12" r="9"/><path d="M15 9l-2 5-5 2 2-5 5-2z"/>',
+  shield: '<path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/>',
+  spark: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/>',
+};
+
 const entries = await getCollection('caseStudies', ({ data }) => !data.draft);
 const caseStudies = await Promise.all(
   entries.map(async (cs) => ({
@@ -67,23 +74,36 @@ const caseStudies = await Promise.all(
               {cs.data.role && (
                 <>
                   <h2>Répartir les responsabilités</h2>
-                  <p><strong>{cs.data.role.expertiseTitle}</strong></p>
-                  <ul>
-                    {cs.data.role.expertiseItems.map((item) => <li>{item}</li>)}
-                  </ul>
-                  <p><strong>{cs.data.role.responsibilityTitle}</strong></p>
-                  <ul>
-                    {cs.data.role.responsibilityItems.map((item) => <li>{item}</li>)}
-                  </ul>
+                  <div class="case-modal-role-grid">
+                    <div class="case-modal-role-card">
+                      <span class="case-modal-role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.compass} /></span>
+                      <h3>{cs.data.role.expertiseTitle}</h3>
+                      <ul>
+                        {cs.data.role.expertiseItems.map((item) => <li>{item}</li>)}
+                      </ul>
+                    </div>
+                    <div class="case-modal-role-card case-modal-role-card-accent">
+                      <span class="case-modal-role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.shield} /></span>
+                      <h3>{cs.data.role.responsibilityTitle}</h3>
+                      <ul>
+                        {cs.data.role.responsibilityItems.map((item) => <li>{item}</li>)}
+                      </ul>
+                    </div>
+                  </div>
                 </>
               )}
 
               {cs.data.process && cs.data.process.length > 0 && (
                 <>
                   <h2>Comment nous avons travaillé</h2>
-                  <ul>
-                    {cs.data.process.map((step) => <li><strong>{step.title}.</strong> {step.text}</li>)}
-                  </ul>
+                  <ol class="case-modal-process">
+                    {cs.data.process.map((step, i) => (
+                      <li>
+                        <span class="case-modal-process-num">{String(i + 1).padStart(2, '0')}</span>
+                        <div><strong>{step.title}</strong><p>{step.text}</p></div>
+                      </li>
+                    ))}
+                  </ol>
                 </>
               )}
 
@@ -97,8 +117,13 @@ const caseStudies = await Promise.all(
                   <h3>Notre approche</h3>
                   <p>{chapter.approach}</p>
                   <h3>{chapter.resultsTitle}</h3>
-                  <ul>
-                    {chapter.results.map((r) => <li><strong>{r.title}.</strong> {r.text}</li>)}
+                  <ul class="case-modal-checklist">
+                    {chapter.results.map((r) => (
+                      <li>
+                        <span class="case-modal-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.checkmark} /></span>
+                        <span><strong>{r.title}.</strong> {r.text}</span>
+                      </li>
+                    ))}
                   </ul>
                 </>
               ))}
@@ -121,17 +146,23 @@ const caseStudies = await Promise.all(
               {cs.data.impact && cs.data.impact.length > 0 && (
                 <>
                   <h2>Ce que ça a changé</h2>
-                  <ul>
-                    {cs.data.impact.map((item) => <li><strong>{item.title}.</strong> {item.text}</li>)}
-                  </ul>
+                  <div class="case-modal-impact-grid">
+                    {cs.data.impact.map((item) => (
+                      <div class="case-modal-impact-card">
+                        <span class="case-modal-impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.spark} /></span>
+                        <strong>{item.title}</strong>
+                        <p>{item.text}</p>
+                      </div>
+                    ))}
+                  </div>
                 </>
               )}
 
               {cs.data.closingText && (
-                <>
+                <div class="case-modal-closing">
                   {cs.data.closingTitle && <h2>{cs.data.closingTitle}</h2>}
-                  <blockquote><p>{cs.data.closingText}</p></blockquote>
-                </>
+                  <p>{cs.data.closingText}</p>
+                </div>
               )}
             </>
           ) : (
@@ -538,6 +569,187 @@ const caseStudies = await Promise.all(
   .case-modal-content :global(p) {
     margin: 0 0 var(--space-3);
   }
+
+  /* --- Role (structured content) --- */
+  .case-modal-role-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    margin: 0 0 var(--space-4);
+  }
+  .case-modal-role-card {
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+  }
+  .case-modal-role-card-accent {
+    background: var(--color-ink-solid);
+    border-color: var(--color-ink-solid);
+    color: var(--color-white);
+  }
+  .case-modal-role-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-orange) 18%, var(--color-surface));
+    color: var(--color-clay-ink);
+    margin-bottom: var(--space-2);
+  }
+  .case-modal-role-card-accent .case-modal-role-icon {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--color-white);
+  }
+  .case-modal-role-icon :global(svg) { width: 14px; height: 14px; }
+  .case-modal-role-card h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    margin: 0 0 var(--space-2);
+    color: inherit;
+  }
+  .case-modal-role-card ul {
+    margin: 0;
+    padding-left: 1.1em;
+    font-size: var(--text-xs);
+    line-height: 1.5;
+  }
+  .case-modal-role-card li {
+    margin-bottom: var(--space-1);
+  }
+
+  /* --- Process (structured content) --- */
+  .case-modal-process {
+    list-style: none;
+    margin: 0 0 var(--space-4);
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .case-modal-process li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-bottom: 0;
+  }
+  .case-modal-process-num {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: var(--color-ink-solid);
+    color: var(--color-white);
+    font-size: 0.6875rem;
+    font-weight: 700;
+  }
+  .case-modal-process li strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    margin-bottom: 2px;
+  }
+  .case-modal-process li p {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+  }
+
+  /* --- Checklist (chapter results) --- */
+  .case-modal-content :global(.case-modal-checklist) {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-4);
+    display: grid;
+    gap: var(--space-2);
+  }
+  .case-modal-content :global(.case-modal-checklist li) {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    margin-bottom: 0;
+  }
+  .case-modal-content :global(.case-modal-check-icon) {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-orange) 18%, var(--color-surface));
+    color: var(--color-clay-ink);
+  }
+  .case-modal-content :global(.case-modal-check-icon svg) { width: 11px; height: 11px; }
+
+  /* --- Impact (structured content) --- */
+  .case-modal-impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--space-3);
+    margin: 0 0 var(--space-4);
+  }
+  .case-modal-impact-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3);
+  }
+  .case-modal-impact-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-orange) 18%, var(--color-surface));
+    color: var(--color-clay-ink);
+    margin-bottom: var(--space-2);
+  }
+  .case-modal-impact-icon :global(svg) { width: 13px; height: 13px; }
+  .case-modal-impact-card strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    color: var(--color-navy);
+    margin-bottom: 2px;
+  }
+  .case-modal-impact-card p {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  /* --- Closing (structured content) --- */
+  .case-modal-content :global(.case-modal-closing) {
+    background: var(--color-cream);
+    border-left: 3px solid var(--color-orange);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4) var(--space-6);
+    margin: 0 0 var(--space-4);
+  }
+  .case-modal-content :global(.case-modal-closing h2) {
+    font-size: var(--text-base);
+    margin: 0 0 var(--space-2);
+  }
+  .case-modal-content :global(.case-modal-closing p) {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    color: var(--color-navy);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (max-width: 480px) {
+    .case-modal-role-grid { grid-template-columns: 1fr; }
+    .case-modal-impact-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
   .case-modal-content :global(.case-gallery) {
     display: grid;
     grid-template-columns: 1fr 1fr;
