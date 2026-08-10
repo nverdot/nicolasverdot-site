@@ -1,0 +1,78 @@
+---
+import { withBase } from '../utils/url';
+import { clients } from '../data/clients';
+import CaseStudyModal from './CaseStudyModal.astro';
+---
+
+<section class="client-strip" data-reveal data-section-name="Logos clients">
+  <div class="client-marquee">
+    <div class="client-marquee-track">
+      {[...clients, ...clients].map((c, i) => {
+        const inner = c.logo ? <img src={withBase(c.logo)} alt={c.name} loading="lazy" /> : <span class="client-text">{c.name}</span>;
+        return c.href ? (
+          <a class="client-item" href={c.href} data-case-study-trigger={c.caseStudySlug} aria-hidden={i >= clients.length ? 'true' : undefined} tabindex={i >= clients.length ? -1 : undefined}>
+            {inner}
+          </a>
+        ) : (
+          <span class="client-item" aria-hidden={i >= clients.length ? 'true' : undefined}>
+            {inner}
+          </span>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<CaseStudyModal />
+
+<style>
+  .client-strip {
+    padding: var(--space-8) 0;
+  }
+  .client-marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .client-marquee-track {
+    display: flex;
+    width: max-content;
+    gap: var(--space-12);
+    animation: marquee-scroll 28s linear infinite;
+  }
+  .client-marquee:hover .client-marquee-track {
+    animation-play-state: paused;
+  }
+  .client-item {
+    display: flex;
+    align-items: center;
+    height: 52px;
+    flex-shrink: 0;
+    background: var(--color-white);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-4);
+    text-decoration: none;
+  }
+  .client-item img {
+    max-height: 100%;
+    max-width: 130px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.6;
+    transition: opacity var(--duration-standard) var(--ease-standard), filter var(--duration-standard) var(--ease-standard);
+  }
+  .client-marquee:hover .client-item img {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+  .client-text {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: var(--color-navy);
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+</style>

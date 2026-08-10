@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
+import ClientLogoStrip from '../../components/ClientLogoStrip.astro';
 import { withBase } from '../../utils/url';
 
 const serviceSchema = {
@@ -86,6 +87,31 @@ const process = [
   { title: 'Ancrer', text: 'Les décisions sont rendues visibles et transformées en priorités, responsabilités et prochaines étapes.' },
 ];
 
+const basics = [
+  {
+    title: 'Le bon ratio de facilitation',
+    texts: [
+      "Pour que chacun soit vraiment vu, entendu et actif dans les échanges, je facilite seul jusqu'à environ 15 personnes.",
+      "Au-delà, je m'appuie sur mon réseau de facilitateurs et facilitatrices partenaires pour co-animer les grands groupes, conventions ou séminaires réunissant plusieurs dizaines, voire centaines de participants.",
+    ],
+  },
+  {
+    title: 'Le bon temps de préparation',
+    texts: [
+      "Une journée de facilitation ne se prépare pas la veille : je compte en général une journée et demie de préparation pour une journée d'animation.",
+      "Trop tôt, le contexte a le temps de changer : de nouvelles informations émergent, les priorités bougent, et une partie de la conception doit être reprise.",
+      "Trop tard, il ne reste plus le temps de poser les bonnes questions ni de vérifier que les parties prenantes sont alignées : on prépare dans l'urgence, et c'est le processus qui en paie le prix.",
+    ],
+  },
+  {
+    title: "Le temps d'alignement de l'équipe de facilitation",
+    texts: [
+      "Dès qu'un dispositif mobilise plusieurs facilitateurs, il faut aussi le temps que l'équipe se cale : partager la même lecture des enjeux, se répartir les rôles, s'accorder sur le déroulé et anticiper ensemble les moments délicats.",
+      "Ce temps d'alignement fait partie intégrante de la préparation — il ne s'improvise pas plus que le reste.",
+    ],
+  },
+];
+
 const formats = [
   { title: "Séminaire d'alignement", text: 'Clarifier une direction commune, les priorités et les contributions de chacun.' },
   { title: 'Séminaire stratégique', text: 'Faire travailler un collectif sur une vision, des choix structurants ou une feuille de route.' },
@@ -120,6 +146,8 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
     <a href={withBase('/offres/mentoring/')} class="btn-outline">Vous préférez garder l'animation ? Voir le Mentoring</a>
   </div>
 
+  <ClientLogoStrip />
+
   <section class="section" data-reveal>
     <div class="container">
       <div class="section-head">
@@ -137,7 +165,7 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
           </article>
         ))}
       </div>
-      <p class="problem-statement"><strong>Votre enjeu n'est pas simplement d'organiser un atelier. C'est de créer les conditions pour que le collectif comprenne, décide et avance réellement.</strong></p>
+      <p class="callout-statement"><strong>Votre enjeu n'est pas simplement d'organiser un atelier. C'est de créer les conditions pour que le collectif comprenne, décide et avance réellement.</strong></p>
     </div>
   </section>
 
@@ -194,6 +222,26 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
     </div>
   </section>
 
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Bon à savoir</p>
+          <h2>Ce qu'il faut savoir pour bien s'organiser</h2>
+        </div>
+      </div>
+      <div class="cards">
+        {basics.map((b) => (
+          <article class="card">
+            <h3>{b.title}</h3>
+            {b.texts.map((t) => <p>{t}</p>)}
+          </article>
+        ))}
+      </div>
+      <p class="callout-statement"><strong>Vous n'achetez pas des heures de facilitation. Vous investissez dans la capacité de votre équipe à avancer réellement — à mettre en balance le coût, souvent invisible, d'un collectif qui piétine, et la valeur d'une dynamique vraiment lancée, ancrée et durable.</strong></p>
+    </div>
+  </section>
+
   <section class="section alt" data-reveal>
     <div class="container">
       <div class="section-head">
@@ -244,7 +292,7 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
     margin-top: calc(var(--space-8) * -1);
     margin-bottom: var(--space-8);
   }
-  .problem-statement {
+  .callout-statement {
     margin: var(--space-8) auto 0;
     max-width: 640px;
     text-align: center;
@@ -254,7 +302,7 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
   .bring-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .bring-cards .card p:not(:last-child) {
+  .card p:not(:last-child) {
     margin-bottom: var(--space-3);
   }
   .muted {
