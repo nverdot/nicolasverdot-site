@@ -5,6 +5,7 @@ import PageHero from '../components/PageHero.astro';
 import { withBase } from '../utils/url';
 import portrait from '../assets/nicolas-portrait.png';
 import action from '../assets/nicolas-action.jpeg';
+import heroImg from '../assets/hero-cas-clients.png';
 
 const swatches = [
   { name: 'Jaune signature', token: '--color-orange', usage: 'CTA, surlignages, éléments d\'accent, badges.' },
@@ -32,8 +33,11 @@ const tags = ['Facilitation', 'Coaching', 'Formation', 'IA appliquée', 'Capture
   <PageHero
     eyebrow="Direction artistique"
     title="Charte graphique"
-    summary="Une identité visuelle lumineuse, professionnelle et mémorable : le jaune attire l'attention, le bleu installe la confiance, le rouge marque l'énergie. Cette page sert de référence pour rester cohérent sur tout le site et les supports de communication."
+    summary="Une identité visuelle lumineuse, professionnelle et mémorable : <strong>le jaune</strong> attire l'attention, <strong>le bleu</strong> installe la confiance, le rouge marque l'énergie. Cette page sert de référence pour rester cohérent sur tout le site et les supports de communication."
     pills={['Usage interne', 'Référence de marque']}
+    image={heroImg}
+    imageAlt="Un facilitateur présente un panneau visuel terminé à un petit groupe, sur une terrasse dominant la mer, un drapeau planté à côté."
+    tall
   />
 
   <section class="section" data-reveal>

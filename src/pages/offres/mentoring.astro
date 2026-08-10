@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { withBase } from '../../utils/url';
+import heroImg from '../../assets/offres/hero-coaching-professionnel.png';
 
 const serviceSchema = {
   '@context': 'https://schema.org',
@@ -82,9 +83,13 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
 >
   <PageHero
     eyebrow="Mentoring · Co-construction · Posture de facilitateur"
-    title="Vous concevez et animez, je vous accompagne à chaque étape"
-    summary="Je co-construis votre séminaire ou atelier avec vous, et je vous prépare à l'animer vous-même — posture, déroulé, méthodes, répétition des moments sensibles."
+    title="Vous concevez et animez,"
+    titleAccent="je vous accompagne à chaque étape."
+    summary="Je co-construis votre séminaire ou atelier avec vous, et je vous prépare à <strong>l'animer vous-même</strong> — posture, déroulé, méthodes, répétition des moments sensibles."
     pills={['Séminaires', 'Ateliers stratégiques', "Journées d'équipe", 'Formation-action']}
+    image={heroImg}
+    imageAlt="Deux personnes en conversation, dans un moment d'accompagnement calme et posé."
+    tall
   />
 
   <div class="container hero-cta-row">

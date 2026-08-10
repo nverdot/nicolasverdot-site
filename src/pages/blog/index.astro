@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
+import heroImg from '../../assets/hero-a-propos.png';
 ---
 
 <Layout
@@ -11,8 +12,13 @@ import CTABlock from '../../components/CTABlock.astro';
 >
   <PageHero
     eyebrow="Blog"
-    title="Cette page arrive bientôt"
-    summary="Le blog est en cours de construction. En attendant, parlons directement de votre situation."
+    title="Cette page arrive"
+    titleAccent="bientôt."
+    summary="Le blog est en cours de construction. En attendant, parlons directement de <strong>votre situation</strong>."
+    image={heroImg}
+    imageAlt="Un facilitateur vu de dos, une pause sur un chemin en hauteur, un carnet de croquis à la main."
+    flip
+    tall
   />
 
   <CTABlock

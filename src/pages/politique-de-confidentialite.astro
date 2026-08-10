@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import { SITE } from '../data/site';
+import heroImg from '../assets/hero-intelligence-collective.png';
 ---
 
 <Layout
@@ -13,6 +14,9 @@ import { SITE } from '../data/site';
     eyebrow="Informations légales"
     title="Politique de confidentialité"
     summary="Cette page explique quelles données sont collectées sur ce site, pourquoi, et comment vous pouvez exercer vos droits — conformément au Règlement général sur la protection des données (RGPD)."
+    image={heroImg}
+    imageAlt="Un cercle de personnes assises en extérieur, en pleine discussion, des objets simples disposés entre elles."
+    tall
   />
 
   <section class="section" data-reveal>

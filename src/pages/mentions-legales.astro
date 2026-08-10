@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import { SITE } from '../data/site';
+import heroImg from '../assets/hero-materiel.png';
 ---
 
 <Layout
@@ -13,6 +14,9 @@ import { SITE } from '../data/site';
     eyebrow="Informations légales"
     title="Mentions légales"
     summary="Conformément aux articles 6-III et 19 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, voici les informations d'identification relatives à l'éditeur et à l'hébergeur de ce site."
+    image={heroImg}
+    imageAlt="Un facilitateur organise soigneusement ses outils sur une table en extérieur."
+    tall
   />
 
   <section class="section" data-reveal>

@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
+import heroImg from '../assets/offres/hero-capture-graphique.png';
 
 const checks = [
   { i: '1', title: 'Pas une question de talent', text: "Nul besoin de savoir dessiner : quelques formes simples suffisent à structurer une pensée complexe." },
@@ -23,9 +24,13 @@ const contexts = [
 >
   <PageHero
     eyebrow="Comprendre la facilitation graphique"
-    title="Un facilitateur graphique, pour quoi faire ?"
-    summary="Utiliser le dessin et le visuel pour aider un collectif à réfléchir, décider et avancer ensemble — sans qu'il soit besoin de savoir dessiner pour en tirer parti."
+    title="Un facilitateur graphique,"
+    titleAccent="pour quoi faire ?"
+    summary="Utiliser <strong>le dessin</strong> et <strong>le visuel</strong> pour aider un collectif à réfléchir, décider et avancer ensemble — sans qu'il soit besoin de savoir dessiner pour en tirer parti."
     pills={['Facilitation graphique', 'Capture graphique', 'Réseau de facilitateurs']}
+    image={heroImg}
+    imageAlt="Un facilitateur graphique dessine une grande fresque colorée en direct devant un public nombreux, lors d'un événement."
+    tall
   />
 
   <section class="section" data-reveal>

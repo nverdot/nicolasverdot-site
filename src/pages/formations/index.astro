@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
+import heroImg from '../../assets/hero-seminaires-alpes-maritimes.png';
 ---
 
 <Layout
@@ -11,8 +12,12 @@ import CTABlock from '../../components/CTABlock.astro';
 >
   <PageHero
     eyebrow="Formations"
-    title="Cette page arrive bientôt"
-    summary="Le catalogue de formations est en cours de construction. En attendant, parlons directement de votre besoin de montée en compétence."
+    title="Cette page arrive"
+    titleAccent="bientôt."
+    summary="Le catalogue de formations est en cours de construction. En attendant, parlons directement de <strong>votre besoin de montée en compétence</strong>."
+    image={heroImg}
+    imageAlt="Un facilitateur anime un atelier en petit groupe sur une terrasse dominant la Méditerranée."
+    tall
   />
 
   <CTABlock
