@@ -25,7 +25,7 @@ J'ai accompagné l'Urssaf / Acoss à travers plusieurs missions complémentaires
 
 Selon les besoins, j'ai mobilisé différentes postures : consultant, coach agile, facilitateur, formateur et mentor.
 
-## 1. Accompagner la transformation sur un an {Transformation}
+## 1. Accompagner la transformation sur un an
 
 **Construire une feuille de route et installer une démarche agile adaptée au contexte**
 
@@ -94,7 +94,7 @@ L'accompagnement a contribué à :
 - installer une démarche d'expérimentation et d'amélioration continue ;
 - renforcer les compétences et la posture de l'équipe de transformation.
 
-## 2. Mentorat à la conception d'ateliers {Mentorat}
+## 2. Mentorat à la conception d'ateliers
 
 **Aider les équipes à concevoir et faciliter leurs propres temps collectifs**
 
@@ -142,7 +142,7 @@ Le mentorat a permis aux personnes accompagnées de :
 - faire davantage participer les collectifs ;
 - transformer les échanges en décisions et en actions.
 
-## 3. Séminaire du CODIR de la DSI {Séminaire CODIR}
+## 3. Séminaire du CODIR de la DSI
 
 **Renforcer la capacité du collectif de direction à faire équipe**
 
@@ -184,7 +184,7 @@ Le séminaire a contribué à :
 - clarifier les attentes au sein du CODIR ;
 - poser les bases d'un fonctionnement plus aligné.
 
-## 4. Séminaire de lancement d'une nouvelle division {Séminaire division}
+## 4. Séminaire de lancement d'une nouvelle division
 
 **Construire une mission, une vision et un cadre d'action communs**
 

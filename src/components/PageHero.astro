@@ -5,6 +5,11 @@ import { Image } from 'astro:assets';
 interface Props {
   eyebrow: string;
   title: string;
+  /** Mot ou groupe de mots accentué en script orange, comme sur le hero de l'accueil (optionnel, uniquement pour la variante has-image). */
+  titleAccent?: string;
+  /** Fin de phrase après l'accent (optionnel, requiert titleAccent). */
+  titleTail?: string;
+  /** Rendu via set:html : les <strong> y sont acceptés pour reprendre le traitement du hero d'accueil. Contenu toujours fourni par le développeur, jamais par un utilisateur. */
   summary: string;
   pills?: string[];
   image?: ImageMetadata;
@@ -12,7 +17,7 @@ interface Props {
   tall?: boolean;
 }
 
-const { eyebrow, title, summary, pills = [], image, imageAlt = '', tall = false } = Astro.props;
+const { eyebrow, title, titleAccent, titleTail, summary, pills = [], image, imageAlt = '', tall = false } = Astro.props;
 ---
 
 <section class={`page-hero${image ? ' has-image' : ''}${tall ? ' is-tall' : ''}`} data-reveal>
@@ -24,8 +29,16 @@ const { eyebrow, title, summary, pills = [], image, imageAlt = '', tall = false 
   )}
   <div class="container page-hero-inner">
     <p class="eyebrow">{eyebrow}</p>
-    <h1>{title}</h1>
-    <p class="page-summary">{summary}</p>
+    {titleAccent ? (
+      <h1>
+        {title}
+        <span class="script-accent">{titleAccent}</span>
+        {titleTail && <span class="hero-tail">{titleTail}</span>}
+      </h1>
+    ) : (
+      <h1>{title}</h1>
+    )}
+    <p class="page-summary" set:html={summary} />
     {pills.length > 0 && (
       <div class="meta-pills">
         {pills.map((pill) => <span>{pill}</span>)}
@@ -65,30 +78,65 @@ const { eyebrow, title, summary, pills = [], image, imageAlt = '', tall = false 
     object-fit: cover;
     z-index: 0;
   }
-  /* Renforcé par rapport à un simple assombrissement léger : sur une
-     illustration claire (ciel, montagne), un texte blanc ou jaune avec un
-     scrim à 55% ne passe pas les seuils de contraste WCAG. Le dégradé
-     monte à 85% en bas de la zone (là où le texte se pose en variante
-     "tall") pour garantir une lecture correcte quel que soit le contenu
-     de l'image. */
+  /* Même traitement que le hero de l'accueil (Hero.astro), la référence
+     visuelle du site : scrim clair directionnel, texte en encre foncée.
+     L'ancien scrim sombre (pensé pour des photos) écrasait les
+     illustrations pâles utilisées ici - cf. deleguer-animation.astro. */
   .page-hero-scrim {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(11, 22, 39, 0.35) 0%, rgba(11, 22, 39, 0.85) 100%);
     z-index: 1;
+    background: linear-gradient(
+      90deg,
+      var(--color-cream) 0%,
+      color-mix(in srgb, var(--color-cream) 88%, transparent) 32%,
+      color-mix(in srgb, var(--color-cream) 35%, transparent) 52%,
+      transparent 68%
+    );
   }
   .page-hero.has-image .page-hero-inner {
     position: relative;
     z-index: 2;
+    max-width: 600px;
   }
   .page-hero.has-image .eyebrow {
-    color: var(--color-orange);
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    color: var(--color-clay-ink);
   }
   .page-hero.has-image h1,
   .page-hero.has-image .page-summary {
-    color: var(--color-white);
-    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+    color: var(--color-navy);
+  }
+  .page-hero.has-image .page-summary {
+    color: var(--color-muted);
+  }
+  .page-hero.has-image .page-summary :global(strong) {
+    color: var(--color-navy);
+  }
+  .script-accent {
+    display: block;
+    font-family: var(--font-script);
+    font-weight: 700;
+    color: var(--color-orange-ink);
+    font-size: clamp(3.2rem, 6vw, 5rem);
+    line-height: 1;
+    margin: 0.15em 0;
+  }
+  .hero-tail {
+    display: block;
+  }
+  @media (max-width: 900px) {
+    .page-hero.has-image .page-hero-scrim {
+      background: linear-gradient(
+        180deg,
+        var(--color-cream) 0%,
+        var(--color-cream) 58%,
+        color-mix(in srgb, var(--color-cream) 75%, transparent) 74%,
+        color-mix(in srgb, var(--color-cream) 30%, transparent) 100%
+      );
+    }
+    .page-hero.has-image .page-hero-inner {
+      max-width: none;
+    }
   }
   .visually-hidden {
     position: absolute;
