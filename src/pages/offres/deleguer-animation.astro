@@ -162,6 +162,12 @@ const takeCharge = [
     <a href={withBase('/offres/mentoring/')} class="btn-outline">Vous préférez garder l'animation ? Voir le Mentoring</a>
   </div>
 
+  <section class="value-band" data-reveal data-section-name="Investissement sécurisé">
+    <div class="container value-band-inner">
+      <h2>Vous investissez déjà du temps et de l'énergie pour réunir les bonnes personnes.<br /><span class="accent">Je vous aide à sécuriser cet investissement en le transformant en décisions et en actions concrètes.</span></h2>
+    </div>
+  </section>
+
   <ClientLogoStrip />
 
   <section class="section" data-reveal>
@@ -230,7 +236,7 @@ const takeCharge = [
       </div>
       <div class="callout-box callout-box-row">
         <span class="callout-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.target} /></span>
-        <p>Vous investissez déjà du temps et de l'énergie pour réunir les bonnes personnes.<br />Je vous aide à sécuriser cet investissement en le transformant en décisions et en actions concrètes.</p>
+        <p>Parlons de votre contexte pour construire le bon dispositif, avant que ce temps collectif ne soit fixé.</p>
         <a href={withBase('/contact/')} class="btn">Parler de votre séminaire →</a>
       </div>
     </div>
@@ -309,6 +315,26 @@ const takeCharge = [
     flex-wrap: wrap;
     margin-top: var(--space-2);
     margin-bottom: var(--space-8);
+  }
+
+  /* --- Bandeau sombre entre le hero et les logos, même traitement que
+     le bandeau "preuve" de la page d'accueil (fond --color-ink-solid). --- */
+  .value-band {
+    background: var(--color-ink-solid);
+    padding: var(--space-12) 0;
+  }
+  .value-band-inner {
+    text-align: center;
+  }
+  .value-band h2 {
+    margin: 0 auto;
+    max-width: 46ch;
+    color: var(--color-white);
+    font-size: var(--text-2xl);
+    line-height: 1.35;
+  }
+  .value-band h2 .accent {
+    color: var(--color-orange);
   }
   .card p:not(:last-child) {
     margin-bottom: var(--space-3);
