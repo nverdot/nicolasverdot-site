@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { SITE } from '../data/site';
+import heroImg from '../assets/hero-contact.png';
 
 const reasons = [
   'concevoir et animer un séminaire',
@@ -30,8 +31,13 @@ const checks = [
 >
   <PageHero
     eyebrow="Contact"
-    title="Qu'est-ce que vous cherchez à atteindre ?"
-    summary="Séminaire, transformation, démarche participative, conférence, formation, accompagnement de leaders : décrivez votre besoin ou le défi à relever. Le premier échange sert à comprendre l'enjeu, les personnes concernées, le niveau de décision et l'échéance."
+    title="Qu'est-ce que vous cherchez"
+    titleAccent="à atteindre ?"
+    summary="Séminaire, transformation, démarche participative, conférence, formation, accompagnement de leaders : décrivez <strong>votre besoin</strong> ou <strong>le défi à relever</strong>. Le premier échange sert à comprendre l'enjeu, les personnes concernées, le niveau de décision et l'échéance."
+    image={heroImg}
+    imageAlt="Deux personnes se rencontrent au début d'un chemin, devant un panneau aux flèches vierges."
+    flip
+    tall
   />
 
   <section class="section" data-reveal>

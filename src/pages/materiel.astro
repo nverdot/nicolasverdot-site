@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
 import { kits, bikabloKit } from '../data/materiel';
+import heroImg from '../assets/hero-materiel.png';
 
 const whyChecks = [
   { i: '1', title: 'Se décharger mentalement', text: "Tout est là, à sa place, prêt à être utilisé. Je n'ai pas à y penser — je reste pleinement présent à l'humain et à la dynamique du collectif." },
@@ -19,9 +20,13 @@ const whyChecks = [
 >
   <PageHero
     eyebrow="Matériel & recommandations"
-    title="Le matériel que j'utilise (et pourquoi)"
-    summary="Cela fait plus de 15 ans que je travaille avec du matériel Neuland. Voici ma sélection complète, testée sur le terrain, organisée par usage : sketchnote, formation & atelier, capture graphique."
+    title="Le matériel que j'utilise,"
+    titleAccent="et pourquoi."
+    summary="Cela fait plus de 15 ans que je travaille avec du matériel Neuland. Voici ma sélection complète, <strong>testée sur le terrain</strong>, organisée par usage : sketchnote, formation & atelier, capture graphique."
     pills={['Ambassadeur Neuland', 'Démarche éco-responsable', 'Testé sur le terrain']}
+    image={heroImg}
+    imageAlt="Un facilitateur organise soigneusement ses outils — marqueurs, carnet de croquis, papier — sur une table en extérieur."
+    tall
   />
 
   <section class="section" data-reveal>

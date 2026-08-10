@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
+import heroImg from '../assets/hero-intelligence-collective.png';
 
 const conditions = [
   { i: '1', title: 'Un enjeu réel', text: "On ne mobilise pas un collectif pour valider une décision déjà prise. L'intelligence collective suppose une vraie question ouverte." },
@@ -53,9 +54,13 @@ const faqSchema = {
 >
   <PageHero
     eyebrow="Comprendre et activer"
-    title="L'intelligence collective ne se décrète pas. Elle se facilite."
-    summary="Un groupe ne devient pas intelligent en se réunissant : il le devient quand le cadre, le processus et la posture d'animation le permettent. Voici comment ça fonctionne — et comment l'installer chez vous."
+    title="L'intelligence collective ne se décrète pas."
+    titleAccent="Elle se facilite."
+    summary="Un groupe ne devient pas intelligent en se réunissant : il le devient quand <strong>le cadre</strong>, <strong>le processus</strong> et la posture d'animation le permettent. Voici comment ça fonctionne — et comment l'installer chez vous."
     pills={['Ateliers facilités', 'Formations', 'Méthodes éprouvées']}
+    image={heroImg}
+    imageAlt="Un cercle de personnes assises en extérieur, en pleine discussion, des objets simples disposés entre elles comme lors d'un atelier de travail."
+    tall
   />
 
   <section class="section" data-reveal>

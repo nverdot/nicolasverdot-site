@@ -15,35 +15,39 @@ interface Props {
   image?: ImageMetadata;
   imageAlt?: string;
   tall?: boolean;
+  /** Si la zone dégagée de l'illustration est à droite plutôt qu'à gauche (cas par cas selon l'image générée) : inverse le scrim et pousse le texte à droite. */
+  flip?: boolean;
 }
 
-const { eyebrow, title, titleAccent, titleTail, summary, pills = [], image, imageAlt = '', tall = false } = Astro.props;
+const { eyebrow, title, titleAccent, titleTail, summary, pills = [], image, imageAlt = '', tall = false, flip = false } = Astro.props;
 ---
 
-<section class={`page-hero${image ? ' has-image' : ''}${tall ? ' is-tall' : ''}`} data-reveal>
+<section class={`page-hero${image ? ' has-image' : ''}${tall ? ' is-tall' : ''}${flip ? ' is-flipped' : ''}`} data-reveal>
   {image && (
     <>
       <Image src={image} alt="" role="presentation" widths={[640, 1200, 1920]} sizes="100vw" class="page-hero-bg" />
       <div class="page-hero-scrim" aria-hidden="true"></div>
     </>
   )}
-  <div class="container page-hero-inner">
-    <p class="eyebrow">{eyebrow}</p>
-    {titleAccent ? (
-      <h1>
-        {title}
-        <span class="script-accent">{titleAccent}</span>
-        {titleTail && <span class="hero-tail">{titleTail}</span>}
-      </h1>
-    ) : (
-      <h1>{title}</h1>
-    )}
-    <p class="page-summary" set:html={summary} />
-    {pills.length > 0 && (
-      <div class="meta-pills">
-        {pills.map((pill) => <span>{pill}</span>)}
-      </div>
-    )}
+  <div class="page-hero-inner">
+    <div class="page-hero-copy">
+      <p class="eyebrow">{eyebrow}</p>
+      {titleAccent ? (
+        <h1>
+          {title}
+          <span class="script-accent">{titleAccent}</span>
+          {titleTail && <span class="hero-tail">{titleTail}</span>}
+        </h1>
+      ) : (
+        <h1>{title}</h1>
+      )}
+      <p class="page-summary" set:html={summary} />
+      {pills.length > 0 && (
+        <div class="meta-pills">
+          {pills.map((pill) => <span>{pill}</span>)}
+        </div>
+      )}
+    </div>
   </div>
   {image && imageAlt && <p class="visually-hidden">{imageAlt}</p>}
 </section>
@@ -94,10 +98,36 @@ const { eyebrow, title, titleAccent, titleTail, summary, pills = [], image, imag
       transparent 68%
     );
   }
-  .page-hero.has-image .page-hero-inner {
+  /* Même cadre que .hero-inner sur l'accueil (Hero.astro) : plus large et
+     avec un padding qui grandit avec le viewport, contrairement au
+     .container standard (1180px, padding fixe) - pour que le texte
+     exploite la largeur de la page comme sur la home. Appliqué à toutes
+     les variantes (avec ou sans image) pour une largeur cohérente. */
+  .page-hero-inner {
     position: relative;
     z-index: 2;
+    width: 100%;
+    max-width: 1400px;
+    margin-inline: auto;
+    padding-inline: clamp(1.5rem, 4vw, 4rem);
+  }
+  .page-hero.has-image .page-hero-copy {
     max-width: 600px;
+  }
+  /* Certaines illustrations ont leur zone dégagée à droite plutôt qu'à
+     gauche : on inverse le dégradé du scrim et on pousse le texte à
+     droite du cadre, sans dupliquer tout le reste du composant. */
+  .page-hero.is-flipped .page-hero-scrim {
+    background: linear-gradient(
+      270deg,
+      var(--color-cream) 0%,
+      color-mix(in srgb, var(--color-cream) 88%, transparent) 32%,
+      color-mix(in srgb, var(--color-cream) 35%, transparent) 52%,
+      transparent 68%
+    );
+  }
+  .page-hero.is-flipped .page-hero-copy {
+    margin-left: auto;
   }
   .page-hero.has-image .eyebrow {
     color: var(--color-clay-ink);
@@ -134,8 +164,37 @@ const { eyebrow, title, titleAccent, titleTail, summary, pills = [], image, imag
         color-mix(in srgb, var(--color-cream) 30%, transparent) 100%
       );
     }
-    .page-hero.has-image .page-hero-inner {
+    .page-hero.has-image .page-hero-copy {
       max-width: none;
+    }
+  }
+  /* Sous 640px, le chevauchement image+texte n'est plus fiable : selon le
+     recadrage de chaque illustration (object-fit:cover sur un mobile
+     étroit), le scrim vertical peut rendre l'image quasiment invisible -
+     cf. hero-accompagnements.png où seul un fragment dépasse en bas.
+     Même solution que le hero de deleguer-animation : bandeau image fixe
+     au-dessus, texte en dessous sur fond plein, sans scrim. */
+  @media (max-width: 640px) {
+    .page-hero.has-image {
+      display: block;
+      padding: 0 0 var(--space-8);
+    }
+    .page-hero.has-image.is-tall {
+      min-height: 0;
+    }
+    .page-hero.has-image .page-hero-bg {
+      position: static;
+      width: 100%;
+      height: 46vw;
+      min-height: 200px;
+      max-height: 320px;
+      object-position: center 30%;
+    }
+    .page-hero.has-image .page-hero-scrim {
+      display: none;
+    }
+    .page-hero.has-image .page-hero-inner {
+      padding-top: var(--space-6);
     }
   }
   .visually-hidden {

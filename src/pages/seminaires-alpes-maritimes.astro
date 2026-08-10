@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
+import heroImg from '../assets/hero-seminaires-alpes-maritimes.png';
 
 const villes = [
   { name: 'Nice', text: "Sièges régionaux, collectivités, scale-ups : des séminaires qui produisent des décisions, pas seulement des souvenirs." },
@@ -56,9 +57,13 @@ const faqSchema = {
 >
   <PageHero
     eyebrow="Alpes-Maritimes & Monaco"
-    title="Un facilitateur professionnel basé dans le 06"
-    summary="Animation de séminaires, ateliers d'intelligence collective, facilitation graphique : j'interviens là où vos équipes travaillent — Nice, Cannes, Sophia Antipolis, Grasse, Antibes, Mandelieu, Monaco — et partout en France."
+    title="Un facilitateur professionnel"
+    titleAccent="basé dans le 06."
+    summary="Animation de séminaires, ateliers d'intelligence collective, facilitation graphique : j'interviens là où vos équipes travaillent — <strong>Nice, Cannes, Sophia Antipolis, Grasse, Antibes, Mandelieu, Monaco</strong> — et partout en France."
     pills={['Séminaires', 'Ateliers', 'Capture graphique', 'Basé dans le 06']}
+    image={heroImg}
+    imageAlt="Un facilitateur anime un atelier en petit groupe sur une terrasse dominant la Méditerranée, toits en tuiles et cyprès en arrière-plan."
+    tall
   />
 
   <section class="section" data-reveal>

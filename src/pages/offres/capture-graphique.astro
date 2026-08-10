@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { withBase } from '../../utils/url';
+import heroImg from '../../assets/offres/hero-capture-graphique.png';
 
 const serviceSchema = {
   '@context': 'https://schema.org',
@@ -89,9 +90,13 @@ const faqSchema = {
 >
   <PageHero
     eyebrow="Facilitation graphique · Capture graphique · Événementiel"
-    title="Facilitation graphique et capture graphique : vos idées méritent d'être vues et mémorisées"
-    summary="Pendant votre séminaire, conférence ou réunion stratégique, je traduis visuellement en temps réel les idées, décisions et échanges. Une fresque prend forme, aide les participants à suivre, et crée une mémoire collective que vous pourrez conserver, partager et réutiliser."
+    title="Vos idées méritent"
+    titleAccent="d'être vues et mémorisées."
+    summary="Pendant votre séminaire, conférence ou réunion stratégique, je traduis visuellement en temps réel les idées, décisions et échanges. Une fresque prend forme, aide les participants à suivre, et crée <strong>une mémoire collective</strong> que vous pourrez conserver, partager et réutiliser."
     pills={['Sur devis', 'En direct', 'Partout en France']}
+    image={heroImg}
+    imageAlt="Un facilitateur graphique dessine une grande fresque colorée en direct devant un public nombreux, lors d'un événement."
+    tall
   />
 
   <section class="section" data-reveal>

@@ -1,11 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
-import ApproachTimeline from '../components/ApproachTimeline.astro';
 import EcosystemBlock from '../components/EcosystemBlock.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { Image } from 'astro:assets';
 import portrait from '../assets/nicolas-portrait.png';
+import heroImg from '../assets/hero-a-propos.png';
 import { SITE } from '../data/site';
 import { withBase } from '../utils/url';
 
@@ -90,38 +90,6 @@ const diffs = [
   },
 ];
 
-const approachSteps = [
-  {
-    title: 'Comprendre le système',
-    text: 'Avant toute proposition, je prends le temps de comprendre votre contexte réel : qui porte quoi, ce qui a déjà été essayé, ce qui bloque en silence.',
-    bullets: ['Écouter les acteurs clés', 'Repérer les tensions sous-jacentes', 'Voir ce qui a déjà été tenté'],
-  },
-  {
-    title: "Clarifier l'intention",
-    text: "On ne conçoit rien tant que le résultat attendu n'est pas nommé noir sur blanc — et partagé par ceux qui doivent trancher.",
-    bullets: ['Nommer le résultat attendu', 'Aligner les parties prenantes', 'Prioriser ce qui compte'],
-  },
-  {
-    title: 'Concevoir le dispositif',
-    text: "Le format se choisit après le diagnostic, jamais avant. Un séminaire de direction ne se prépare pas comme un atelier d'équipe.",
-    bullets: ['Choisir le bon format', 'Séquencer les temps forts', 'Prévoir la restitution'],
-  },
-  {
-    title: 'Créer les conditions du dialogue',
-    text: 'Un cadre suffisamment sécurisant pour que les désaccords sortent — et se traitent — plutôt que de couver après la réunion.',
-    bullets: ['Poser un cadre clair', 'Autoriser le désaccord', "Préparer l'arbitrage"],
-  },
-  {
-    title: 'Rendre visible',
-    text: "Les idées, les liens et les choix se matérialisent en direct grâce à la facilitation graphique — la mémoire du collectif ne dépend plus d'un compte rendu.",
-    bullets: ['Capturer en direct', 'Relier les idées entre elles', 'Garder une trace partagée'],
-  },
-  {
-    title: 'Ancrer la suite',
-    text: "Une intervention réussie se juge à ce qui se passe après. Responsables, échéances, rituels de suivi : rien ne repart flou.",
-    bullets: ['Attribuer les responsabilités', 'Fixer les échéances', 'Installer un suivi'],
-  },
-];
 ---
 
 <Layout
@@ -131,8 +99,13 @@ const approachSteps = [
 >
   <PageHero
     eyebrow="Qui suis-je ?"
-    title="Je fais bouger ce qui est bloqué."
-    summary="Ancien développeur, coach agile, facilitateur, formateur, facilitateur graphique et moniteur de plongée : un parcours qui relie structure, observation, sécurité, transmission et mise en mouvement. Cette page vous dit qui je suis, ce en quoi je crois, et comment je conçois chaque intervention."
+    title="Je fais bouger"
+    titleAccent="ce qui est bloqué."
+    summary="Ancien développeur, <strong>coach agile, facilitateur, formateur</strong>, facilitateur graphique et moniteur de plongée : un parcours qui relie structure, observation, sécurité, transmission et <strong>mise en mouvement</strong>."
+    image={heroImg}
+    imageAlt="Un facilitateur vu de dos, une pause sur un chemin en hauteur, un carnet de croquis à la main, face à un paysage qui s'ouvre devant lui."
+    flip
+    tall
   />
 
   <section class="section" data-reveal>
@@ -244,19 +217,6 @@ const approachSteps = [
           </article>
         ))}
       </div>
-    </div>
-  </section>
-
-  <section class="section" data-reveal>
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Le déroulé</p>
-          <h2>Six étapes, jamais un format imposé</h2>
-        </div>
-        <p>La méthode se choisit après avoir compris votre contexte — jamais avant. World Café, atelier de décision, séminaire de direction : le bon format dépend d'où vous en êtes, pas de mes préférences.</p>
-      </div>
-      <ApproachTimeline steps={approachSteps} />
     </div>
   </section>
 

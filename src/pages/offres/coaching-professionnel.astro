@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { withBase } from '../../utils/url';
+import heroImg from '../../assets/offres/hero-coaching-professionnel.png';
 
 const serviceSchema = {
   '@context': 'https://schema.org',
@@ -79,9 +80,13 @@ const faqSchema = {
 >
   <PageHero
     eyebrow="Coaching professionnel · Posture · Leadership"
-    title="Vous êtes compétent. Mais quelque chose coince."
-    summary="Dans votre posture, dans vos interactions, dans la manière dont vous tenez votre équipe ou traversez les tensions. Nous travaillons sur ce qui se passe réellement : les croyances, les réactions automatiques, la sécurité intérieure et les choix que vous n'arrivez plus à poser seul."
+    title="Vous êtes compétent."
+    titleAccent="Mais quelque chose coince."
+    summary="Dans votre posture, dans vos interactions, dans la manière dont vous tenez votre équipe ou traversez les tensions. Nous travaillons sur ce qui se passe réellement : <strong>les croyances</strong>, <strong>les réactions automatiques</strong>, la sécurité intérieure et les choix que vous n'arrivez plus à poser seul."
     pills={['Sur devis', '100 % individuel', 'En ligne ou en présentiel']}
+    image={heroImg}
+    imageAlt="Deux personnes assises en conversation, l'une prenant des notes dans un carnet, ambiance calme et posée."
+    tall
   />
 
   <section class="section" data-reveal>

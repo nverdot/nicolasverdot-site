@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { withBase } from '../../utils/url';
+import heroImg from '../../assets/offres/hero-accompagnement-transformation.png';
 
 const serviceSchema = {
   '@context': 'https://schema.org',
@@ -77,9 +78,13 @@ const faqSchema = {
 >
   <PageHero
     eyebrow="Transformation · Alignement · Intelligence collective"
-    title="Votre transformation existe sur le papier. Faisons-la vivre sur le terrain."
-    summary="Les dispositifs ont été lancés, mais quelque chose coince : les équipes ne s'approprient pas le changement, les comportements évoluent peu, l'énergie retombe. J'interviens en cours de route pour regarder ce qui se joue réellement et construire avec vous les conditions pour que la transformation prenne."
+    title="Votre transformation existe sur le papier."
+    titleAccent="Faisons-la vivre sur le terrain."
+    summary="Les dispositifs ont été lancés, mais quelque chose coince : les équipes ne s'approprient pas le changement, les comportements évoluent peu, l'énergie retombe. J'interviens en cours de route pour regarder ce qui se joue réellement et construire avec vous <strong>les conditions pour que la transformation prenne</strong>."
     pills={['Sur devis', 'Sur mesure', 'Avec vos équipes, pas à leur place']}
+    image={heroImg}
+    imageAlt="Un groupe traverse un passage de pierres et un pont, depuis un chemin envahi de broussailles vers un chemin dégagé, symbolisant une transformation en cours."
+    tall
   />
 
   <section class="section" data-reveal>
