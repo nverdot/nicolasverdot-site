@@ -79,14 +79,6 @@ const bring = [
 
 const includes = ['Les entretiens de cadrage', 'La conception du déroulé', 'Le choix des méthodes', 'La préparation des supports', 'La facilitation du jour J', 'La facilitation graphique', 'La synthèse des résultats', 'Le débrief et les prochaines étapes'];
 
-const process = [
-  { title: 'Cadrer', text: "Nous clarifions le contexte, les participants, les tensions, les objectifs et ce qui devra être différent à la fin." },
-  { title: 'Concevoir', text: 'Je transforme l\'intention en processus : rythme, séquences, méthodes, consignes, supports et modalités de décision.' },
-  { title: 'Préparer', text: 'Nous sécurisons les rôles, la logistique, les prises de parole, les supports et les situations sensibles.' },
-  { title: 'Faciliter', text: 'Le jour J, je garde une position haute sur le processus et basse sur le contenu : le groupe travaille, je ne lui impose pas les réponses.' },
-  { title: 'Ancrer', text: 'Les décisions sont rendues visibles et transformées en priorités, responsabilités et prochaines étapes.' },
-];
-
 const basics = [
   {
     title: 'Le bon ratio de facilitation',
@@ -202,23 +194,83 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
     </div>
   </section>
 
-  <section class="section dark" data-reveal>
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Mon processus</p>
-          <h2>Cadrer → Concevoir → Préparer → Faciliter → Ancrer</h2>
-        </div>
-      </div>
-      <div class="method process-method">
-        {process.map((s, i) => (
-          <div class="step">
-            <b>{String(i + 1).padStart(2, '0')}</b>
-            <strong>{s.title}</strong>
-            <span>{s.text}</span>
-          </div>
-        ))}
-      </div>
+  <section class="section alt" data-reveal>
+    <div class="container prose accompaniment-prose">
+      <p class="eyebrow">Mon processus</p>
+      <h2>Un accompagnement avant, pendant et après</h2>
+      <p>Déléguer la facilitation, ce n'est pas simplement confier l'animation d'une journée.</p>
+      <p>C'est se faire accompagner pour comprendre ce qui doit réellement être travaillé, concevoir le bon processus, créer les conditions pour que le collectif puisse produire quelque chose d'utile… et tirer les enseignements de ce qui s'est passé.</p>
+
+      <h3>Avant — Comprendre avant de concevoir</h3>
+      <p>Avant de parler de méthode, de Post-it ou de déroulé, il faut comprendre la situation.</p>
+      <p class="question-lines">
+        Pourquoi réunir ce collectif ?<br />
+        Pour faire quoi, concrètement ?<br />
+        Avec qui ?<br />
+        Autour de quelles questions ?<br />
+        Pour produire quoi ?<br />
+        Et surtout : <strong>comment ce qui sera produit va-t-il être utilisé ensuite ?</strong>
+      </p>
+      <p>Je cherche aussi à comprendre ce qui s'est passé avant et ce qui doit se passer après.</p>
+      <p class="question-lines">
+        Le quotidien des participants.<br />
+        Ce qu'ils vivent réellement.<br />
+        Les tensions ou contraintes qui peuvent influencer les échanges.<br />
+        Les informations dont ils disposent.<br />
+        Et même une question essentielle : <strong>ont-ils réellement les moyens de répondre à ce qu'on va leur demander ?</strong>
+      </p>
+      <p>On regarde aussi leur expérience passée de l'intelligence collective.</p>
+      <p>Parce qu'un collectif qui a déjà vécu trois ateliers remplis de Post-it sans jamais voir ce qu'ils sont devenus ne part pas de zéro.</p>
+      <p>Il peut avoir appris que « participer ne sert à rien », que « les ateliers sont du théâtre » ou simplement que « les Post-it, ça ne marche pas ».</p>
+      <p>Le problème n'était probablement pas le Post-it.</p>
+      <p>Le problème était souvent l'absence de sens, de suite ou de lien entre la méthode utilisée et ce que le collectif devait réellement produire.</p>
+      <p>Cette phase de préparation sert donc aussi à <strong>réparer le sens</strong> avant de remettre les participants dans un nouveau processus collectif.</p>
+
+      <h3>Concevoir — Construire le chemin, pas empiler les méthodes</h3>
+      <p>Une fois l'intention clarifiée, je construis avec vous le <strong>macro-déroulé</strong>.</p>
+      <p>Les grandes étapes de la journée ou du séminaire : ce que le collectif doit comprendre, explorer, confronter, décider ou construire, et dans quel ordre.</p>
+      <p>Ce déroulé est challengé avec vous pour vérifier qu'il répond réellement à l'objectif.</p>
+      <p>Puis vient le <strong>micro-déroulé</strong>.</p>
+      <p>Chaque séquence est conçue précisément : les questions posées, les consignes, le temps, la composition des groupes, le niveau de participation attendu, les modalités de restitution et la manière dont les productions vont s'enchaîner.</p>
+      <p>Je conçois également les supports qui vont aider le collectif à travailler : canevas, outils visuels, supports de réflexion, dispositifs de restitution, affichages…</p>
+      <p>Le visuel n'est pas là pour décorer.</p>
+      <p>Il sert à <strong>donner à voir</strong>, soutenir la réflexion, faciliter les interactions, mettre en relation les idées et permettre au groupe de construire à partir de ce qu'il produit.</p>
+
+      <h3>Pendant — Poser le cadre et tenir le processus</h3>
+      <p>Le jour J, tout commence par le sens.</p>
+      <p class="question-lines">
+        Pourquoi sommes-nous là ?<br />
+        Qu'attend-on réellement de cette journée ?<br />
+        Sur quoi les participants peuvent-ils agir ?<br />
+        Qu'est-ce qui est déjà décidé ?<br />
+        Qu'est-ce qui est réellement ouvert à la discussion ?
+      </p>
+      <p>Le niveau de délégation doit être clair.</p>
+      <p>Faire participer des personnes à une décision déjà prise sans le leur dire crée plus de frustration que d'engagement.</p>
+      <p>J'accompagne donc aussi le sponsor ou le leader dans la manière de lancer la journée : poser l'intention, expliquer le cadre et donner au collectif les informations nécessaires pour pouvoir réfléchir et agir.</p>
+      <p>Ensuite, je tiens le processus.</p>
+      <p>Je facilite les interactions, observe ce qui se passe dans le groupe, fais circuler la parole, rends visibles les points de vue, aide à approfondir lorsqu'on reste en surface, à confronter lorsqu'il le faut et à converger quand le moment est venu.</p>
+      <p>Et si la réalité de la salle ne correspond plus au déroulé préparé, j'adapte.</p>
+      <p class="question-lines">
+        Parce qu'un bon processus n'est pas celui qu'on applique parfaitement.<br />
+        C'est celui qui permet au groupe d'avancer.
+      </p>
+
+      <h3>Après — Comprendre ce qui s'est joué et préparer la suite</h3>
+      <p>La facilitation ne s'arrête pas quand la dernière personne quitte la salle.</p>
+      <p>Un temps de débrief permet de revenir sur ce qui s'est passé.</p>
+      <p class="question-lines">
+        Les moments forts.<br />
+        Les points de bascule.<br />
+        Ce qui a facilité ou freiné le collectif.<br />
+        Les sujets qui ont émergé.<br />
+        Les tensions ou signaux faibles qu'il serait dommage d'ignorer.
+      </p>
+      <p>On regarde aussi les productions, les décisions et les prochaines étapes.</p>
+      <p>Et surtout : <strong>qu'est-ce que cette journée nous apprend sur ce qu'il faudrait maintenant mettre en place ?</strong></p>
+      <p>Cela peut concerner le suivi d'une décision, un autre temps collectif, une évolution dans la manière de travailler ensemble ou simplement une vigilance à garder dans les semaines qui suivent.</p>
+      <p>Le séminaire n'est alors plus un événement isolé.</p>
+      <p>Il devient une étape dans un processus plus large.</p>
     </div>
   </section>
 
@@ -325,20 +377,12 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
     content: '— ';
     color: var(--color-orange-ink);
   }
-  .process-method {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+  .accompaniment-prose h3 {
+    margin-top: var(--space-12);
   }
-  .process-method .step {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-  }
-  .process-method .step strong {
-    color: var(--color-white);
-  }
-  .process-method .step span {
-    font-size: var(--text-sm);
-    color: rgba(255, 255, 255, 0.75);
+  .question-lines {
+    color: var(--color-navy);
+    font-weight: 600;
   }
   .methods-list {
     list-style: none;
@@ -361,9 +405,6 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
     color: var(--color-orange-ink);
   }
   @media (max-width: 900px) {
-    .process-method {
-      grid-template-columns: 1fr;
-    }
     .includes-list,
     .methods-list {
       grid-template-columns: 1fr 1fr;
