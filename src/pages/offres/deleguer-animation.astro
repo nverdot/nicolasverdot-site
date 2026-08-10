@@ -16,13 +16,31 @@ const serviceSchema = {
   url: new URL(withBase('/offres/deleguer-animation/'), Astro.site).toString(),
 };
 
-const pains = [
-  'Un programme trop chargé et peu participatif',
-  'Des prises de parole interminables',
-  'Beaucoup d\'idées, mais aucune vraie décision',
-  'Des participants qui décrochent',
-  'Une énergie positive qui retombe dès le lendemain',
-  'Des engagements qui ne sont jamais suivis',
+const problems = [
+  {
+    title: 'Vous ne savez pas comment construire le bon processus',
+    text: "Vous maîtrisez votre sujet, mais pas forcément les méthodes d'intelligence collective. Quel format choisir ? Comment faire participer ? Comment passer des échanges à une décision concrète ?",
+  },
+  {
+    title: 'Vos ateliers sont participatifs… mais produisent peu',
+    text: "Des Post-it, des icebreakers, des discussions, une bonne énergie sur le moment… puis quelques semaines plus tard, difficile de dire ce qui a réellement changé.",
+  },
+  {
+    title: 'Les discussions tournent en rond',
+    text: "Les mêmes sujets reviennent, tout semble prioritaire, les points de vue s'opposent et les décisions ont du mal à émerger.",
+  },
+  {
+    title: 'Vous êtes trop impliqué pour faciliter vous-même',
+    text: "Difficile d'exprimer votre point de vue, écouter les autres et contribuer aux décisions tout en gérant le temps, la parole, les tensions et la dynamique du groupe.",
+  },
+  {
+    title: 'Tout le monde ne participe pas vraiment',
+    text: "Quelques personnes prennent beaucoup de place, d'autres restent en retrait. La hiérarchie, les désaccords ou les non-dits peuvent empêcher le collectif de réellement travailler ensemble.",
+  },
+  {
+    title: "L'enjeu est trop important pour improviser",
+    text: "Séminaire stratégique, transformation, décision structurante, lancement de projet… Vous mobilisez parfois des dizaines de personnes. Vous voulez que ce temps produise autre chose qu'une belle journée ensemble.",
+  },
 ];
 
 const bring = [
@@ -85,17 +103,23 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
   </div>
 
   <section class="section" data-reveal>
-    <div class="container split">
-      <div>
-        <p class="eyebrow">Le problème</p>
-        <h2>Un séminaire ne devrait pas être une réunion en plus</h2>
-        <ul class="pain-list">
-          {pains.map((p) => <li>{p}</li>)}
-        </ul>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Le problème</p>
+          <h2>Vous avez besoin de faire avancer un collectif. Mais…</h2>
+          <p>Réunir les bonnes personnes dans une salle ne suffit pas toujours à produire les bonnes décisions.</p>
+        </div>
       </div>
-      <div class="quote">
-        <blockquote>Je vous aide à concevoir un temps collectif utile, engageant et orienté vers un résultat concret.</blockquote>
+      <div class="cards">
+        {problems.map((p) => (
+          <article class="card">
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </article>
+        ))}
       </div>
+      <p class="problem-statement"><strong>Votre enjeu n'est pas simplement d'organiser un atelier. C'est de créer les conditions pour que le collectif comprenne, décide et avance réellement.</strong></p>
     </div>
   </section>
 
@@ -201,27 +225,12 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
     margin-top: calc(var(--space-8) * -1);
     margin-bottom: var(--space-8);
   }
-  .pain-list {
-    list-style: none;
-    margin: var(--space-6) 0 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-3);
-  }
-  .pain-list li {
-    position: relative;
-    padding-left: var(--space-6);
-    color: var(--color-ink);
-  }
-  .pain-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 10px;
-    height: 3px;
-    background: var(--color-clay);
-    border-radius: 2px;
+  .problem-statement {
+    margin: var(--space-8) auto 0;
+    max-width: 640px;
+    text-align: center;
+    font-size: var(--text-xl);
+    color: var(--color-navy);
   }
   .muted {
     color: var(--color-muted);

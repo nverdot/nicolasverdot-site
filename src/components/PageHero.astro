@@ -23,18 +23,14 @@ const { eyebrow, title, summary, pills = [], image, imageAlt = '', tall = false 
     </>
   )}
   <div class="container page-hero-inner">
-    <div>
-      <p class="eyebrow">{eyebrow}</p>
-      <h1>{title}</h1>
-    </div>
-    <div>
-      <p class="page-summary">{summary}</p>
-      {pills.length > 0 && (
-        <div class="meta-pills">
-          {pills.map((pill) => <span>{pill}</span>)}
-        </div>
-      )}
-    </div>
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{title}</h1>
+    <p class="page-summary">{summary}</p>
+    {pills.length > 0 && (
+      <div class="meta-pills">
+        {pills.map((pill) => <span>{pill}</span>)}
+      </div>
+    )}
   </div>
   {image && imageAlt && <p class="visually-hidden">{imageAlt}</p>}
 </section>
@@ -56,14 +52,7 @@ const { eyebrow, title, summary, pills = [], image, imageAlt = '', tall = false 
     justify-content: flex-end;
     min-height: clamp(520px, 68vh, 780px);
   }
-  /* Un seul bloc de texte, empilé et pleine largeur, plutôt qu'un résumé
-     étriqué dans une colonne étroite à droite du titre. */
-  .page-hero.is-tall .page-hero-inner {
-    display: block;
-  }
   .page-hero.is-tall .page-summary {
-    margin-top: var(--space-4);
-    max-width: 56ch;
     font-size: var(--text-xl);
   }
   .page-hero-bg {
@@ -107,19 +96,14 @@ const { eyebrow, title, summary, pills = [], image, imageAlt = '', tall = false 
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
   }
-  .page-hero-inner {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: var(--space-12);
-    align-items: start;
-  }
   .page-hero h1 {
     font-size: clamp(2.5rem, 5vw, 4.5rem);
   }
   .page-summary {
+    margin: var(--space-4) 0 0;
+    max-width: 62ch;
     font-size: var(--text-lg);
     color: var(--color-muted);
-    margin: 0;
   }
   .meta-pills {
     display: flex;
@@ -134,12 +118,5 @@ const { eyebrow, title, summary, pills = [], image, imageAlt = '', tall = false 
     border-radius: var(--radius-pill);
     font-size: var(--text-xs);
     font-weight: 700;
-  }
-
-  @media (max-width: 800px) {
-    .page-hero-inner {
-      grid-template-columns: 1fr;
-      align-items: start;
-    }
   }
 </style>
