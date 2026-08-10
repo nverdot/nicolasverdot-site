@@ -45,16 +45,34 @@ const problems = [
 
 const bring = [
   {
-    title: "Facilitation d'intelligence collective",
-    text: "Je construis un processus qui permet aux participants de comprendre, contribuer, confronter leurs points de vue, décider et agir. Ce n'est pas simplement « faire participer » : chaque méthode est choisie en fonction de l'objectif recherché.",
+    title: 'Un déroulé construit à partir du résultat attendu',
+    texts: [
+      "Je ne pars pas d'un catalogue de méthodes ou d'un atelier déjà tout fait.",
+      "On commence par clarifier ce qui doit être différent à la fin : une décision prise, des priorités partagées, une vision commune, des solutions construites, un plan d'action concret…",
+      "Je construis ensuite le chemin qui permettra au groupe d'y arriver : les bonnes séquences, les bonnes questions, le bon niveau de participation et les bons formats.",
+    ],
   },
   {
-    title: 'Facilitation graphique',
-    text: 'Les idées, tensions, décisions et prochaines étapes deviennent visibles au fur et à mesure. Elle permet de maintenir l\'attention, de rendre les échanges plus accessibles, de construire une compréhension commune et de conserver une mémoire utile du séminaire.',
+    title: 'Un cadre tenu pour que vous puissiez vraiment participer',
+    texts: [
+      "Le jour J, je prends en charge le temps, les consignes, la circulation de la parole, les sous-groupes, les restitutions, les divergences, les moments où ça bloque… et les ajustements quand le programme prévu rencontre la réalité.",
+      'Vous pouvez rester pleinement dans votre rôle : apporter votre expertise, écouter, challenger, décider ou simplement prendre part aux échanges.',
+    ],
   },
   {
-    title: 'Une approche ancrée dans le terrain',
-    text: "Je ne propose pas un déroulé théorique déconnecté de la réalité : les contraintes des managers, les tensions dans les équipes, les transformations qui s'essoufflent, les décisions difficiles à faire vivre, les imprévus du jour J.",
+    title: "Un collectif que l'on aide à produire, pas seulement à participer",
+    texts: [
+      "Mon objectif n'est pas de faire parler tout le monde pour pouvoir dire que l'atelier était participatif.",
+      "Il est de faire émerger ce qui compte, confronter les points de vue, rendre visibles les désaccords, faire converger lorsque c'est nécessaire et transformer les échanges en décisions ou en prochaines étapes concrètes.",
+    ],
+  },
+  {
+    title: 'Le visuel comme outil de travail',
+    texts: [
+      'La facilitation graphique est intégrée au processus quand elle apporte quelque chose.',
+      "Elle permet de rendre visibles les idées, les liens, les tensions, les choix et les décisions au fur et à mesure. Le groupe peut voir ce qu'il construit, revenir dessus, compléter, corriger et avancer à partir d'une représentation commune.",
+      "Et à la fin, il reste autre chose qu'une pile de Post-it et quelques photos prises avec un téléphone.",
+    ],
   },
 ];
 
@@ -128,14 +146,15 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
       <div class="section-head">
         <div>
           <p class="eyebrow">Ce que j'apporte</p>
-          <h2>Trois choses que vous ne trouverez pas ensemble ailleurs</h2>
+          <h2>Ce que je prends en charge</h2>
+          <p>Déléguer la facilitation, ce n'est pas simplement confier l'animation du jour J. Je prends en charge le processus qui doit permettre au collectif d'arriver quelque part.</p>
         </div>
       </div>
-      <div class="cards">
+      <div class="cards bring-cards">
         {bring.map((b) => (
           <article class="card">
             <h3>{b.title}</h3>
-            <p>{b.text}</p>
+            {b.texts.map((t) => <p>{t}</p>)}
           </article>
         ))}
       </div>
@@ -232,6 +251,12 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
     font-size: var(--text-xl);
     color: var(--color-navy);
   }
+  .bring-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .bring-cards .card p:not(:last-child) {
+    margin-bottom: var(--space-3);
+  }
   .muted {
     color: var(--color-muted);
   }
@@ -294,6 +319,9 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
     .includes-list,
     .methods-list {
       grid-template-columns: 1fr 1fr;
+    }
+    .bring-cards {
+      grid-template-columns: 1fr;
     }
   }
   @media (max-width: 560px) {
