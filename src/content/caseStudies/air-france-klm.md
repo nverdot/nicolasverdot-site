@@ -5,6 +5,7 @@ title: "Accompagner une transformation agile à l'échelle dans un environnement
 subtitle: "Air France-KLM — Transformation, coaching et développement des compétences agiles"
 question: "Comment accompagner plusieurs directions dans leur transformation tout en tenant compte de leurs réalités métiers, de leurs niveaux de maturité et d'un environnement international complexe ?"
 summary: "J'ai accompagné Air France-KLM dans sa transformation agile sur plusieurs périmètres stratégiques — Ground Services, Digital Marketing, Cargo Commercial et Opérationnel — à travers l'accompagnement de la transformation, le coaching des équipes et des rôles agiles, la formation et l'amélioration continue."
+challengeText: "Les différents périmètres regroupaient de nombreuses équipes, des activités métiers variées et plusieurs niveaux de pilotage, en France et aux Pays-Bas. Le défi ne consistait pas à installer un cadre agile standard, mais à relier les initiatives aux enjeux métiers, synchroniser les équipes et développer leur autonomie — sans appliquer un modèle de manière rigide."
 offerHref: "/offres/accompagnement-transformation/"
 offerLabel: "Voir l'offre accompagnement des transformations"
 ctaTitle: "Une transformation agile à mener sur plusieurs périmètres ?"
@@ -20,163 +21,75 @@ factsheet:
     value: "Agilité, SAFe, Scrum, Kanban, rôles agiles, leadership facilitateur et facilitation graphique"
   - label: "Finalité"
     value: "Aider les équipes et l'organisation à mieux se synchroniser, mieux coopérer et améliorer continuellement leur capacité à délivrer de la valeur"
+role:
+  expertiseTitle: "L'expertise métier était dans les équipes"
+  expertiseItems:
+    - "La connaissance des activités Ground Services, Digital Marketing et Cargo"
+    - "L'expérience du terrain et des contraintes opérationnelles"
+    - "La culture et les habitudes de travail françaises et néerlandaises"
+    - "La maîtrise des outils et processus existants"
+  responsibilityTitle: "Notre responsabilité"
+  responsibilityItems:
+    - "Structurer la transformation à l'échelle sans imposer un cadre rigide"
+    - "Coacher les équipes et les rôles agiles sur leurs situations réelles"
+    - "Concevoir et animer les formations et les rituels de synchronisation"
+    - "Faire circuler les apprentissages entre les périmètres et la communauté de coachs"
+chapters:
+  - number: "01"
+    title: "Transformation agile à l'échelle"
+    subtitle: "Faire évoluer l'organisation, les équipes et les rôles agiles"
+    context: "Les différents périmètres regroupaient de nombreuses équipes et plusieurs niveaux de pilotage, en France et aux Pays-Bas, avec des cultures et des organisations différentes à faire coexister."
+    challenge: "Le défi ne consistait pas à installer Scrum, Kanban ou SAFe, mais à relier les initiatives aux enjeux métiers, rendre les priorités et les dépendances visibles, et développer l'autonomie des collectifs."
+    approach: "J'ai accompagné équipes et responsables dans l'adaptation de pratiques agiles à leur contexte, et coaché les rôles clés — Product Owners, Product Managers, Release Train Engineers, Scrum Masters — à partir des situations réellement rencontrées."
+    results:
+      - title: "Équipes mieux connectées"
+        text: "Un lien plus direct entre les enjeux métiers et le travail des équipes."
+      - title: "Synchronisation renforcée"
+        text: "Une meilleure visibilité sur les priorités et les dépendances."
+      - title: "Rôles clarifiés"
+        text: "Des interactions plus claires entre les rôles agiles."
+      - title: "Amélioration continue"
+        text: "Des boucles régulières d'inspection et d'adaptation installées."
+  - number: "02"
+    title: "Formation et développement des compétences"
+    subtitle: "Construire des repères communs et renforcer la capacité d'action"
+    context: "La transformation concernait des profils très différents, avec des niveaux de connaissance et d'expérience variés — il fallait un socle commun sans niveler les besoins."
+    challenge: "Il ne s'agissait pas de transmettre un vocabulaire, mais d'aider chacun à comprendre pourquoi les pratiques agiles existent, comment les adapter à son environnement, et quelle posture adopter pour les faire vivre."
+    approach: "J'ai conçu et animé des formations sur l'agilité, SAFe, Scrum, Kanban, les rôles agiles, le leadership facilitateur et la facilitation graphique, en alternant apports méthodologiques, exercices et mises en situation réelles."
+    results:
+      - title: "Langage commun"
+        text: "Un vocabulaire et des repères partagés entre les acteurs."
+      - title: "Rôles mieux occupés"
+        text: "Des responsabilités plus claires pour chaque rôle agile."
+      - title: "Compétences de facilitation"
+        text: "Une capacité renforcée à faire vivre les pratiques."
+      - title: "Application concrète"
+        text: "Des apprentissages transférés directement dans les équipes."
+  - number: "03"
+    title: "Contribuer à la transformation globale"
+    subtitle: "Apprendre entre coachs et construire une cohérence d'ensemble"
+    context: "En complément des accompagnements par périmètre, j'ai participé à la communauté des coachs et à l'équipe de transformation globale d'Air France-KLM."
+    challenge: "Chaque périmètre avançait à son rythme : l'enjeu était de partager les apprentissages et construire une cohérence à l'échelle du groupe, sans effacer les spécificités de chaque terrain."
+    approach: "La communauté de coachs a servi d'espace pour harmoniser certaines pratiques, identifier les difficultés communes et capitaliser sur les expérimentations menées sur chaque périmètre."
+    results:
+      - title: "Apprentissages partagés"
+        text: "Des enseignements qui circulent d'un périmètre à l'autre."
+      - title: "Pratiques harmonisées"
+        text: "Une cohérence renforcée à l'échelle du groupe."
+      - title: "Difficultés communes identifiées"
+        text: "Des obstacles récurrents mieux compris."
+      - title: "Communauté apprenante"
+        text: "Un espace d'amélioration continue pour les coachs."
+impact:
+  - title: "Une transformation à l'échelle, pas un cadre imposé"
+    text: "Des pratiques adaptées à chaque périmètre plutôt qu'un modèle unique."
+  - title: "Des rôles agiles renforcés"
+    text: "Product Owners, Product Managers, Scrum Masters et RTE mieux outillés."
+  - title: "Une culture de facilitation"
+    text: "Des interactions et une coopération améliorées entre les équipes."
+  - title: "Une cohérence internationale"
+    text: "Des équipes françaises et néerlandaises alignées sur une même dynamique."
+closingTitle: "Une mission internationale et multidimensionnelle"
+closingText: "Cette collaboration m'a amené à intervenir auprès d'équipes françaises et néerlandaises, dans des environnements métiers très différents, en mobilisant plusieurs postures : consultant en transformation, coach agile, coach d'équipe et de rôles, formateur, facilitateur et membre de la communauté de transformation."
 publishDate: 2026-08-06
 ---
-
-J'ai accompagné Air France-KLM dans sa transformation agile sur plusieurs périmètres stratégiques :
-
-- Ground Services ;
-- Digital Marketing ;
-- Cargo Commercial et Opérationnel.
-
-Cette mission internationale, menée en France et aux Pays-Bas, associait accompagnement de la transformation, coaching des équipes et des rôles agiles, formation et amélioration continue.
-
-L'objectif n'était pas uniquement de déployer des méthodes ou des rituels, mais d'aider les équipes à mieux coopérer, se synchroniser et délivrer de la valeur.
-
-## 1. Transformation agile à l'échelle
-
-**Faire évoluer l'organisation, les équipes et les rôles agiles**
-
-### Le contexte
-
-Les différents périmètres regroupaient de nombreuses équipes, des activités métiers variées et plusieurs niveaux de pilotage.
-
-La transformation devait permettre de mieux articuler les enjeux métiers, les priorités stratégiques et le travail réalisé par les équipes.
-
-Dans un groupe international comme Air France-KLM, il fallait également construire suffisamment de cohérence entre les équipes françaises et néerlandaises, tout en respectant leurs différences culturelles et organisationnelles.
-
-### Le défi
-
-Le défi ne consistait pas simplement à installer Scrum, Kanban ou SAFe.
-
-Il fallait aider l'organisation à :
-
-- mieux relier les initiatives aux enjeux métiers ;
-- rendre les priorités et les dépendances plus visibles ;
-- synchroniser plusieurs équipes et projets ;
-- améliorer les interactions entre les métiers et les équipes ;
-- clarifier les responsabilités des différents rôles ;
-- développer l'autonomie des collectifs ;
-- installer une véritable dynamique d'amélioration continue.
-
-L'approche devait être suffisamment structurante pour soutenir la transformation à l'échelle, sans appliquer un modèle de manière rigide.
-
-### L'accompagnement proposé
-
-J'ai accompagné les équipes et les responsables dans la mise en place et l'adaptation de pratiques agiles adaptées à leurs contextes.
-
-Le travail a notamment porté sur :
-
-- la structuration des modes de fonctionnement ;
-- la synchronisation entre les équipes ;
-- la clarification des priorités ;
-- l'identification et la gestion des dépendances ;
-- l'articulation entre les besoins métiers et la réalisation ;
-- l'amélioration des temps de planification ;
-- la mise en place de boucles régulières d'inspection et d'adaptation.
-
-J'ai également accompagné plusieurs équipes et trains, ainsi que les personnes occupant les principaux rôles de l'organisation agile :
-
-- Product Owners ;
-- Product Managers ;
-- Release Train Engineers ;
-- Scrum Masters ;
-- managers ;
-- membres des équipes.
-
-Le coaching s'appuyait sur les situations réellement rencontrées : positionnement dans le rôle, priorisation, relation avec les métiers, facilitation, coopération, gestion des dépendances ou accompagnement de l'autonomie.
-
-Les collectifs étaient régulièrement invités à observer leur fonctionnement, à identifier leurs principaux points de friction et à construire les expérimentations permettant de progresser.
-
-### Ce que la démarche a permis
-
-L'accompagnement a contribué à :
-
-- mieux connecter les équipes aux enjeux des métiers ;
-- renforcer la synchronisation entre plusieurs équipes et trains ;
-- améliorer la visibilité sur les priorités et les dépendances ;
-- clarifier les rôles et leurs interactions ;
-- développer la capacité des équipes à résoudre leurs propres difficultés ;
-- faire progresser la posture des Product Owners, Product Managers, Scrum Masters et RTE ;
-- adapter les pratiques agiles aux réalités de chaque périmètre ;
-- installer progressivement une culture d'apprentissage et d'amélioration continue.
-
-## 2. Formation et développement des compétences
-
-**Construire des repères communs et renforcer la capacité d'action**
-
-### Le contexte
-
-La transformation concernait des profils très différents, avec des niveaux de connaissance et d'expérience variés.
-
-Il était nécessaire de créer un socle commun, tout en proposant des formations adaptées aux responsabilités et aux besoins rencontrés sur le terrain.
-
-### Les formations proposées
-
-J'ai conçu et animé des formations autour de plusieurs thématiques :
-
-- fondamentaux de l'agilité ;
-- SAFe et agilité à l'échelle ;
-- Scrum ;
-- Kanban ;
-- rôle de Scrum Master ;
-- rôle de Product Owner ;
-- posture du leader facilitateur ;
-- techniques de facilitation ;
-- facilitation graphique.
-
-Les formations alternaient apports méthodologiques, échanges, exercices, mises en situation et travail sur des problématiques réelles.
-
-### Le défi
-
-Il ne s'agissait pas uniquement de transmettre un vocabulaire ou de présenter le fonctionnement d'un framework.
-
-L'enjeu était d'aider les participants à comprendre :
-
-- pourquoi les pratiques agiles existent ;
-- à quels problèmes elles peuvent répondre ;
-- comment les adapter à leur propre environnement ;
-- comment occuper pleinement leur rôle ;
-- quelle posture adopter pour faire vivre ces pratiques ;
-- comment utiliser la facilitation et le visuel pour améliorer les interactions.
-
-### Ce que la démarche a permis
-
-Les formations ont contribué à :
-
-- créer un langage commun entre les différents acteurs ;
-- renforcer la compréhension des principes agiles ;
-- clarifier les responsabilités des différents rôles ;
-- développer les compétences de facilitation ;
-- faire évoluer la posture des managers et des leaders ;
-- favoriser l'application concrète des apprentissages dans les équipes.
-
-## 3. Contribuer à la transformation globale
-
-**Apprendre entre coachs et construire une cohérence d'ensemble**
-
-### Une contribution à la communauté de transformation
-
-En complément des accompagnements réalisés auprès des différents périmètres, j'ai participé à la communauté des coachs et à l'équipe de transformation globale d'Air France-KLM.
-
-Cette contribution permettait de :
-
-- partager les apprentissages issus des différents terrains ;
-- confronter les approches ;
-- harmoniser certaines pratiques ;
-- identifier les difficultés communes ;
-- capitaliser sur les expérimentations ;
-- contribuer à la cohérence globale de la transformation.
-
-La communauté constituait également un espace d'apprentissage et d'amélioration continue pour les personnes chargées d'accompagner les équipes et l'organisation.
-
-## Une mission internationale et multidimensionnelle
-
-Cette collaboration m'a amené à intervenir auprès d'équipes françaises et néerlandaises, dans des environnements métiers très différents. J'y ai mobilisé plusieurs postures :
-
-- **Consultant en transformation**, pour structurer l'approche à l'échelle ;
-- **Coach agile**, pour faire évoluer les pratiques et les équipes ;
-- **Coach d'équipe et de rôles**, pour accompagner les Product Owners, Product Managers, Scrum Masters et RTE ;
-- **Formateur**, pour construire les repères communs ;
-- **Facilitateur**, pour améliorer les interactions et la coopération ;
-- **Membre de la communauté de transformation**, pour contribuer à la cohérence d'ensemble.
