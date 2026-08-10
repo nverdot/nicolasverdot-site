@@ -11,11 +11,14 @@ const caseStudies = await Promise.all(
     cs,
     Content: (await cs.render()).Content,
     relatedPriority: cs.data.offerHref ? findPriorityByHref(cs.data.offerHref) : undefined,
+    hasStructuredContent: Boolean(
+      cs.data.role || (cs.data.process && cs.data.process.length > 0) || (cs.data.chapters && cs.data.chapters.length > 0)
+    ),
   }))
 );
 ---
 
-{caseStudies.map(({ cs, Content, relatedPriority }) => (
+{caseStudies.map(({ cs, Content, relatedPriority, hasStructuredContent }) => (
   <div
     class="case-modal"
     id={`case-modal-${cs.slug}`}
@@ -57,7 +60,83 @@ const caseStudies = await Promise.all(
           <p>{cs.data.question}</p>
         </div>
         <div class="case-modal-content" data-lightbox-scope>
-          <Content />
+          {hasStructuredContent ? (
+            <>
+              {cs.data.challengeText && <p>{cs.data.challengeText}</p>}
+
+              {cs.data.role && (
+                <>
+                  <h2>Répartir les responsabilités</h2>
+                  <p><strong>{cs.data.role.expertiseTitle}</strong></p>
+                  <ul>
+                    {cs.data.role.expertiseItems.map((item) => <li>{item}</li>)}
+                  </ul>
+                  <p><strong>{cs.data.role.responsibilityTitle}</strong></p>
+                  <ul>
+                    {cs.data.role.responsibilityItems.map((item) => <li>{item}</li>)}
+                  </ul>
+                </>
+              )}
+
+              {cs.data.process && cs.data.process.length > 0 && (
+                <>
+                  <h2>Comment nous avons travaillé</h2>
+                  <ul>
+                    {cs.data.process.map((step) => <li><strong>{step.title}.</strong> {step.text}</li>)}
+                  </ul>
+                </>
+              )}
+
+              {cs.data.chapters && cs.data.chapters.map((chapter) => (
+                <>
+                  <h2>{chapter.number}. {chapter.title}</h2>
+                  <h3>Le contexte</h3>
+                  <p>{chapter.context}</p>
+                  <h3>Le défi</h3>
+                  <p>{chapter.challenge}</p>
+                  <h3>Notre approche</h3>
+                  <p>{chapter.approach}</p>
+                  <h3>{chapter.resultsTitle}</h3>
+                  <ul>
+                    {chapter.results.map((r) => <li><strong>{r.title}.</strong> {r.text}</li>)}
+                  </ul>
+                </>
+              ))}
+
+              {cs.data.gallery && cs.data.gallery.images.length > 0 && (
+                <>
+                  <h2>{cs.data.gallery.title}</h2>
+                  {cs.data.gallery.text && <p>{cs.data.gallery.text}</p>}
+                  <div class="case-gallery">
+                    {cs.data.gallery.images.filter((img) => !img.wide).map((img) => (
+                      <figure><img src={withBase(img.src)} alt={img.alt} loading="lazy" /></figure>
+                    ))}
+                  </div>
+                  {cs.data.gallery.images.filter((img) => img.wide).map((img) => (
+                    <figure class="case-gallery-wide"><img src={withBase(img.src)} alt={img.alt} loading="lazy" /></figure>
+                  ))}
+                </>
+              )}
+
+              {cs.data.impact && cs.data.impact.length > 0 && (
+                <>
+                  <h2>Ce que ça a changé</h2>
+                  <ul>
+                    {cs.data.impact.map((item) => <li><strong>{item.title}.</strong> {item.text}</li>)}
+                  </ul>
+                </>
+              )}
+
+              {cs.data.closingText && (
+                <>
+                  {cs.data.closingTitle && <h2>{cs.data.closingTitle}</h2>}
+                  <blockquote><p>{cs.data.closingText}</p></blockquote>
+                </>
+              )}
+            </>
+          ) : (
+            <Content />
+          )}
         </div>
         <a class="btn" href={withBase('/cas-clients/')}>Voir les autres cas clients →</a>
       </div>

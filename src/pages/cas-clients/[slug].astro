@@ -330,7 +330,7 @@ const caseStudySchema = {
 
         <!-- Closing editorial -->
         {cs.data.closingText && (
-          <section class="section alt case-closing" data-reveal>
+          <section class="section dark case-closing" data-reveal>
             <div class="container case-closing-inner">
               {cs.data.closingTitle && <h2>{cs.data.closingTitle}</h2>}
               <p>{cs.data.closingText}</p>
@@ -860,7 +860,7 @@ const caseStudySchema = {
   .case-closing-inner p {
     font-family: var(--font-display);
     font-size: var(--text-lg);
-    color: var(--color-navy);
+    color: rgba(255, 255, 255, 0.92);
     line-height: 1.6;
   }
 
