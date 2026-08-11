@@ -117,6 +117,13 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
   gsap.registerPlugin(ScrollTrigger);
+  // Sur mobile, la barre d'adresse qui se rétracte/réapparaît pendant un
+  // scroll (typiquement un swipe vertical, parfois avec une composante
+  // horizontale) redimensionne la fenêtre. ScrollTrigger recalcule alors
+  // tous ses triggers par défaut sur chaque resize — avec .batch() sur des
+  // grilles de plusieurs dizaines d'éléments (blog, formations...), ce
+  // recalcul répété peut geler ou faire planter la page. Fix officiel GSAP.
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   const mm = gsap.matchMedia();
   mm.add('(prefers-reduced-motion: no-preference)', () => {
