@@ -5,6 +5,8 @@ title: "Faire coopérer les acteurs d'un territoire pour construire des parcours
 subtitle: "Facilitation de démarches territoriales autour du handicap en Corse"
 question: "Comment permettre à des établissements et des professionnels aux réalités différentes de dépasser leurs propres contraintes pour construire ensemble des réponses plus cohérentes à l'échelle du territoire ?"
 summary: "La Mission d'Appui et de Ressources aux ESMS de Corse (LaMAREC) a réuni les acteurs qui accompagnent les enfants et les jeunes en situation de handicap autour de deux ateliers de deux jours, animés par une équipe de deux facilitateurs et une facilitatrice graphique."
+metaTitle: "LaMAREC — faire coopérer les acteurs d'un territoire"
+metaDescription: "Comment LaMAREC a réuni les acteurs accompagnant les enfants en situation de handicap en Corse autour de deux ateliers pour construire des parcours plus fluides."
 challengeText: "De nombreux acteurs interviennent auprès des enfants et des familles. Chacun a ses contraintes, ses priorités, ses logiques propres. Pourtant, les parcours restent souvent fragmentés, avec des zones de rupture, des attentes non couvertes et des incompréhensions. Le défi : raisonner à l'échelle du parcours de l'enfant, et non plus à l'échelle de chaque organisation."
 offerHref: "/offres/deleguer-animation/"
 offerLabel: "Voir l'offre déléguer l'animation"

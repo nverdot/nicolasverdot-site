@@ -27,6 +27,9 @@ const caseStudies = defineCollection({
     subtitle: z.string(),
     question: z.string(),
     summary: z.string(),
+    /** Titre/description courts pour la balise <title> et la meta description (SEO). Si absents, on retombe sur title/summary — souvent trop longs pour un SERP (Google tronque au-delà de ~60 / ~155 caractères). */
+    metaTitle: z.string().optional(),
+    metaDescription: z.string().optional(),
     offerHref: z.string().optional(),
     offerLabel: z.string().optional(),
     ctaTitle: z.string().optional(),

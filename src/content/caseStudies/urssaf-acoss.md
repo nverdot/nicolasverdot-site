@@ -5,6 +5,8 @@ title: "Accompagner une transformation dans la durée, du pilotage stratégique 
 subtitle: "Urssaf / Acoss — Conseil, coaching, formation et facilitation"
 question: "Comment faire évoluer une organisation complexe sans réduire la transformation à l'application d'un nouveau cadre ou à l'installation de quelques rituels ?"
 summary: "J'ai accompagné l'Urssaf / Acoss à travers plusieurs missions complémentaires : un accompagnement d'un an autour de l'agilité et de la transformation, du mentorat à la conception d'ateliers ainsi que la conception et l'animation de séminaires stratégiques et managériaux."
+metaTitle: "Urssaf / Acoss — transformation agile dans la durée"
+metaDescription: "Un an d'accompagnement de l'Urssaf / Acoss : agilité et transformation, mentorat à la conception d'ateliers, séminaires stratégiques et managériaux."
 challengeText: "L'organisation devait mieux coordonner de nombreux projets et parties prenantes, tout en faisant évoluer la posture de ses équipes et de ses dirigeants. L'enjeu n'était pas de déployer un cadre standard, mais de construire une manière de travailler adaptée à la réalité de l'organisation, à chaque étage : delivery, ateliers, comités de direction, nouvelles divisions."
 offerHref: "/offres/accompagnement-transformation/"
 offerLabel: "Voir l'offre accompagnement des transformations"

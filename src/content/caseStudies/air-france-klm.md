@@ -5,6 +5,8 @@ title: "Accompagner une transformation agile à l'échelle dans un environnement
 subtitle: "Air France-KLM — Transformation, coaching et développement des compétences agiles"
 question: "Comment accompagner plusieurs directions dans leur transformation tout en tenant compte de leurs réalités métiers, de leurs niveaux de maturité et d'un environnement international complexe ?"
 summary: "J'ai accompagné Air France-KLM dans sa transformation agile sur plusieurs périmètres stratégiques — Ground Services, Digital Marketing, Cargo Commercial et Opérationnel — à travers l'accompagnement de la transformation, le coaching des équipes et des rôles agiles, la formation et l'amélioration continue."
+metaTitle: "Air France-KLM — transformation agile à l'échelle"
+metaDescription: "Comment j'ai accompagné la transformation agile d'Air France-KLM sur plusieurs périmètres : coaching d'équipes et de rôles agiles, formation et amélioration continue."
 challengeText: "Les différents périmètres regroupaient de nombreuses équipes, des activités métiers variées et plusieurs niveaux de pilotage, en France et aux Pays-Bas. Le défi ne consistait pas à installer un cadre agile standard, mais à relier les initiatives aux enjeux métiers, synchroniser les équipes et développer leur autonomie — sans appliquer un modèle de manière rigide."
 offerHref: "/offres/accompagnement-transformation/"
 offerLabel: "Voir l'offre accompagnement des transformations"

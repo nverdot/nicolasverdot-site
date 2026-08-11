@@ -5,6 +5,8 @@ title: "Passer de la protection des périmètres à une véritable dynamique d'�
 subtitle: "Accompagnement de chefs de projet dans la conception et la facilitation d'ateliers stratégiques"
 question: "Comment faire avancer plusieurs équipes confrontées à un même défi lorsqu'elles poursuivent des priorités différentes, partagent difficilement l'information et cherchent davantage à protéger leur périmètre qu'à construire une réponse commune ?"
 summary: "Louis Vuitton souhaitait accompagner plusieurs chefs de projet dans la conception d'ateliers destinés à réaligner des équipes interdépendantes autour de sujets stratégiques."
+metaTitle: "Louis Vuitton — vers une vraie dynamique d'équipe"
+metaDescription: "Accompagnement de chefs de projet Louis Vuitton dans la conception d'ateliers pour réaligner des équipes interdépendantes autour de sujets stratégiques communs."
 challengeText: "Face aux retards et au manque de clarté, la tentation était de renforcer encore le cadre — préciser les responsabilités, multiplier les règles. Le défi consistait à sortir de cette recherche de responsabilité individuelle pour construire une responsabilité collective face au résultat attendu : passer de plusieurs équipes qui travaillent côte à côte à un collectif capable de réellement faire équipe."
 offerHref: "/offres/mentoring/"
 offerLabel: "Voir l'offre mentoring"

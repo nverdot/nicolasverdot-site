@@ -5,6 +5,8 @@ title: "Faire progresser une équipe commerciale grâce à l'intelligence collec
 subtitle: "Conception d'un parcours d'ateliers commerciaux réplicables"
 question: "Comment aider une communauté de commerciaux à améliorer ses pratiques, augmenter ses conversions et développer son chiffre d'affaires, sans lui imposer une méthode descendante ?"
 summary: "MG2MIX voulait sortir des réunions commerciales habituelles pour proposer à ses équipes des ateliers participatifs, concrets et réplicables — sans imposer une méthode depuis le haut."
+metaTitle: "MG2MIX — ateliers commerciaux participatifs"
+metaDescription: "Comment MG2MIX a remplacé ses réunions commerciales habituelles par un parcours d'ateliers participatifs et réplicables, conçus avec l'équipe plutôt qu'imposés."
 challengeText: "Le défi consistait à ne pas tomber dans une approche descendante où une personne explique aux commerciaux ce qu'ils doivent faire. L'objectif était au contraire de s'appuyer sur les expériences de chacun pour faire monter en puissance l'ensemble de l'équipe, tout en apportant suffisamment de structure pour transformer les échanges en décisions et en actions concrètes."
 offerHref: "/offres/mentoring/"
 offerLabel: "Voir l'offre mentoring"

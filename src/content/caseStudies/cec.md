@@ -5,6 +5,8 @@ title: "Donner à voir les idées clés pour mieux les ancrer et les mettre en a
 subtitle: "Capture graphique du dernier rendez-vous d'une cohorte de dirigeants"
 question: "Comment aider des dirigeantes et des dirigeants à retenir l'essentiel de deux journées particulièrement riches, à relier les différentes interventions et à transformer l'inspiration en action ?"
 summary: "Capture graphique en direct, en partenariat avec Osanwe, du dernier rendez-vous d'une cohorte de dirigeants CEC à Sophia Antipolis — deux journées d'ateliers et de conférences sur la transformation régénératrice des modèles d'affaires."
+metaTitle: "CEC — capture graphique d'un séminaire de dirigeants"
+metaDescription: "Capture graphique en direct, avec Osanwe, du séminaire de clôture d'une cohorte de dirigeants CEC : deux journées d'ateliers et de conférences à Sophia Antipolis."
 challengeText: "L'enjeu n'était pas simplement de prendre des notes ou de créer de belles illustrations. La capture graphique devait faire ressortir l'essentiel des conférences et des ateliers, créer un fil rouge entre les séquences et ancrer les prises de conscience — tout en restant fidèle aux propos des intervenants et à l'expérience vécue par les dirigeants."
 offerHref: "/offres/capture-graphique/"
 offerLabel: "Voir l'offre capture graphique"

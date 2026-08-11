@@ -74,8 +74,8 @@ const caseStudySchema = {
 ---
 
 <Layout
-  title={`${cs.data.client} — ${cs.data.title} — by Nicolas Verdot`}
-  description={cs.data.summary}
+  title={`${cs.data.metaTitle ?? `${cs.data.client} — ${cs.data.title}`} — by Nicolas Verdot`}
+  description={cs.data.metaDescription ?? cs.data.summary}
   path={`/cas-clients/${cs.slug}/`}
   breadcrumbs={[
     { name: 'Accueil', path: '/' },

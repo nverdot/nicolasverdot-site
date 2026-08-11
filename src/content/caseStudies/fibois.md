@@ -4,6 +4,8 @@ title: "Rendre un colloque technique plus lisible, plus vivant et plus mémorabl
 subtitle: "Capture graphique en direct d'un colloque technique sur le Cèdre de l'Atlas"
 question: "Comment rendre accessibles des contenus techniques et scientifiques, tout en aidant les participants à mieux suivre, mieux comprendre et mieux retenir l'essentiel d'une journée dense ?"
 summary: "Capture graphique en direct, en partenariat avec Osanwe, du colloque de restitution du projet « Le Cèdre de l'Atlas, de la graine aux produits finis », organisé par FIBOIS SUD, FIBOIS Occitanie, la FNB Provence-Alpes et France Forêt PACA."
+metaTitle: "FIBOIS — capture graphique d'un colloque technique"
+metaDescription: "Capture graphique en direct, avec Osanwe, du colloque de restitution du projet FIBOIS sur le Cèdre de l'Atlas — rendre un contenu technique lisible et mémorable."
 challengeText: "L'enjeu n'était pas seulement de documenter le colloque : il fallait rendre les contenus plus visuels et plus accessibles, faire ressortir les idées clés au milieu d'un grand volume d'informations techniques, et permettre à chacun de repartir avec une synthèse claire et mémorable — transformer une succession d'interventions expertes en une lecture plus simple et plus engageante."
 offerHref: "/offres/capture-graphique/"
 offerLabel: "Voir l'offre capture graphique"
