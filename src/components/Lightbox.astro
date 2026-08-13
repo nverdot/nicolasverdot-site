@@ -100,6 +100,12 @@
 </style>
 
 <style>
+  /* Voir la même règle dans CaseStudyModal.astro : sans elle,
+     display: flex l'emporte sur [hidden] { display: none } et le panneau
+     reste mis en page/peint en continu même invisible. */
+  .lightbox[hidden] {
+    display: none;
+  }
   .lightbox {
     position: fixed;
     inset: 0;

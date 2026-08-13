@@ -78,6 +78,12 @@ const embedUrl = `${SITE.bookingUrl}?embed=true`;
 </style>
 
 <style>
+  /* Voir la même règle dans CaseStudyModal.astro : sans elle,
+     display: flex l'emporte sur [hidden] { display: none } et le panneau
+     reste mis en page/peint en continu même invisible. */
+  .booking-modal[hidden] {
+    display: none;
+  }
   .booking-modal {
     position: fixed;
     inset: 0;

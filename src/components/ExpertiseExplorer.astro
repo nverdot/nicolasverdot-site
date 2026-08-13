@@ -205,6 +205,12 @@ import { withBase } from '../utils/url';
      tiroir (mobile). .expertise-panel est la couche plein viewport (fond
      assombri inclus) qui centre la carte visible via flexbox ; c'est
      .expertise-panel-inner qui porte le fond clair/l'ombre/le scroll. */
+  /* Voir la même règle dans CaseStudyModal.astro : sans elle,
+     display: flex l'emporte sur [hidden] { display: none } et le panneau
+     reste mis en page/peint en continu même invisible. */
+  .expertise-panel[hidden] {
+    display: none;
+  }
   .expertise-panel {
     position: fixed;
     inset: 0;

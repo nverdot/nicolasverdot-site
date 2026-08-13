@@ -370,6 +370,16 @@ const caseStudies = await Promise.all(
 </style>
 
 <style>
+  /* Sans cette règle, .case-modal { display: flex } l'emporte sur la
+     feuille de style native [hidden] { display: none } (même spécificité,
+     déclarée après) : chacun des 9 panneaux (un par cas client) resterait
+     mis en page, peint et composité en continu — invisible mais bien réel
+     en mémoire/GPU — même quand hidden. Repéré via le "Masquer les
+     éléments gênants" de Safari, qui applique un display:none forcé et
+     fait disparaître le plantage. */
+  .case-modal[hidden] {
+    display: none;
+  }
   .case-modal {
     position: fixed;
     inset: 0;
