@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
+import heroImg from '../assets/hero-contact.png';
 
 const villes = [
   { name: 'Nice', text: "Sièges régionaux, collectivités, scale-ups : des séminaires qui produisent des décisions, pas seulement des souvenirs." },
@@ -17,6 +18,23 @@ const formats = [
   { i: '1', title: "Séminaire d'équipe ou de direction", text: "Une journée ou deux pour clarifier une stratégie, trancher des priorités et repartir avec un plan d'action réel." },
   { i: '2', title: "Atelier d'intelligence collective", text: "Un format court et structuré pour traiter un sujet précis : décision, organisation, tensions, projet." },
   { i: '3', title: 'Capture graphique en direct', text: "Une fresque visuelle réalisée pendant votre événement, qui en garde la mémoire et prolonge son impact." },
+];
+
+const missions = [
+  {
+    client: 'CEC',
+    logo: '/logos/cec.png',
+    title: "Donner à voir les idées clés pour mieux les ancrer et les mettre en action",
+    text: "Capture graphique en direct, à Sophia Antipolis, du dernier rendez-vous d'une cohorte de dirigeants CEC — deux journées d'ateliers et de conférences.",
+    slug: 'cec',
+  },
+  {
+    client: 'JCI Monaco',
+    logo: '/logos/jci-monaco.png',
+    title: "Faire équipe autour d'une vision commune",
+    text: "Conception et facilitation du séminaire de prise de présidence de la Jeune Chambre Économique de Monaco.",
+    slug: 'jci-monaco',
+  },
 ];
 
 const faq = [
@@ -60,6 +78,10 @@ const faqSchema = {
     titleAccent="basé dans le 06."
     summary="Animation de séminaires, ateliers d'intelligence collective, facilitation graphique : j'interviens là où vos équipes travaillent — <strong>Nice, Cannes, Sophia Antipolis, Grasse, Antibes, Mandelieu, Monaco</strong> — et partout en France."
     pills={['Séminaires', 'Ateliers', 'Capture graphique', 'Basé dans le 06']}
+    image={heroImg}
+    imageAlt="Un facilitateur accueille une personne et lui indique un chemin, devant un panneau aux flèches vierges."
+    flip
+    tall
   />
 
   <section class="section" data-reveal>
@@ -104,6 +126,29 @@ const faqSchema = {
   </section>
 
   <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Exemples de missions dans la région</p>
+          <h2>Ce que ça a donné concrètement</h2>
+        </div>
+        <p>Deux missions récentes, à Sophia Antipolis et à Monaco — le contexte, le dispositif et ce que ça a produit.</p>
+      </div>
+      <div class="cards">
+        {missions.map((m) => (
+          <article class="card">
+            <img src={withBase(m.logo)} alt={m.client} class="mission-card-logo" />
+            <h3>{m.title}</h3>
+            <p>{m.text}</p>
+            <a class="card-link" href={withBase(`/cas-clients/${m.slug}/`)}>Découvrir le cas client</a>
+          </article>
+        ))}
+      </div>
+      <p class="missions-more"><a href={withBase('/cas-clients/')}>Voir tous les cas clients →</a></p>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
     <div class="container prose">
       <p class="eyebrow">Ce que vous obtenez</p>
       <h2>Un séminaire qui ne retombe pas le lundi suivant</h2>
@@ -112,7 +157,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section alt" data-reveal>
+  <section class="section" data-reveal>
     <div class="container">
       <div class="section-head">
         <div>
@@ -143,5 +188,18 @@ const faqSchema = {
 <style>
   .muted {
     color: var(--color-muted);
+  }
+  .mission-card-logo {
+    display: block;
+    height: 40px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    object-position: left center;
+    margin-bottom: var(--space-4);
+  }
+  .missions-more {
+    margin: var(--space-8) 0 0;
+    text-align: center;
   }
 </style>
