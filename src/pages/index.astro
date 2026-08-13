@@ -276,12 +276,15 @@ const journeyStepsAfterFork = [
   const mm = gsap.matchMedia();
 
   // Le trait sous "le collectif avance." se dessine de gauche à droite au
-  // scroll et se redessine à chaque passage — descendre le trace, remonter
-  // l'efface — plutôt que de rester acquis une fois pour toutes. Seul cet
-  // exemplaire du motif .ink-underline (celui du bandeau bénéfices) est
-  // concerné. Trigger sur la SECTION (pas le path, trop fin pour un calcul
-  // fiable) et seuil à 65% : sur un grand écran, le bandeau peut déjà
-  // dépasser 85% de hauteur de viewport dès le chargement, ce qui
+  // scroll, une seule fois, et reste acquis ensuite — pas de redessin/effacement
+  // à chaque passage. Un aller-retour de scroll (fréquent sur mobile avec le
+  // rebond élastique en haut de page) rejouait ce tween en boucle avant/arrière
+  // (toggleActions ... reverse), ce qui est à la fois une animation trop
+  // fréquente pour un simple flourish décoratif et un point instable signalé
+  // sur mobile. Seul cet exemplaire du motif .ink-underline (celui du bandeau
+  // bénéfices) est concerné. Trigger sur la SECTION (pas le path, trop fin
+  // pour un calcul fiable) et seuil à 65% : sur un grand écran, le bandeau
+  // peut déjà dépasser 85% de hauteur de viewport dès le chargement, ce qui
   // déclenchait l'anim avant même que l'utilisateur ait scrollé jusqu'à elle.
   mm.add('(prefers-reduced-motion: no-preference)', () => {
     const section = document.querySelector<HTMLElement>('.proof-band');
@@ -299,7 +302,7 @@ const journeyStepsAfterFork = [
       scrollTrigger: {
         trigger: section,
         start: 'top 65%',
-        toggleActions: 'play none none reverse',
+        toggleActions: 'play none none none',
       },
     });
 
@@ -307,7 +310,8 @@ const journeyStepsAfterFork = [
   });
 
   // Même motif .ink-underline, troisième exemplaire indépendant : le trait sous
-  // "avancer durablement." dans le panneau d'expertise.
+  // "avancer durablement." dans le panneau d'expertise. Même correctif : joué
+  // une seule fois, jamais rejoué en arrière.
   mm.add('(prefers-reduced-motion: no-preference)', () => {
     const section = document.querySelector<HTMLElement>('.partner-approach-expertise');
     const path = document.querySelector<SVGPathElement>('.partner-approach-expertise .ink-underline path');
@@ -324,7 +328,7 @@ const journeyStepsAfterFork = [
       scrollTrigger: {
         trigger: section,
         start: 'top 75%',
-        toggleActions: 'play none none reverse',
+        toggleActions: 'play none none none',
       },
     });
 
