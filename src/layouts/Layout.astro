@@ -56,7 +56,17 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
 </html>
 
 <script>
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Diagnostic d'un crash récurrent signalé sur mobile pendant le scroll
+  // ("un problème récurrent est survenu", message de crash natif de
+  // Safari) — persiste même en Private Browsing (donc pas un souci de
+  // cache) et même après la suppression du backdrop-filter du header.
+  // En attendant d'isoler la cause exacte, on désactive toutes les
+  // animations liées au scroll sur tactile, comme si prefers-reduced-motion
+  // était forcé — au pire un site plus statique sur mobile, au mieux ça
+  // confirme (et corrige) un souci de coût GPU/mémoire cumulatif.
+  const reduceMotion =
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+    window.matchMedia('(pointer: coarse)').matches;
   if (!reduceMotion && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -126,7 +136,9 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
   ScrollTrigger.config({ ignoreMobileResize: true });
 
   const mm = gsap.matchMedia();
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
+  // (pointer: fine) exclut le tactile — voir la note sur le crash mobile
+  // récurrent plus haut dans ce fichier, même désactivation ici.
+  mm.add('(prefers-reduced-motion: no-preference) and (pointer: fine)', () => {
     const grids = document.querySelectorAll<HTMLElement>('.cards, .article-grid, .product-grid, .formation-grid, .problem-list, .timeline');
     grids.forEach((grid) => {
       const items = Array.from(grid.children) as HTMLElement[];

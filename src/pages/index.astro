@@ -287,7 +287,7 @@ const journeyStepsAfterFork = [
   // pour un calcul fiable) et seuil à 65% : sur un grand écran, le bandeau
   // peut déjà dépasser 85% de hauteur de viewport dès le chargement, ce qui
   // déclenchait l'anim avant même que l'utilisateur ait scrollé jusqu'à elle.
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
+  mm.add('(prefers-reduced-motion: no-preference) and (pointer: fine)', () => {
     const section = document.querySelector<HTMLElement>('.proof-band');
     const path = document.querySelector<SVGPathElement>('.proof-inner .ink-underline path');
     if (!section || !path) return;
@@ -313,7 +313,7 @@ const journeyStepsAfterFork = [
   // Même motif .ink-underline, troisième exemplaire indépendant : le trait sous
   // "avancer durablement." dans le panneau d'expertise. Même correctif : joué
   // une seule fois, jamais rejoué en arrière.
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
+  mm.add('(prefers-reduced-motion: no-preference) and (pointer: fine)', () => {
     const section = document.querySelector<HTMLElement>('.partner-approach-expertise');
     const path = document.querySelector<SVGPathElement>('.partner-approach-expertise .ink-underline path');
     if (!section || !path) return;
@@ -340,7 +340,7 @@ const journeyStepsAfterFork = [
   // numérotée passe du bleu au jaune au fil du scroll, pour donner une
   // sensation de progression le long des étapes (et repasse au bleu en
   // remontant, comme les traits .ink-underline).
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
+  mm.add('(prefers-reduced-motion: no-preference) and (pointer: fine)', () => {
     const nums = gsap.utils.toArray<HTMLElement>('.trust-step-num');
     const triggers = nums.map((num) =>
       ScrollTrigger.create({
