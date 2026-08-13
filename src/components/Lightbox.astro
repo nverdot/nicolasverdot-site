@@ -13,7 +13,7 @@
 
 <script>
   function setupLightbox() {
-    const lightbox = document.querySelector<HTMLElement>('[data-lightbox]');
+    const lightbox = document.querySelector<HTMLElement>('[data-lightbox]')!;
     if (!lightbox) return;
     document.body.appendChild(lightbox);
 

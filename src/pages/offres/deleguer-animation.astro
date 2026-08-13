@@ -2,7 +2,6 @@
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import ClientLogoStrip from '../../components/ClientLogoStrip.astro';
 import { withBase } from '../../utils/url';
@@ -300,7 +299,7 @@ const takeCharge = [
         </div>
       </div>
       <div class="phase-timeline" aria-hidden="true">
-        {takeCharge.map((t, i) => (
+        {takeCharge.map((_t, i) => (
           <>
             <span class="phase-timeline-dot">{i + 1}</span>
             {i < takeCharge.length - 1 && <span class="phase-timeline-line"></span>}
@@ -308,7 +307,7 @@ const takeCharge = [
         ))}
       </div>
       <div class="take-charge-grid">
-        {takeCharge.map((t, i) => (
+        {takeCharge.map((t) => (
           <button type="button" class="take-charge-card" data-phase-trigger={t.title}>
             <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} /></span>
             <h3>{t.title}</h3>
