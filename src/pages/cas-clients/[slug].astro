@@ -374,6 +374,20 @@ const caseStudySchema = {
     :root:not([data-theme='light']) .case-hero { background: var(--color-cream); }
   }
   :root[data-theme='dark'] .case-hero { background: var(--color-cream); }
+  /* Coût GPU continu du backdrop-filter pendant le scroll, désactivé sur
+     tactile — voir la même règle sur .section.alt dans global.css. */
+  @media (pointer: coarse) {
+    .case-hero {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    :root[data-theme='dark'] .case-hero,
+    :root:not([data-theme='light']) .case-hero {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+  }
   .case-hero-grid {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
