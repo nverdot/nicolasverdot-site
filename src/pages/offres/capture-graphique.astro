@@ -1,9 +1,15 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
+import ClientLogoStrip from '../../components/ClientLogoStrip.astro';
 import { withBase } from '../../utils/url';
 import heroImg from '../../assets/offres/hero-capture-graphique.png';
+
+const relatedCaseStudies = (
+  await getCollection('caseStudies', ({ data }) => !data.draft && data.offerHref === '/offres/capture-graphique/')
+).sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 
 const serviceSchema = {
   '@context': 'https://schema.org',
@@ -16,6 +22,29 @@ const serviceSchema = {
   areaServed: { '@type': 'Country', name: 'France' },
   url: new URL(withBase('/offres/capture-graphique/'), Astro.site).toString(),
 };
+
+const icons: Record<string, string> = {
+  eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+  bulb: '<path d="M9 18h6M10 22h4M12 2a6 6 0 0 0-4 10.5c.6.5 1 1.3 1 2.1V16h6v-1.4c0-.8.4-1.6 1-2.1A6 6 0 0 0 12 2z"/>',
+  memory: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 15l4-4 3 3 5-6 4 4"/>',
+  heart: '<path d="M12 21s-7.5-4.6-10-9.3C.4 8.6 2.3 5 6 5c2 0 3.5 1.1 4.3 2.4C11.1 6.1 12.6 5 14.6 5c3.7 0 5.6 3.6 4 6.7C19.5 16.4 12 21 12 21z"/>',
+  megaphone: '<path d="M3 11v2a2 2 0 0 0 2 2h1l3 5V4L6 9H5a2 2 0 0 0-2 2z"/><path d="M14 8a4 4 0 0 1 0 8"/><path d="M17 5a8 8 0 0 1 0 14"/>',
+  door: '<path d="M6 3h9v18H6z"/><path d="M15 3l4 1.5v15L15 21"/><circle cx="12" cy="12" r="0.8" fill="currentColor" stroke="none"/>',
+  ear: '<path d="M9 17.5c-2.5 0-4.5-2-4.5-4.5S6.5 8.5 9 8.5c2 0 3.5 1.3 4 3"/><path d="M9 8.5A5.5 5.5 0 1 1 9 19.5"/><path d="M12 12.5c0 1.4-1.1 2.5-2.5 2.5"/>',
+  clipboard: '<rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M8.5 11h7M8.5 15h7"/>',
+  pencil: '<path d="M4 20l1-4.2L15.8 5 19 8.2 8.2 19 4 20z"/><path d="M13.5 6.5l4 4"/>',
+  gift: '<rect x="3" y="9" width="18" height="12" rx="1"/><path d="M3 9v-1a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1"/><path d="M12 9v12"/><path d="M12 9c-1.5-4-6-5-6-2 0 1.5 2 2 6 2z"/><path d="M12 9c1.5-4 6-5 6-2 0 1.5-2 2-6 2z"/>',
+  network: '<circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="6" r="2.3"/><circle cx="12" cy="18" r="2.3"/><path d="M8 7l3.2 9M16 7l-3.2 9M8.3 6h7.4"/>',
+  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
+  compass: '<path d="M4 17c2.5-6 5 6 8 0s4.5-5 8 0"/><circle cx="4" cy="17" r="1" fill="currentColor" stroke="none"/><circle cx="20" cy="17" r="1" fill="currentColor" stroke="none"/>',
+};
+
+const valueItems = [
+  { icon: 'eye', title: 'Capter l\'attention', text: 'Voir les idées apparaître en direct crée un point de repère commun pour toute la salle.' },
+  { icon: 'bulb', title: 'Clarifier les sujets complexes', text: 'Les concepts et les décisions deviennent plus faciles à comprendre et à suivre.' },
+  { icon: 'memory', title: 'Créer une mémoire collective', text: "La fresque rassemble les moments clés de l'événement dans un support unique." },
+  { icon: 'megaphone', title: 'Renforcer les messages', text: 'Les interventions importantes deviennent plus mémorables et plus faciles à partager.' },
+];
 
 const variants = [
   {
@@ -30,20 +59,84 @@ const variants = [
   },
 ];
 
-const checks = [
-  { i: '1', title: 'Écouter en temps réel', text: "Je suis les prises de parole, les échanges et les moments clés de l'événement." },
-  { i: '2', title: "Extraire l'essentiel", text: 'Les idées fortes, les décisions, les tensions, les messages importants et les liens entre les sujets.' },
-  { i: '3', title: 'Structurer l\'information', text: 'Une organisation visuelle pour que les contenus restent compréhensibles après l\'événement.' },
-  { i: '4', title: 'Créer une trace exploitable', text: 'Photographiée, numérisée, imprimée, partagée ou réutilisée dans vos communications internes.' },
+const problems = [
+  { icon: 'door', title: "L'attention décroche", text: "Sur un format long, les participants décrochent — surtout sur des contenus denses ou abstraits." },
+  { icon: 'compass', title: 'Les sujets restent abstraits', text: 'Une stratégie ou un concept complexe, entendu une fois, se comprend rarement en profondeur.' },
+  { icon: 'memory', title: 'Tout se perd après l\'événement', text: "Ce qui s'est dit s'efface vite. Il ne reste qu'un compte rendu que peu de monde relira." },
+  { icon: 'heart', title: 'Les contributions ne sont pas reconnues', text: "Les participants ne savent pas toujours si ce qu'ils ont partagé a été réellement entendu." },
+  { icon: 'megaphone', title: "Les messages clés ne marquent pas", text: "Une intervention importante, sans support fort, se dilue parmi toutes les autres." },
+  { icon: 'target', title: "L'événement s'arrête à la porte de la salle", text: "Rien ne continue à vivre dans les bureaux, les présentations ou les communications internes." },
 ];
 
-const benefits = [
-  { num: 'Attention', title: 'Engager les participants', text: 'Voir les idées apparaître en direct capte l\'attention et crée un point de repère commun.' },
-  { num: 'Clarté', title: 'Clarifier les sujets complexes', text: 'Les concepts et les décisions deviennent plus faciles à comprendre.' },
-  { num: 'Mémoire', title: 'Créer une mémoire collective', text: "La fresque rassemble les moments clés de l'événement dans un support unique." },
-  { num: 'Valeur', title: 'Valoriser les contributions', text: 'Les participants voient que leurs idées sont écoutées, synthétisées et intégrées.' },
-  { num: 'Impact', title: 'Renforcer les messages', text: 'Les interventions importantes deviennent plus mémorables et plus faciles à partager.' },
-  { num: 'Durée', title: "Prolonger l'événement", text: 'La fresque continue à vivre dans les bureaux, présentations ou communications internes.' },
+const costSigns = [
+  "Le compte rendu écrit part dans une boîte mail et personne ne le rouvre.",
+  "Quelques semaines plus tard, peu de participants se souviennent des messages clés.",
+  "Les organisateurs n'ont rien à montrer de concret pour valoriser l'événement en interne.",
+  "Le budget et l'énergie investis dans le contenu de la journée ne laissent presque aucune trace durable.",
+];
+
+const takeCharge = [
+  {
+    icon: 'ear',
+    title: 'Échange initial',
+    text: "Un échange sur les objectifs, le public et le programme de votre événement.",
+    subtitle: "Comprendre l'intention avant de préparer quoi que ce soit",
+    detail: [
+      "Avant de préparer quoi que ce soit, j'ai besoin de comprendre ce que cette fresque doit produire.",
+      "Est-ce d'abord une trace du contenu pour vos communications internes ? Un support qui doit aider les participants à suivre un programme dense ? Ou un outil qui accompagne directement la réflexion du groupe ?",
+      "On regarde ensemble le programme, le public, les temps forts à ne pas manquer, et la manière dont vous comptez réutiliser la fresque après l'événement — communication interne, réseaux sociaux, rapport annuel.",
+      "C'est aussi le moment de choisir entre une <strong>capture graphique</strong> (je capture ce qui se dit) et une <strong>facilitation graphique du process</strong> (j'interviens dès la conception du déroulé pour que le visuel serve aussi à faire réfléchir le groupe).",
+    ],
+  },
+  {
+    icon: 'clipboard',
+    title: 'Préparation',
+    text: 'Vocabulaire, enjeux, contenus disponibles, choix du format.',
+    subtitle: "Se préparer pour pouvoir suivre en direct sans perdre le fil",
+    detail: [
+      "Capturer en direct suppose d'arriver déjà familier avec votre sujet — sans quoi je passerais l'événement à comprendre plutôt qu'à synthétiser.",
+      "Je prends connaissance du vocabulaire spécifique à votre organisation ou votre secteur, des enjeux de fond, et de tous les contenus disponibles à l'avance : slides, notes de cadrage, interventions déjà écrites.",
+      "C'est aussi le moment de choisir le format le plus adapté : sur papier grand format, sur tablette pour une capture digitale, projetée en direct ou non, et d'anticiper le style visuel — y compris le respect de votre charte graphique si vous le souhaitez.",
+      "Une bonne préparation, c'est ce qui permet le jour J de se concentrer entièrement sur l'écoute, plutôt que de chercher à comprendre le sujet en même temps que je le dessine.",
+    ],
+  },
+  {
+    icon: 'pencil',
+    title: 'Jour J',
+    text: "Capture en direct des idées, des échanges et des décisions.",
+    subtitle: "Écouter, sélectionner, rendre visible — en temps réel",
+    detail: [
+      "Le jour J, je suis les prises de parole, les échanges et les moments clés de votre événement en temps réel.",
+      "Mon travail n'est pas de tout noter : c'est de <strong>sélectionner l'essentiel</strong> — les idées fortes, les décisions, les tensions, les messages importants et les liens entre les sujets — puis de le traduire en mots-clés, pictogrammes, personnages et liens visuels, sous les yeux du groupe.",
+      "Voir la fresque se construire en direct capte l'attention et donne à toute la salle un point de repère commun, même sur un format long ou un programme dense.",
+      "Quand je suis en facilitation graphique du process plutôt qu'en capture pure, ce même visuel sert aussi de support de travail : il aide le groupe à voir ses propres idées, à les relier, et à converger vers des décisions.",
+    ],
+  },
+  {
+    icon: 'gift',
+    title: 'Livraison',
+    text: "Finalisation et livraison de la fresque.",
+    subtitle: "Transformer la fresque en support réellement exploitable",
+    detail: [
+      "Une fois l'événement terminé, la fresque est finalisée : reprise des finitions, numérisation en haute définition si besoin, préparation des fichiers adaptés à vos usages.",
+      "Vous repartez avec un support exploitable : imprimé en grand format pour vos bureaux, partagé en interne, réutilisé sur vos réseaux sociaux ou intégré à un rapport annuel.",
+      "Quand la capture a été réalisée sur support physique, vous pouvez conserver la fresque originale — c'est à prévoir dans le devis.",
+      "Le but n'est pas seulement de documenter l'événement : c'est que ce qui s'y est dit continue à vivre bien après que la salle se soit vidée.",
+    ],
+  },
+];
+
+const basics = [
+  { icon: 'network', title: 'Basé à Nice, mobile partout en France', text: "J'interviens facilement sur toute la Côte d'Azur et me déplace partout en France. La capture digitale peut aussi être réalisée à distance." },
+  { icon: 'compass', title: 'Plusieurs salles en parallèle', text: "Seul, je ne peux couvrir qu'un espace à la fois. Pour plusieurs salles simultanées, je mobilise un réseau de facilitateurs graphiques de confiance." },
+  { icon: 'target', title: 'Sur devis', text: "Le tarif dépend de la durée, du format physique ou digital, du temps de préparation et des droits d'utilisation souhaités." },
+];
+
+const timingBrackets = [
+  { color: 'navy', duration: '1 à 2 semaines', text: "Une capture graphique simple, sur un événement déjà cadré." },
+  { color: 'blue', duration: '3 à 4 semaines', text: "Le temps de s'approprier un vocabulaire ou des enjeux spécifiques avant l'événement." },
+  { color: 'clay', duration: '4 à 8 semaines', text: "Une facilitation graphique du process, avec co-conception du déroulé en amont." },
+  { color: 'brick', duration: 'Plusieurs salles', text: "Prévoir plus de temps pour mobiliser et coordonner un réseau de facilitateurs graphiques." },
 ];
 
 const events = [
@@ -52,16 +145,9 @@ const events = [
   'Journées de transformation', 'Concertations', 'Tables rondes', 'Formations', 'Forums participatifs',
 ];
 
-const steps = [
-  'Échange initial sur les objectifs, le public et le programme',
-  'Préparation : vocabulaire, enjeux, contenus disponibles, choix du format',
-  'Jour J : capture en direct des idées, échanges et décisions',
-  'Finalisation et livraison de la fresque',
-];
-
 const faqs = [
   { q: 'Est-ce que la capture graphique peut être projetée en direct ?', a: 'Oui. Une capture digitale peut être projetée en temps réel selon la configuration technique de l\'événement.' },
-  { q: 'Quelle est la différence entre capture graphique et facilitation graphique ?', a: "La capture graphique consiste principalement à écouter et synthétiser visuellement les échanges d'un événement déjà cadré. La facilitation graphique du process va plus loin : j'interviens en amont sur la conception du déroulé, et le visuel aide directement le groupe à réfléchir, contribuer et décider — pas seulement à en garder une trace. Les deux options sont détaillées plus haut sur cette page." },
+  { q: 'Quelle est la différence entre capture graphique et facilitation graphique ?', a: "La capture graphique consiste principalement à écouter et synthétiser visuellement les échanges d'un événement déjà cadré. La facilitation graphique du process va plus loin : j'interviens en amont sur la conception du déroulé, et le visuel aide directement le groupe à réfléchir, contribuer et décider — pas seulement à en garder une trace." },
   { q: 'Pouvez-vous capturer plusieurs ateliers en parallèle ?', a: 'Seul, non. Pour plusieurs salles simultanées, je peux mobiliser un réseau de facilitateurs graphiques de confiance.' },
   { q: 'Peut-on garder la fresque originale ?', a: 'Oui, lorsque la capture est réalisée sur support physique et que cela est prévu dans le devis.' },
   { q: 'Pouvez-vous respecter notre charte graphique ?', a: 'Oui. Le style peut être adapté à votre identité, tout en conservant la lisibilité nécessaire à une capture réalisée en direct.' },
@@ -88,36 +174,53 @@ const faqSchema = {
     { name: 'Facilitation graphique & capture graphique', path: '/offres/capture-graphique/' },
   ]}
 >
-  <PageHero
-    eyebrow="Facilitation graphique · Capture graphique · Événementiel"
-    title="Vos idées méritent"
-    titleAccent="d'être vues et mémorisées."
-    summary="Pendant votre séminaire, conférence ou réunion stratégique, je traduis visuellement en temps réel les idées, décisions et échanges. Une fresque prend forme, aide les participants à suivre, et crée <strong>une mémoire collective</strong> que vous pourrez conserver, partager et réutiliser."
-    pills={['Sur devis', 'En direct', 'Partout en France']}
-    image={heroImg}
-    imageAlt="Un facilitateur graphique dessine une grande fresque colorée en direct devant un public nombreux, lors d'un événement."
-    tall
-  />
-
-  <section class="section" data-reveal>
-    <div class="container split">
-      <div>
-        <p class="eyebrow">Ce que je fais</p>
-        <h2>Écouter, clarifier et rendre visible</h2>
-        <p class="hero-copy">La facilitation graphique — dont la capture graphique (ou scribing) est la forme la plus directe — est une technique de transcription visuelle en temps réel. Je sélectionne l'essentiel, je structure l'information et je la transforme en mots-clés, pictogrammes, personnages et liens visuels — sous les yeux du groupe.</p>
-        <div class="checks">
-          {checks.map((c) => (
-            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
-          ))}
+  <section class="hero-bg" data-reveal>
+    <Image src={heroImg} alt="Un facilitateur graphique dessine une grande fresque colorée en direct devant un public nombreux, lors d'un événement." widths={[800, 1400, 2000]} sizes="100vw" class="hero-bg-img" />
+    <div class="hero-bg-scrim" aria-hidden="true"></div>
+    <div class="hero-bg-inner">
+      <div class="hero-bg-copy">
+        <p class="eyebrow">Facilitation graphique · Capture graphique · Événementiel</p>
+        <h1>
+          Vos idées méritent
+          <span class="script-accent">d'être vues</span>
+          <span class="hero-tail">et mémorisées.</span>
+        </h1>
+        <p class="page-summary">Pendant votre séminaire, conférence ou réunion stratégique, je traduis visuellement en temps réel les idées, décisions et échanges. Une fresque prend forme, aide les participants à suivre, et crée <strong>une mémoire collective</strong> que vous pourrez conserver, partager et réutiliser.</p>
+        <div class="meta-pills">
+          {['Sur devis', 'En direct', 'Partout en France'].map((pill) => <span>{pill}</span>)}
         </div>
-      </div>
-      <div class="quote">
-        <blockquote>Vos idées méritent mieux qu'un compte rendu que personne ne relira.</blockquote>
+        <div class="hero-cta-row">
+          <a href={withBase('/contact/')} class="btn">Parler de votre événement →</a>
+          <a href={withBase('/offres/deleguer-animation/')} class="btn-outline">Besoin aussi d'animer l'atelier ? Voir Déléguer l'animation</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section alt" data-reveal>
+  <section class="value-band" data-reveal data-section-name="Pourquoi une capture graphique">
+    <div class="container value-band-inner">
+      <h2>
+        Un compte rendu se lit une fois, s'il est lu.
+        <span class="accent-wrap">
+          Une fresque continue à vivre après l'événement.
+          <svg class="ink-underline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 10 C 70 2, 150 14, 296 6" /></svg>
+        </span>
+      </h2>
+      <div class="value-grid">
+        {valueItems.map((v) => (
+          <div class="value-item">
+            <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[v.icon]} />
+            <strong>{v.title}</strong>
+            <p>{v.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ClientLogoStrip />
+
+  <section class="section" data-reveal>
     <div class="container">
       <div class="section-head">
         <div>
@@ -138,18 +241,116 @@ const faqSchema = {
     </div>
   </section>
 
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Le problème</p>
+          <h2>Ce qui se passe sans trace visuelle</h2>
+        </div>
+      </div>
+      <div class="cards icon-cards">
+        {problems.map((p) => (
+          <article class="card">
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[p.icon]} /></span>
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </article>
+        ))}
+      </div>
+      <div class="callout-box">
+        <span class="callout-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.eye} /></span>
+        <p><strong>Vos idées méritent mieux qu'un compte rendu que personne ne relira.</strong><br /><span class="accent">Une fresque se regarde, se comprend et se partage — bien après que la salle se soit vidée.</span></p>
+      </div>
+    </div>
+  </section>
+
   <section class="section" data-reveal>
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow">Bénéfices</p>
-          <h2>Pourquoi intégrer une capture graphique ?</h2>
+          <p class="eyebrow">Le vrai coût d'un événement sans trace</p>
         </div>
       </div>
-      <div class="cards">
-        {benefits.map((b) => (
+      <div class="cost-columns">
+        <div class="cost-col cost-col-highlight">
+          <h3>Le contenu de votre événement a une vraie valeur</h3>
+          <p>Le temps de préparation, les interventions, les échanges — tout cela représente un investissement réel.</p>
+          <p><strong>Sans support, cette valeur s'évapore en quelques semaines.</strong></p>
+        </div>
+        <div class="cost-col">
+          <h3>Les signes que le contenu se perd</h3>
+          <ol class="cost-numbered">
+            {costSigns.map((c) => <li>{c}</li>)}
+          </ol>
+        </div>
+        <div class="cost-col">
+          <h3>Pourquoi un événement se dilue dans la mémoire</h3>
+          <p>Un compte rendu texte demande un effort de lecture que peu de monde fournit. Sans repère visuel fort, même un excellent contenu finit par ressembler à toutes les autres réunions.</p>
+        </div>
+      </div>
+      <div class="callout-box callout-box-row">
+        <span class="callout-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.megaphone} /></span>
+        <p>Parlons de votre événement pour construire la fresque qui le fera vivre après le jour J.</p>
+        <a href={withBase('/contact/')} class="btn">Parler de votre événement →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Déroulé</p>
+          <h2>Comment cela fonctionne</h2>
+        </div>
+      </div>
+      <div class="phase-timeline" aria-hidden="true">
+        {takeCharge.map((_t, i) => (
+          <>
+            <span class="phase-timeline-dot">{i + 1}</span>
+            {i < takeCharge.length - 1 && <span class="phase-timeline-line"></span>}
+          </>
+        ))}
+      </div>
+      <div class="take-charge-grid">
+        {takeCharge.map((t) => (
+          <button type="button" class="take-charge-card" data-phase-trigger={t.title}>
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} /></span>
+            <h3>{t.title}</h3>
+            <p>{t.text}</p>
+            <span class="take-charge-more">En savoir plus →</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {takeCharge.map((t, i) => (
+    <div class="phase-modal" data-phase-modal={t.title} hidden>
+      <div class="phase-modal-backdrop" data-phase-modal-close></div>
+      <div class="phase-modal-panel" role="dialog" aria-modal="true" aria-labelledby={`phase-modal-title-${i}`}>
+        <button type="button" class="phase-modal-close" data-phase-modal-close aria-label="Fermer">✕</button>
+        <span class="take-charge-num phase-modal-num">{i + 1}</span>
+        <p class="eyebrow">{t.title}</p>
+        <h3 id={`phase-modal-title-${i}`}>{t.subtitle}</h3>
+        {t.detail.map((paragraph) => <p set:html={paragraph} />)}
+      </div>
+    </div>
+  ))}
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Bon à savoir</p>
+          <h2>Ce qu'il faut savoir pour bien s'organiser</h2>
+        </div>
+      </div>
+      <div class="cards icon-cards">
+        {basics.map((b) => (
           <article class="card">
-            <div class="num">{b.num}</div>
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[b.icon]} /></span>
             <h3>{b.title}</h3>
             <p>{b.text}</p>
           </article>
@@ -158,7 +359,38 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section alt" data-reveal>
+  <section class="section alt" data-reveal data-section-name="Combien de temps">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Planification</p>
+          <h2>Combien de temps faut-il prévoir ?</h2>
+        </div>
+      </div>
+
+      <div class="timing-intro">
+        <p class="timing-intro-lead">Idéalement : 2 à 4 semaines avant votre événement</p>
+        <p>Le temps nécessaire dépend surtout de la technicité du sujet et du format choisi — une capture simple demande moins de préparation qu'une facilitation graphique du process co-conçue en amont.</p>
+      </div>
+
+      <h3 class="timing-subhead">Le bon timing</h3>
+      <div class="timing-grid">
+        {timingBrackets.map((t) => (
+          <div class={`timing-item timing-item-${t.color}`}>
+            <span class="timing-duration">{t.duration}</span>
+            <span class="timing-text">{t.text}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="timing-callout">
+        <p class="timing-callout-title">Votre événement est dans moins de deux semaines ?</p>
+        <p>Parlons-en quand même. Sur un sujet que je connais déjà, une capture graphique reste possible dans des délais courts.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
     <div class="container prose">
       <p class="eyebrow">Événements</p>
       <h2>Pour quels événements ?</h2>
@@ -168,31 +400,38 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section" data-reveal>
-    <div class="container">
-      <p class="eyebrow">Déroulé</p>
-      <h2>Comment cela fonctionne ?</h2>
-      <div class="timeline">
-        {steps.map((step, i) => (
-          <div class="timeline-item"><span>{i + 1}</span><strong>{step}</strong></div>
-        ))}
+  {relatedCaseStudies.length > 0 && (
+    <section class="section alt" data-reveal data-section-name="Cas clients">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Cas clients</p>
+            <h2>Ce que ça donne concrètement</h2>
+          </div>
+          <p><a href={withBase('/cas-clients/')}>Voir tous les cas clients →</a></p>
+        </div>
+        <div class="cards">
+          {relatedCaseStudies.map((cs) => (
+            <article class="card case-vignette">
+              {cs.data.clientLogo ? (
+                <img src={withBase(cs.data.clientLogo)} alt={cs.data.client} class="case-card-logo" />
+              ) : (
+                <div class="num">{cs.data.client}</div>
+              )}
+              <p class="case-vignette-label">La problématique</p>
+              <p class="case-vignette-question">{cs.data.question}</p>
+              <p class="case-vignette-label">Le cas</p>
+              <h3>{cs.data.title}</h3>
+              <p>{cs.data.summary}</p>
+              <a class="card-link" href={withBase(`/cas-clients/${cs.slug}/`)}>Découvrir le cas client</a>
+            </article>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <section class="section alt" data-reveal>
-    <div class="container">
-      <div class="panel">
-        <p class="eyebrow">Zone d'intervention & tarif</p>
-        <h2>Basé à Nice, mobile partout en France</h2>
-        <p class="muted">J'interviens facilement sur toute la Côte d'Azur (Nice, Cannes, Antibes, Sophia Antipolis, Monaco) et me déplace partout en France. La capture digitale peut aussi être réalisée à distance selon le format de l'événement. Pour plusieurs salles simultanées, je peux mobiliser un réseau de facilitateurs graphiques de confiance.</p>
-        <p class="muted">Le tarif dépend de la durée, du format physique ou digital, du temps de préparation et des droits d'utilisation. Sur devis.</p>
-        <a class="btn" href={withBase('/contact/')}>Parler de votre événement</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" data-reveal>
     <div class="container prose">
       <p class="eyebrow">FAQ</p>
       <h2>Questions fréquentes</h2>
@@ -211,6 +450,8 @@ const faqSchema = {
     eyebrow="Votre événement mérite une trace vivante"
     title="Faisons apparaître ce qui compte."
     subtitle="Parlons de votre événement, du public, du programme et de la manière dont vous souhaitez réutiliser la fresque après le jour J."
+    ctaLabel="Parler de votre événement"
+    dark
   />
 
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
@@ -221,8 +462,8 @@ const faqSchema = {
   .muted {
     color: var(--color-muted);
   }
-  .panel .btn {
-    margin-top: var(--space-4);
+  .card p:not(:last-child) {
+    margin-bottom: var(--space-3);
   }
   .variant-ideal {
     font-size: var(--text-sm);
@@ -230,3 +471,43 @@ const faqSchema = {
     margin-bottom: 0;
   }
 </style>
+
+<script>
+  const triggers = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-phase-trigger]'));
+  const modals = Array.from(document.querySelectorAll<HTMLElement>('[data-phase-modal]'));
+
+  function openModal(name: string) {
+    const modal = modals.find((m) => m.dataset.phaseModal === name);
+    if (!modal) return;
+    modal.hidden = false;
+    document.body.classList.add('case-modal-lock-scroll');
+  }
+
+  function closeModal(modal: HTMLElement) {
+    modal.hidden = true;
+    if (!modals.some((m) => !m.hidden)) {
+      document.body.classList.remove('case-modal-lock-scroll');
+    }
+  }
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const name = trigger.dataset.phaseTrigger;
+      if (name) openModal(name);
+    });
+  });
+
+  modals.forEach((modal) => {
+    modal.querySelectorAll('[data-phase-modal-close]').forEach((el) => {
+      el.addEventListener('click', () => closeModal(modal));
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      modals.forEach((modal) => {
+        if (!modal.hidden) closeModal(modal);
+      });
+    }
+  });
+</script>
