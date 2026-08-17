@@ -1,9 +1,15 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
+import ClientLogoStrip from '../../components/ClientLogoStrip.astro';
 import { withBase } from '../../utils/url';
 import heroImg from '../../assets/offres/hero-accompagnement-transformation.png';
+
+const relatedCaseStudies = (
+  await getCollection('caseStudies', ({ data }) => !data.draft && data.offerHref === '/offres/accompagnement-transformation/')
+).sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 
 const serviceSchema = {
   '@context': 'https://schema.org',
@@ -17,34 +23,128 @@ const serviceSchema = {
   url: new URL(withBase('/offres/accompagnement-transformation/'), Astro.site).toString(),
 };
 
-const checks = [
-  { i: '1', title: "Écouter le système", text: "Entretiens, observation, compréhension de l'histoire de la transformation et des attentes des parties prenantes." },
-  { i: '2', title: 'Rendre visibles les blocages', text: 'Incohérences, non-dits, décisions floues et mécanismes qui entretiennent la situation.' },
-  { i: '3', title: 'Mettre les acteurs au travail', text: "Ateliers, conversations structurées, séminaires, espaces de décision, accompagnement ciblé des leaders." },
-  { i: '4', title: 'Expérimenter dans le réel', text: "Des changements testables, observables et ajustables plutôt que de grands plans théoriques." },
+const icons: Record<string, string> = {
+  compass: '<path d="M4 17c2.5-6 5 6 8 0s4.5-5 8 0"/><circle cx="4" cy="17" r="1" fill="currentColor" stroke="none"/><circle cx="20" cy="17" r="1" fill="currentColor" stroke="none"/>',
+  people: '<circle cx="8" cy="8" r="3"/><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M14.5 20c.2-2.6 2.1-4.7 4.6-5"/>',
+  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
+  shield: '<path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/>',
+  ghost: '<path d="M6 21V11a6 6 0 0 1 12 0v10l-2.5-2-2 2-1.5-1.5-1.5 1.5-2-2L6 21z"/><circle cx="9.5" cy="11" r="0.8" fill="currentColor" stroke="none"/><circle cx="14.5" cy="11" r="0.8" fill="currentColor" stroke="none"/>',
+  battery: '<rect x="2" y="8" width="18" height="8" rx="1.5"/><path d="M22 10.5v3"/><path d="M6 11v2"/>',
+  eyeoff: '<path d="M3 3l18 18"/><path d="M10.6 5.1A10.6 10.6 0 0 1 12 5c6 0 9.5 5 9.5 7a11.6 11.6 0 0 1-2.9 3.5"/><path d="M6.3 6.3C4 7.9 2.5 10.2 2.5 12c0 2 3.5 7 9.5 7 1.3 0 2.5-.2 3.6-.6"/><path d="M9.5 9.5a3 3 0 0 0 4.2 4.2"/>',
+  scale: '<path d="M12 3v18"/><path d="M5 8l-3 6a3.2 3.2 0 0 0 6 0l-3-6z"/><path d="M19 8l-3 6a3.2 3.2 0 0 0 6 0l-3-6z"/><path d="M5 8h14"/><path d="M9 21h6"/>',
+  ear: '<path d="M9 17.5c-2.5 0-4.5-2-4.5-4.5S6.5 8.5 9 8.5c2 0 3.5 1.3 4 3"/><path d="M9 8.5A5.5 5.5 0 1 1 9 19.5"/><path d="M12 12.5c0 1.4-1.1 2.5-2.5 2.5"/>',
+  layers: '<path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/>',
+  clipboard: '<rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M8.5 11h7M8.5 15h7"/>',
+  microscope: '<path d="M6 21h9"/><path d="M10 21v-4a4 4 0 1 1 4-4"/><path d="M9 9l4-4 3 3-4 4"/><path d="M14.5 3.5l2 2"/>',
+  flask: '<path d="M9 3h6"/><path d="M10 3v6l-5.5 9.5A1.5 1.5 0 0 0 5.8 21h12.4a1.5 1.5 0 0 0 1.3-2.5L14 9V3"/><path d="M7.5 15h9"/>',
+  loop: '<path d="M4 12a8 8 0 0 1 13.5-5.8"/><path d="M20 12a8 8 0 0 1-13.5 5.8"/><path d="M17 3v4h-4"/><path d="M7 21v-4h4"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3.2 2"/>',
+  network: '<circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="6" r="2.3"/><circle cx="12" cy="18" r="2.3"/><path d="M8 7l3.2 9M16 7l-3.2 9M8.3 6h7.4"/>',
+};
+
+const valueItems = [
+  { icon: 'target', title: 'Pas une méthode plaquée', text: "L'intervention part de votre contexte, jamais d'un framework tout fait." },
+  { icon: 'compass', title: 'Une lecture systémique', text: 'Interactions, règles implicites et conditions créées par l\'organisation.' },
+  { icon: 'people', title: 'Une vraie pratique de la facilitation', text: 'Les sujets complexes travaillés avec les personnes concernées, pas à leur place.' },
+  { icon: 'shield', title: 'Une attention à la sécurité', text: "Un collectif change quand il peut essayer et apprendre, pas seulement sous la pression." },
 ];
 
-const audiences = [
-  { num: 'Direction', title: 'Vous pilotez une transformation', text: 'Vous avez besoin d\'un regard extérieur pour challenger le dispositif et identifier ce qui bloque réellement.' },
-  { num: 'RH', title: 'Vous êtes une équipe RH ou transformation', text: 'Vous cherchez à relier les ambitions stratégiques aux réalités humaines, managériales et opérationnelles.' },
-  { num: 'Métiers', title: 'Vous êtes une direction métier', text: "Vous devez faire évoluer les pratiques sans perdre la capacité à délivrer ni épuiser les équipes." },
-  { num: 'IA', title: "Vous accompagnez un changement lié à l'IA", text: 'Vous voulez travailler les usages, les peurs, les rôles, les décisions et les nouvelles façons de collaborer.' },
-  { num: 'Expérience', title: 'Vous avez déjà essayé plusieurs approches', text: "Vous ne cherchez pas une nouvelle recette, mais un accompagnement capable de lire le système." },
+const problems = [
+  { icon: 'ghost', title: 'Le sens s\'est perdu en route', text: "Les équipes ne savent plus très bien pourquoi ce changement, précisément — ni ce qu'on attend d'elles." },
+  { icon: 'eyeoff', title: "L'adoption reste superficielle", text: "Les process, les outils ou l'organigramme ont changé sur le papier. Les comportements, beaucoup moins." },
+  { icon: 'battery', title: 'La dynamique retombe', text: "L'énergie du lancement s'essouffle. Les urgences du quotidien reprennent le dessus." },
+  { icon: 'compass', title: 'Les résistances restent invisibles', text: "Elles ne s'expriment jamais ouvertement en réunion — mais elles freinent tout, en silence." },
+  { icon: 'scale', title: 'Le management est pris entre deux feux', text: "Porter un changement qu'il n'a pas toujours compris ni choisi, devant des équipes qui le lui demandent des comptes." },
+  { icon: 'layers', title: 'Plusieurs initiatives se superposent', text: "Sans que personne ne sache vraiment comment elles s'articulent entre elles, ni dans quel ordre." },
 ];
 
-const approach = [
-  'Écouter le système',
-  'Rendre visibles les blocages',
-  'Mettre les acteurs au travail',
-  'Expérimenter dans le réel',
-  'Apprendre et ajuster',
+const costSigns = [
+  "Les réunions de suivi reviennent aux mêmes sujets, mois après mois.",
+  "Les décisions prises en comité ne changent rien à la manière dont les équipes travaillent réellement.",
+  "Trois mois après un temps fort, tout le monde a repris ses anciennes habitudes.",
+  "Le prochain grand projet de changement sera encore plus dur à faire adopter — celui-ci aura appris aux équipes à ne plus y croire.",
 ];
 
-const diff = [
-  { title: 'Pas une méthode plaquée', text: "L'intervention ne commence pas par un framework, mais par la compréhension de votre contexte." },
-  { title: 'Une lecture systémique', text: 'Nous regardons les interactions, les règles implicites et les conditions créées par l\'organisation.' },
-  { title: 'Une vraie pratique de la facilitation', text: 'Les sujets complexes sont travaillés avec les personnes concernées, pas à leur place.' },
-  { title: 'Une attention à la sécurité', text: "Un collectif ne change pas sous la seule pression. Nous travaillons les conditions qui permettent d'essayer et d'apprendre." },
+const takeCharge = [
+  {
+    icon: 'ear',
+    title: 'Écouter le système',
+    text: "Entretiens, observation, compréhension de l'histoire de la transformation et des attentes des parties prenantes.",
+    subtitle: "Comprendre avant de proposer quoi que ce soit",
+    detail: [
+      "Je ne commence jamais par un plan d'action.",
+      "La première phase consiste à écouter : des entretiens avec les personnes concernées, à différents niveaux de l'organisation, et de l'observation directe — réunions, rituels, manière dont circule (ou pas) l'information.",
+      "Je cherche à comprendre l'histoire de cette transformation. <strong>Pourquoi a-t-elle été lancée ? Qu'est-ce qui a déjà été tenté ? Qu'est-ce qui a fonctionné, qu'est-ce qui a échoué, et pourquoi ?</strong>",
+      "Un système qui a déjà vécu plusieurs tentatives de changement sans suite ne part pas de zéro. Il a appris des réflexes de prudence, parfois de cynisme, qu'il faut comprendre avant d'espérer les dépasser.",
+      "J'écoute aussi les attentes, souvent différentes selon où l'on se trouve dans l'organisation : la direction attend des résultats, les managers cherchent à protéger leurs équipes, les équipes veulent d'abord comprendre ce qui va concrètement changer pour elles.",
+      "Cette phase se termine par une restitution honnête de ce que j'ai entendu et observé — y compris ce qui est inconfortable à dire.",
+    ],
+  },
+  {
+    icon: 'microscope',
+    title: 'Rendre visibles les blocages',
+    text: 'Incohérences, non-dits, décisions floues et mécanismes qui entretiennent la situation.',
+    subtitle: "Donner à voir ce que personne ne dit tout haut",
+    detail: [
+      "Un système bloqué n'est presque jamais bloqué par manque de bonne volonté.",
+      "Il est bloqué par des mécanismes qui se renforcent eux-mêmes : une décision jamais tranchée qui laisse deux équipes travailler en parallèle, un discours de direction qui ne correspond pas aux critères réels de promotion, un objectif affiché qui contredit les priorités du quotidien.",
+      "Mon rôle est de <strong>rendre ces mécanismes visibles</strong> — pas de désigner des responsables, mais de donner au collectif les moyens de voir ce qui, structurellement, entretient la situation.",
+      "Cela passe par des restitutions construites avec soin : synthèses, cartographies, fresques visuelles qui rendent lisible une réalité souvent connue de tous, mais jamais formulée ensemble.",
+      "C'est une étape délicate. Elle demande de la précision dans le choix des mots et un cadre suffisamment sûr pour que les personnes concernées — y compris les dirigeants — puissent entendre ce qui est dit sans se sentir attaquées.",
+    ],
+  },
+  {
+    icon: 'people',
+    title: 'Mettre les acteurs au travail',
+    text: "Ateliers, conversations structurées, séminaires, espaces de décision, accompagnement ciblé des leaders.",
+    subtitle: "Construire les réponses avec ceux qui devront les porter",
+    detail: [
+      "Une fois les blocages rendus visibles, la tentation est de proposer directement des solutions.",
+      "Je préfère mettre les bonnes personnes au travail sur les bonnes questions — parce qu'une décision construite avec ceux qui devront la porter a beaucoup plus de chances de tenir qu'une décision qui leur est simplement annoncée.",
+      "Selon la situation, cela prend des formes différentes : des ateliers de codirection pour trancher collectivement, des séminaires pour aligner une direction sur une vision commune, un accompagnement individuel pour un leader qui doit faire évoluer sa posture, ou des espaces de décision plus courts pour débloquer un point précis.",
+      "Je conçois et facilite ces temps de travail, en m'appuyant selon les besoins sur la facilitation graphique pour rendre les échanges plus lisibles et plus mémorables.",
+      "L'enjeu n'est pas de produire un énième plan d'action qui restera sur une slide. C'est que les personnes présentes ressortent avec des décisions qu'elles comprennent, qu'elles ont contribué à construire, et qu'elles peuvent réellement mettre en œuvre.",
+    ],
+  },
+  {
+    icon: 'flask',
+    title: 'Expérimenter dans le réel',
+    text: "Des changements testables, observables et ajustables plutôt que de grands plans théoriques.",
+    subtitle: "Tester avant de généraliser",
+    detail: [
+      "Un grand plan de transformation, déployé d'un coup sur toute une organisation, ne laisse aucune place à l'apprentissage : s'il ne fonctionne pas, on le découvre trop tard, à grande échelle.",
+      "Je préfère construire avec vous des <strong>expérimentations ciblées</strong> : un nouveau rituel testé sur une équipe avant d'être généralisé, un mode de décision essayé sur un projet pilote, une nouvelle répartition des rôles observée sur quelques semaines avant d'être ancrée.",
+      "Chaque expérimentation est pensée pour être observable : qu'est-ce qui devrait changer, concrètement, si ça fonctionne ? Comment allons-nous le savoir ?",
+      "Cette logique change aussi la manière dont le changement est vécu par les équipes : on ne leur impose pas une solution présentée comme définitive, on leur demande de participer à un essai, ce qui ouvre un espace légitime pour le questionner, l'ajuster, voire l'abandonner.",
+      "C'est souvent dans ces expérimentations que se construit la vraie preuve — celle qui convainc, bien plus qu'un plan sur le papier.",
+    ],
+  },
+  {
+    icon: 'loop',
+    title: 'Apprendre et ajuster',
+    text: "Revenir sur ce qui a été tenté, consolider ce qui fonctionne et ajuster le reste avant de poursuivre.",
+    subtitle: "Ancrer ce qui marche, corriger le reste",
+    detail: [
+      "Une transformation n'est pas un projet qu'on termine, c'est une trajectoire qu'on ajuste.",
+      "Une fois les expérimentations menées, je reviens avec vous sur ce qu'elles ont réellement produit : ce qui a fonctionné et mérite d'être étendu, ce qui n'a pas pris et pourquoi, ce qui doit être reformulé avant d'être proposé à nouveau.",
+      "Cette étape s'appuie sur ce qui a été observé pendant l'expérimentation, pas sur des impressions générales — c'est ce qui rend l'ajustement crédible aux yeux des équipes qui ont participé.",
+      "Je vous aide aussi à transformer ces apprentissages en décisions pour la suite : ce qu'il faut ancrer dans les pratiques, ce qui doit encore être accompagné, et ce qui appelle une nouvelle boucle d'écoute et d'expérimentation.",
+      "C'est ce mouvement répété — écouter, rendre visible, mettre au travail, expérimenter, apprendre — qui transforme un plan en changement réellement vécu.",
+    ],
+  },
+];
+
+const basics = [
+  { icon: 'clock', title: 'Un rythme qui s\'adapte', text: "De quelques journées ciblées sur un blocage précis à un accompagnement de plusieurs mois, selon la profondeur du changement attendu." },
+  { icon: 'network', title: 'Présentiel, distanciel ou hybride', text: "Le format s'ajuste à la réalité de vos équipes, en particulier lorsqu'elles sont réparties sur plusieurs sites." },
+  { icon: 'people', title: "Je travaille avec votre équipe transformation", text: "Je ne la remplace pas : je l'aide à prendre de la hauteur, à lire les blocages et à renforcer son impact." },
+];
+
+const timingBrackets = [
+  { color: 'navy', duration: 'Quelques semaines', text: 'Un diagnostic ciblé ou un accompagnement resserré sur un blocage précis.' },
+  { color: 'blue', duration: '2 à 3 mois', text: "Un accompagnement suivi sur une équipe ou un périmètre en particulier." },
+  { color: 'clay', duration: '3 à 6 mois', text: "Une transformation à l'échelle d'une direction, avec plusieurs temps forts." },
+  { color: 'brick', duration: '6 mois et plus', text: "Un accompagnement dans la durée, avec des ajustements réguliers selon l'avancée réelle." },
 ];
 
 const faqs = [
@@ -76,102 +176,232 @@ const faqSchema = {
     { name: 'Accompagnement de transformation', path: '/offres/accompagnement-transformation/' },
   ]}
 >
-  <PageHero
-    eyebrow="Transformation · Alignement · Intelligence collective"
-    title="Votre transformation existe sur le papier."
-    titleAccent="Faisons-la vivre sur le terrain."
-    summary="Les dispositifs ont été lancés, mais quelque chose coince : les équipes ne s'approprient pas le changement, les comportements évoluent peu, l'énergie retombe. J'interviens en cours de route pour regarder ce qui se joue réellement et construire avec vous <strong>les conditions pour que la transformation prenne</strong>."
-    pills={['Sur devis', 'Sur mesure', 'Avec vos équipes, pas à leur place']}
-    image={heroImg}
-    imageAlt="Un groupe traverse un passage de pierres et un pont, depuis un chemin envahi de broussailles vers un chemin dégagé, symbolisant une transformation en cours."
-    tall
-  />
+  <section class="hero-bg" data-reveal>
+    <Image src={heroImg} alt="Un groupe traverse un passage de pierres et un pont, depuis un chemin envahi de broussailles vers un chemin dégagé, symbolisant une transformation en cours." widths={[800, 1400, 2000]} sizes="100vw" class="hero-bg-img" />
+    <div class="hero-bg-scrim" aria-hidden="true"></div>
+    <div class="hero-bg-inner">
+      <div class="hero-bg-copy">
+        <p class="eyebrow">Transformation · Alignement · Intelligence collective</p>
+        <h1>
+          Votre transformation existe sur le papier.
+          <span class="script-accent">Faisons-la vivre</span>
+          <span class="hero-tail">sur le terrain.</span>
+        </h1>
+        <p class="page-summary">Les dispositifs ont été lancés, mais quelque chose coince : les équipes ne s'approprient pas le changement, les comportements évoluent peu, l'énergie retombe. J'interviens en cours de route pour regarder ce qui se joue réellement et construire avec vous <strong>les conditions pour que la transformation prenne</strong>.</p>
+        <div class="meta-pills">
+          {['Sur devis', 'Sur mesure', 'Avec vos équipes, pas à leur place'].map((pill) => <span>{pill}</span>)}
+        </div>
+        <div class="hero-cta-row">
+          <a href={withBase('/contact/')} class="btn">Échanger sur votre transformation →</a>
+          <a href={withBase('/offres/deleguer-animation/')} class="btn-outline">Un seul temps fort à concevoir ? Voir Déléguer l'animation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="value-band" data-reveal data-section-name="Ce qui change">
+    <div class="container value-band-inner">
+      <h2>
+        Une transformation ne réussit pas parce qu'un nouveau process existe.
+        <span class="accent-wrap">
+          Elle réussit quand les gens changent réellement de manière de travailler.
+          <svg class="ink-underline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 10 C 70 2, 150 14, 296 6" /></svg>
+        </span>
+      </h2>
+      <div class="value-grid">
+        {valueItems.map((v) => (
+          <div class="value-item">
+            <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[v.icon]} />
+            <strong>{v.title}</strong>
+            <p>{v.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ClientLogoStrip />
 
   <section class="section" data-reveal>
-    <div class="container split">
-      <div>
-        <p class="eyebrow">La transformation avance... mais pas vraiment</p>
-        <h2>Recréer les conditions d'un changement réellement adopté</h2>
-        <p class="hero-copy">L'objectif n'est pas d'ajouter une nouvelle méthode à celles qui existent déjà : c'est comprendre ce qui empêche la transformation de prendre, puis agir sur le sens partagé, la qualité des interactions, la clarté des décisions et la posture des leaders.</p>
-        <div class="checks">
-          {checks.map((c) => (
-            <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Le problème</p>
+          <h2>La transformation avance... mais pas vraiment</h2>
+        </div>
+      </div>
+      <div class="cards icon-cards">
+        {problems.map((p) => (
+          <article class="card">
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[p.icon]} /></span>
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </article>
+        ))}
+      </div>
+      <div class="callout-box">
+        <span class="callout-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.target} /></span>
+        <p><strong>L'objectif n'est pas d'ajouter une nouvelle méthode à celles qui existent déjà.</strong><br /><span class="accent">C'est comprendre ce qui empêche la transformation de prendre, puis agir sur le sens partagé, la qualité des interactions et la posture des leaders.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Le vrai coût d'une transformation qui ne prend pas</p>
+        </div>
+      </div>
+      <div class="cost-columns">
+        <div class="cost-col cost-col-highlight">
+          <h3>Le premier coût, ce n'est pas le budget du projet</h3>
+          <p>C'est le temps et le crédit déjà investis par la direction, les équipes transformation et tous les managers mobilisés pour porter le changement.</p>
+          <p><strong>Ce capital-là ne se refinance pas facilement.</strong></p>
+        </div>
+        <div class="cost-col">
+          <h3>Les signes que ça ne prend pas</h3>
+          <ol class="cost-numbered">
+            {costSigns.map((c) => <li>{c}</li>)}
+          </ol>
+        </div>
+        <div class="cost-col">
+          <h3>Pourquoi une transformation cale, la plupart du temps</h3>
+          <p>Rarement par manque de bonne volonté. Le plus souvent : un sens insuffisamment partagé, des blocages jamais rendus visibles, des décisions annoncées plutôt que construites avec ceux qui doivent les porter.</p>
+        </div>
+      </div>
+      <div class="callout-box callout-box-row">
+        <span class="callout-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.compass} /></span>
+        <p>Parlons de votre contexte pour comprendre ce qui bloque, avant que la dynamique ne s'essouffle davantage.</p>
+        <a href={withBase('/contact/')} class="btn">Échanger sur votre transformation →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">L'accompagnement</p>
+          <h2>Ce que comprend l'accompagnement</h2>
+        </div>
+      </div>
+      <div class="phase-timeline" aria-hidden="true">
+        {takeCharge.map((_t, i) => (
+          <>
+            <span class="phase-timeline-dot">{i + 1}</span>
+            {i < takeCharge.length - 1 && <span class="phase-timeline-line"></span>}
+          </>
+        ))}
+      </div>
+      <div class="take-charge-grid">
+        {takeCharge.map((t) => (
+          <button type="button" class="take-charge-card" data-phase-trigger={t.title}>
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[t.icon]} /></span>
+            <h3>{t.title}</h3>
+            <p>{t.text}</p>
+            <span class="take-charge-more">En savoir plus →</span>
+          </button>
+        ))}
+      </div>
+      <p class="ideal-if"><strong>Idéal si :</strong> la transformation est déjà engagée, mais qu'elle rencontre des blocages, des résistances ou une perte de dynamique.</p>
+    </div>
+  </section>
+
+  {takeCharge.map((t, i) => (
+    <div class="phase-modal" data-phase-modal={t.title} hidden>
+      <div class="phase-modal-backdrop" data-phase-modal-close></div>
+      <div class="phase-modal-panel" role="dialog" aria-modal="true" aria-labelledby={`phase-modal-title-${i}`}>
+        <button type="button" class="phase-modal-close" data-phase-modal-close aria-label="Fermer">✕</button>
+        <span class="take-charge-num phase-modal-num">{i + 1}</span>
+        <p class="eyebrow">{t.title}</p>
+        <h3 id={`phase-modal-title-${i}`}>{t.subtitle}</h3>
+        {t.detail.map((paragraph) => <p set:html={paragraph} />)}
+      </div>
+    </div>
+  ))}
+
+  <section class="section alt" data-reveal>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Bon à savoir</p>
+          <h2>Ce qu'il faut savoir pour bien s'organiser</h2>
+        </div>
+      </div>
+      <div class="cards icon-cards">
+        {basics.map((b) => (
+          <article class="card">
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[b.icon]} /></span>
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal data-section-name="Combien de temps">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Planification</p>
+          <h2>Combien de temps faut-il prévoir ?</h2>
+        </div>
+      </div>
+
+      <div class="timing-intro">
+        <p class="timing-intro-lead">Ça dépend surtout de ce qui doit changer</p>
+        <p>Un accompagnement de transformation ne se dimensionne pas comme un atelier ponctuel : sa durée dépend du périmètre concerné, de la profondeur du changement attendu et de ce qui a déjà été tenté.</p>
+      </div>
+
+      <h3 class="timing-subhead">Le bon ordre de grandeur</h3>
+      <div class="timing-grid">
+        {timingBrackets.map((t) => (
+          <div class={`timing-item timing-item-${t.color}`}>
+            <span class="timing-duration">{t.duration}</span>
+            <span class="timing-text">{t.text}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="timing-callout">
+        <p class="timing-callout-title">Vous ne savez pas encore quel périmètre a du sens ?</p>
+        <p>C'est justement l'objet du premier échange : cadrer ensemble ce qui doit être traité, et à quelle échelle.</p>
+      </div>
+    </div>
+  </section>
+
+  {relatedCaseStudies.length > 0 && (
+    <section class="section alt" data-reveal data-section-name="Cas clients">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Cas clients</p>
+            <h2>Ce que ça donne concrètement</h2>
+          </div>
+          <p><a href={withBase('/cas-clients/')}>Voir tous les cas clients →</a></p>
+        </div>
+        <div class="cards">
+          {relatedCaseStudies.map((cs) => (
+            <article class="card case-vignette">
+              {cs.data.clientLogo ? (
+                <img src={withBase(cs.data.clientLogo)} alt={cs.data.client} class="case-card-logo" />
+              ) : (
+                <div class="num">{cs.data.client}</div>
+              )}
+              <p class="case-vignette-label">La problématique</p>
+              <p class="case-vignette-question">{cs.data.question}</p>
+              <p class="case-vignette-label">Le cas</p>
+              <h3>{cs.data.title}</h3>
+              <p>{cs.data.summary}</p>
+              <a class="card-link" href={withBase(`/cas-clients/${cs.slug}/`)}>Découvrir le cas client</a>
+            </article>
           ))}
         </div>
       </div>
-      <div class="quote">
-        <blockquote>Une transformation ne réussit pas parce qu'un nouveau processus existe. Elle réussit quand les personnes peuvent réellement changer leur manière de travailler ensemble.</blockquote>
-      </div>
-    </div>
-  </section>
-
-  <section class="section alt" data-reveal>
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Public</p>
-          <h2>Cette offre est pertinente si…</h2>
-        </div>
-      </div>
-      <div class="cards">
-        {audiences.map((a) => (
-          <article class="card">
-            <div class="num">{a.num}</div>
-            <h3>{a.title}</h3>
-            <p>{a.text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section dark" data-reveal>
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Approche</p>
-          <h2>Une intervention qui part du réel</h2>
-        </div>
-        <p>Écoute, mise en visibilité, mise au travail, expérimentation, apprentissage — dans cet ordre, sans raccourci.</p>
-      </div>
-      <div class="method">
-        {approach.map((step, i) => (
-          <div class="step"><b>{String(i + 1).padStart(2, '0')}</b>{step}</div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section" data-reveal>
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Différenciation</p>
-          <h2>Une transformation qui travaille aussi l'humain</h2>
-        </div>
-      </div>
-      <div class="cards">
-        {diff.map((d) => (
-          <article class="card">
-            <h3>{d.title}</h3>
-            <p>{d.text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section alt" data-reveal>
-    <div class="container">
-      <div class="panel">
-        <p class="eyebrow">Modalités</p>
-        <h2>Un accompagnement construit selon votre contexte</h2>
-        <p class="muted">Diagnostic, entretiens, observation, ateliers d'alignement, séminaires, accompagnement des leaders, coaching individuel, facilitation graphique — combinés selon votre situation. De quelques journées ciblées à un accompagnement de plusieurs mois. Présentiel, distanciel ou hybride.</p>
-        <p class="muted">Le tarif dépend du périmètre, du nombre d'équipes concernées, de la durée, du niveau d'enjeu et des livrables attendus.</p>
-        <a class="btn" href={withBase('/contact/')}>Échanger sur votre transformation</a>
-      </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <section class="section" data-reveal>
     <div class="container prose">
@@ -192,6 +422,8 @@ const faqSchema = {
     eyebrow="Votre transformation n'a pas besoin d'un nouveau slogan"
     title="Elle a besoin d'un espace pour regarder ce qui se joue vraiment."
     subtitle="Prenons un premier temps pour comprendre le contexte, les tensions, les personnes concernées et ce que vous voulez réellement voir changer."
+    ctaLabel="Échanger sur votre transformation"
+    dark
   />
 
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
@@ -202,7 +434,47 @@ const faqSchema = {
   .muted {
     color: var(--color-muted);
   }
-  .panel .btn {
-    margin-top: var(--space-4);
+  .card p:not(:last-child) {
+    margin-bottom: var(--space-3);
   }
 </style>
+
+<script>
+  const triggers = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-phase-trigger]'));
+  const modals = Array.from(document.querySelectorAll<HTMLElement>('[data-phase-modal]'));
+
+  function openModal(name: string) {
+    const modal = modals.find((m) => m.dataset.phaseModal === name);
+    if (!modal) return;
+    modal.hidden = false;
+    document.body.classList.add('case-modal-lock-scroll');
+  }
+
+  function closeModal(modal: HTMLElement) {
+    modal.hidden = true;
+    if (!modals.some((m) => !m.hidden)) {
+      document.body.classList.remove('case-modal-lock-scroll');
+    }
+  }
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const name = trigger.dataset.phaseTrigger;
+      if (name) openModal(name);
+    });
+  });
+
+  modals.forEach((modal) => {
+    modal.querySelectorAll('[data-phase-modal-close]').forEach((el) => {
+      el.addEventListener('click', () => closeModal(modal));
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      modals.forEach((modal) => {
+        if (!modal.hidden) closeModal(modal);
+      });
+    }
+  });
+</script>
