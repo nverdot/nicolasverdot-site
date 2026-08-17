@@ -8,6 +8,14 @@ import portrait from '../assets/nicolas-portrait.png';
 import heroImg from '../assets/hero-a-propos.png';
 import { SITE } from '../data/site';
 import { withBase } from '../utils/url';
+import { getCollection } from 'astro:content';
+
+// Associe chaque tag client de la timeline à son cas client s'il existe,
+// pour le rendre cliquable — construit depuis les vraies données plutôt
+// qu'une liste de slugs à maintenir à la main.
+const caseStudiesByClient = new Map(
+  (await getCollection('caseStudies', ({ data }) => !data.draft)).map((cs) => [cs.data.client, cs.slug])
+);
 
 const aboutFacts = [
   { label: 'Posture', text: 'Facilitateur, coach et formateur' },
@@ -57,6 +65,7 @@ const career = [
   {
     role: 'Fondateur',
     company: "Décoincés du Crayon → by Nicolas Verdot",
+    tags: ['CEC', 'FIBOIS', 'JCI Monaco', 'LaMAREC', 'Louis Vuitton', 'MG2MIX', 'Ressources', 'Urssaf / Acoss'],
     text: "Lancer Décoincés du Crayon, la communauté dédiée à la facilitation graphique : un cahier d'exercices, une formation e-learning, puis un Sommet annuel qui réunit la communauté depuis plus de 5 ans maintenant, et une Académie pour aller plus loin. Cette aventure a fini par devenir une entreprise à part entière : by NICOLAS VERDOT.",
   },
 ];
@@ -119,7 +128,7 @@ const diffs = [
       <div>
         <p class="eyebrow">Nicolas Verdot</p>
         <h2>Une posture directe, simple et ancrée dans le terrain.</h2>
-        <p class="hero-copy">Je viens à l'origine du monde informatique. J'ai été développeur, puis coach agile, facilitateur, formateur, facilitateur graphique et accompagnateur de transformations.</p>
+        <p class="hero-copy">Je viens à l'origine du monde informatique. J'ai été développeur, puis Scrum Master, et par la suite je suis passé du côté de l'accompagnement en tant que coach agile, facilitateur, formateur, facilitateur graphique et accompagnateur de transformations.</p>
 
         <p class="bio-statement">Aujourd'hui, je travaille à l'endroit où se croisent la stratégie, la décision, la participation, le leadership et le fonctionnement réel des équipes.</p>
 
@@ -152,7 +161,13 @@ const diffs = [
               <p class="career-company">{c.company}</p>
               {c.tags && (
                 <div class="career-tags">
-                  {c.tags.map((tag) => <span class="career-tag">{tag}</span>)}
+                  {c.tags.map((tag) => (
+                    caseStudiesByClient.has(tag) ? (
+                      <a class="career-tag career-tag-link" href={withBase(`/cas-clients/${caseStudiesByClient.get(tag)}/`)}>{tag}</a>
+                    ) : (
+                      <span class="career-tag">{tag}</span>
+                    )
+                  ))}
                 </div>
               )}
               <p class="career-text">{c.text}</p>
@@ -379,6 +394,18 @@ const diffs = [
     border: 1px solid var(--color-border);
     border-radius: var(--radius-pill);
     padding: 2px var(--space-2);
+  }
+  .career-tag-link {
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out), color 160ms var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .career-tag-link:hover {
+      background: var(--color-orange);
+      border-color: var(--color-orange);
+      color: var(--color-ink-solid);
+    }
   }
 
   .quote-section .big-quote {
