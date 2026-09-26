@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CoutInaction from '../../components/CoutInaction.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { withBase } from '../../utils/url';
+
+/*
+ * Les trois idées qui justifient l'outil, et qui disent le positionnement du
+ * site : produire est devenu rapide, décider ne l'est pas, et c'est l'écart
+ * entre les deux qui coûte. Elles sont volontairement placées APRÈS le
+ * calculateur : quelqu'un qui arrive ici veut son chiffre, pas un essai.
+ */
+const idees = [
+  {
+    titre: "L'exécution a changé d'échelle. La décision, non.",
+    texte:
+      "Ce qui prenait trois semaines à produire se fait aujourd'hui en trois heures. Mais le comité qui doit dire oui se réunit toujours une fois par mois, et reporte toujours au mois suivant. Le goulet d'étranglement s'est déplacé : il n'est plus dans la production, il est dans la décision collective.",
+  },
+  {
+    titre: 'Un sujet non tranché ne coûte pas seulement du temps de réunion.',
+    texte:
+      "Il bloque tout ce qui en dépend, occupe l'attention de ceux qui attendent la réponse, et se paie une deuxième fois quand il faut rouvrir le dossier. Le temps passé en salle est la partie visible, et la plus petite.",
+  },
+  {
+    titre: 'Converger est un travail, pas une qualité humaine.',
+    texte:
+      "Un collectif ne se met pas d'accord parce qu'on lui demande de bien vouloir. Il converge quand la question est bien posée, que les options sont instruites, que le mandat de décision est clair et que quelqu'un tient la conversation. Tout cela se conçoit, et s'apprend.",
+  },
+];
+---
+
+<Layout
+  title="Combien vous coûte une décision reportée ? — by Nicolas Verdot"
+  description="Un calculateur du coût de l'inaction : chiffrez ce que vous coûte, chaque mois, un sujet qui reste sur la table sans être tranché. Huit questions, une minute, rien n'est envoyé."
+  path="/outils/cout-de-linaction/"
+  breadcrumbs={[
+    { name: 'Accueil', path: '/' },
+    { name: "Coût de l'inaction", path: '/outils/cout-de-linaction/' },
+  ]}
+>
+  <PageHero
+    eyebrow="Un outil, pas un questionnaire commercial"
+    title="Le coût de"
+    titleAccent="l'inaction."
+    summary="L'IA a fait fondre le temps d'exécution. Le temps de décision, lui, n'a pas bougé. Chiffrez ce que vous coûte, <strong>chaque mois</strong>, un sujet qui reste sur la table sans être tranché."
+    pills={['8 questions', 'Moins d’une minute', 'Rien n’est envoyé']}
+  />
+
+  <CoutInaction />
+
+  <section class="section alt" data-reveal data-section-name="Pourquoi ce calcul">
+    <div class="container">
+      <div class="section-head">
+        <h2>Pourquoi ce calcul plutôt qu'un autre</h2>
+      </div>
+      <div class="idees">
+        {idees.map((i) => (
+          <div class="idee">
+            <h3>{i.titre}</h3>
+            <p>{i.texte}</p>
+          </div>
+        ))}
+      </div>
+      <p class="idees-suite">
+        C'est exactement le travail que je fais&nbsp;:
+        <a href={withBase('/offres/')}>faire converger, décider et agir un collectif</a> — sur un sujet précis, ou
+        dans sa façon de fonctionner.
+      </p>
+    </div>
+  </section>
+
+  <CTABlock
+    dark
+    title="Vous avez un chiffre. Parlons de ce qu'il révèle."
+    subtitle="Trente minutes pour poser le sujet, comprendre ce qui bloque réellement, et voir s'il y a matière à travailler ensemble."
+    ctaLabel="Réserver un échange"
+    secondaryLabel="Découvrir les accompagnements"
+    secondaryHref={withBase('/offres/')}
+  />
+</Layout>
+
+<style>
+  .idees {
+    display: grid;
+    gap: var(--space-8);
+    max-width: var(--prose-max);
+    margin-inline: auto;
+  }
+  .idee h3 {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.2;
+  }
+  .idee p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+  .idees-suite {
+    max-width: var(--prose-max);
+    margin: var(--space-12) auto 0;
+    font-size: var(--text-lg);
+  }
+  .idees-suite a {
+    color: var(--color-blue);
+    font-weight: 600;
+  }
+</style>

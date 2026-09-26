@@ -8,6 +8,20 @@ draft: false
 
 Au téléphone, une chargée d'événementiel me demande si je peux « venir sketchnoter » son assemblée générale de trois cents personnes, avec un dessin projeté en direct sur grand écran pendant que la directrice générale parle. Je lui explique que ce qu'elle décrit n'est pas du sketchnote : c'est du scribing, une pratique de facilitation graphique, sur un format qu'on appelle parfois graphic recording projeté. Elle me répond, un peu déstabilisée : « Ce n'est pas pareil ? » Non. Et cette confusion de vocabulaire, dans son brief, aurait pu coûter cher : mauvais matériel prévu, mauvais temps de préparation budgété, mauvais profil sollicité pour le poste. Les mots comptent, parce qu'ils décrivent des prestations, des postures et des livrables différents. Voici le lexique tel que je l'utilise sur le terrain, avec les nuances qui font la différence quand vous commandez une prestation.
 
+<figure class="figure-pleine">
+  <img
+    src="/blog/qu-est-ce-que-la-facilitation-graphique.jpg"
+    alt="Panneau dessiné au feutre intitulé « Qu'est-ce que la facilitation graphique ? ». À gauche, deux cercles qui se croisent : facilitation d'un côté, scribing de l'autre, la facilitation graphique à leur intersection, et la capture graphique du côté du scribing. À droite, une carte à deux axes — seul ou en groupe, en différé ou en direct — où se placent le sketchnote, la mind map, la fresque, la capture graphique, la formation et la conférence. En bas, les cinq bénéfices de la pensée visuelle : impliquer, structurer, mémoriser, partager, fédérer."
+    width="1600"
+    height="1015"
+    loading="lazy"
+  />
+  <figcaption>
+    Le panneau que je dessine quand on me pose la question en vrai. Les deux cercles disent les
+    familles, la carte dit où chaque pratique se range.
+  </figcaption>
+</figure>
+
 ## Facilitation graphique : le terme qui englobe tout
 
 Commençons par le mot parapluie. La facilitation graphique désigne l'ensemble des pratiques qui utilisent le dessin, la couleur et la mise en page pour soutenir le travail d'un groupe : rendre visibles des idées, structurer une réflexion, garder une trace d'une discussion. Sous ce terme cohabitent des formats très différents — une fresque dessinée en direct pendant un séminaire, un gabarit préparé à l'avance pour cadrer un atelier, une carte stratégique conçue en amont pour présenter un projet.

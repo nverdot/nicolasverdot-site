@@ -32,20 +32,45 @@ const mobileFallback = await getImage({ src: heroBgMobile, width: 750, format: '
 
   <div class="hero-inner">
     <div class="hero-copy">
+      {/* Les trois verbes que vend ce site, posés avant le titre : converger,
+          décider, agir. C'est la promesse en trois mots, et elle revient
+          ensuite dans le lead et dans l'outil de diagnostic. */}
+      <p class="hero-kicker">Converger · Décider · Agir</p>
+
       <h1 id="hero-title">
-        Mettre vos équipes
-        <span class="script-accent">en mouvement</span>
-        <span class="hero-tail">autour des projets qui comptent vraiment.</span>
+        Produire va désormais très vite.
+        <span class="script-accent">Décider ensemble,</span>
+        <span class="hero-tail">c'est là que tout ralentit.</span>
       </h1>
 
       <p class="hero-lead">
-        J'accompagne les leaders, les managers et les équipes à <strong>voir clair</strong>, <strong>prendre les bonnes décisions</strong> et <strong>passer réellement à l'action</strong>.
+        L'IA a fait fondre le temps d'exécution. Le temps de décision, lui, n'a pas bougé&nbsp;: il se compte
+        toujours en réunions, en arbitrages reportés et en sujets qui reviennent. J'accompagne vos collectifs
+        à <strong>converger</strong>, <strong>décider</strong> et <strong>passer à l'acte</strong> — en semaines, pas en trimestres.
       </p>
 
       <div class="hero-actions">
         <a href={withBase('/offres/')} class="btn">Voir les accompagnements →</a>
         <a href={withBase('/contact/')} class="btn-outline">Échangeons ensemble</a>
       </div>
+
+      {/* L'entrée de l'outil : une porte discrète, pas un troisième bouton.
+          Le chiffre est le meilleur argument de cette page — mais c'est le
+          visiteur qui doit le calculer, pas moi qui le promets. */}
+      <p class="hero-tool">
+        <a href={withBase('/outils/cout-de-linaction/')}>
+          <span class="hero-tool-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7.4V12l3.2 1.9" />
+            </svg>
+          </span>
+          <span>
+            <strong>Combien vous coûte une décision reportée&nbsp;?</strong>
+            <small>Le calcul en une minute, chiffré sur votre situation.</small>
+          </span>
+        </a>
+      </p>
     </div>
   </div>
 </section>
@@ -89,7 +114,15 @@ const mobileFallback = await getImage({ src: heroBgMobile, width: 750, format: '
     padding-inline: clamp(1.5rem, 4vw, 4rem);
   }
   .hero-copy {
-    max-width: 600px;
+    max-width: 640px;
+  }
+  .hero-kicker {
+    margin: 0 0 var(--space-4);
+    color: var(--color-clay-ink);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
   }
   .hero-copy h1 {
     margin: 0 0 var(--space-6);
@@ -125,6 +158,58 @@ const mobileFallback = await getImage({ src: heroBgMobile, width: 750, format: '
     flex-wrap: wrap;
   }
 
+  /* L'entrée de l'outil : une carte très basse en intensité, posée sous les
+     boutons. Elle ne doit jamais se lire comme la troisième action — elle
+     attrape celui qui n'est pas prêt à cliquer sur les deux premières. */
+  .hero-tool {
+    margin: var(--space-6) 0 0;
+  }
+  .hero-tool a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    max-width: 30rem;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--color-surface) 78%, transparent);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+    color: var(--color-navy);
+    text-decoration: none;
+    transition: box-shadow var(--duration-hover) ease, background var(--duration-hover) ease;
+  }
+  .hero-tool strong {
+    display: block;
+    font-size: var(--text-base);
+    line-height: 1.3;
+  }
+  .hero-tool small {
+    display: block;
+    margin-top: 0.1rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.35;
+  }
+  .hero-tool-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--color-orange);
+    color: var(--color-navy);
+  }
+  .hero-tool-icon svg {
+    width: 21px;
+    height: 21px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .hero-tool a:hover {
+      background: var(--color-surface);
+      box-shadow: inset 0 0 0 1.5px var(--color-navy), var(--shadow-sm);
+    }
+  }
+
   @media (max-width: 900px) {
     .hero {
       min-height: 0;
@@ -149,12 +234,19 @@ const mobileFallback = await getImage({ src: heroBgMobile, width: 750, format: '
 
   @media (max-width: 640px) {
     .hero {
-      min-height: 680px;
+      /* Le hero porte désormais une accroche, un titre en trois temps, deux
+         boutons et l'entrée de l'outil : la hauteur suit le contenu au lieu
+         d'être imposée, sinon le dernier bloc tombe sous la ligne de flottaison
+         du dégradé et se lit sur la photo. */
+      min-height: 0;
       align-items: flex-start;
       padding-top: var(--space-8);
     }
     .hero :global(.hero-bg) {
       object-position: 45% 15%;
+    }
+    .hero-tool a {
+      max-width: none;
     }
   }
 

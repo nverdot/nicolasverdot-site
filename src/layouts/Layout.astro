@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Compagnon from '../components/Compagnon.astro';
 import SEO from '../components/SEO.astro';
 import '../styles/global.css';
 import { withBase } from '../utils/url';
@@ -52,6 +53,11 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
       <slot />
     </main>
     <Footer />
+    {/* Après le pied de page : le Compagnon est en position fixe, sa place dans
+        le flux n'a donc pas d'importance visuelle — mais elle en a pour le
+        clavier et les lecteurs d'écran, qui le rencontrent en dernier, une fois
+        le contenu de la page parcouru. */}
+    <Compagnon />
   </body>
 </html>
 

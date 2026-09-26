@@ -1,0 +1,953 @@
+---
+/**
+ * Le calculateur du coût de l'inaction.
+ *
+ * Il existait un prototype qui chiffrait le coût d'une réunion : le temps passé
+ * en salle, multiplié par les salaires. Le chiffre impressionne, mais il rate
+ * l'essentiel — et le prototype le disait lui-même en note de bas de page :
+ * « ce chiffre ne compte pas le coût des décisions retardées, souvent bien plus
+ * élevé ». C'est exactement ce qu'il fallait mettre au premier plan.
+ *
+ * Le modèle, donc, tient en deux lignes :
+ *
+ *   1. le temps que le collectif passe à en reparler — un coût de délibération,
+ *      visible dans les agendas ;
+ *   2. la valeur que la décision doit produire et qui n'est pas encore
+ *      produite — invisible, et presque toujours la plus grosse des deux.
+ *
+ * Deux partis pris tiennent l'honnêteté de l'outil :
+ *
+ *   - On retient systématiquement le BAS de chaque fourchette. Le montant
+ *     affiché est un plancher, jamais une projection flatteuse. C'est dit à
+ *     l'écran, pas seulement dans le détail du calcul.
+ *   - Rien ne quitte le navigateur. Aucune réponse n'est envoyée, stockée ni
+ *     transmise ; le bouton de copie sert à celui qui VEUT me transmettre sa
+ *     synthèse, par le canal de son choix.
+ *
+ * Les questions servent aussi à autre chose qu'au calcul : « qu'est-ce qui
+ * bloque » et « ce que vous voudriez » décident du diagnostic et de l'offre
+ * proposée à la fin. Un chiffre sans lecture ne fait rien avancer.
+ */
+
+import { withBase } from '../utils/url';
+import { SITE } from '../data/site';
+
+/* Les icônes du site : trait currentColor, grille 24 — mêmes tracés que le
+   Footer et la page d'accueil. */
+const ICONES = {
+  horloge: '<circle cx="12" cy="12" r="9"/><path d="M12 7.4V12l3.2 1.9"/>',
+  valeur: '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
+};
+---
+
+<section class="outil section" data-section-name="Outil coût de l'inaction">
+  <div class="container">
+    <div class="outil-card">
+      <div class="outil-top" id="ci-top" hidden>
+        <button class="outil-back" id="ci-back" type="button">← Retour</button>
+        <div class="outil-bar"><i id="ci-bar"></i></div>
+        <span class="outil-count" id="ci-count"></span>
+      </div>
+
+      {/* --- 0 : l'entrée ------------------------------------------------- */}
+      <section class="outil-step is-shown" data-step="0">
+        <p class="outil-hand">Et si on mettait un nombre dessus&nbsp;?</p>
+        <h2>Combien vous coûte<br />la décision que vous n'avez pas prise&nbsp;?</h2>
+        <p class="outil-lead">
+          Huit questions, moins d'une minute. Pensez à <strong>un sujet précis</strong>, qui revient sans être
+          tranché&nbsp;: une réorganisation, un arbitrage de priorités, une offre à lancer, un mode de
+          fonctionnement à changer.
+        </p>
+        <p class="outil-note">
+          Rien n'est envoyé ni enregistré&nbsp;: le calcul se fait dans votre navigateur. Et à chaque question,
+          on retient le bas de votre fourchette — le résultat est un plancher.
+        </p>
+        <button class="btn" data-next type="button">Faire le calcul →</button>
+      </section>
+
+      {/* --- 1 : la nature du sujet --------------------------------------- */}
+      <section class="outil-step" data-step="1">
+        <h2>De quoi s'agit-il&nbsp;?</h2>
+        <p class="outil-hint">Le type de sujet ne change pas le calcul, mais il change la lecture qu'on en fait.</p>
+        <div class="outil-choices" data-q="sujet">
+          <button class="outil-choice" data-v="organisation" type="button">Une organisation à faire évoluer<small>Rôles, périmètres, façon de travailler ensemble.</small></button>
+          <button class="outil-choice" data-v="priorites" type="button">Un arbitrage de priorités<small>Trop de chantiers, pas assez de moyens pour tous.</small></button>
+          <button class="outil-choice" data-v="offre" type="button">Une offre, un produit, un marché<small>Lancer, arrêter, repositionner.</small></button>
+          <button class="outil-choice" data-v="transformation" type="button">Une transformation déjà décidée<small>Elle est actée sur le papier, elle ne se met pas en place.</small></button>
+        </div>
+      </section>
+
+      {/* --- 2 : l'enjeu -------------------------------------------------- */}
+      <section class="outil-step" data-step="2">
+        <h2>Sur un an, cette décision doit rapporter, économiser ou débloquer&nbsp;…</h2>
+        <p class="outil-hint">
+          Chiffre d'affaires gagné, coûts évités, temps libéré, projet débloqué&nbsp;: tout compte. En cas de
+          doute, prenez la fourchette du dessous.
+        </p>
+        <div class="outil-choices cols" data-q="enjeu">
+          <button class="outil-choice" data-v="25000" type="button">Moins de 50 k€</button>
+          <button class="outil-choice" data-v="50000" type="button">50 à 200 k€</button>
+          <button class="outil-choice" data-v="200000" type="button">200 k€ à 1 M€</button>
+          <button class="outil-choice" data-v="1000000" type="button">Plus d'1 M€</button>
+        </div>
+        <p class="outil-note">
+          On retiendra la borne <strong>basse</strong> de votre choix. « 50 à 200 k€ » sera compté 50 k€.
+        </p>
+      </section>
+
+      {/* --- 3 : depuis quand -------------------------------------------- */}
+      <section class="outil-step" data-step="3">
+        <h2>Depuis combien de temps ce sujet est-il sur la table&nbsp;?</h2>
+        <p class="outil-hint">Depuis la première fois où il a été mis à l'ordre du jour.</p>
+        <div class="outil-choices cols" data-q="mois">
+          <button class="outil-choice" data-v="1" type="button">Quelques semaines</button>
+          <button class="outil-choice" data-v="3" type="button">Environ trois mois</button>
+          <button class="outil-choice" data-v="6" type="button">Six mois</button>
+          <button class="outil-choice" data-v="12" type="button">Plus d'un an</button>
+        </div>
+        <p class="outil-note">Au-delà d'un an, on s'arrête à douze mois&nbsp;: ce qui est plus ancien n'est plus chiffrable sérieusement.</p>
+      </section>
+
+      {/* --- 4 : qui est autour de la table ------------------------------ */}
+      <section class="outil-step" data-step="4">
+        <h2>Qui est autour de la table&nbsp;?</h2>
+        <p class="outil-hint">Pas besoin de connaître les salaires&nbsp;: on part d'ordres de grandeur, que vous pouvez ajuster.</p>
+        <div class="outil-row">
+          <div class="outil-who">Direction<small>≈ <span data-sal-label="dir"></span> k€ brut par an</small></div>
+          <div class="outil-stepper" data-key="dir">
+            <button type="button" aria-label="Moins">−</button><output>1</output><button type="button" aria-label="Plus">+</button>
+          </div>
+        </div>
+        <div class="outil-row">
+          <div class="outil-who">Managers<small>≈ <span data-sal-label="man"></span> k€ brut par an</small></div>
+          <div class="outil-stepper" data-key="man">
+            <button type="button" aria-label="Moins">−</button><output>4</output><button type="button" aria-label="Plus">+</button>
+          </div>
+        </div>
+        <div class="outil-row">
+          <div class="outil-who">Collaborateurs<small>≈ <span data-sal-label="col"></span> k€ brut par an</small></div>
+          <div class="outil-stepper" data-key="col">
+            <button type="button" aria-label="Moins">−</button><output>3</output><button type="button" aria-label="Plus">+</button>
+          </div>
+        </div>
+        <details class="outil-adjust">
+          <summary>Ajuster les salaires</summary>
+          <div class="outil-sal">
+            <label>Direction (k€ brut / an)<input type="number" min="15" max="500" data-sal="dir" /></label>
+            <label>Managers (k€ brut / an)<input type="number" min="15" max="500" data-sal="man" /></label>
+            <label>Collaborateurs (k€ brut / an)<input type="number" min="15" max="500" data-sal="col" /></label>
+          </div>
+        </details>
+        <div class="outil-actions"><button class="btn" data-next type="button">Continuer →</button></div>
+      </section>
+
+      {/* --- 5 : le temps que ça occupe ---------------------------------- */}
+      <section class="outil-step" data-step="5">
+        <h2>Chaque mois, combien de temps ce sujet occupe-t-il ce collectif&nbsp;?</h2>
+        <p class="outil-hint">Réunions, points d'étape, préparations, échanges de couloir&nbsp;: le temps de tous cumulé, pas seulement le vôtre.</p>
+        <div class="outil-choices cols" data-q="heures">
+          <button class="outil-choice" data-v="2" type="button">Deux heures</button>
+          <button class="outil-choice" data-v="4" type="button">Une demi-journée</button>
+          <button class="outil-choice" data-v="8" type="button">Une journée</button>
+          <button class="outil-choice" data-v="16" type="button">Deux jours ou plus</button>
+        </div>
+      </section>
+
+      {/* --- 6 : le taux de décision ------------------------------------- */}
+      <section class="outil-step" data-step="6">
+        <h2>Sur les cinq dernières réunions consacrées à ce sujet, combien se sont terminées par une décision claire&nbsp;?</h2>
+        <p class="outil-hint">Une décision claire&nbsp;: on sait <strong>quoi</strong>, <strong>qui</strong> s'en charge et <strong>pour quand</strong>.</p>
+        <div class="outil-scale" data-q="dec">
+          <button class="outil-choice" data-v="0" type="button">0</button>
+          <button class="outil-choice" data-v="1" type="button">1</button>
+          <button class="outil-choice" data-v="2" type="button">2</button>
+          <button class="outil-choice" data-v="3" type="button">3</button>
+          <button class="outil-choice" data-v="4" type="button">4</button>
+          <button class="outil-choice" data-v="5" type="button">5</button>
+        </div>
+        <div class="outil-legend"><span>Aucune</span><span>Toutes</span></div>
+      </section>
+
+      {/* --- 7 : le blocage ---------------------------------------------- */}
+      <section class="outil-step" data-step="7">
+        <h2>À votre avis, qu'est-ce qui bloque vraiment&nbsp;?</h2>
+        <p class="outil-hint">Une seule réponse&nbsp;: celle que vous diriez en privé.</p>
+        <div class="outil-choices" data-q="blocage">
+          <button class="outil-choice" data-v="mandat" type="button">On ne sait pas qui décide<small>Chacun croit que l'autre tranchera.</small></button>
+          <button class="outil-choice" data-v="personnes" type="button">Les bonnes personnes ne sont pas là<small>Celles qui savent, ou celles qui peuvent dire oui.</small></button>
+          <button class="outil-choice" data-v="options" type="button">Aucune option n'est vraiment instruite<small>On arbitre entre des intuitions.</small></button>
+          <button class="outil-choice" data-v="desaccord" type="button">Un désaccord que personne ne nomme<small>Le vrai sujet n'est pas à l'ordre du jour.</small></button>
+          <button class="outil-choice" data-v="animation" type="button">Personne ne tient la conversation<small>La réunion s'anime un peu toute seule.</small></button>
+        </div>
+      </section>
+
+      {/* --- 8 : ce qu'on veut ------------------------------------------- */}
+      <section class="outil-step" data-step="8">
+        <h2>Et vous, qu'est-ce que vous voudriez&nbsp;?</h2>
+        <p class="outil-hint">Dernière question.</p>
+        <div class="outil-choices" data-q="want">
+          <button class="outil-choice" data-v="animer" type="button">Savoir mener ce genre de décision moi-même</button>
+          <button class="outil-choice" data-v="equipe" type="button">Que le collectif change durablement sa façon de décider</button>
+          <button class="outil-choice" data-v="deleguer" type="button">Qu'on nous conçoive et anime le temps fort qui tranche<small>Séminaire, atelier de décision, journée stratégique.</small></button>
+          <button class="outil-choice" data-v="changement" type="button">Faire enfin atterrir un changement déjà décidé</button>
+        </div>
+      </section>
+
+      {/* --- 9 : le résultat --------------------------------------------- */}
+      <section class="outil-step" data-step="9">
+        <p class="outil-reslabel">Chaque mois où ce sujet reste ouvert vous coûte au moins</p>
+        <div class="outil-big"><span id="ci-mensuel">0 €</span> <small>par mois</small></div>
+        <p class="outil-per">
+          Soit <strong id="ci-deja"></strong> depuis que le sujet est sur la table, il y a <span id="ci-mois"></span>.
+        </p>
+
+        <div class="outil-recover">
+          <span>dont</span><b id="ci-recup">0 €</b>
+          <span>par mois qu'un collectif qui tranche récupérerait.</span>
+        </div>
+
+        <div class="outil-leaks">
+          <div class="outil-leak" data-leak="A">
+            <div class="outil-leak-head">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONES.horloge} />
+                Le temps passé à en reparler
+              </span>
+              <b></b>
+            </div>
+            <div class="outil-track"><i></i></div>
+            <p>Ce que coûte, chaque mois, le temps que tout le monde y consacre sans conclure.</p>
+          </div>
+          <div class="outil-leak" data-leak="B">
+            <div class="outil-leak-head">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONES.valeur} />
+                La valeur qui attend
+              </span>
+              <b></b>
+            </div>
+            <div class="outil-track"><i></i></div>
+            <p>Ce que la décision doit produire, et qui n'est pas encore produit. Ce montant n'est pas perdu — il est reporté, mois après mois.</p>
+          </div>
+        </div>
+
+        <div class="outil-diag">
+          <p class="outil-hand">Votre goulet d'étranglement</p>
+          <h3 id="ci-diagtitle"></h3>
+          <p id="ci-diagtext"></p>
+
+          <div class="outil-offer">
+            <p class="outil-kicker">Ce que je vous propose</p>
+            <h4 id="ci-offername"></h4>
+            <p id="ci-offertext"></p>
+            <a class="outil-more" id="ci-offerlink" href="#">Découvrir cette offre →</a>
+          </div>
+
+          <div class="outil-cta">
+            <a class="btn" href={SITE.bookingUrl} target="_blank" rel="noopener">En parler 30 minutes, gratuitement</a>
+            <button class="btn-outline" id="ci-copy" type="button">Copier ma synthèse</button>
+          </div>
+          <p class="outil-ctanote" id="ci-copynote">
+            Vos réponses ne m'ont pas été transmises — rien n'a quitté votre navigateur. Copiez votre synthèse si
+            vous voulez que l'échange démarre là où ce calcul s'arrête.
+          </p>
+        </div>
+
+        <details class="outil-how">
+          <summary>Comment c'est calculé</summary>
+          <ul>
+            <li><strong>Coût horaire chargé</strong>&nbsp;= salaire brut annuel × 1,45 (charges patronales) ÷ 1 600 heures travaillées par an.</li>
+            <li><strong>Le temps passé à en reparler</strong>&nbsp;= ce coût horaire, pour toutes les personnes concernées, sur le nombre d'heures que le sujet occupe chaque mois.</li>
+            <li><strong>La valeur qui attend</strong>&nbsp;= l'enjeu annuel que vous avez indiqué, divisé par douze. On prend toujours la borne basse de la fourchette choisie.</li>
+            <li><strong>Ce qu'un collectif qui tranche récupérerait</strong>&nbsp;= la part du coût mensuel proportionnelle aux réunions qui n'aboutissent pas. Cinq décisions claires sur cinq&nbsp;: rien à récupérer de ce côté-là, le blocage est ailleurs.</li>
+            <li>Ne sont comptés ni le coût d'opportunité des sujets que celui-ci empêche de traiter, ni l'usure des équipes qui rediscutent la même chose. Les deux sont réels&nbsp;; aucun n'est chiffrable honnêtement ici.</li>
+          </ul>
+        </details>
+
+        <div class="outil-restart"><button class="btn-outline" id="ci-restart" type="button">Refaire le calcul</button></div>
+      </section>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ OFFRES_BASE: withBase('/offres/') }}>
+  (() => {
+    const racine = document.querySelector('.outil-card');
+    if (!racine) return;
+
+    const TOTAL_Q = 8;
+    const RESULT = 9;
+
+    const state = {
+      dir: 1, man: 4, col: 3,
+      sal: { dir: 90, man: 55, col: 35 },
+      sujet: null, enjeu: null, mois: null, heures: null, dec: null, blocage: null, want: null,
+    };
+    let step = 0;
+
+    const $ = (s, r = racine) => r.querySelector(s);
+    const $$ = (s, r = racine) => [...r.querySelectorAll(s)];
+    const eur = (n) => Math.round(n).toLocaleString('fr-FR') + ' €';
+    /* Un montant au franc près ferait croire à une précision qui n'existe pas :
+       tout est arrondi, et d'autant plus grossièrement que le nombre est grand. */
+    const rond = (n) => (n >= 100000 ? Math.round(n / 1000) * 1000 : n >= 10000 ? Math.round(n / 100) * 100 : Math.round(n / 10) * 10);
+    const sobre = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const horaire = (k) => (k * 1000 * 1.45) / 1600;
+    const gens = () => state.dir + state.man + state.col;
+    const coutHeure = () =>
+      state.dir * horaire(state.sal.dir) + state.man * horaire(state.sal.man) + state.col * horaire(state.sal.col);
+
+    function calculer() {
+      const deliberation = coutHeure() * state.heures;
+      const valeur = state.enjeu / 12;
+      const mensuel = deliberation + valeur;
+      return {
+        deliberation,
+        valeur,
+        mensuel,
+        deja: mensuel * state.mois,
+        /* La part récupérable ne porte que sur ce qui dépend de la façon de
+           décider. On ne promet pas de récupérer la valeur d'une décision qu'un
+           atelier ne prendra pas à la place du dirigeant. */
+        recup: mensuel * ((5 - state.dec) / 5),
+      };
+    }
+
+    /* --- salaires --- */
+    $$('[data-sal]').forEach((inp) => {
+      const k = inp.dataset.sal;
+      inp.value = state.sal[k];
+      inp.addEventListener('input', () => {
+        const v = +inp.value;
+        if (v >= 15) {
+          state.sal[k] = v;
+          syncLabels();
+        }
+      });
+    });
+    function syncLabels() {
+      $$('[data-sal-label]').forEach((s) => (s.textContent = state.sal[s.dataset.salLabel]));
+    }
+
+    /* --- compteurs de participants --- */
+    $$('.outil-stepper').forEach((st) => {
+      const key = st.dataset.key;
+      const out = $('output', st);
+      const [moins, plus] = $$('button', st);
+      const rendre = () => (out.textContent = state[key]);
+      moins.onclick = () => {
+        state[key] = Math.max(0, state[key] - 1);
+        /* Un collectif de zéro personne n'a pas de sujet : on garde au moins
+           quelqu'un dans la pièce. */
+        if (gens() === 0) state[key] = 1;
+        rendre();
+      };
+      plus.onclick = () => {
+        state[key] = Math.min(30, state[key] + 1);
+        rendre();
+      };
+      rendre();
+    });
+
+    /* --- questions à choix : elles avancent d'elles-mêmes --- */
+    $$('[data-q]').forEach((groupe) => {
+      const q = groupe.dataset.q;
+      $$('.outil-choice', groupe).forEach((btn) =>
+        btn.addEventListener('click', () => {
+          $$('.outil-choice', groupe).forEach((b) => b.classList.toggle('is-on', b === btn));
+          const v = btn.dataset.v;
+          state[q] = isNaN(+v) ? v : +v;
+          setTimeout(() => aller(step + 1), sobre ? 0 : 220);
+        })
+      );
+    });
+
+    $$('[data-next]').forEach((b) => b.addEventListener('click', () => aller(step + 1)));
+    $('#ci-back').addEventListener('click', () => aller(step - 1));
+    $('#ci-restart').addEventListener('click', () => {
+      Object.assign(state, { sujet: null, enjeu: null, mois: null, heures: null, dec: null, blocage: null, want: null });
+      $$('.outil-choice.is-on').forEach((b) => b.classList.remove('is-on'));
+      aller(0);
+    });
+
+    function aller(n) {
+      step = Math.max(0, Math.min(RESULT, n));
+      $$('.outil-step').forEach((s) => s.classList.toggle('is-shown', +s.dataset.step === step));
+      $('#ci-top').hidden = step === 0 || step === RESULT;
+      $('#ci-bar').style.width = (step / TOTAL_Q) * 100 + '%';
+      $('#ci-count').textContent = `${step} / ${TOTAL_Q}`;
+      if (step === RESULT) afficherResultat();
+      /* On remonte sur la carte, pas en haut de la page : l'en-tête du site et
+         le titre de la page n'ont pas besoin d'être relus à chaque question. */
+      const y = racine.getBoundingClientRect().top + window.scrollY - 90;
+      window.scrollTo({ top: y, behavior: sobre ? 'auto' : 'smooth' });
+    }
+
+    function compter(el, to) {
+      if (sobre) {
+        el.textContent = eur(to);
+        return;
+      }
+      const t0 = performance.now();
+      const d = 1100;
+      const pas = (t) => {
+        const p = Math.min(1, (t - t0) / d);
+        el.textContent = eur(to * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(pas);
+      };
+      requestAnimationFrame(pas);
+    }
+
+    const MOIS_DIT = { 1: 'quelques semaines', 3: 'environ trois mois', 6: 'six mois', 12: 'plus d’un an' };
+
+    /*
+     * Le diagnostic. Il ne sort pas du calcul mais de la question « qu'est-ce
+     * qui bloque » : le chiffre dit l'ampleur, la réponse dit la cause. Un
+     * collectif qui tranche cinq fois sur cinq a un problème ailleurs — il a sa
+     * propre entrée.
+     */
+    const DIAG = {
+      mandat: [
+        'Le mandat de décision n’est pas posé',
+        'Tant que personne ne sait qui tranche, la réunion produit des avis, pas des décisions. Ce n’est pas un défaut de caractère : c’est une règle du jeu qui n’a jamais été écrite. Elle s’écrit en une heure — et elle change tout ce qui suit.',
+      ],
+      personnes: [
+        'La décision ne se discute pas là où elle peut se prendre',
+        'Il manque ceux qui savent, ou ceux qui peuvent dire oui. Le collectif instruit donc un sujet qu’il n’a pas le pouvoir de conclure, et remonte chaque fois d’un cran. Le travail est de recomposer la pièce avant de recomposer l’ordre du jour.',
+      ],
+      options: [
+        'Vous arbitrez entre des intuitions',
+        'Aucune option n’a été instruite assez pour être comparée, alors chacun défend la sienne à l’estime. Un collectif ne choisit bien qu’entre deux ou trois scénarios réellement documentés — les préparer coûte moins cher qu’un mois de plus de discussion.',
+      ],
+      desaccord: [
+        'Le vrai sujet n’est pas à l’ordre du jour',
+        'Un désaccord que personne ne nomme ne disparaît pas : il ressort en objections de forme, en reports, en décisions reprises un mois plus tard. C’est le cas où un tiers extérieur change le plus de choses, parce qu’il peut poser la question que personne dans la pièce ne peut poser.',
+      ],
+      animation: [
+        'Personne ne tient la conversation',
+        'Sans quelqu’un dont le seul rôle est de tenir le fil, la discussion suit celui qui parle le plus fort ou le plus longtemps. Animer n’est pas présider : c’est un métier, et il s’apprend — ou il se délègue le temps des décisions qui comptent.',
+      ],
+      ok: [
+        'Vos réunions décident. Le blocage est en amont',
+        'Cinq fois sur cinq, vous concluez — ce n’est pas là que ça coince. Ce sujet-ci résiste donc pour une autre raison : un enjeu plus politique qu’opérationnel, ou une décision qui appartient à un autre étage. Le coût reste réel, mais il ne se réglera pas en travaillant vos réunions.',
+      ],
+    };
+
+    const OFFRES = {
+      animer: [
+        'Mentoring',
+        'Je vous prépare à mener vous-même ce type de décision : cadrage, posture, déroulé, répétition. On travaille sur votre sujet réel, pas sur un cas d’école.',
+        'mentoring/',
+      ],
+      equipe: [
+        'Coaching d’équipe',
+        'Ateliers réguliers, séminaires et coaching du manager, dans la durée : c’est la façon de décider du collectif qu’on change, pas une réunion en particulier.',
+        'coaching-equipe/',
+      ],
+      deleguer: [
+        'Déléguer l’animation d’un temps collectif',
+        'Je conçois et j’anime de bout en bout le moment qui tranche : cadrage en amont, facilitation, capture graphique, synthèse et prochaines étapes.',
+        'deleguer-animation/',
+      ],
+      changement: [
+        'Accompagnement des transformations',
+        'Faire atterrir un changement déjà décidé, en créant les conditions de son adoption réelle — y compris en faisant remonter ce qui n’a pas encore été dit.',
+        'accompagnement-transformation/',
+      ],
+    };
+
+    function afficherResultat() {
+      const r = calculer();
+
+      compter($('#ci-mensuel'), rond(r.mensuel));
+      $('#ci-deja').textContent = eur(rond(r.deja));
+      $('#ci-mois').textContent = MOIS_DIT[state.mois];
+      compter($('#ci-recup'), rond(r.recup));
+
+      const fuites = { A: r.deliberation, B: r.valeur };
+      const max = Math.max(1, ...Object.values(fuites));
+      $$('.outil-leak').forEach((el) => {
+        const v = fuites[el.dataset.leak];
+        $('b', el).textContent = eur(rond(v)) + ' / mois';
+        el.classList.toggle('is-main', v >= max);
+        const barre = $('i', el);
+        barre.style.width = '0';
+        requestAnimationFrame(() => requestAnimationFrame(() => (barre.style.width = (v / max) * 100 + '%')));
+      });
+
+      const [t, txt] = DIAG[state.dec === 5 ? 'ok' : state.blocage];
+      $('#ci-diagtitle').textContent = t;
+      $('#ci-diagtext').textContent = txt;
+
+      const [nom, texte, chemin] = OFFRES[state.want];
+      $('#ci-offername').textContent = nom;
+      $('#ci-offertext').textContent = texte;
+      $('#ci-offerlink').href = OFFRES_BASE + chemin;
+    }
+
+    /*
+     * La synthèse à copier. Le prototype promettait « vos réponses me seront
+     * transmises » — c'était faux, rien n'est envoyé. Plutôt qu'un faux
+     * formulaire, on rend le texte : celui qui veut me le faire parvenir choisit
+     * son canal, et voit exactement ce qu'il m'envoie.
+     */
+    $('#ci-copy').addEventListener('click', async () => {
+      const r = calculer();
+      const [t] = DIAG[state.dec === 5 ? 'ok' : state.blocage];
+      const texte = [
+        'Coût de l’inaction — ma synthèse',
+        '',
+        `Sujet : ${state.sujet}`,
+        `Sur la table depuis : ${MOIS_DIT[state.mois]}`,
+        `Autour de la table : ${state.dir} direction, ${state.man} managers, ${state.col} collaborateurs`,
+        `Temps que ça occupe : ${state.heures} h par mois`,
+        `Réunions qui tranchent : ${state.dec} sur 5`,
+        `Enjeu annuel retenu (borne basse) : ${eur(state.enjeu)}`,
+        '',
+        `Coût mensuel plancher : ${eur(rond(r.mensuel))}`,
+        `— dont temps passé à en reparler : ${eur(rond(r.deliberation))}`,
+        `— dont valeur qui attend : ${eur(rond(r.valeur))}`,
+        `Déjà dépensé : ${eur(rond(r.deja))}`,
+        '',
+        `Goulet d’étranglement : ${t}`,
+      ].join('\n');
+
+      const note = $('#ci-copynote');
+      try {
+        await navigator.clipboard.writeText(texte);
+        note.textContent = 'Synthèse copiée. Collez-la dans un message, un mail, ou gardez-la pour vous.';
+      } catch {
+        /* Presse-papiers refusé (contexte non sécurisé, navigateur verrouillé) :
+           on ne laisse pas l'utilisateur devant un bouton qui n'a rien fait. */
+        note.textContent = 'Copie impossible depuis ce navigateur. Votre coût mensuel plancher : ' + eur(rond(r.mensuel)) + '.';
+      }
+    });
+
+    syncLabels();
+  })();
+</script>
+
+<style>
+  .outil-card {
+    max-width: 760px;
+    margin-inline: auto;
+    padding: clamp(1.4rem, 4vw, 2.4rem);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-md);
+  }
+
+  /* --- l'avancement --- */
+  .outil-top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+  .outil-top[hidden] {
+    display: none;
+  }
+  .outil-bar {
+    flex: 1;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--color-border) 55%, transparent);
+    overflow: hidden;
+  }
+  .outil-bar i {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: var(--radius-pill);
+    background: var(--color-blue);
+    transition: width 0.4s var(--ease-out);
+  }
+  .outil-back {
+    padding: 0.35rem 0;
+    border: 0;
+    background: none;
+    color: var(--color-muted);
+    font: 500 var(--text-base) var(--font-body);
+    cursor: pointer;
+  }
+  .outil-back:hover {
+    color: var(--color-navy);
+  }
+  .outil-count {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* --- les écrans --- */
+  .outil-step {
+    display: none;
+  }
+  .outil-step.is-shown {
+    display: block;
+    animation: outil-entree 0.35s var(--ease-out);
+  }
+  @keyframes outil-entree {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .outil-card h2 {
+    margin: 0 0 var(--space-3);
+    font-size: clamp(1.4rem, 3.2vw, 1.9rem);
+    line-height: 1.2;
+  }
+  .outil-hand {
+    margin: 0 0 var(--space-2);
+    color: var(--color-clay);
+    font-family: var(--font-script);
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .outil-lead {
+    margin: var(--space-4) 0;
+    color: var(--color-muted);
+    font-size: var(--text-lg);
+  }
+  .outil-lead strong,
+  .outil-hint strong,
+  .outil-note strong {
+    color: var(--color-navy);
+  }
+  .outil-hint {
+    margin: 0 0 var(--space-6);
+    color: var(--color-muted);
+  }
+  .outil-note {
+    margin: var(--space-4) 0 var(--space-6);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* --- les choix --- */
+  .outil-choices {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .outil-choices.cols {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  .outil-choice {
+    padding: 1rem 1.15rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-cream);
+    box-shadow: inset 0 0 0 1.5px var(--color-border);
+    color: var(--color-navy);
+    font: 500 var(--text-lg) / 1.35 var(--font-body);
+    text-align: left;
+    cursor: pointer;
+    transition: box-shadow var(--duration-hover) ease, background var(--duration-hover) ease, transform var(--duration-press) var(--ease-out);
+  }
+  .outil-choice small {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    font-weight: 400;
+  }
+  .outil-choice:hover {
+    box-shadow: inset 0 0 0 1.5px var(--color-navy);
+  }
+  .outil-choice:active {
+    transform: scale(0.985);
+  }
+  .outil-choice.is-on {
+    background: var(--color-blue-soft);
+    box-shadow: inset 0 0 0 2px var(--color-blue);
+  }
+  .outil-scale {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--space-2);
+  }
+  .outil-scale .outil-choice {
+    padding: 1rem 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-align: center;
+  }
+  .outil-legend {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-3);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* --- les compteurs de participants --- */
+  .outil-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .outil-row:last-of-type {
+    border-bottom: 0;
+  }
+  .outil-who {
+    font-weight: 700;
+  }
+  .outil-who small {
+    display: block;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    font-weight: 400;
+  }
+  .outil-stepper {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .outil-stepper button {
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-cream);
+    box-shadow: inset 0 0 0 1.5px var(--color-border);
+    color: var(--color-navy);
+    font: 500 1.5rem / 1 var(--font-body);
+    cursor: pointer;
+  }
+  .outil-stepper button:hover {
+    box-shadow: inset 0 0 0 1.5px var(--color-navy);
+  }
+  .outil-stepper output {
+    min-width: 46px;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-align: center;
+  }
+  .outil-adjust {
+    margin-top: var(--space-6);
+  }
+  .outil-adjust summary,
+  .outil-how summary {
+    color: var(--color-blue);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .outil-sal {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+  .outil-sal label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .outil-sal input {
+    width: 130px;
+    padding: 0.6rem 0.75rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-cream);
+    box-shadow: inset 0 0 0 1.5px var(--color-border);
+    color: var(--color-ink);
+    font: 500 var(--text-lg) var(--font-body);
+    text-align: right;
+  }
+  .outil-actions {
+    margin-top: var(--space-8);
+  }
+
+  /* --- le résultat --- */
+  .outil-reslabel {
+    margin: 0 0 var(--space-2);
+    color: var(--color-muted);
+    font-size: var(--text-lg);
+  }
+  .outil-big {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 10vw, 4.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .outil-big small {
+    color: var(--color-muted);
+    font-size: 0.3em;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+  .outil-per {
+    margin: var(--space-3) 0 0;
+    color: var(--color-muted);
+  }
+  .outil-per strong {
+    color: var(--color-navy);
+  }
+  .outil-recover {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.85rem;
+    margin-top: var(--space-6);
+    padding: var(--space-6);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--color-orange) 26%, var(--color-surface));
+    color: var(--color-navy);
+  }
+  .outil-recover b {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-clay-ink);
+  }
+
+  .outil-leaks {
+    display: grid;
+    gap: var(--space-8);
+    margin-top: var(--space-8);
+  }
+  .outil-leak-head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+  .outil-leak-head span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+  }
+  .outil-leak-head svg {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    color: var(--color-muted);
+  }
+  .outil-leak-head b {
+    font-family: var(--font-display);
+    white-space: nowrap;
+  }
+  .outil-leak p {
+    margin: var(--space-2) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .outil-track {
+    height: 14px;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--color-border) 45%, transparent);
+    overflow: hidden;
+  }
+  .outil-track i {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: var(--radius-pill);
+    background: var(--color-blue);
+    transition: width 0.9s var(--ease-out);
+  }
+  .outil-leak.is-main .outil-track i {
+    background: var(--color-clay);
+  }
+  .outil-leak.is-main .outil-leak-head span {
+    font-weight: 700;
+  }
+  .outil-leak.is-main .outil-leak-head svg {
+    color: var(--color-clay);
+  }
+
+  .outil-diag {
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px dashed var(--color-border);
+  }
+  .outil-diag h3 {
+    margin: var(--space-2) 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 3.4vw, 1.75rem);
+    font-weight: 800;
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.15;
+  }
+  .outil-diag > p {
+    margin: 0;
+  }
+  .outil-offer {
+    margin-top: var(--space-8);
+    padding: var(--space-6);
+    border-radius: var(--radius-sm);
+    box-shadow: inset 0 0 0 1.5px var(--color-navy);
+  }
+  .outil-kicker {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .outil-offer h4 {
+    margin: var(--space-2) 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: var(--tracking-tight);
+  }
+  .outil-offer p {
+    margin: 0 0 var(--space-3);
+  }
+  .outil-more {
+    color: var(--color-blue);
+    font-weight: 600;
+  }
+  .outil-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+  .outil-ctanote {
+    margin: var(--space-4) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .outil-how {
+    margin-top: var(--space-12);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .outil-how ul {
+    margin: var(--space-4) 0 0;
+    padding-left: 1.25rem;
+  }
+  .outil-how li {
+    margin-bottom: 0.4rem;
+  }
+  .outil-how strong {
+    color: var(--color-navy);
+  }
+  .outil-restart {
+    margin-top: var(--space-8);
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .outil-step.is-shown {
+      animation: none;
+    }
+    .outil-bar i,
+    .outil-track i {
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,1086 @@
+---
+/**
+ * Le Compagnon : un personnage qui demande ce qui se joue, et y conduit.
+ *
+ * Porté depuis le site des Décoincés du Crayon — même personnage dessiné, même
+ * mécanique — et rhabillé aux couleurs d'ici. Le principe ne change pas : le
+ * menu range le catalogue d'offres, le Compagnon part de la situation. Ce qu'on
+ * taperait dans une barre de recherche, on le dit ici en une phrase, et on
+ * atterrit sur la bonne page.
+ *
+ * Quatre choses en font autre chose qu'un chatbot :
+ *
+ * 1. Tous les écrans sont rendus au build, en HTML. Les choix sont de vrais
+ *    liens, Google les suit, le bouton retour fonctionne, et rien ne dépend
+ *    d'un serveur ni d'un modèle. Le script ne fait que montrer un groupe et en
+ *    cacher un autre.
+ * 2. Le lanceur ne s'ouvre jamais tout seul. Il salue, propose trois fois, puis
+ *    se tait — au-delà ce n'est plus une proposition, c'est une pop-up.
+ * 3. Rien n'est stocké : ni d'une page à l'autre, ni d'une visite à l'autre.
+ * 4. Sur téléphone, le panneau ne reste pas une vignette dans un coin : il
+ *    prend tout l'écran et devient une petite application, avec sa barre de
+ *    marque, le personnage au centre et des cartes à hauteur de pouce.
+ *
+ * Les poses vivent dans `public/compagnon/`, recopiées de l'autre dépôt (c'est
+ * là que se trouvent les sources et le script qui les met au même gabarit).
+ */
+
+import { ICONES, PLEINES, ECRANS, POSES, poseDe, personnage } from '../data/compagnon';
+import { withBase } from '../utils/url';
+
+const accueil = ECRANS[0];
+
+/* Le dossier des poses passe par withBase : le site tourne parfois dans un
+   sous-dossier (/TESTSITENV/), et un chemin absolu y renverrait un 404. */
+const dossier = withBase(personnage.dossier);
+
+/*
+ * Le script n'a besoin que de l'en-tête de chaque écran : les listes de choix
+ * sont déjà dans le HTML. Sans ce tri, les huit écrans voyageaient deux fois
+ * dans la page.
+ */
+const ENTETES = ECRANS.map(({ id, pose, oeil, titre, message }) => ({
+  id,
+  /* La pose est résolue ici, au build : le script n'a pas à savoir lesquelles
+     sont réellement dessinées. */
+  pose: poseDe(pose),
+  oeil,
+  titre,
+  message,
+}));
+
+const estExterne = (href: string) => /^https?:/.test(href);
+---
+
+<div
+  class="compagnon"
+  id="compagnon"
+  data-ecran="accueil"
+  data-poses={POSES.join(' ')}
+  data-dossier={dossier}
+  data-perso={personnage.actif ? '1' : undefined}
+>
+  {/* Cliquer dans le vide referme : c'est le geste qu'on essaie d'abord. */}
+  <div class="compagnon__voile" id="compagnon-voile"></div>
+
+  {/* Le rond ne porte pas de libellé : c'est la bulle qui dit, trois fois par
+      page, ce qu'il propose. Elle est écrite en Caveat — sur ce site, c'est la
+      voix des annotations à la main, celle d'une remarque qu'on glisse. */}
+  <span class="compagnon__bulle" aria-hidden="true">Je vous aide à trouver&nbsp;?</span>
+
+  <button
+    class="compagnon__lanceur"
+    id="compagnon-lanceur"
+    type="button"
+    aria-haspopup="dialog"
+    aria-controls="compagnon-boite"
+    aria-expanded="false"
+    aria-label="Je vous aide à trouver ?"
+  >
+    <img src={`${dossier}lanceur.webp`} width="128" height="128" alt="" decoding="async" />
+  </button>
+
+  <section
+    class="compagnon__boite"
+    id="compagnon-boite"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="compagnon-titre"
+    hidden
+  >
+    {/* Sur téléphone, le panneau devient un écran entier : il porte alors la
+        marque, que le panneau flottant de l'ordinateur n'a pas à répéter
+        par-dessus la page. Le même lettrage que l'en-tête du site, pas une
+        approximation. */}
+    <p class="compagnon__marque">
+      <span class="compagnon__marque-script">by</span>
+      <span class="compagnon__marque-caps">NICOLAS VERDOT</span>
+    </p>
+
+    <div class="compagnon__perso" aria-hidden="true">
+      {/* « lazy » sur une image cachée : le navigateur ne la cherche qu'à
+          l'ouverture. Le script la devance dès que la souris approche. */}
+      <img
+        id="compagnon-perso"
+        src={`${dossier}${poseDe(accueil.pose)}.webp`}
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <div class="compagnon__panneau">
+      <button class="compagnon__fermer" id="compagnon-fermer" type="button" aria-label="Fermer">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none"
+             stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+
+      <p class="compagnon__oeil" id="compagnon-oeil">{accueil.oeil}</p>
+      {/* Un paragraphe, pas un <h2>.
+          Le Compagnon est présent sur TOUTES les pages : en titre de niveau 2,
+          il ajouterait « Bonjour ! » à la structure de titres de chaque page,
+          juste à côté des vrais h2 que Google lit pour comprendre le sujet de
+          la page. Le panneau reste nommé pour les lecteurs d'écran par
+          `aria-labelledby`, qui n'exige pas un élément de titre. */}
+      <p class="compagnon__titre" id="compagnon-titre" tabindex="-1">{accueil.titre}</p>
+      <p class="compagnon__message" id="compagnon-message">{accueil.message}</p>
+
+      {/*
+        Les listes d'actions sont rendues au build, une par écran, puis montrées
+        à tour de rôle. Les fabriquer en JavaScript les priverait du style :
+        Astro porte ses règles par un attribut « data-astro-cid-… » qu'un
+        élément créé par script n'a pas.
+      */}
+      {ECRANS.map((e) => (
+        <div class="compagnon__actions" data-actions={e.id} hidden={e.id !== 'accueil'}>
+          {e.actions.map((a) => {
+            const externe = !!a.vers && estExterne(a.vers);
+            const contenu = (
+              <>
+                <svg class="compagnon__icone" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"
+                     fill={PLEINES.has(a.icone) ? 'currentColor' : 'none'}
+                     stroke={PLEINES.has(a.icone) ? 'none' : 'currentColor'}
+                     stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d={ICONES[a.icone]} />
+                </svg>
+                <span class="compagnon__action-texte">{a.texte}</span>
+                {a.note && <small>{a.note}</small>}
+                <svg class="compagnon__chevron" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"
+                     fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+                  <path d="M9 5l7 7-7 7" />
+                </svg>
+              </>
+            );
+            return a.vers ? (
+              <a
+                class="compagnon__action"
+                href={externe ? a.vers : withBase(a.vers)}
+                {...(externe ? { target: '_blank', rel: 'noopener' } : {})}
+              >
+                {contenu}
+              </a>
+            ) : (
+              <button class="compagnon__action" type="button" data-ecran={a.ecran}>
+                {contenu}
+              </button>
+            );
+          })}
+        </div>
+      ))}
+
+      <button class="compagnon__retour" id="compagnon-retour" type="button" hidden>
+        <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none"
+             stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+          <path d="M15 5l-7 7 7 7" />
+        </svg>
+        Revenir au début
+      </button>
+
+      {/* Plein écran, la croix ne suffit plus comme sortie : on la cherche en
+          haut quand on vient de lire en bas. */}
+      <button class="compagnon__passer" id="compagnon-passer" type="button">Continuer vers le site</button>
+    </div>
+  </section>
+</div>
+
+<script is:inline define:vars={{ ENTETES }}>
+  (() => {
+    const racine = document.getElementById('compagnon');
+    if (!racine) return;
+
+    const lanceur = document.getElementById('compagnon-lanceur');
+    const boite = document.getElementById('compagnon-boite');
+    const perso = document.getElementById('compagnon-perso');
+    const oeil = document.getElementById('compagnon-oeil');
+    const titre = document.getElementById('compagnon-titre');
+    const message = document.getElementById('compagnon-message');
+    const retour = document.getElementById('compagnon-retour');
+    const fermer = document.getElementById('compagnon-fermer');
+    const voile = document.getElementById('compagnon-voile');
+    const groupes = [...racine.querySelectorAll('[data-actions]')];
+
+    const parId = Object.fromEntries(ENTETES.map((e) => [e.id, e]));
+    const dossier = racine.dataset.dossier;
+    let precharge = false;
+
+    /* Les poses ne partent qu'à l'approche : survol, focus clavier, ou à défaut
+       l'ouverture elle-même. Le premier écran est donc déjà en cache au moment
+       où le panneau s'ouvre. */
+    function prechargerPoses() {
+      if (precharge || !perso) return;
+      precharge = true;
+      racine.dataset.poses.split(' ').forEach((p) => {
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = dossier + p + '.webp';
+      });
+    }
+
+    /*
+     * Le message s'écrit lettre à lettre, comme la réplique d'un personnage.
+     * D'un écran à l'autre la bulle et les boutons se ressemblent : sans ce
+     * mouvement, on ne voit pas que la réponse a changé.
+     *
+     * Deux morceaux, et deux seulement : ce qui est déjà écrit, et le reste de
+     * la phrase, posé transparent. La bulle prend donc d'emblée sa taille
+     * finale — rien ne saute pendant la frappe — et le texte complet est
+     * présent dans la page du premier au dernier instant, donc lisible par un
+     * lecteur d'écran et trouvable au Cmd+F. Toucher la bulle termine la phrase
+     * d'un coup, et qui a demandé moins d'animation lit tout, tout de suite.
+     */
+    const sobre = matchMedia('(prefers-reduced-motion: reduce)');
+    let frappe = 0;
+    let finir = () => {};
+
+    function taper(texte) {
+      clearTimeout(frappe);
+      const ecrit = document.createElement('span');
+      ecrit.className = 'compagnon__frappe';
+      const reste = document.createElement('span');
+      reste.className = 'compagnon__reste';
+      message.replaceChildren(ecrit, reste);
+      finir = () => {
+        clearTimeout(frappe);
+        ecrit.textContent = texte;
+        reste.textContent = '';
+        ecrit.classList.add('est-fini');
+      };
+      if (sobre.matches) return finir();
+      let i = 0;
+      const pas = () => {
+        i += 1;
+        ecrit.textContent = texte.slice(0, i);
+        reste.textContent = texte.slice(i);
+        if (i >= texte.length) return finir();
+        const c = texte[i - 1];
+        frappe = setTimeout(pas, '.?!…'.includes(c) ? 240 : ',:;—'.includes(c) ? 120 : 22);
+      };
+      pas();
+    }
+    message.addEventListener('click', () => finir());
+
+    function afficher(id, focus) {
+      const e = parId[id] || parId.accueil;
+      racine.dataset.ecran = e.id;
+      oeil.textContent = e.oeil;
+      titre.textContent = e.titre;
+      taper(e.message);
+      if (perso) perso.src = dossier + e.pose + '.webp';
+      groupes.forEach((g) => (g.hidden = g.dataset.actions !== e.id));
+      retour.hidden = e.id === 'accueil';
+
+      /* On retire l'attribut, on force le navigateur à en prendre acte, puis on
+         le remet — sans quoi l'animation ne rejouerait pas. */
+      delete racine.dataset.change;
+      void racine.offsetWidth;
+      racine.dataset.change = '1';
+
+      /* Sur téléphone, le choix se fait en bas de l'écran : l'écran suivant
+         repart du haut, sur la réplique, pour qu'on voie qu'elle a changé. */
+      if (focus) {
+        racine.scrollTo({ top: 0, behavior: sobre.matches ? 'auto' : 'smooth' });
+        groupes.forEach((g) => (g.scrollTop = 0));
+        titre.focus({ preventScroll: true });
+      }
+    }
+
+    function ouvrir(ecran) {
+      prechargerPoses();
+      boite.hidden = false;
+      lanceur.hidden = true;
+      racine.dataset.ouvert = '1';
+      lanceur.setAttribute('aria-expanded', 'true');
+      afficher(ecran || 'accueil');
+      fermer.focus({ preventScroll: true });
+      delete racine.dataset.salut;
+      delete racine.dataset.bulle;
+      bulles = BULLES;
+    }
+
+    function refermer() {
+      boite.hidden = true;
+      lanceur.hidden = false;
+      delete racine.dataset.ouvert;
+      lanceur.setAttribute('aria-expanded', 'false');
+      lanceur.focus({ preventScroll: true });
+    }
+
+    lanceur.addEventListener('click', () => ouvrir());
+    lanceur.addEventListener('pointerenter', prechargerPoses, { once: true });
+    lanceur.addEventListener('focus', prechargerPoses, { once: true });
+    fermer.addEventListener('click', refermer);
+    document.getElementById('compagnon-passer')?.addEventListener('click', refermer);
+    voile.addEventListener('click', refermer);
+    retour.addEventListener('click', () => afficher('accueil', true));
+
+    racine.addEventListener('click', (ev) => {
+      const b = ev.target.closest('button[data-ecran]');
+      if (b) afficher(b.dataset.ecran, true);
+    });
+
+    document.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape' && !boite.hidden) refermer();
+    });
+
+    /*
+     * Deux gestes, deux rythmes.
+     *
+     * Le petit salut rejoue à chaque page : trois secondes, rien de déplacé, et
+     * c'est lui qui fait remarquer le lanceur.
+     *
+     * La bulle revient trois fois par page, cinq secondes à chaque passage,
+     * puis se tait. Une seule apparition se rate — on lit ailleurs. Trois,
+     * espacées d'une demi-minute, se remarquent sans occuper l'écran ; et la
+     * troisième est la dernière, parce qu'au-delà ce n'est plus une
+     * proposition.
+     *
+     * Jamais d'ouverture automatique : la page appartient au visiteur.
+     */
+    racine.dataset.salut = '1';
+    setTimeout(() => delete racine.dataset.salut, 6000);
+
+    const BULLES = 3;
+    let bulles = 0;
+
+    function proposer() {
+      /* Rien pendant que le panneau est ouvert : la question est déjà posée. */
+      if (bulles >= BULLES || !boite.hidden) return;
+      bulles += 1;
+      racine.dataset.bulle = '1';
+      setTimeout(() => {
+        delete racine.dataset.bulle;
+        if (bulles < BULLES) setTimeout(proposer, 26000);
+      }, 5200);
+    }
+
+    setTimeout(proposer, 1600);
+
+    /* Ouvert au reste du site : une page peut envoyer le visiteur sur un écran
+       précis, par exemple depuis un bouton « on en parle ? ». */
+    window.Compagnon = Object.freeze({ ouvrir, fermer: refermer, afficher });
+  })();
+</script>
+
+<style>
+  .compagnon {
+    --marge: max(1rem, env(safe-area-inset-bottom));
+    --perso-h: 238px; /* hauteur commune à toutes les poses */
+    --perso-x: 110px; /* où retombe le milieu de la tête */
+    position: fixed;
+    z-index: 900;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: var(--marge);
+  }
+
+  /* --- le lanceur --- */
+
+  /*
+   * Le jaune de la marque. Le lanceur traverse des sections crème, des aplats
+   * jaunes, le bandeau noir et le mode sombre : le navy disparaît sur le
+   * bandeau noir, la terre cuite se bat avec les boutons ; le jaune tient
+   * partout. Il ne porte que de l'encre navy — à 1,7:1 sur blanc, il ne peut
+   * pas servir de couleur de texte.
+   */
+  .compagnon__lanceur {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    /*
+     * Un liseré clair, pas un cerne. Le lanceur flotte au-dessus de n'importe
+     * quel fond — une photo de montagne, un aplat jaune, le bloc CTA noir — et
+     * sans rien pour l'en détacher il s'y fondait.
+     */
+    border: 3px solid var(--color-surface);
+    border-radius: 50%;
+    background: var(--color-orange);
+    color: var(--color-navy);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition:
+      transform var(--duration-press) var(--ease-out),
+      box-shadow var(--duration-press) var(--ease-out);
+  }
+
+  .compagnon__lanceur[hidden] {
+    display: none;
+  }
+
+  .compagnon__lanceur img {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    /* Le dessin est au trait noir sur fond transparent : il lui faut toujours
+       un fond clair sous lui, y compris en mode sombre. */
+    background: #fffdfa;
+    object-fit: cover;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .compagnon__lanceur:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  .compagnon__lanceur:focus-visible {
+    outline: 3px solid var(--color-clay);
+    outline-offset: 3px;
+  }
+
+  .compagnon__bulle {
+    display: none;
+  }
+
+  .compagnon[data-bulle] .compagnon__bulle {
+    position: absolute;
+    right: 8px;
+    bottom: calc(100% + 0.6rem);
+    display: block;
+    padding: 0.35rem 1rem 0.5rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1.5px var(--color-border), var(--shadow-sm);
+    color: var(--color-navy);
+    font-family: var(--font-script);
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+    animation: compagnon-bulle 5.2s ease-out both;
+  }
+
+  /* La pointe de la bulle, du même filet que la carte. */
+  .compagnon[data-bulle] .compagnon__bulle::after {
+    position: absolute;
+    right: 26px;
+    top: 100%;
+    width: 11px;
+    height: 11px;
+    margin-top: -7px;
+    border: 1.5px solid var(--color-border);
+    border-width: 0 1.5px 1.5px 0;
+    background: var(--color-surface);
+    content: '';
+    transform: rotate(45deg);
+  }
+
+  /*
+   * Le voile détache le panneau de la page, et cliquer dedans referme. Le
+   * z-index négatif le place derrière le panneau sans le sortir de la pile du
+   * Compagnon : il reste donc au-dessus de la page.
+   */
+  .compagnon__voile {
+    display: none;
+  }
+
+  .compagnon[data-ouvert] .compagnon__voile {
+    position: fixed;
+    z-index: -1;
+    inset: 0;
+    display: block;
+    background: rgba(11, 22, 39, 0.28);
+    backdrop-filter: blur(2px);
+    animation: compagnon-voile 0.2s ease-out both;
+  }
+
+  /* Le salut d'arrivée : deux oscillations, puis plus rien. */
+  .compagnon[data-salut] .compagnon__lanceur > * {
+    animation: compagnon-salut 1.5s ease-in-out 1s 2;
+    transform-origin: 50% 85%;
+  }
+
+  @keyframes compagnon-voile {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes compagnon-bulle {
+    0% { opacity: 0; transform: translateY(6px); }
+    9%, 86% { opacity: 1; transform: none; }
+    100% { opacity: 0; transform: translateY(4px); }
+  }
+
+  @keyframes compagnon-salut {
+    0%, 55%, 100% { transform: rotate(0); }
+    65% { transform: rotate(-10deg); }
+    75% { transform: rotate(9deg); }
+    85% { transform: rotate(-5deg); }
+    93% { transform: rotate(3deg); }
+  }
+
+  /* --- le panneau, sur ordinateur --- */
+
+  .compagnon__boite {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 380px);
+    align-items: end;
+    width: min(580px, calc(100vw - 2rem));
+  }
+
+  .compagnon__boite[hidden] {
+    display: none;
+  }
+
+  /* Propres à l'écran plein du téléphone. */
+  .compagnon__marque,
+  .compagnon__passer {
+    display: none;
+  }
+
+  /*
+   * Sur ordinateur, le personnage passe DERRIÈRE le panneau, pas devant.
+   *
+   * Les poses ne font pas toutes la même largeur — celle du paperboard fait
+   * près de trois fois la largeur d'une autre — et les plus larges venaient se
+   * poser par-dessus le texte. Glissé dessous, ce qui dépasse s'enfonce sous la
+   * carte au lieu de la barrer : on lit de la profondeur, pas un accident.
+   *
+   * Toutes les poses ont la même hauteur et la tête centrée : c'est donc la
+   * hauteur qui fixe l'échelle, et la tête retombe toujours sur --perso-x. La
+   * marge basse négative annule le retrait du widget — le personnage pose les
+   * pieds sur le bord de l'écran pendant que le panneau garde son air.
+   */
+  .compagnon__perso {
+    position: relative;
+    z-index: 0;
+    height: var(--perso-h);
+    pointer-events: none;
+  }
+
+  .compagnon__perso img {
+    position: absolute;
+    bottom: calc(-1 * var(--marge));
+    left: var(--perso-x);
+    transform: translateX(-50%);
+    width: auto;
+    max-width: none;
+    height: var(--perso-h);
+    filter: drop-shadow(0 8px 18px rgba(18, 32, 51, 0.18));
+  }
+
+  .compagnon__panneau {
+    position: relative;
+    z-index: 1;
+    padding: 1.4rem 1.4rem 1.25rem;
+    /* Un filet, pas un cerne : aucune carte du site n'a de contour noir. */
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-md);
+  }
+
+  .compagnon__fermer {
+    position: absolute;
+    top: 0.65rem;
+    right: 0.65rem;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-cream);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+    color: var(--color-muted);
+    cursor: pointer;
+  }
+
+  .compagnon__fermer:hover {
+    box-shadow: inset 0 0 0 1.5px var(--color-navy);
+    color: var(--color-navy);
+  }
+
+  .compagnon__oeil {
+    margin: 0 2.4rem 0.35rem 0;
+    color: var(--color-clay-ink);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .compagnon__titre {
+    margin: 0 2.4rem 0.4rem 0;
+    color: var(--color-navy);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.1;
+  }
+
+  .compagnon__titre:focus {
+    outline: none;
+  }
+
+  .compagnon__message {
+    margin: 0 0 1rem;
+    color: var(--color-muted);
+    font-size: var(--text-base);
+    line-height: 1.5;
+  }
+
+  /* --- les choix --- */
+
+  .compagnon__actions {
+    display: grid;
+    gap: 0.4rem;
+    max-height: min(52vh, 440px);
+    overflow-y: auto;
+  }
+
+  .compagnon__actions[hidden] {
+    display: none;
+  }
+
+  .compagnon__action {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 0.7rem;
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-cream);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+    color: var(--color-navy);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      box-shadow var(--duration-hover) ease,
+      background-color var(--duration-hover) ease;
+  }
+
+  .compagnon__icone {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    color: var(--color-clay-ink);
+  }
+
+  .compagnon__action-texte {
+    grid-column: 2;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .compagnon__action small {
+    grid-column: 2;
+    margin-top: 0.1rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.3;
+  }
+
+  .compagnon__chevron {
+    grid-column: 3;
+    grid-row: 1 / -1;
+    color: var(--color-muted);
+  }
+
+  .compagnon__action:hover,
+  .compagnon__action:focus-visible {
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1.5px var(--color-navy), var(--shadow-sm);
+    outline: none;
+  }
+
+  .compagnon__action:focus-visible {
+    box-shadow: inset 0 0 0 1.5px var(--color-navy), 0 0 0 3px var(--color-orange);
+  }
+
+  .compagnon__retour {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.85rem;
+    padding: 0.2rem 0;
+    border: 0;
+    background: none;
+    color: var(--color-blue);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .compagnon__retour[hidden] {
+    display: none;
+  }
+
+  .compagnon__retour:hover {
+    color: var(--color-navy);
+    text-decoration: underline;
+  }
+
+  /* --- téléphone : le panneau devient une application ---------------------
+     Sous 720 px, le panneau flottant n'a plus de sens : il occuperait presque
+     tout l'écran en laissant voir une bande de page derrière lui, ce qui se lit
+     comme une pop-up ratée. Il prend donc tout l'écran et devient une petite
+     app — barre de marque en haut, le personnage au centre avec sa réplique en
+     phylactère, les choix en grandes cartes à hauteur de pouce, et une sortie
+     explicite en bas. Mêmes écrans, mêmes choix, même script : seul l'habit
+     change. */
+
+  @media (max-width: 719px) {
+    .compagnon:not([data-ouvert]) {
+      /* Un peu plus haut que sur ordinateur : sur téléphone, le bas de l'écran
+         appartient à la barre du navigateur, qui se rétracte et revient. */
+      bottom: calc(1rem + env(safe-area-inset-bottom));
+    }
+
+    .compagnon__lanceur {
+      width: 58px;
+      height: 58px;
+    }
+    .compagnon__lanceur img {
+      width: 52px;
+      height: 52px;
+    }
+
+    /*
+     * Ouvert : plus rien de la page derrière, et le défilement de la page est
+     * bloqué — sinon on scrolle le site sous l'application.
+     */
+    :global(html:has(.compagnon[data-ouvert])) {
+      overflow: hidden;
+    }
+
+    .compagnon[data-ouvert] {
+      inset: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      background:
+        radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--color-orange) 22%, transparent) 0 11%, transparent 32%),
+        radial-gradient(circle at 4% 52%, color-mix(in srgb, var(--color-clay) 12%, transparent) 0 12%, transparent 34%),
+        var(--color-cream);
+    }
+
+    .compagnon[data-ouvert] .compagnon__voile {
+      display: none;
+    }
+
+    /* Le personnage est grand à l'accueil, puis se fait discret : une fois
+       entré dans un cheminement, ce sont les choix qui comptent. */
+    .compagnon[data-ouvert] {
+      --perso-h: 190px;
+    }
+    .compagnon[data-ouvert]:not([data-ecran='accueil']) {
+      --perso-h: 130px;
+    }
+
+    .compagnon__boite {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      min-height: 100%;
+      padding: calc(0.9rem + env(safe-area-inset-top)) 1.1rem calc(1.4rem + env(safe-area-inset-bottom));
+    }
+    .compagnon__boite[hidden] {
+      display: none;
+    }
+
+    .compagnon__marque {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      min-height: 44px;
+      margin: 0;
+      padding-right: 3.4rem;
+    }
+    .compagnon__marque-script {
+      color: var(--color-orange);
+      font-family: var(--font-script);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .compagnon__marque-caps {
+      color: var(--color-navy);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .compagnon__perso {
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: var(--perso-h);
+      margin: 0.35rem -0.5rem 0;
+    }
+
+    .compagnon__perso img {
+      position: relative;
+      left: auto;
+      bottom: auto;
+      transform: none;
+      height: var(--perso-h);
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      /* Le dessin est un buste : il s'arrête net à la taille. La première carte
+         recouvre presque cette coupe, mais pas tout à fait — une dizaine de
+         pixels de polo tranché restaient visibles au-dessus d'elle. Le dégradé
+         fait disparaître le bas du personnage derrière les choix au lieu de le
+         couper au cutter. */
+      -webkit-mask-image: linear-gradient(to bottom, #000 86%, transparent 99%);
+      mask-image: linear-gradient(to bottom, #000 86%, transparent 99%);
+      /* Pas d'ombre portée ici : le buste a un bord bas rectiligne, et l'ombre
+         de cette arête dessinait une barre grise sous le personnage — le
+         dégradé efface le dessin, pas l'ombre qu'il projette. */
+      filter: none;
+    }
+
+    .compagnon__fermer {
+      top: calc(0.9rem + env(safe-area-inset-top));
+      right: 1rem;
+      width: 44px;
+      height: 44px;
+      background: var(--color-surface);
+      box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-sm);
+      color: var(--color-navy);
+    }
+
+    /*
+     * L'œil, le titre et le message forment ensemble ce que le personnage dit :
+     * un phylactère, la pointe vers sa tête. Le panneau passe en
+     * « display: contents » — ses enfants deviennent des éléments de la
+     * colonne, et « order » place la bulle avant le personnage sans toucher au
+     * HTML, donc sans toucher à l'ordinateur ni à l'ordre de lecture.
+     */
+    .compagnon__panneau {
+      display: contents;
+    }
+    .compagnon__marque { order: 1; }
+    .compagnon__oeil { order: 2; }
+    .compagnon__titre { order: 3; }
+    .compagnon__message { order: 4; }
+    .compagnon__perso { order: 5; }
+    .compagnon__actions { order: 6; }
+    .compagnon__retour { order: 7; }
+    .compagnon__passer { order: 8; }
+
+    .compagnon__oeil,
+    .compagnon__titre,
+    .compagnon__message {
+      margin: 0;
+      background: var(--color-surface);
+      box-shadow: inset 1px 0 0 var(--color-border), inset -1px 0 0 var(--color-border);
+      text-align: left;
+    }
+
+    .compagnon__oeil {
+      margin-top: 0.9rem;
+      padding: 0.9rem 1.1rem 0.2rem;
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      box-shadow: inset 1px 1px 0 var(--color-border), inset -1px 0 0 var(--color-border);
+    }
+
+    .compagnon__titre {
+      padding: 0.1rem 1.1rem 0.3rem;
+      font-size: 1.625rem;
+    }
+
+    .compagnon__message {
+      position: relative;
+      padding: 0.1rem 1.1rem 1.1rem;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      box-shadow: inset 1px -1px 0 var(--color-border), inset -1px 0 0 var(--color-border), var(--shadow-sm);
+      font-size: 1.0625rem;
+      line-height: 1.5;
+    }
+
+    /* La pointe du phylactère : deux triangles superposés, le filet puis la
+       surface, pour que le trait se poursuive autour de la pointe. */
+    .compagnon__message::before,
+    .compagnon__message::after {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: 13px solid transparent;
+      border-bottom: 0;
+      content: '';
+      translate: -50% 0;
+    }
+    .compagnon__message::before {
+      border-top-color: var(--color-border);
+    }
+    .compagnon__message::after {
+      margin-top: -2px;
+      border-width: 12px;
+      border-bottom: 0;
+      border-top-color: var(--color-surface);
+    }
+
+    /* Les choix remontent sur la ceinture du personnage : il se tient derrière
+       la première carte, sans vide entre eux. */
+    .compagnon__actions {
+      position: relative;
+      z-index: 2;
+      margin-top: -0.7rem;
+      gap: 0.55rem;
+      max-height: none;
+      overflow: visible;
+    }
+
+    .compagnon__action {
+      grid-template-columns: 40px minmax(0, 1fr) auto;
+      column-gap: 0.75rem;
+      min-height: 60px;
+      padding: 0.6rem 0.85rem;
+      /* Le rayon des cartes du site, pas celui d'un champ de formulaire. */
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-sm);
+      font-size: 1.0625rem;
+    }
+    .compagnon__action-texte {
+      font-weight: 700;
+    }
+
+    /* Le disque jaune : c'est la forme des pastilles du site — un rond jaune,
+       un trait navy dessus. */
+    .compagnon__icone {
+      box-sizing: border-box;
+      width: 40px;
+      height: 40px;
+      padding: 9px;
+      border-radius: 50%;
+      background: var(--color-orange);
+      color: var(--color-navy);
+    }
+
+    /*
+     * La première carte de chaque écran est celle qu'on choisit le plus
+     * souvent : elle prend le navy de l'action principale. Une seule par écran
+     * — deux accents, et plus aucun ne dit rien.
+     */
+    .compagnon__actions > .compagnon__action:first-child {
+      background: var(--color-ink-solid);
+      box-shadow: var(--shadow-sm);
+      color: var(--color-white);
+    }
+    .compagnon__actions > .compagnon__action:first-child :is(.compagnon__action-texte, .compagnon__chevron, small) {
+      color: var(--color-white);
+    }
+
+    .compagnon__retour {
+      align-self: center;
+      margin: 1.1rem auto 0;
+    }
+
+    .compagnon__passer {
+      display: block;
+      min-height: 44px;
+      margin: 0.4rem auto 0;
+      padding: 0.5rem 0.8rem;
+      border: 0;
+      background: none;
+      color: var(--color-muted);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+
+  /* --- mode sombre : rattraper le dessin ---------------------------------
+     Le personnage est un trait noir sur fond transparent. Sur une page nuit, il
+     s'évanouit. Un halo chaud très doux derrière lui le rattrape sans
+     l'enfermer dans une vignette blanche. Les deux blocs qui suivent sont le
+     même correctif, pour la préférence système et pour le bouton du site. */
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .compagnon__perso::before {
+      position: absolute;
+      inset: -12% -22% -6%;
+      background: radial-gradient(ellipse at 50% 45%, rgba(252, 248, 239, 0.9) 0 38%, rgba(252, 248, 239, 0) 72%);
+      content: '';
+    }
+    :global(:root:not([data-theme='light'])) .compagnon__perso img {
+      filter: none;
+    }
+  }
+
+  :global(:root[data-theme='dark']) .compagnon__perso::before {
+    position: absolute;
+    inset: -12% -22% -6%;
+    background: radial-gradient(ellipse at 50% 45%, rgba(252, 248, 239, 0.9) 0 38%, rgba(252, 248, 239, 0) 72%);
+    content: '';
+  }
+  :global(:root[data-theme='dark']) .compagnon__perso img {
+    filter: none;
+  }
+
+  /* --- la réplique qui s'écrit, et l'écran qui change --- */
+
+  :global(.compagnon__frappe:not(.est-fini))::after {
+    content: '▍';
+    position: absolute;
+    margin-left: 1px;
+    animation: compagnon-curseur 0.8s steps(1) infinite;
+  }
+  @keyframes compagnon-curseur {
+    50% { opacity: 0; }
+  }
+  .compagnon__message {
+    cursor: default;
+  }
+  :global(.compagnon__reste) {
+    color: transparent;
+  }
+
+  .compagnon[data-change] :is(.compagnon__oeil, .compagnon__titre) {
+    animation: compagnon-pop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+  }
+  /* Le personnage ne fait que fondre : sur ordinateur sa place est tenue par un
+     « transform », qu'une animation d'échelle écraserait. */
+  .compagnon[data-change] .compagnon__perso img {
+    animation: compagnon-fondu 0.35s ease-out both;
+  }
+  .compagnon[data-change] .compagnon__actions:not([hidden]) > * {
+    animation: compagnon-entree 0.3s ease-out both;
+  }
+  .compagnon[data-change] .compagnon__actions > :nth-child(2) { animation-delay: 0.05s; }
+  .compagnon[data-change] .compagnon__actions > :nth-child(3) { animation-delay: 0.1s; }
+  .compagnon[data-change] .compagnon__actions > :nth-child(4) { animation-delay: 0.15s; }
+  .compagnon[data-change] .compagnon__actions > :nth-child(5) { animation-delay: 0.2s; }
+  .compagnon[data-change] .compagnon__actions > :nth-child(6) { animation-delay: 0.25s; }
+  .compagnon[data-change] .compagnon__actions > :nth-child(n + 7) { animation-delay: 0.3s; }
+
+  @keyframes compagnon-pop {
+    from { opacity: 0; transform: scale(0.94) translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes compagnon-fondu {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes compagnon-entree {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .compagnon__lanceur { transition: none; }
+    .compagnon__lanceur:hover { transform: none; }
+    .compagnon[data-salut] .compagnon__lanceur > * { animation: none; }
+    .compagnon[data-bulle] .compagnon__bulle { animation: none; opacity: 1; }
+    .compagnon[data-ouvert] .compagnon__voile { animation: none; }
+    .compagnon[data-change] :is(.compagnon__oeil, .compagnon__titre, .compagnon__perso img),
+    .compagnon[data-change] .compagnon__actions > * { animation: none; }
+    :global(.compagnon__frappe)::after { display: none; }
+  }
+</style>
