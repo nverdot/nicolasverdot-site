@@ -121,7 +121,7 @@ export const ECRANS: Ecran[] = [
         texte: 'Nos réunions tournent à vide',
         icone: 'horloge',
         vers: '/outils/cout-de-linaction/',
-        note: 'Chiffrez-les d’abord : une minute, c’est souvent édifiant',
+        note: 'Le diagnostic dit pourquoi, et ce que ça coûte',
       },
       {
         texte: 'Je veux savoir décider en collectif',
@@ -258,7 +258,7 @@ export const ECRANS: Ecran[] = [
         texte: 'Calculer le coût de l’inaction',
         icone: 'calcul',
         vers: '/outils/cout-de-linaction/',
-        note: 'Huit questions, une minute, rien n’est envoyé',
+        note: 'Douze questions : pourquoi ça bloque, et ce que ça coûte',
       },
       {
         texte: 'Des situations réelles, avec leurs résultats',

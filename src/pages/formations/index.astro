@@ -1,27 +1,310 @@
 ---
+/**
+ * Le catalogue de formations.
+ *
+ * Cette page annonçait « Cette page arrive bientôt » alors que le catalogue
+ * complet — six univers, une trentaine de formations — dormait déjà, structuré,
+ * dans `src/data/formations.ts`. « Formations » est un lien de la navigation
+ * principale : il menait donc dans un cul-de-sac depuis chaque page du site.
+ *
+ * Le problème de lecture, ici, n'est pas le manque de contenu : c'est qu'il y
+ * en a beaucoup. Trois dispositifs pour que ça reste facile à parcourir :
+ *
+ *   1. un sommaire en tête, avec le compte par univers — on sait tout de suite
+ *      l'ampleur du catalogue et par où entrer ;
+ *   2. un univers = une section titrée, jamais une liste de trente lignes
+ *      d'affilée ;
+ *   3. chaque carte donne d'abord ce qui fait éliminer ou retenir — durée,
+ *      format, niveau — avant la phrase qui explique. On ne lit le résumé que
+ *      des formations dont le format convient déjà.
+ */
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
+import { formationGroups } from '../../data/formations';
+import { withBase } from '../../utils/url';
 import heroImg from '../../assets/hero-seminaires-alpes-maritimes.png';
+
+const total = formationGroups.reduce((n, g) => n + g.items.length, 0);
+
+/* Un identifiant d'ancre stable, dérivé du nom d'univers : accents retirés,
+   tout ce qui n'est pas une lettre devient un tiret. */
+const ancre = (s: string) =>
+  'univers-' +
+  s
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+const icones: Record<string, string> = {
+  duree: '<circle cx="12" cy="12" r="9"/><path d="M12 7.4V12l3.2 1.9"/>',
+  format: '<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/>',
+  niveau: '<path d="M4 20V10M10 20V4M16 20v-8M22 20h-20"/>',
+};
 ---
 
 <Layout
-  title="Formations — by Nicolas Verdot"
-  description="Le catalogue de formations est en cours de construction."
+  title="Formations — facilitation, intelligence collective, IA | by Nicolas Verdot"
+  description="Le catalogue complet : formations en facilitation graphique, intelligence collective, posture de leader facilitateur, IA appliquée et pédagogie active. Durées, formats et niveaux détaillés."
   path="/formations/"
+  breadcrumbs={[
+    { name: 'Accueil', path: '/' },
+    { name: 'Formations', path: '/formations/' },
+  ]}
 >
   <PageHero
-    eyebrow="Formations"
-    title="Cette page arrive"
-    titleAccent="bientôt."
-    summary="Le catalogue de formations est en cours de construction. En attendant, parlons directement de <strong>votre besoin de montée en compétence</strong>."
+    eyebrow="Le catalogue"
+    title="Des formations"
+    titleAccent="qui se pratiquent,"
+    titleTail="pas qui s'écoutent."
+    summary="Facilitation graphique, intelligence collective, posture de leader, IA appliquée, pédagogie active. Toutes se travaillent <strong>sur vos sujets réels</strong>, jamais sur des cas d'école — et toutes s'adaptent à votre contexte."
     image={heroImg}
     imageAlt="Un facilitateur anime un atelier en petit groupe sur une terrasse dominant la Méditerranée."
     tall
   />
 
+  {/* Le sommaire : l'ampleur du catalogue en un coup d'œil, et une porte par
+      univers. De vrais liens d'ancre — ils fonctionnent sans JavaScript, se
+      partagent, et le bouton retour les respecte. */}
+  <section class="section" data-reveal data-section-name="Sommaire des univers">
+    <div class="container">
+      <p class="cat-intro">
+        <strong>{total} formations</strong>, réparties en {formationGroups.length} univers. Chacune existe en
+        intra-entreprise et s'ajuste à votre durée, votre niveau et vos enjeux.
+      </p>
+      <nav class="cat-nav" aria-label="Les univers de formation">
+        {formationGroups.map((g) => (
+          <a class="cat-chip" href={`#${ancre(g.universe)}`}>
+            {g.universe}
+            <span>{g.items.length}</span>
+          </a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  {formationGroups.map((g, i) => (
+    <section
+      class:list={['section', { alt: i % 2 === 0 }]}
+      id={ancre(g.universe)}
+      data-reveal
+      data-section-name={`Univers — ${g.universe}`}
+    >
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{g.items.length} formations</p>
+            <h2>{g.universe}</h2>
+          </div>
+        </div>
+        <div class="formation-grid">
+          {g.items.map((f) => (
+            <article class:list={['formation-card', { 'has-fiche': f.programme }]}>
+              {/* Seules les formations qui ont un programme complet ont une
+                  fiche. Le lien couvre toute la carte (::after), pour que la
+                  cible soit la carte entiere et pas trois mots. */}
+              <h3>
+                {f.programme ? (
+                  <a href={withBase(`/formations/${f.slug}/`)}>{f.title}</a>
+                ) : (
+                  f.title
+                )}
+              </h3>
+              <ul class="formation-meta">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icones.duree} />
+                  <span><span class="sr-only">Durée&nbsp;: </span>{f.duration}</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icones.format} />
+                  <span><span class="sr-only">Format&nbsp;: </span>{f.format}</span>
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icones.niveau} />
+                  <span><span class="sr-only">Niveau&nbsp;: </span>{f.level}</span>
+                </li>
+              </ul>
+              <p>{f.summary}</p>
+              {f.programme && <span class="formation-lien">Voir le programme →</span>}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section" data-reveal data-section-name="Sur mesure">
+    <div class="container prose">
+      <p class="eyebrow">Avant de choisir</p>
+      <h2>Aucune de ces formations ne se donne telle quelle</h2>
+      <p>
+        Les durées et les niveaux indiqués sont des points de départ, pas un menu. Une même formation ne se
+        déroule pas de la même façon selon que le groupe vient d'y être inscrit ou qu'il a demandé à la suivre,
+        selon qu'il a déjà un sujet brûlant sur la table ou non.
+      </p>
+      <p>
+        C'est pour ça que le premier échange porte sur votre contexte et sur ce qui devra être différent après
+        — pas sur le programme. Si un <a href={withBase('/offres/')}>accompagnement</a> répond mieux qu'une
+        formation, je vous le dirai.
+      </p>
+    </div>
+  </section>
+
   <CTABlock
-    title="Un besoin de formation à préciser dès maintenant ?"
-    subtitle="Facilitation graphique, intelligence collective, posture de leader facilitateur : parlons-en directement."
+    dark
+    title="Une formation à caler ?"
+    subtitle="Dites-moi qui vous voulez former, sur quoi, et ce qui devra avoir changé ensuite. On construit le format à partir de là."
+    ctaLabel="En parler 30 minutes"
+    secondaryLabel="Voir les accompagnements"
+    secondaryHref={withBase('/offres/')}
   />
 </Layout>
+
+<style>
+  .cat-intro {
+    max-width: var(--prose-max);
+    margin: 0 0 var(--space-8);
+    font-size: var(--text-lg);
+    color: var(--color-muted);
+  }
+  .cat-intro strong {
+    color: var(--color-navy);
+  }
+
+  .cat-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .cat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 0.7rem 1rem 0.7rem 1.1rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1.5px var(--color-border);
+    color: var(--color-navy);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+    transition: box-shadow var(--duration-hover) ease, transform var(--duration-press) var(--ease-out);
+  }
+  /* Le compte dans une pastille jaune : c'est l'information qui fait choisir
+     une porte plutôt qu'une autre, elle doit se lire sans être lue. */
+  .cat-chip span {
+    display: grid;
+    place-items: center;
+    min-width: 26px;
+    height: 26px;
+    padding-inline: 0.35rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-orange);
+    color: #122033;
+    font-size: var(--text-xs);
+    font-weight: 700;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .cat-chip:hover {
+      box-shadow: inset 0 0 0 1.5px var(--color-navy);
+      transform: translateY(-1px);
+    }
+  }
+
+  .formation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: var(--space-4);
+  }
+  .formation-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-sm);
+  }
+  .formation-card h3 {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-lg);
+    line-height: 1.25;
+  }
+  /* La fiche technique avant le résumé : durée, format et niveau sont ce qui
+     fait éliminer une formation en deux secondes. On ne lit la phrase que des
+     formations dont le format tient déjà. */
+  .formation-meta {
+    display: grid;
+    gap: 0.4rem;
+    margin: 0 0 var(--space-4);
+    padding: 0 0 var(--space-4);
+    border-bottom: 1px dashed var(--color-border);
+    list-style: none;
+  }
+  .formation-meta li {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr);
+    gap: 0.6rem;
+    align-items: start;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .formation-meta svg {
+    width: 18px;
+    height: 18px;
+    margin-top: 0.1em;
+    color: var(--color-clay);
+  }
+  .formation-card > p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* La carte qui a une fiche devient cliquable en entier : le lien du titre
+     s'etend par un ::after sur toute la carte. Le nom accessible reste le
+     titre, et le texte de la carte reste selectionnable. */
+  .formation-card.has-fiche {
+    position: relative;
+    transition: box-shadow var(--duration-hover) ease, transform var(--duration-press) var(--ease-out);
+  }
+  .formation-card h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .formation-card h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  .formation-lien {
+    margin-top: var(--space-4);
+    color: var(--color-blue);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .formation-card.has-fiche:hover {
+      box-shadow: inset 0 0 0 1.5px var(--color-navy), var(--shadow-md);
+      transform: translateY(-2px);
+    }
+  }
+  .formation-card h3 a:focus-visible {
+    outline: none;
+  }
+  .formation-card.has-fiche:focus-within {
+    box-shadow: inset 0 0 0 2px var(--color-navy), 0 0 0 3px var(--color-orange);
+  }
+
+  /* La carte est une colonne : le lien se pose en bas, aligne d'une carte a
+     l'autre meme quand les resumes n'ont pas la meme longueur. */
+  .formation-card > p {
+    flex: 1;
+  }
+
+  /* Le saut d'ancre ne doit pas coller le titre sous l'en-tête collant. */
+  [id^='univers-'] {
+    scroll-margin-top: 90px;
+  }
+</style>

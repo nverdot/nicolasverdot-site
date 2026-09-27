@@ -28,11 +28,44 @@ const idees = [
       "Un collectif ne se met pas d'accord parce qu'on lui demande de bien vouloir. Il converge quand la question est bien posée, que les options sont instruites, que le mandat de décision est clair et que quelqu'un tient la conversation. Tout cela se conçoit, et s'apprend.",
   },
 ];
+
+const faq = [
+  {
+    q: "Combien coûte une réunion d'une heure ?",
+    a: "Cela dépend de qui est dans la pièce. Le calculateur l'affiche en direct dès que vous avez décrit votre collectif : coût horaire chargé de chaque participant — salaire brut annuel multiplié par 1,45 pour les charges patronales, divisé par 1 600 heures travaillées par an — additionné pour toutes les personnes présentes. Pour un comité de huit personnes mêlant direction et managers, l'heure dépasse souvent 350 €.",
+  },
+  {
+    q: "Pourquoi chiffrer l'inaction plutôt que la réunion ?",
+    a: "Parce que le temps passé en salle est la partie visible, et la plus petite. Une réunion longue qui tranche coûte moins cher qu'une réunion courte qui reporte : ce qui coûte vraiment, c'est la valeur que la décision doit produire et qui n'est pas encore produite, mois après mois. Le calculateur affiche les deux, côte à côte.",
+  },
+  {
+    q: 'Le résultat est-il exagéré ?',
+    a: "C'est l'inverse : à chaque question, on retient le bas de votre fourchette, et le montant affiché est un plancher. Ne sont comptés ni le coût des sujets que celui-ci empêche de traiter, ni l'usure des équipes qui rediscutent la même chose. Les deux sont réels ; aucun n'est chiffrable honnêtement ici.",
+  },
+  {
+    q: 'Faut-il supprimer les réunions ?',
+    a: "Non. Une organisation qui ne se réunit plus ne décide pas mieux : elle décide plus tard. Le sujet n'est pas leur nombre, c'est ce qui en sort — une question bien posée, des options instruites, un mandat de décision clair et quelqu'un qui tient la conversation. Tout cela se conçoit, et s'apprend.",
+  },
+  {
+    q: 'Mes réponses sont-elles enregistrées ?',
+    a: "Non. Tout le calcul se fait dans votre navigateur : rien n'est envoyé, rien n'est stocké, aucune adresse e-mail n'est demandée. Si vous voulez en parler, le bouton de copie vous rend votre synthèse et vous choisissez à qui vous l'envoyez.",
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
 <Layout
-  title="Combien vous coûte une décision reportée ? — by Nicolas Verdot"
-  description="Un calculateur du coût de l'inaction : chiffrez ce que vous coûte, chaque mois, un sujet qui reste sur la table sans être tranché. Huit questions, une minute, rien n'est envoyé."
+  title="Combien coûte une réunion qui ne décide pas ? — by Nicolas Verdot"
+  description="Deux réponses en douze questions : pourquoi un sujet ne se tranche pas chez vous, et ce que ce blocage vous coûte chaque mois. Rien n'est envoyé."
   path="/outils/cout-de-linaction/"
   breadcrumbs={[
     { name: 'Accueil', path: '/' },
@@ -43,8 +76,8 @@ const idees = [
     eyebrow="Un outil, pas un questionnaire commercial"
     title="Le coût de"
     titleAccent="l'inaction."
-    summary="L'IA a fait fondre le temps d'exécution. Le temps de décision, lui, n'a pas bougé. Chiffrez ce que vous coûte, <strong>chaque mois</strong>, un sujet qui reste sur la table sans être tranché."
-    pills={['8 questions', 'Moins d’une minute', 'Rien n’est envoyé']}
+    summary="Une réunion coûte cher&nbsp;: vous verrez ici ce que vaut une heure de votre collectif. Mais un sujet qu'elle ne tranche pas coûte bien davantage — chiffrez ce que vous coûte, <strong>chaque mois</strong>, une décision qui reste sur la table."
+    pills={['Le pourquoi', 'Le combien', 'Rien n’est envoyé']}
   />
 
   <CoutInaction />
@@ -69,6 +102,37 @@ const idees = [
       </p>
     </div>
   </section>
+
+  <section class="section" data-reveal data-section-name="Par où commencer">
+    <div class="container prose">
+      <p class="eyebrow">Passer à l'action</p>
+      <h2>Par où l'on commence, selon ce qui bloque</h2>
+      <p><strong>Si c'est vous qui menez ces discussions</strong>, le levier le plus rapide est votre posture d'animateur. Je vous prépare à conduire vos propres temps de décision en <a href={withBase('/offres/mentoring/')}>mentoring</a>, ou nous travaillons votre posture de dirigeant en <a href={withBase('/offres/coaching-professionnel/')}>coaching individuel</a>.</p>
+      <p><strong>Si c'est le collectif qui coince</strong>, c'est sa façon de décider qu'il faut reprendre&nbsp;: en <a href={withBase('/offres/coaching-equipe/')}>coaching d'équipe</a> dans la durée, ou en installant des pratiques d'<a href={withBase('/intelligence-collective/')}>intelligence collective</a> qui produisent des décisions et pas seulement des échanges.</p>
+      <p><strong>Si un temps fort doit trancher</strong>, séminaire ou atelier de décision, vous pouvez me <a href={withBase('/offres/deleguer-animation/')}>déléguer l'animation</a>&nbsp;: vous participez pleinement pendant que je tiens le cadre, et chacun repart avec la trace de ce qui a été décidé.</p>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal data-section-name="Questions fréquentes">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Questions fréquentes</p>
+          <h2>Sur ce calcul</h2>
+        </div>
+      </div>
+      <div class="faq">
+        {faq.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <CTABlock
     dark

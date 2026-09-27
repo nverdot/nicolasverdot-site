@@ -8,9 +8,26 @@ import CaseStudyModal from './CaseStudyModal.astro';
   <div class="client-marquee">
     <div class="client-marquee-track">
       {[...clients, ...clients].map((c, i) => {
-        const inner = c.logo ? <img src={withBase(c.logo)} alt={c.name} loading="lazy" /> : <span class="client-text">{c.name}</span>;
+        /* alt vide dans un lien : c'est l'aria-label du lien qui nomme.
+           Hors lien, le logo porte le nom du client comme d'habitude. */
+        const inner = c.logo ? (
+          <img src={withBase(c.logo)} alt={c.href ? '' : c.name} loading="lazy" />
+        ) : (
+          <span class="client-text">{c.name}</span>
+        );
         return c.href ? (
-          <a class="client-item" href={c.href} data-case-study-trigger={c.caseStudySlug} aria-hidden={i >= clients.length ? 'true' : undefined} tabindex={i >= clients.length ? -1 : undefined}>
+          /* Le nom accessible d'un logo cliquable ne peut pas etre le seul nom
+             du client : a l'oreille, « Air France KLM, lien » ne dit pas ou
+             l'on atterrit. L'aria-label prend le relais du alt, qui passe donc
+             a vide pour ne pas etre annonce deux fois. */
+          <a
+            class="client-item"
+            href={c.href}
+            data-case-study-trigger={c.caseStudySlug}
+            aria-label={`${c.name} — voir le cas client`}
+            aria-hidden={i >= clients.length ? 'true' : undefined}
+            tabindex={i >= clients.length ? -1 : undefined}
+          >
             {inner}
           </a>
         ) : (
@@ -40,8 +57,32 @@ import CaseStudyModal from './CaseStudyModal.astro';
     gap: var(--space-12);
     animation: marquee-scroll 28s linear infinite;
   }
-  .client-marquee:hover .client-marquee-track {
+  /*
+   * Un contenu qui bouge tout seul plus de cinq secondes doit pouvoir etre
+   * arrete (WCAG 2.2.2). La pause au survol ne servait qu'a la souris.
+   *
+   *   - au clavier : `:focus-within` arrete le defilement des qu'un logo est
+   *     atteint en tabulant, sinon la cible fuit sous le focus ;
+   *   - au tactile : pas de survol possible, et une cible qui se deplace est
+   *     penible a viser. On coupe donc l'animation et on rend la bande
+   *     glissable au doigt — le visiteur la parcourt a son rythme.
+   */
+  .client-marquee:hover .client-marquee-track,
+  .client-marquee:focus-within .client-marquee-track {
     animation-play-state: paused;
+  }
+
+  @media (hover: none) {
+    .client-marquee {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .client-marquee::-webkit-scrollbar {
+      display: none;
+    }
+    .client-marquee-track {
+      animation: none;
+    }
   }
   .client-item {
     display: flex;
@@ -67,11 +108,15 @@ import CaseStudyModal from './CaseStudyModal.astro';
     filter: grayscale(0);
     opacity: 1;
   }
+  /* La pastille est en `--color-white`, une constante qui reste claire au
+     theme sombre : son encre doit l'etre aussi. Avec `--color-navy`, qui
+     bascule en creme, les sept clients sans logo disparaissaient purement et
+     simplement (1,08:1). */
   .client-text {
     font-family: var(--font-display);
     font-weight: 700;
     font-size: var(--text-lg);
-    color: var(--color-navy);
+    color: var(--color-ink-solid);
     opacity: 0.7;
     white-space: nowrap;
   }

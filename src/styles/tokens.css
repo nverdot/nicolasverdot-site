@@ -27,6 +27,17 @@
      surfaces volontairement toujours sombres, ex. le bloc CTA). */
   --color-white: #fffdfa;
   --color-ink-solid: #0b1627;
+  /*
+   * L'anneau de focus. Constante, et surtout PAS `--color-orange` : le jaune
+   * donne 1,44:1 sur le creme (il en faut 3 — WCAG 2.4.11) et 1:1 sur un
+   * bouton jaune, ou il devient litteralement invisible.
+   *
+   * Cette terre cuite passe sur les quatre surfaces du site et dans les deux
+   * themes : creme 4,8 — nuit 3,6 — bandeau noir 3,5 — bouton jaune 3,4. Elle
+   * ne bascule pas avec le theme, sinon elle repasserait sous le seuil sur le
+   * jaune, qui ne bascule pas non plus.
+   */
+  --color-focus: #c1440e;
 
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
   /* Display : Bricolage Grotesque — une grotesque aux finitions irrégulières,

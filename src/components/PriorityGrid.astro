@@ -4,12 +4,17 @@ import { withBase } from '../utils/url';
 
 interface Props {
   sectionName?: string;
+  /* Le titre est un prop : ce bloc sert a la fois sur l'accueil et sur la page
+     des offres, et deux pages qui s'enchainent ne doivent pas afficher le meme
+     titre — sinon on croit n'avoir pas change de page. */
+  title?: string;
   lead?: string;
   description?: string;
 }
 
 const {
   sectionName = 'Comment travailler ensemble',
+  title = 'Comment travailler ensemble ?',
   lead = "Six façons de vous accompagner, du séminaire clé en main à l'accompagnement individuel.",
   description = "Six manières d'intervenir, à choisir selon votre situation — elles peuvent aussi se combiner : par exemple un séminaire animé pour vous, suivi d'un coaching d'équipe pour ancrer les nouvelles habitudes.",
 } = Astro.props;
@@ -18,7 +23,7 @@ const {
 <section class="priorities section" data-reveal data-section-name={sectionName}>
   <div class="container">
     <div class="priorities-intro">
-      <h2>Comment travailler ensemble ?</h2>
+      <h2>{title}</h2>
       {lead && <p class="priorities-lead">{lead}</p>}
       {description && <p>{description}</p>}
     </div>

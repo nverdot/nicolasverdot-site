@@ -45,8 +45,8 @@ p {
 
 /* Focus clavier cohérent sur tout le site. */
 :focus-visible {
-  outline: 2px solid var(--color-orange);
-  outline-offset: 3px;
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 h1 {
@@ -97,10 +97,20 @@ section {
   padding: var(--space-16) 0;
 }
 
+/*
+ * ATTENTION, regle de fond : une surface qui ne change pas de theme doit
+ * porter une encre qui ne change pas non plus.
+ *
+ * Le jaune `--color-orange` est identique en clair et en sombre. L'encre etait
+ * `--color-navy`, qui bascule en creme au theme sombre — resultat, creme sur
+ * jaune, un contraste de 1,39:1 : tous les boutons principaux du site etaient
+ * illisibles en mode sombre. `--color-ink-solid` est une constante, comme le
+ * jaune : 12:1 dans les deux themes.
+ */
 .btn {
   display: inline-block;
   background: var(--color-orange);
-  color: var(--color-navy);
+  color: var(--color-ink-solid);
   text-decoration: none;
   padding: 0.85rem 1.75rem;
   border-radius: var(--radius-pill);
@@ -444,6 +454,24 @@ section {
   max-width: 600px;
   color: var(--color-muted);
   margin: 0;
+}
+
+/*
+ * Le rang « titre a gauche, chapo a droite » ne tient que si l'un des deux est
+ * court. Des qu'un titre long cotoie un paragraphe long, on obtient deux
+ * colonnes de lecture qui demarrent a des hauteurs differentes : l'oeil n'a
+ * plus de point d'entree et hesite entre les deux.
+ *
+ * Des qu'un chapo est present, l'en-tete s'empile donc : titre, puis chapo
+ * dessous. Le rang reste pour les en-tetes qui portent un titre seul face a
+ * une action (« voir tout ») — la, il n'y a qu'un seul texte a lire, et le
+ * second element est un bouton, pas une colonne concurrente.
+ */
+.section-head:has(> p:not(.eyebrow)) {
+  display: block;
+}
+.section-head:has(> p:not(.eyebrow)) > p:not(.eyebrow) {
+  margin-top: var(--space-4);
 }
 
 .cards {
@@ -1474,7 +1502,7 @@ section {
   font-family: var(--font-display);
   font-weight: 800;
   font-size: var(--text-2xl);
-  color: var(--color-navy);
+  color: var(--color-ink-solid);
 }
 .cost-total-label {
   margin: var(--space-2) 0 0;
@@ -1564,7 +1592,7 @@ section {
   height: 1.6em;
   border-radius: 999px;
   background: var(--color-orange);
-  color: var(--color-navy);
+  color: var(--color-ink-solid);
   font-family: var(--font-display);
   font-weight: 800;
   font-size: var(--text-xs);
@@ -1694,7 +1722,7 @@ section {
   height: 32px;
   border-radius: 999px;
   background: var(--color-orange);
-  color: var(--color-navy);
+  color: var(--color-ink-solid);
   font-family: var(--font-display);
   font-weight: 800;
   font-size: var(--text-sm);
@@ -1751,7 +1779,7 @@ section {
   height: 32px;
   border-radius: 999px;
   background: var(--color-orange);
-  color: var(--color-navy);
+  color: var(--color-ink-solid);
   font-family: var(--font-display);
   font-weight: 800;
   font-size: var(--text-sm);
@@ -1834,4 +1862,20 @@ section {
 }
 body.case-modal-lock-scroll {
   overflow: hidden;
+}
+
+/* Réservé aux lecteurs d'écran : le texte reste dans la page et dans l'ordre de
+   lecture, mais n'occupe aucune place à l'écran. Sert à nommer une donnée que
+   le dessin rend évidente à l'œil et muette à l'oreille — « Durée : 2 jours »
+   quand seule une icône d'horloge distingue la ligne. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }

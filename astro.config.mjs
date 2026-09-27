@@ -52,5 +52,9 @@ export default defineConfig({
     '/offres/dynamique-durable': '/offres/coaching-equipe/',
     // Fusion des pages "Qui suis-je" et "Approche" en une seule (2026-08).
     '/approche': '/a-propos/',
+    // Deux calculateurs avaient été construits en parallèle (2026-09) : le
+    // coût d'une réunion et le coût de l'inaction. Ils se cannibalisaient ;
+    // le second absorbe le premier, qui avait été publié quelques heures.
+    '/cout-des-reunions': '/outils/cout-de-linaction/',
   },
 });

@@ -3,12 +3,13 @@ import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import PriorityGrid from '../../components/PriorityGrid.astro';
+import OfferFinder from '../../components/OfferFinder.astro';
 import heroImg from '../../assets/offres/hero-accompagnements.png';
 ---
 
 <Layout
   title="Les offres — by Nicolas Verdot"
-  description="Sept façons de remettre un collectif en mouvement, du cadrage d'une décision à la capture graphique d'un temps fort. Trouvez celle qui correspond à votre situation."
+  description="Six façons de remettre un collectif en mouvement, du séminaire clé en main au coaching individuel. Dites ce que vous venez chercher, la page vous oriente."
   path="/offres/"
 >
   <PageHero
@@ -22,7 +23,17 @@ import heroImg from '../../assets/offres/hero-accompagnements.png';
     tall
   />
 
-  <PriorityGrid sectionName="Accompagnements" lead="" />
+  {/* Aider a choisir AVANT de lister. Six cartes equivalentes ne departagent
+      rien : on part donc de la situation, comme le fait le Compagnon, et la
+      grille complete vient ensuite pour ceux qui preferent tout voir. */}
+  <OfferFinder />
+
+  <PriorityGrid
+    sectionName="Les six accompagnements"
+    title="Les six accompagnements, en clair"
+    lead=""
+    description="Ils se combinent souvent : un séminaire animé pour vous, puis un coaching d'équipe pour ancrer ce qui s'y est décidé. Si vous hésitez entre deux, c'est en général que les deux sont utiles — dans un ordre."
+  />
 
   <CTABlock
     eyebrow="Vous hésitez sur le bon point d'entrée ?"

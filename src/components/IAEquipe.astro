@@ -1,0 +1,324 @@
+---
+/**
+ * L'IA dans l'atelier.
+ *
+ * Première version de cette section : « L'IA fait partie de l'équipe, elle ne
+ * décide pas », suivi du partage des rôles homme/machine. Vrai, mais ça tombait
+ * comme un cheveu dans la soupe — on annonçait une précaution d'usage à
+ * quelqu'un qui n'avait pas encore compris ce que l'IA venait faire là.
+ *
+ * L'angle est donc inversé, et il tient en une phrase : ce qui change, ce n'est
+ * pas le matériel de l'atelier — les post-it et les métaphores visuelles ne
+ * bougent pas, c'est toujours ça qui fait parler un groupe — c'est que la
+ * connaissance de l'entreprise devient consultable PENDANT la conversation.
+ *
+ * Et ça raccroche directement au reste du site : « on vérifiera et on en
+ * reparle au prochain comité » est l'une des premières causes du report d'une
+ * décision. C'est cette phrase-là que l'IA fait disparaître de la salle — pas
+ * le débat, pas l'arbitrage, pas le désaccord.
+ *
+ * Le partage des rôles reste, mais en second rideau : on ne commence pas par
+ * dire ce que l'outil ne fera pas.
+ */
+
+import { withBase } from '../utils/url';
+
+/* Mêmes tracés feutre que le Footer et la page d'accueil : viewBox 24×24,
+   trait currentColor. */
+const icons: Record<string, string> = {
+  preparer: '<path d="M6 3.5h9l4 4v13H6z"/><path d="M14.5 3.5V8h4.5"/><path d="M9 12.5h6M9 16h4"/>',
+  elargir: '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>',
+  objecter: '<path d="M12 3.5l8.5 15h-17z"/><path d="M12 9.5v4M12 16.3h.01"/>',
+  restituer: '<path d="M4.5 5.5h15v10h-9l-6 4.5z"/><path d="M8.5 9h7M8.5 12h4"/>',
+  choisir: '<path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/><path d="M8 12l3 3 5-6"/>',
+  valeurs: '<path d="M12 20.3S4.6 15.6 4.6 10.6a4.1 4.1 0 0 1 7.4-2.5 4.1 4.1 0 0 1 7.4 2.5c0 5-7.4 9.7-7.4 9.7z"/>',
+  desaccord:
+    '<circle cx="8" cy="8" r="3"/><circle cx="16.5" cy="9.5" r="2.5"/><path d="M2.5 19.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M15 19.5c.2-2.2 1.6-3.8 3.5-4.2"/>',
+  assumer: '<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/>',
+};
+
+const machine = [
+  {
+    icon: 'preparer',
+    title: 'Instruire une option sans quitter la salle',
+    text: "Les chiffres, les comptes rendus, les études, les retours clients : la connaissance de l'entreprise devient interrogeable pendant l'atelier. La question qui aurait renvoyé au comité suivant trouve sa réponse en quatre minutes.",
+  },
+  {
+    icon: 'elargir',
+    title: 'Tester une hypothèse tout de suite',
+    text: "« Et si on arrêtait cette offre ? » Plutôt que de le noter pour plus tard, on confronte l'hypothèse aux données réelles devant tout le monde. Le groupe voit la même chose au même moment — c'est là que les désaccords deviennent discutables.",
+  },
+  {
+    icon: 'objecter',
+    title: "Élargir, puis contredire",
+    text: "Vingt options là où le groupe en voyait trois. Puis l'objection à chacune, y compris la plus confortable — une IA peut attaquer une proposition sans y laisser de capital politique. Ce que personne dans la pièce ne peut se permettre de dire.",
+  },
+  {
+    icon: 'restituer',
+    title: 'Restituer le soir même, sans lisser',
+    text: "Trois heures de débat en un relevé de décisions lisible, avec les désaccords conservés plutôt qu'arrondis. Ce qui n'est pas écrit le jour même n'existe plus la semaine suivante.",
+  },
+];
+
+const humain = [
+  {
+    icon: 'choisir',
+    title: 'Choisir',
+    text: "Une décision engage quelqu'un. Une IA n'engage personne : elle ne sera pas dans la salle dans six mois pour en répondre. C'est pour ça que le choix ne se délègue pas.",
+  },
+  {
+    icon: 'valeurs',
+    title: 'Arbitrer ce à quoi on tient',
+    text: "Quand deux options sont également défendables, ce n'est plus une question d'analyse. C'est une question de valeurs, de projet, de ce qu'on accepte de perdre — et ça, aucun modèle ne le sait à votre place.",
+  },
+  {
+    icon: 'desaccord',
+    title: 'Porter le désaccord',
+    text: "Nommer ce qui fâche, l'entendre, et rester dans la pièce après. C'est le travail le plus difficile d'un collectif, et c'est exactement celui qu'aucun outil ne fera.",
+  },
+  {
+    icon: 'assumer',
+    title: 'Assumer',
+    text: "Devant l'équipe, devant le client, devant le conseil. Une décision que personne n'assume n'est pas une décision : c'est un document.",
+  },
+];
+---
+
+<section class="ia section" data-reveal data-section-name="L'IA fait partie de l'équipe">
+  <div class="container">
+    {/*
+      Une seule colonne, et un seul chemin pour l'oeil.
+
+      Ce bloc utilisait `.section-head`, le flex du site qui pose le titre a
+      gauche et le chapo a droite. Ce gabarit marche avec un titre court et
+      rien d'autre ; avec un titre long ET un chapo long, il cree deux colonnes
+      de lecture concurrentes qui demarrent a des hauteurs differentes, et le
+      lecteur ne sait plus par ou commencer. Accroche, titre, chapo : empiles,
+      alignes a gauche, dans l'ordre ou on les lit.
+    */}
+    <div class="ia-head">
+      <p class="eyebrow">Intelligence collective augmentée</p>
+      <h2>
+        Les post-it restent. Ce qui disparaît, c'est
+        <span class="accent-wrap">
+          l'attente.
+          <svg class="ink-underline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M4 10 C 70 2, 150 14, 296 6" />
+          </svg>
+        </span>
+      </h2>
+      <p class="ia-chapo">
+        Les murs de papier, les métaphores visuelles, les feutres&nbsp;: rien de tout cela ne disparaît, et
+        c'est toujours ce qui fait parler un groupe. Ce qui change, c'est qu'on n'est plus obligé de s'arrêter
+        quand la question dépasse ce que les gens ont en tête. La connaissance de l'entreprise — ses chiffres,
+        ses études, ses comptes rendus — devient interrogeable <strong>pendant</strong> l'atelier.
+      </p>
+    </div>
+
+    {/* La phrase qui relie cette section au reste du site : c'est le report
+        faute d'information qui étale une décision sur six mois. */}
+    <p class="ia-punch">
+      «&nbsp;On vérifiera, et on en reparle au prochain comité.&nbsp;»<br />
+      <span>C'est cette phrase-là qui coûte des mois. C'est elle qu'on fait disparaître de la salle.</span>
+    </p>
+
+    <div class="ia-cols">
+      <div class="ia-col">
+        <p class="ia-col-head ia-col-head-machine">Ce que ça débloque dans la salle</p>
+        <div class="ia-items">
+          {machine.map((m) => (
+            <div class="ia-item">
+              <svg class="ia-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[m.icon]} />
+              <div>
+                <strong>{m.title}</strong>
+                <p>{m.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="ia-col">
+        <p class="ia-col-head ia-col-head-humain">Ce qui reste entre vous, et y restera</p>
+        <div class="ia-items">
+          {humain.map((h) => (
+            <div class="ia-item">
+              <svg class="ia-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[h.icon]} />
+              <div>
+                <strong>{h.title}</strong>
+                <p>{h.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* La limite est dite ici, à la fin, une fois qu'on a compris ce que l'IA
+        vient faire — et pas en titre, où elle se lisait comme une excuse. */}
+    <p class="ia-close">
+      L'IA prépare, propose, objecte et restitue. Elle ne vote pas, elle n'arbitre pas, elle n'assume pas.
+      <strong>La décision reste à ceux qui devront en répondre dans six mois.</strong>
+    </p>
+
+    <p class="ia-more">
+      <a href={withBase('/intelligence-collective-augmentee/')}>
+        Voir comment j'introduis concrètement l'IA dans un processus d'intelligence collective →
+      </a>
+    </p>
+  </div>
+</section>
+
+<style>
+  /* Tout le bloc d'introduction sur une seule colonne, cale a gauche, avec une
+     largeur de lecture confortable. Le titre peut respirer plus large que le
+     texte courant — c'est ce qui le designe comme point d'entree. */
+  /* Une colonne de lecture, une seule mesure pour tout le bloc. Le titre n'est
+     PAS bride plus etroit que le texte : a 18ch, un titre de douze mots se
+     cassait en quatre lignes courtes et tres grasses, sur un tiers de la
+     largeur — un pave lourd avec du vide a cote. */
+  .ia-head {
+    max-width: 720px;
+    margin-bottom: var(--space-8);
+  }
+  .ia-head h2 {
+    margin-bottom: var(--space-6);
+    text-wrap: balance;
+  }
+  .ia-chapo {
+    margin: 0;
+    max-width: 62ch;
+    color: var(--color-muted);
+    font-size: var(--text-lg);
+  }
+  .ia-chapo strong {
+    color: var(--color-navy);
+  }
+  .ia .accent-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  .ia .ink-underline {
+    position: absolute;
+    left: 0;
+    bottom: -0.15em;
+    width: 100%;
+    height: 0.25em;
+    fill: none;
+    stroke: var(--color-orange);
+    stroke-width: 5;
+  }
+
+  /* La citation-pivot : mise en relief comme une réplique entendue en réunion,
+     pas comme un témoignage client. D'où le filet terre cuite à gauche plutôt
+     qu'un encadré complet. */
+  .ia-punch {
+    max-width: 720px;
+    margin: 0;
+    padding-left: var(--space-6);
+    border-left: 3px solid var(--color-clay);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.25;
+  }
+  .ia-punch span {
+    display: block;
+    margin-top: var(--space-3);
+    color: var(--color-muted);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.5;
+  }
+
+  .ia-cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-12);
+    margin-top: var(--space-12);
+  }
+
+  .ia-col-head {
+    margin: 0 0 var(--space-6);
+    padding-bottom: var(--space-3);
+    /* Le trait sous chaque colonne porte la distinction : jaune du côté de la
+       machine, terre cuite du côté humain. Deux couleurs que le site utilise
+       déjà, et qui ne se lisent pas comme « bien » contre « mal ». */
+    border-bottom: 2px solid var(--color-border);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .ia-col-head-machine {
+    border-bottom-color: var(--color-orange);
+    color: var(--color-muted);
+  }
+  .ia-col-head-humain {
+    border-bottom-color: var(--color-clay);
+    color: var(--color-clay-ink);
+  }
+
+  .ia-items {
+    display: grid;
+    gap: var(--space-8);
+  }
+  .ia-item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+  .ia-icon {
+    width: 28px;
+    height: 28px;
+    color: var(--color-muted);
+  }
+  .ia-col:last-child .ia-icon {
+    color: var(--color-clay);
+  }
+  .ia-item strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+    letter-spacing: var(--tracking-tight);
+  }
+  .ia-item p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-base);
+  }
+
+  .ia-close {
+    max-width: 62ch;
+    margin: var(--space-12) 0 0;
+    padding-top: var(--space-8);
+    border-top: 1px dashed var(--color-border);
+    color: var(--color-muted);
+    font-size: var(--text-lg);
+  }
+  .ia-close strong {
+    color: var(--color-navy);
+  }
+
+  .ia-more {
+    margin: var(--space-6) 0 0;
+    font-size: var(--text-lg);
+  }
+  .ia-more a {
+    color: var(--color-blue);
+    font-weight: 600;
+  }
+
+  @media (max-width: 860px) {
+    .ia-cols {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+  }
+</style>

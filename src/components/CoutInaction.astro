@@ -32,17 +32,69 @@
 import { withBase } from '../utils/url';
 import { SITE } from '../data/site';
 
+interface Props {
+  /**
+   * « modal » enferme l'outil dans un <dialog> qui s'ouvre par-dessus la page.
+   * C'est la forme utilisée depuis le hero : quelqu'un qui accepte de répondre
+   * à douze questions ne doit pas d'abord perdre la page qu'il était en train de
+   * lire. La page /outils/cout-de-linaction/ garde la forme « inline » — elle
+   * existe pour la recherche, le partage et le référencement.
+   *
+   * Les deux formes ne doivent jamais coexister sur une même page : le script
+   * se lie à la première carte qu'il trouve.
+   */
+  modal?: boolean;
+}
+
+const { modal = false } = Astro.props;
+
 /* Les icônes du site : trait currentColor, grille 24 — mêmes tracés que le
    Footer et la page d'accueil. */
 const ICONES = {
   horloge: '<circle cx="12" cy="12" r="9"/><path d="M12 7.4V12l3.2 1.9"/>',
   valeur: '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
 };
+
+const Enveloppe = modal ? 'dialog' : 'section';
+
+/*
+ * Le niveau des titres dépend de la forme, et c'est un vrai sujet
+ * d'accessibilité, pas une coquetterie.
+ *
+ * Sur la page dédiée, le calculateur EST le contenu : ses questions sont de
+ * légitimes <h2> sous le <h1> de la page. En popup sur l'accueil, les mêmes
+ * balises injectaient neuf <h2> dans la structure de titres de la page —
+ * « De quoi s'agit-il ? », « Qui est autour de la table ? » — au même rang que
+ * les vraies sections, et AVANT elles dans l'ordre du document. Un lecteur
+ * d'écran qui parcourt la page par ses titres tombait sur un questionnaire
+ * fermé ; Google lit la même liste pour comprendre le sujet de la page.
+ *
+ * En popup, ce sont donc des paragraphes portant le style des titres. Le
+ * <dialog> reste nommé par son aria-label, qui n'exige aucun élément de titre.
+ * Même apparence, deux structures — c'est la structure qui doit s'adapter, pas
+ * le dessin.
+ */
+const Question = modal ? 'p' : 'h2';
+const DiagTitre = modal ? 'p' : 'h3';
+const OffreTitre = modal ? 'p' : 'h4';
 ---
 
-<section class="outil section" data-section-name="Outil coût de l'inaction">
+<Enveloppe
+  class:list={['outil', { section: !modal, 'is-modal': modal }]}
+  id={modal ? 'outil-dialog' : undefined}
+  aria-label={modal ? "Calculer le coût de l'inaction" : undefined}
+  data-section-name={modal ? undefined : "Outil coût de l'inaction"}
+>
   <div class="container">
     <div class="outil-card">
+      {modal && (
+        <button class="outil-close" id="ci-close" type="button" aria-label="Fermer le calculateur">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none"
+               stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      )}
       <div class="outil-top" id="ci-top" hidden>
         <button class="outil-back" id="ci-back" type="button">← Retour</button>
         <div class="outil-bar"><i id="ci-bar"></i></div>
@@ -52,23 +104,36 @@ const ICONES = {
       {/* --- 0 : l'entrée ------------------------------------------------- */}
       <section class="outil-step is-shown" data-step="0">
         <p class="outil-hand">Et si on mettait un nombre dessus&nbsp;?</p>
-        <h2>Combien vous coûte<br />la décision que vous n'avez pas prise&nbsp;?</h2>
+        <Question class="outil-question">Combien vous coûte<br />la décision que vous n'avez pas prise&nbsp;?</Question>
+        {/*
+          L'entree doit faire UNE chose : installer le sujet dans la tete du
+          visiteur. Toutes les questions qui suivent portent sur lui ; sans
+          cette consigne, on arrive a la premiere question sans savoir de quoi
+          on parle. Le reste (le detail du calcul, la prudence des fourchettes)
+          attend la fin — c'est la qu'on se demande si le chiffre est serieux,
+          pas avant d'avoir commence.
+        */}
         <p class="outil-lead">
-          Huit questions, moins d'une minute. Pensez à <strong>un sujet précis</strong>, qui revient sans être
-          tranché&nbsp;: une réorganisation, un arbitrage de priorités, une offre à lancer, un mode de
-          fonctionnement à changer.
+          <strong>Pensez à un sujet précis</strong>, qui revient dans vos réunions sans jamais être tranché.
+          Une réorganisation, un arbitrage de priorités, une offre à lancer. Gardez-le en tête&nbsp;: les
+          douze questions portent toutes sur lui.
         </p>
         <p class="outil-note">
-          Rien n'est envoyé ni enregistré&nbsp;: le calcul se fait dans votre navigateur. Et à chaque question,
-          on retient le bas de votre fourchette — le résultat est un plancher.
+          Deux minutes. Vous obtiendrez <strong>pourquoi</strong> ce sujet ne se tranche pas, et
+          <strong>combien</strong> il vous coûte chaque mois. Rien n'est envoyé&nbsp;: tout se calcule dans
+          votre navigateur.
         </p>
-        <button class="btn" data-next type="button">Faire le calcul →</button>
+        <button class="btn" data-next type="button">J'ai mon sujet en tête →</button>
       </section>
 
-      {/* --- 1 : la nature du sujet --------------------------------------- */}
+      {/* --- 1 : la nature du sujet ---------------------------------------
+          La premiere question d'un questionnaire doit etre la plus facile, et
+          elle doit confirmer qu'on est au bon endroit. « De quoi s'agit-il ? »
+          faisait l'inverse : une question sans sujet, dont le texte d'aide
+          admettait en plus qu'elle ne servait pas au calcul. */}
       <section class="outil-step" data-step="1">
-        <h2>De quoi s'agit-il&nbsp;?</h2>
-        <p class="outil-hint">Le type de sujet ne change pas le calcul, mais il change la lecture qu'on en fait.</p>
+        <Question class="outil-question">Votre sujet, c'est plutôt&nbsp;…</Question>
+        <p class="outil-hint">Prenez le plus proche&nbsp;: c'est la lecture du résultat qui s'y adapte.</p>
         <div class="outil-choices" data-q="sujet">
           <button class="outil-choice" data-v="organisation" type="button">Une organisation à faire évoluer<small>Rôles, périmètres, façon de travailler ensemble.</small></button>
           <button class="outil-choice" data-v="priorites" type="button">Un arbitrage de priorités<small>Trop de chantiers, pas assez de moyens pour tous.</small></button>
@@ -79,7 +144,7 @@ const ICONES = {
 
       {/* --- 2 : l'enjeu -------------------------------------------------- */}
       <section class="outil-step" data-step="2">
-        <h2>Sur un an, cette décision doit rapporter, économiser ou débloquer&nbsp;…</h2>
+        <Question class="outil-question">Sur un an, cette décision doit rapporter, économiser ou débloquer&nbsp;…</Question>
         <p class="outil-hint">
           Chiffre d'affaires gagné, coûts évités, temps libéré, projet débloqué&nbsp;: tout compte. En cas de
           doute, prenez la fourchette du dessous.
@@ -97,7 +162,7 @@ const ICONES = {
 
       {/* --- 3 : depuis quand -------------------------------------------- */}
       <section class="outil-step" data-step="3">
-        <h2>Depuis combien de temps ce sujet est-il sur la table&nbsp;?</h2>
+        <Question class="outil-question">Depuis combien de temps ce sujet est-il sur la table&nbsp;?</Question>
         <p class="outil-hint">Depuis la première fois où il a été mis à l'ordre du jour.</p>
         <div class="outil-choices cols" data-q="mois">
           <button class="outil-choice" data-v="1" type="button">Quelques semaines</button>
@@ -110,7 +175,7 @@ const ICONES = {
 
       {/* --- 4 : qui est autour de la table ------------------------------ */}
       <section class="outil-step" data-step="4">
-        <h2>Qui est autour de la table&nbsp;?</h2>
+        <Question class="outil-question">Qui est autour de la table&nbsp;?</Question>
         <p class="outil-hint">Pas besoin de connaître les salaires&nbsp;: on part d'ordres de grandeur, que vous pouvez ajuster.</p>
         <div class="outil-row">
           <div class="outil-who">Direction<small>≈ <span data-sal-label="dir"></span> k€ brut par an</small></div>
@@ -130,6 +195,19 @@ const ICONES = {
             <button type="button" aria-label="Moins">−</button><output>3</output><button type="button" aria-label="Plus">+</button>
           </div>
         </div>
+        {/* Question du prototype « coût des réunions », gardée ici parce qu'elle
+            se répond d'un geste sur le même écran plutôt qu'en une étape de
+            plus : elle isole la part du temps qui se règle sans rien décider
+            d'autre, simplement en n'invitant que ceux qui décident. */}
+        <div class="outil-row outil-row-extra">
+          <div class="outil-who">
+            Dont combien auraient pu ne pas venir&nbsp;?
+            <small>Sur <span data-ntot></span> personnes. Un compte rendu leur aurait suffi.</small>
+          </div>
+          <div class="outil-stepper" data-key="extra">
+            <button type="button" aria-label="Moins de personnes en trop">−</button><output>0</output><button type="button" aria-label="Plus de personnes en trop">+</button>
+          </div>
+        </div>
         <details class="outil-adjust">
           <summary>Ajuster les salaires</summary>
           <div class="outil-sal">
@@ -143,7 +221,7 @@ const ICONES = {
 
       {/* --- 5 : le temps que ça occupe ---------------------------------- */}
       <section class="outil-step" data-step="5">
-        <h2>Chaque mois, combien de temps ce sujet occupe-t-il ce collectif&nbsp;?</h2>
+        <Question class="outil-question">Chaque mois, combien de temps ce sujet occupe-t-il ce collectif&nbsp;?</Question>
         <p class="outil-hint">Réunions, points d'étape, préparations, échanges de couloir&nbsp;: le temps de tous cumulé, pas seulement le vôtre.</p>
         <div class="outil-choices cols" data-q="heures">
           <button class="outil-choice" data-v="2" type="button">Deux heures</button>
@@ -155,7 +233,7 @@ const ICONES = {
 
       {/* --- 6 : le taux de décision ------------------------------------- */}
       <section class="outil-step" data-step="6">
-        <h2>Sur les cinq dernières réunions consacrées à ce sujet, combien se sont terminées par une décision claire&nbsp;?</h2>
+        <Question class="outil-question">Sur les cinq dernières réunions consacrées à ce sujet, combien se sont terminées par une décision claire&nbsp;?</Question>
         <p class="outil-hint">Une décision claire&nbsp;: on sait <strong>quoi</strong>, <strong>qui</strong> s'en charge et <strong>pour quand</strong>.</p>
         <div class="outil-scale" data-q="dec">
           <button class="outil-choice" data-v="0" type="button">0</button>
@@ -168,22 +246,71 @@ const ICONES = {
         <div class="outil-legend"><span>Aucune</span><span>Toutes</span></div>
       </section>
 
-      {/* --- 7 : le blocage ---------------------------------------------- */}
+      {/* --- 7 à 11 : le diagnostic --------------------------------------
+          Cinq questions INDIRECTES. On ne demande jamais « qu'est-ce qui
+          bloque » : quelqu'un qui le savait n'aurait pas besoin de l'outil, et
+          une réponse déclarée ne fait que revenir à l'écran sous forme de
+          diagnostic — ce qui ne lui apprend rien.
+          Chaque réponse ajoute des points à une ou deux causes ; c'est la
+          combinaison qui désigne la cause dominante, et les réponses qui ont
+          pesé sont réaffichées à la fin comme faisceau d'indices. */}
       <section class="outil-step" data-step="7">
-        <h2>À votre avis, qu'est-ce qui bloque vraiment&nbsp;?</h2>
-        <p class="outil-hint">Une seule réponse&nbsp;: celle que vous diriez en privé.</p>
-        <div class="outil-choices" data-q="blocage">
-          <button class="outil-choice" data-v="mandat" type="button">On ne sait pas qui décide<small>Chacun croit que l'autre tranchera.</small></button>
-          <button class="outil-choice" data-v="personnes" type="button">Les bonnes personnes ne sont pas là<small>Celles qui savent, ou celles qui peuvent dire oui.</small></button>
-          <button class="outil-choice" data-v="options" type="button">Aucune option n'est vraiment instruite<small>On arbitre entre des intuitions.</small></button>
-          <button class="outil-choice" data-v="desaccord" type="button">Un désaccord que personne ne nomme<small>Le vrai sujet n'est pas à l'ordre du jour.</small></button>
-          <button class="outil-choice" data-v="animation" type="button">Personne ne tient la conversation<small>La réunion s'anime un peu toute seule.</small></button>
+        <Question class="outil-question">Quand une décision est enfin prise sur ce sujet, que se passe-t-il le plus souvent ensuite&nbsp;?</Question>
+        <p class="outil-hint">Repensez à la dernière fois.</p>
+        <div class="outil-choices" data-q="apres">
+          <button class="outil-choice" data-v="rouverte" type="button">Elle est rouverte quelques semaines plus tard<small>« On en reparle, finalement ce n'est pas si simple. »</small></button>
+          <button class="outil-choice" data-v="partielle" type="button">Elle est appliquée, mais pas par tout le monde<small>Certains font comme si elle n'avait pas été prise.</small></button>
+          <button class="outil-choice" data-v="info" type="button">On découvre qu'il manquait une information<small>Et il faut refaire le tour de la question.</small></button>
+          <button class="outil-choice" data-v="appliquee" type="button">Elle est appliquée, et on n'en reparle plus</button>
         </div>
       </section>
 
-      {/* --- 8 : ce qu'on veut ------------------------------------------- */}
       <section class="outil-step" data-step="8">
-        <h2>Et vous, qu'est-ce que vous voudriez&nbsp;?</h2>
+        <Question class="outil-question">Si vous demandiez séparément à chaque participant qui tranche ce sujet, combien donneraient le même nom&nbsp;?</Question>
+        <p class="outil-hint">Répondez honnêtement&nbsp;: c'est la question qui surprend le plus les dirigeants.</p>
+        <div class="outil-choices" data-q="mandat">
+          <button class="outil-choice" data-v="tous" type="button">Tous, sans hésiter</button>
+          <button class="outil-choice" data-v="plupart" type="button">La plupart</button>
+          <button class="outil-choice" data-v="partages" type="button">Ils se partageraient entre deux ou trois noms</button>
+          <button class="outil-choice" data-v="aucun" type="button">Franchement, je ne suis pas sûr moi-même</button>
+        </div>
+      </section>
+
+      <section class="outil-step" data-step="9">
+        <Question class="outil-question">Quand il faut choisir entre deux directions, sur quoi s'appuie le choix&nbsp;?</Question>
+        <p class="outil-hint">&nbsp;</p>
+        <div class="outil-choices" data-q="options">
+          <button class="outil-choice" data-v="documente" type="button">Des scénarios écrits, avec leurs chiffres et leurs conséquences</button>
+          <button class="outil-choice" data-v="unNote" type="button">Une note, souvent préparée par une seule personne</button>
+          <button class="outil-choice" data-v="experience" type="button">L'avis de la personne la plus expérimentée sur le sujet</button>
+          <button class="outil-choice" data-v="tourDeTable" type="button">Un tour de table, chacun donne son sentiment</button>
+        </div>
+      </section>
+
+      <section class="outil-step" data-step="10">
+        <Question class="outil-question">Dans la dernière réunion sur ce sujet, combien de personnes n'ont quasiment pas parlé&nbsp;?</Question>
+        <p class="outil-hint">Sur <span id="ci-ntot"></span> participants.</p>
+        <div class="outil-choices cols" data-q="silence">
+          <button class="outil-choice" data-v="aucune" type="button">Aucune</button>
+          <button class="outil-choice" data-v="une" type="button">Une ou deux</button>
+          <button class="outil-choice" data-v="moitie" type="button">Environ la moitié</button>
+          <button class="outil-choice" data-v="presque" type="button">La plupart</button>
+        </div>
+      </section>
+
+      <section class="outil-step" data-step="11">
+        <Question class="outil-question">Y a-t-il, autour de ce sujet, quelque chose que tout le monde sait mais que personne ne dit en réunion&nbsp;?</Question>
+        <p class="outil-hint">Personne ne lira votre réponse&nbsp;: rien ne quitte votre navigateur.</p>
+        <div class="outil-choices" data-q="nonDit">
+          <button class="outil-choice" data-v="oui" type="button">Oui, et je vois très bien quoi</button>
+          <button class="outil-choice" data-v="peutetre" type="button">Probablement, sans pouvoir le nommer précisément</button>
+          <button class="outil-choice" data-v="non" type="button">Non, tout se dit</button>
+        </div>
+      </section>
+
+      {/* --- 12 : ce qu'on veut ------------------------------------------ */}
+      <section class="outil-step" data-step="12">
+        <Question class="outil-question">Et vous, qu'est-ce que vous voudriez&nbsp;?</Question>
         <p class="outil-hint">Dernière question.</p>
         <div class="outil-choices" data-q="want">
           <button class="outil-choice" data-v="animer" type="button">Savoir mener ce genre de décision moi-même</button>
@@ -193,9 +320,34 @@ const ICONES = {
         </div>
       </section>
 
-      {/* --- 9 : le résultat --------------------------------------------- */}
-      <section class="outil-step" data-step="9">
-        <p class="outil-reslabel">Chaque mois où ce sujet reste ouvert vous coûte au moins</p>
+      {/* --- 13 : le résultat --------------------------------------------- */}
+      <section class="outil-step" data-step="13">
+        {/*
+          Le resultat repond aux DEUX questions posees, dans cet ordre :
+          d'abord POURQUOI ca ne se decide pas, ensuite COMBIEN ca coute.
+
+          Le pourquoi passe en premier parce que c'est ce qu'on est venu
+          chercher, et parce qu'un montant sans cause ne fait rien avancer —
+          les entreprises connaissent le cout de leurs reunions depuis vingt
+          ans et ne le reglent pas. Le montant, lui, sert a donner sa taille au
+          probleme.
+
+          Et le diagnostic montre ses indices : sans eux, c'est un oracle.
+        */}
+        <p class="outil-reslabel">Pourquoi ça ne se décide pas</p>
+        <DiagTitre id="ci-diagtitle" class="outil-diag-titre outil-cause"></DiagTitre>
+        <p class="outil-diagtext" id="ci-diagtext"></p>
+
+        <div class="outil-indices" id="ci-indices" hidden>
+          <p class="outil-indices-head">Ce qui m'amène à ce diagnostic, dans vos réponses&nbsp;:</p>
+          <ul id="ci-indices-liste"></ul>
+        </div>
+
+        <p class="outil-second" id="ci-second" hidden></p>
+
+        <div class="outil-sep" aria-hidden="true"></div>
+
+        <p class="outil-reslabel">Ce que ce blocage vous coûte</p>
         <div class="outil-big"><span id="ci-mensuel">0 €</span> <small>par mois</small></div>
         <p class="outil-per">
           Soit <strong id="ci-deja"></strong> depuis que le sujet est sur la table, il y a <span id="ci-mois"></span>.
@@ -216,7 +368,10 @@ const ICONES = {
               <b></b>
             </div>
             <div class="outil-track"><i></i></div>
-            <p>Ce que coûte, chaque mois, le temps que tout le monde y consacre sans conclure.</p>
+            <p>
+              Ce que coûte, chaque mois, le temps que tout le monde y consacre sans conclure.
+              <span id="ci-extra-note" hidden>Dont <b id="ci-extra"></b> pour des personnes qui auraient pu ne pas venir.</span>
+            </p>
           </div>
           <div class="outil-leak" data-leak="B">
             <div class="outil-leak-head">
@@ -232,13 +387,10 @@ const ICONES = {
         </div>
 
         <div class="outil-diag">
-          <p class="outil-hand">Votre goulet d'étranglement</p>
-          <h3 id="ci-diagtitle"></h3>
-          <p id="ci-diagtext"></p>
 
           <div class="outil-offer">
             <p class="outil-kicker">Ce que je vous propose</p>
-            <h4 id="ci-offername"></h4>
+            <OffreTitre id="ci-offername" class="outil-offer-titre"></OffreTitre>
             <p id="ci-offertext"></p>
             <a class="outil-more" id="ci-offerlink" href="#">Découvrir cette offre →</a>
           </div>
@@ -259,29 +411,39 @@ const ICONES = {
             <li><strong>Coût horaire chargé</strong>&nbsp;= salaire brut annuel × 1,45 (charges patronales) ÷ 1 600 heures travaillées par an.</li>
             <li><strong>Le temps passé à en reparler</strong>&nbsp;= ce coût horaire, pour toutes les personnes concernées, sur le nombre d'heures que le sujet occupe chaque mois.</li>
             <li><strong>La valeur qui attend</strong>&nbsp;= l'enjeu annuel que vous avez indiqué, divisé par douze. On prend toujours la borne basse de la fourchette choisie.</li>
-            <li><strong>Ce qu'un collectif qui tranche récupérerait</strong>&nbsp;= la part du coût mensuel proportionnelle aux réunions qui n'aboutissent pas. Cinq décisions claires sur cinq&nbsp;: rien à récupérer de ce côté-là, le blocage est ailleurs.</li>
+            <li><strong>Les présences en trop</strong>&nbsp;sont une part de ce temps de délibération, pas une dépense supplémentaire&nbsp;: les compter à côté reviendrait à facturer deux fois les mêmes heures.</li>
+            <li><strong>Ce qu'un collectif qui tranche récupérerait</strong>&nbsp;= la part du coût mensuel proportionnelle aux réunions qui n'aboutissent pas, plus le temps de ceux qui n'avaient pas à être là — une décision claire ne les rembourse pas. Cinq décisions sur cinq et personne en trop&nbsp;: rien à récupérer de ce côté-là, le blocage est ailleurs.</li>
             <li>Ne sont comptés ni le coût d'opportunité des sujets que celui-ci empêche de traiter, ni l'usure des équipes qui rediscutent la même chose. Les deux sont réels&nbsp;; aucun n'est chiffrable honnêtement ici.</li>
           </ul>
         </details>
 
         <div class="outil-restart"><button class="btn-outline" id="ci-restart" type="button">Refaire le calcul</button></div>
       </section>
+
+      {/* Le compteur en direct : dès que le collectif est décrit, on sait ce que
+          coûte une heure passée ensemble. C'est le chiffre qui fait lever les
+          yeux, et il rend concrètes les questions qui suivent. */}
+      <p class="outil-ticker" id="ci-ticker" hidden>
+        Une heure de ce collectif coûte <b id="ci-ticker-val"></b>.
+      </p>
     </div>
   </div>
-</section>
+</Enveloppe>
 
 <script define:vars={{ OFFRES_BASE: withBase('/offres/') }}>
   (() => {
     const racine = document.querySelector('.outil-card');
     if (!racine) return;
 
-    const TOTAL_Q = 8;
-    const RESULT = 9;
+    const TOTAL_Q = 12;
+    const RESULT = 13;
 
     const state = {
-      dir: 1, man: 4, col: 3,
+      dir: 1, man: 4, col: 3, extra: 0,
       sal: { dir: 90, man: 55, col: 35 },
-      sujet: null, enjeu: null, mois: null, heures: null, dec: null, blocage: null, want: null,
+      sujet: null, enjeu: null, mois: null, heures: null, dec: null, want: null,
+      /* Les cinq reponses indirectes qui alimentent le diagnostic. */
+      apres: null, mandat: null, options: null, silence: null, nonDit: null,
     };
     let step = 0;
 
@@ -300,18 +462,20 @@ const ICONES = {
 
     function calculer() {
       const deliberation = coutHeure() * state.heures;
+      /* Les présences en trop sont une part de la délibération, pas une fuite
+         de plus : les compter à côté reviendrait à facturer deux fois les
+         mêmes heures. */
+      const excedent = gens() ? deliberation * (Math.min(state.extra, gens()) / gens()) : 0;
       const valeur = state.enjeu / 12;
       const mensuel = deliberation + valeur;
-      return {
-        deliberation,
-        valeur,
-        mensuel,
-        deja: mensuel * state.mois,
-        /* La part récupérable ne porte que sur ce qui dépend de la façon de
-           décider. On ne promet pas de récupérer la valeur d'une décision qu'un
-           atelier ne prendra pas à la place du dirigeant. */
-        recup: mensuel * ((5 - state.dec) / 5),
-      };
+      /* La part récupérable porte sur ce qui dépend de la façon de décider :
+         les mois où l'on ne tranche pas sont perdus en entier. S'y ajoute,
+         même quand le collectif tranche, le temps de ceux qui n'avaient pas à
+         être là — une décision claire ne les rembourse pas. On ne promet en
+         revanche jamais de récupérer la valeur d'une décision qu'un atelier ne
+         prendra pas à la place du dirigeant. */
+      const recup = Math.min(mensuel, mensuel * ((5 - state.dec) / 5) + excedent * (state.dec / 5));
+      return { deliberation, excedent, valeur, mensuel, deja: mensuel * state.mois, recup };
     }
 
     /* --- salaires --- */
@@ -328,24 +492,51 @@ const ICONES = {
     });
     function syncLabels() {
       $$('[data-sal-label]').forEach((s) => (s.textContent = state.sal[s.dataset.salLabel]));
+      majTicker();
+    }
+
+    /* Le compteur en direct n'apparaît qu'une fois le collectif décrit (étape 4)
+       et disparaît sur le résultat, où le chiffre du mois prend le relais. */
+    const ticker = $('#ci-ticker');
+    const tickerVal = $('#ci-ticker-val');
+    function majTicker() {
+      if (!ticker || !tickerVal) return;
+      const visible = step >= 4 && step < RESULT;
+      ticker.hidden = !visible;
+      if (visible) tickerVal.textContent = eur(rond(coutHeure()));
     }
 
     /* --- compteurs de participants --- */
+    const sortieExtra = $('[data-key="extra"] output');
+    const totalDit = $('[data-ntot]');
+    /* « Personnes en trop » se compte sur l'effectif : si le collectif rétrécit,
+       le nombre de personnes superflues ne peut pas lui rester supérieur. */
+    function bornerExtra() {
+      state.extra = Math.min(state.extra, gens());
+      if (sortieExtra) sortieExtra.textContent = state.extra;
+      if (totalDit) totalDit.textContent = gens();
+    }
+
     $$('.outil-stepper').forEach((st) => {
       const key = st.dataset.key;
       const out = $('output', st);
       const [moins, plus] = $$('button', st);
+      const plafond = () => (key === 'extra' ? gens() : 30);
       const rendre = () => (out.textContent = state[key]);
       moins.onclick = () => {
         state[key] = Math.max(0, state[key] - 1);
         /* Un collectif de zéro personne n'a pas de sujet : on garde au moins
            quelqu'un dans la pièce. */
-        if (gens() === 0) state[key] = 1;
+        if (key !== 'extra' && gens() === 0) state[key] = 1;
         rendre();
+        bornerExtra();
+        majTicker();
       };
       plus.onclick = () => {
-        state[key] = Math.min(30, state[key] + 1);
+        state[key] = Math.min(plafond(), state[key] + 1);
         rendre();
+        bornerExtra();
+        majTicker();
       };
       rendre();
     });
@@ -366,7 +557,8 @@ const ICONES = {
     $$('[data-next]').forEach((b) => b.addEventListener('click', () => aller(step + 1)));
     $('#ci-back').addEventListener('click', () => aller(step - 1));
     $('#ci-restart').addEventListener('click', () => {
-      Object.assign(state, { sujet: null, enjeu: null, mois: null, heures: null, dec: null, blocage: null, want: null });
+      Object.assign(state, { sujet: null, enjeu: null, mois: null, heures: null, dec: null, blocage: null, want: null, extra: 0 });
+      bornerExtra();
       $$('.outil-choice.is-on').forEach((b) => b.classList.remove('is-on'));
       aller(0);
     });
@@ -377,18 +569,31 @@ const ICONES = {
       $('#ci-top').hidden = step === 0 || step === RESULT;
       $('#ci-bar').style.width = (step / TOTAL_Q) * 100 + '%';
       $('#ci-count').textContent = `${step} / ${TOTAL_Q}`;
+      const ntot = $('#ci-ntot');
+      if (ntot) ntot.textContent = gens();
+      bornerExtra();
+      majTicker();
       if (step === RESULT) afficherResultat();
       /* On remonte sur la carte, pas en haut de la page : l'en-tête du site et
-         le titre de la page n'ont pas besoin d'être relus à chaque question. */
-      const y = racine.getBoundingClientRect().top + window.scrollY - 90;
-      window.scrollTo({ top: y, behavior: sobre ? 'auto' : 'smooth' });
+         le titre de la page n'ont pas besoin d'être relus à chaque question.
+         En popup, c'est le <dialog> qui défile — remonter la page derrière lui
+         ne se verrait pas, et déplacerait la lecture une fois refermé. */
+      const dlg = racine.closest('dialog');
+      if (dlg) {
+        dlg.scrollTo({ top: 0, behavior: sobre ? 'auto' : 'smooth' });
+      } else {
+        const y = racine.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top: y, behavior: sobre ? 'auto' : 'smooth' });
+      }
     }
 
     function compter(el, to) {
-      if (sobre) {
-        el.textContent = eur(to);
-        return;
-      }
+      /* Le montant final est écrit d'abord, l'animation ne fait que le
+         rattraper : dans un onglet en arrière-plan, requestAnimationFrame ne
+         s'exécute pas, et le chiffre resterait figé à 0 € — le seul endroit de
+         la page où une animation qui ne démarre pas produirait un faux. */
+      el.textContent = eur(to);
+      if (sobre) return;
       const t0 = performance.now();
       const d = 1100;
       const pas = (t) => {
@@ -407,6 +612,91 @@ const ICONES = {
      * collectif qui tranche cinq fois sur cinq a un problème ailleurs — il a sa
      * propre entrée.
      */
+    /*
+     * Le moteur de diagnostic.
+     *
+     * Personne ne repond « qu'est-ce qui bloque chez vous » : qui le sait n'a
+     * pas besoin de l'outil, et une reponse declaree ne ferait que revenir a
+     * l'ecran. On interroge donc des SYMPTOMES — ce qui se passe apres une
+     * decision, qui tranche vraiment, sur quoi s'appuie un choix, qui se tait,
+     * ce qui ne se dit pas — et chaque symptome charge une ou deux causes.
+     *
+     * Les poids ne sont pas des probabilites : ils disent seulement combien un
+     * symptome est caracteristique d'une cause. Un symptome tres discriminant
+     * pese 3, un symptome compatible avec plusieurs causes pese 1.
+     *
+     * Chaque entree porte aussi la phrase qui sera reaffichee a la fin comme
+     * indice : le diagnostic doit pouvoir montrer sur quoi il s'appuie, sinon
+     * c'est un oracle.
+     */
+    const SIGNAUX = {
+      apres: {
+        rouverte: { poids: { mandat: 3, desaccord: 2 }, indice: 'les décisions sont rouvertes quelques semaines plus tard' },
+        partielle: { poids: { mandat: 3, desaccord: 1 }, indice: "la décision n'est appliquée que par une partie des personnes" },
+        info: { poids: { options: 3 }, indice: "on découvre après coup qu'il manquait une information" },
+        appliquee: { poids: {}, indice: null },
+      },
+      mandat: {
+        tous: { poids: {}, indice: null },
+        plupart: { poids: { mandat: 1 }, indice: null },
+        partages: { poids: { mandat: 3, personnes: 1 }, indice: 'les participants ne désigneraient pas tous la même personne pour trancher' },
+        aucun: { poids: { mandat: 4, personnes: 2 }, indice: "vous-même n'êtes pas certain de qui détient la décision" },
+      },
+      options: {
+        documente: { poids: {}, indice: null },
+        unNote: { poids: { options: 1 }, indice: null },
+        experience: { poids: { options: 2, personnes: 1 }, indice: "le choix repose sur l'avis de la personne la plus expérimentée" },
+        tourDeTable: { poids: { options: 3, animation: 1 }, indice: 'les directions se départagent au sentiment, sans scénarios écrits' },
+      },
+      silence: {
+        aucune: { poids: {}, indice: null },
+        une: { poids: {}, indice: null },
+        moitie: { poids: { animation: 2, desaccord: 1 }, indice: 'la moitié de la salle ne parle pas' },
+        presque: { poids: { animation: 3, desaccord: 2 }, indice: 'la plupart des participants ne prennent pas la parole' },
+      },
+      nonDit: {
+        oui: { poids: { desaccord: 4 }, indice: "il existe un non-dit que vous identifiez précisément" },
+        peutetre: { poids: { desaccord: 2 }, indice: 'il y a probablement un non-dit autour de ce sujet' },
+        non: { poids: {}, indice: null },
+      },
+    };
+
+    /* Le taux de décision est un signal a part : il ne designe pas une cause
+       precise, il dit que l'animation ne produit pas de conclusion. */
+    function diagnostiquer() {
+      const scores = { mandat: 0, personnes: 0, options: 0, desaccord: 0, animation: 0 };
+      const indices = [];
+
+      Object.keys(SIGNAUX).forEach((q) => {
+        const rep = SIGNAUX[q][state[q]];
+        if (!rep) return;
+        Object.entries(rep.poids).forEach(([cause, n]) => (scores[cause] += n));
+        if (rep.indice) indices.push({ texte: rep.indice, poids: Math.max(...Object.values(rep.poids), 0) });
+      });
+
+      if (state.dec <= 1) {
+        scores.animation += 3;
+        indices.push({ texte: `seule${state.dec > 1 ? 's' : ''} ${state.dec} réunion${state.dec > 1 ? 's' : ''} sur cinq se termine${state.dec > 1 ? 'nt' : ''} par une décision claire`, poids: 3 });
+      } else if (state.dec <= 3) {
+        scores.animation += 1;
+      }
+
+      const classement = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      const [cause, score] = classement[0];
+      const second = classement[1];
+
+      /* Rien ne ressort : le collectif decide correctement, le blocage est
+         ailleurs — et on le dit, plutot que de designer une cause au hasard. */
+      if (score === 0) return { cause: 'ok', indices: [], second: null };
+
+      indices.sort((a, b) => b.poids - a.poids);
+      return {
+        cause,
+        indices: indices.slice(0, 3),
+        second: second && second[1] >= score * 0.6 && second[1] > 0 ? second[0] : null,
+      };
+    }
+
     const DIAG = {
       mandat: [
         'Le mandat de décision n’est pas posé',
@@ -429,7 +719,7 @@ const ICONES = {
         'Sans quelqu’un dont le seul rôle est de tenir le fil, la discussion suit celui qui parle le plus fort ou le plus longtemps. Animer n’est pas présider : c’est un métier, et il s’apprend — ou il se délègue le temps des décisions qui comptent.',
       ],
       ok: [
-        'Vos réunions décident. Le blocage est en amont',
+        'Vos réunions décident. Le blocage est ailleurs',
         'Cinq fois sur cinq, vous concluez — ce n’est pas là que ça coince. Ce sujet-ci résiste donc pour une autre raison : un enjeu plus politique qu’opérationnel, ou une décision qui appartient à un autre étage. Le coût reste réel, mais il ne se réglera pas en travaillant vos réunions.',
       ],
     };
@@ -476,9 +766,38 @@ const ICONES = {
         requestAnimationFrame(() => requestAnimationFrame(() => (barre.style.width = (v / max) * 100 + '%')));
       });
 
-      const [t, txt] = DIAG[state.dec === 5 ? 'ok' : state.blocage];
+      /* La part « présences en trop » ne s'affiche que si elle pèse : sous 5 %
+         du temps de délibération, l'annoncer donnerait du poids à un détail. */
+      const noteExtra = $('#ci-extra-note');
+      const montreExtra = r.excedent > r.deliberation * 0.05;
+      noteExtra.hidden = !montreExtra;
+      if (montreExtra) $('#ci-extra').textContent = eur(rond(r.excedent)) + ' / mois';
+
+      const d = diagnostiquer();
+      const [t, txt] = DIAG[d.cause];
       $('#ci-diagtitle').textContent = t;
       $('#ci-diagtext').textContent = txt;
+
+      /* Les indices : c'est ce qui fait la difference entre un diagnostic et
+         un horoscope. On reaffiche les reponses qui ont pese, telles qu'elles
+         ont ete donnees. */
+      const boite = $('#ci-indices');
+      const liste = $('#ci-indices-liste');
+      liste.replaceChildren();
+      d.indices.forEach((i) => {
+        const li = document.createElement('li');
+        li.textContent = i.texte;
+        liste.append(li);
+      });
+      boite.hidden = d.indices.length === 0;
+
+      const sec = $('#ci-second');
+      if (d.second) {
+        sec.textContent = `En second lieu, un autre facteur pèse : ${DIAG[d.second][0].toLowerCase()}.`;
+        sec.hidden = false;
+      } else {
+        sec.hidden = true;
+      }
 
       const [nom, texte, chemin] = OFFRES[state.want];
       $('#ci-offername').textContent = nom;
@@ -494,13 +813,16 @@ const ICONES = {
      */
     $('#ci-copy').addEventListener('click', async () => {
       const r = calculer();
-      const [t] = DIAG[state.dec === 5 ? 'ok' : state.blocage];
+      const d = diagnostiquer();
+      const [t] = DIAG[d.cause];
       const texte = [
         'Coût de l’inaction — ma synthèse',
         '',
         `Sujet : ${state.sujet}`,
         `Sur la table depuis : ${MOIS_DIT[state.mois]}`,
         `Autour de la table : ${state.dir} direction, ${state.man} managers, ${state.col} collaborateurs`,
+        `Dont personnes qui auraient pu ne pas venir : ${state.extra}`,
+        `Coût d'une heure de ce collectif : ${eur(rond(coutHeure()))}`,
         `Temps que ça occupe : ${state.heures} h par mois`,
         `Réunions qui tranchent : ${state.dec} sur 5`,
         `Enjeu annuel retenu (borne basse) : ${eur(state.enjeu)}`,
@@ -510,7 +832,8 @@ const ICONES = {
         `— dont valeur qui attend : ${eur(rond(r.valeur))}`,
         `Déjà dépensé : ${eur(rond(r.deja))}`,
         '',
-        `Goulet d’étranglement : ${t}`,
+        `Pourquoi ça ne se décide pas : ${t}`,
+        ...(d.indices.length ? ['Les signaux : ' + d.indices.map((i) => i.texte).join(' ; ')] : []),
       ].join('\n');
 
       const note = $('#ci-copynote');
@@ -525,10 +848,126 @@ const ICONES = {
     });
 
     syncLabels();
+
+    /*
+     * La forme popup.
+     *
+     * Le lien du hero reste un vrai lien vers /outils/cout-de-linaction/ : sans
+     * JavaScript, ou pour un moteur de recherche, il mène à la page complète.
+     * Avec JavaScript, on l'intercepte et l'outil s'ouvre ici même — celui qui
+     * accepte de répondre à douze questions ne doit pas d'abord perdre la page
+     * qu'il lisait.
+     *
+     * <dialog> apporte gratuitement ce qu'une fausse popup fait mal : le focus
+     * enfermé dedans, la fermeture par Échap, et le reste de la page rendu
+     * inerte pour les lecteurs d'écran.
+     */
+    const dialog = document.getElementById('outil-dialog');
+    if (dialog) {
+      const ouvrir = () => {
+        if (dialog.open) return;
+        dialog.showModal();
+        document.documentElement.style.overflow = 'hidden';
+      };
+      const fermer = () => {
+        dialog.close();
+      };
+
+      dialog.addEventListener('close', () => {
+        document.documentElement.style.overflow = '';
+      });
+
+      document.getElementById('ci-close')?.addEventListener('click', fermer);
+
+      /* Cliquer sur le fond referme. Le <dialog> reçoit le clic quand il tombe
+         en dehors de la carte : on compare donc la cible au dialog lui-même. */
+      dialog.addEventListener('click', (ev) => {
+        if (ev.target === dialog) fermer();
+      });
+
+      /* Tout lien vers l'outil, où qu'il soit dans la page, ouvre la popup.
+         Ctrl/Cmd + clic et le clic du milieu continuent d'ouvrir un onglet :
+         c'est le geste de quelqu'un qui veut garder la page. */
+      document.addEventListener('click', (ev) => {
+        const lien = ev.target.closest('a[href*="/outils/cout-de-linaction"]');
+        if (!lien || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0) return;
+        ev.preventDefault();
+        aller(0);
+        ouvrir();
+      });
+
+      window.CoutInaction = Object.freeze({ ouvrir, fermer });
+    }
   })();
 </script>
 
 <style>
+  /* --- la forme popup ----------------------------------------------------
+     Le <dialog> natif arrive avec ses propres marges, sa bordure et sa largeur
+     de contenu : on le remet à plat pour qu'il ne soit qu'un cadre autour de la
+     carte, centré, avec la page assombrie derrière. */
+  .outil.is-modal {
+    width: 100%;
+    max-width: none;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-ink);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  .outil.is-modal::backdrop {
+    background: rgba(11, 22, 39, 0.55);
+    backdrop-filter: blur(3px);
+  }
+  .outil.is-modal .container {
+    display: flex;
+    align-items: center;
+    min-height: 100dvh;
+    /* De l'air en haut et en bas : la carte ne doit jamais toucher les bords,
+       sinon on ne voit plus qu'elle est posée par-dessus la page. */
+    padding-block: clamp(1rem, 4vh, 3rem);
+  }
+  .outil.is-modal .outil-card {
+    width: 100%;
+    animation: outil-popin 0.28s var(--ease-out);
+  }
+  @keyframes outil-popin {
+    from { opacity: 0; transform: translateY(14px) scale(0.985); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .outil-card {
+    position: relative;
+  }
+  .outil-close {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-cream);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+    color: var(--color-muted);
+    cursor: pointer;
+  }
+  .outil-close:hover {
+    box-shadow: inset 0 0 0 1.5px var(--color-navy);
+    color: var(--color-navy);
+  }
+  /* La croix mord sur le titre du premier écran s'il n'a pas d'épaule. */
+  .outil.is-modal .outil-step > :is(h2, .outil-question, .outil-hand) {
+    padding-right: 3rem;
+  }
+
   .outil-card {
     max-width: 760px;
     margin-inline: auto;
@@ -594,10 +1033,18 @@ const ICONES = {
     to { opacity: 1; transform: none; }
   }
 
-  .outil-card h2 {
+  /* En popup, la question est un <p> (voir la note sur les niveaux de titre en
+     tete de fichier). Un <p> n'herite pas du style global des titres : on le
+     lui redonne ici, pour que les deux formes soient identiques a l'oeil. */
+  .outil-card :is(h2, .outil-question) {
     margin: 0 0 var(--space-3);
+    color: var(--color-navy);
+    font-family: var(--font-display);
     font-size: clamp(1.4rem, 3.2vw, 1.9rem);
+    font-weight: 800;
+    letter-spacing: var(--tracking-tight);
     line-height: 1.2;
+    text-wrap: balance;
   }
   .outil-hand {
     margin: 0 0 var(--space-2);
@@ -683,6 +1130,13 @@ const ICONES = {
     color: var(--color-muted);
     font-size: var(--text-sm);
   }
+  /* Sous 480px, six colonnes tomberaient sous les 44px de cible tactile :
+     deux rangées de trois gardent des boutons atteignables au pouce. */
+  @media (max-width: 480px) {
+    .outil-scale {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
 
   /* --- les compteurs de participants --- */
   .outil-row {
@@ -765,6 +1219,97 @@ const ICONES = {
   .outil-actions {
     margin-top: var(--space-8);
   }
+  /* La question « qui aurait pu ne pas venir » se pose sur le même écran que
+     l'effectif, mais elle est d'une autre nature : le trait plein la sépare
+     des trois rangées qui décrivent le collectif. */
+  .outil-row-extra {
+    margin-top: var(--space-2);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 0;
+  }
+  .outil-row-extra .outil-who {
+    max-width: 28ch;
+  }
+
+  .outil-ticker {
+    margin: var(--space-8) 0 0;
+    padding-top: var(--space-6);
+    border-top: 1px dashed var(--color-border);
+    color: var(--color-muted);
+  }
+  .outil-ticker[hidden] {
+    display: none;
+  }
+  .outil-ticker b {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--color-navy);
+  }
+
+
+  /* --- le diagnostic, en tete du resultat ------------------------------- */
+
+  .outil-cause {
+    margin: 0 0 var(--space-4) !important;
+    font-size: clamp(1.6rem, 4.4vw, 2.4rem) !important;
+    line-height: 1.12 !important;
+  }
+  .outil-diagtext {
+    max-width: 58ch;
+    margin: 0 0 var(--space-6);
+    color: var(--color-muted);
+    font-size: var(--text-lg);
+  }
+
+  /* Les indices : la preuve du diagnostic. Encadre discret, pour qu'on voie
+     que c'est une citation de ses propres reponses et pas un nouvel argument. */
+  .outil-indices {
+    max-width: 52ch;
+    padding: var(--space-4) var(--space-6);
+    border-radius: var(--radius-sm);
+    background: var(--color-cream);
+    box-shadow: inset 3px 0 0 var(--color-blue);
+  }
+  .outil-indices[hidden] {
+    display: none;
+  }
+  .outil-indices-head {
+    margin: 0 0 var(--space-3);
+    color: var(--color-navy);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+  .outil-indices ul {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+  .outil-indices li {
+    margin-bottom: 0.35rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .outil-indices li:last-child {
+    margin-bottom: 0;
+  }
+
+  .outil-second {
+    max-width: 52ch;
+    margin: var(--space-4) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .outil-second[hidden] {
+    display: none;
+  }
+
+  /* La cesure entre le pourquoi et le combien : deux reponses distinctes, pas
+     un seul bloc qui coule. */
+  .outil-sep {
+    height: 1px;
+    margin: var(--space-12) 0;
+    background: var(--color-border);
+  }
 
   /* --- le résultat --- */
   .outil-reslabel {
@@ -842,6 +1387,13 @@ const ICONES = {
     color: var(--color-muted);
     font-size: var(--text-sm);
   }
+  #ci-extra-note b {
+    color: var(--color-clay-ink);
+    font-weight: 700;
+  }
+  #ci-extra-note[hidden] {
+    display: none;
+  }
   .outil-track {
     height: 14px;
     border-radius: var(--radius-pill);
@@ -871,8 +1423,9 @@ const ICONES = {
     padding-top: var(--space-8);
     border-top: 1px dashed var(--color-border);
   }
-  .outil-diag h3 {
+  .outil-diag :is(h3, .outil-diag-titre) {
     margin: var(--space-2) 0 var(--space-3);
+    color: var(--color-navy);
     font-family: var(--font-display);
     font-size: clamp(1.35rem, 3.4vw, 1.75rem);
     font-weight: 800;
@@ -896,8 +1449,9 @@ const ICONES = {
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
-  .outil-offer h4 {
+  .outil-offer :is(h4, .outil-offer-titre) {
     margin: var(--space-2) 0 var(--space-3);
+    color: var(--color-navy);
     font-family: var(--font-display);
     font-size: 1.35rem;
     font-weight: 800;
