@@ -69,6 +69,17 @@ const etapes = [
       ['Après', 'Un questionnaire très court à quinze jours et un appel de 20 minutes pour décider de la suite.'],
     ],
     prix: 'À partir de 1 500 € HT',
+    /* Le prix couvre bien plus que deux heures : sans cette ligne, il se
+       compare a une journee de formation aux outils, et parait cher. */
+    inclus:
+      'Entretien de préparation, questionnaire aux participants, trois démonstrations préparées sur votre activité, synthèse visuelle, point à quinze jours.',
+    objectifs: [
+      "Expliquer ce que l'IA générative sait faire, ne sait pas faire, et pourquoi elle se trompe.",
+      "Classer une information en vert, orange ou rouge avant de la confier à un outil d'IA.",
+      'Identifier au moins une tâche de son travail à tester avec l’IA dans les quinze jours.',
+    ],
+    prerequis:
+      "Aucune connaissance technique. Pas besoin d'un ordinateur par personne : les démonstrations se font sur un écran commun.",
   },
   {
     id: 'atelier-metier-augmente',
@@ -316,7 +327,7 @@ const faqs = [
   },
   {
     q: 'Combien coûte un accompagnement IA ?',
-    a: "Le Premier pas IA commence à 1 500 € HT. Les étapes suivantes sont sur devis, selon la taille de l'équipe et le périmètre. Les licences, développements, audits juridiques et déplacements hors des Alpes-Maritimes ne sont pas compris.",
+    a: "Le Premier pas IA commence à 1 500 € HT, préparation, synthèse visuelle et point à quinze jours compris. Les étapes suivantes sont sur devis, selon la taille de l'équipe et le périmètre. Les licences, développements, audits juridiques et déplacements hors des Alpes-Maritimes ne sont pas compris.",
   },
   {
     q: 'Intervenez-vous à Sophia Antipolis, Cannes ou Monaco ?',
@@ -515,6 +526,7 @@ const faqSchema = {
                 </ul>
               </header>
 
+              {e.inclus && <p class="etape-inclus"><strong>Compris dans le prix.</strong> {e.inclus}</p>}
               <p class="etape-pourqui"><strong>Pour qui.</strong> {e.pourQui}</p>
               <p class="etape-promesse">{e.promesse}</p>
 
@@ -532,6 +544,16 @@ const faqSchema = {
                   </ul>
                 </div>
               </div>
+
+              {e.objectifs && (
+                <div class="etape-objectifs">
+                  <p class="etape-label">Objectifs — chaque participant sera capable de</p>
+                  <ul class="etape-liste">
+                    {e.objectifs.map((o) => <li>{o}</li>)}
+                  </ul>
+                  {e.prerequis && <p class="etape-prerequis"><strong>Prérequis.</strong> {e.prerequis}</p>}
+                </div>
+              )}
 
               <p class="etape-preuve"><strong>Comment on sait que c'est réussi.</strong> {e.preuve}</p>
 
@@ -1009,6 +1031,25 @@ const faqSchema = {
     margin-right: var(--space-1);
     color: var(--color-muted);
     font-weight: 400;
+  }
+  .etape-inclus {
+    margin: 0 0 var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-cream);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+    color: var(--color-muted);
+  }
+  .etape-inclus strong,
+  .etape-prerequis strong {
+    color: var(--color-navy);
+  }
+  .etape-objectifs {
+    margin: 0 0 var(--space-6);
+  }
+  .etape-prerequis {
+    margin: var(--space-3) 0 0;
+    color: var(--color-muted);
   }
   .etape-pourqui,
   .etape-promesse {
