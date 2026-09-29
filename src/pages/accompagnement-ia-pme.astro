@@ -42,9 +42,9 @@ const path = '/accompagnement-ia-pme/';
  */
 const etapes = [
   {
-    id: 'declic-ia',
+    id: 'premier-pas-ia',
     phase: 'Comprendre',
-    nom: 'Déclic IA',
+    nom: 'Premier pas IA',
     duree: '2 heures',
     pourQui: "Le dirigeant, le comité de direction ou toute l'équipe, jusqu'à 30 personnes.",
     resultat: "Une compréhension commune, des règles de base et les premières pistes utiles.",
@@ -79,7 +79,7 @@ const etapes = [
       'Une équipe de 6 à 12 personnes qui partage un même métier : commerce, opérations, RH, formation, gestion de projet ou direction.',
     resultat: 'Trois façons de travailler, testées sur de vrais dossiers.',
     promesse:
-      "Pas d'exercices génériques : l'équipe transforme trois tâches réelles en modes opératoires réutilisables, avec l'outil que votre entreprise autorise.",
+      "Pas d'exercices génériques : l'équipe transforme trois tâches réelles en modes opératoires réutilisables, avec l'outil que votre entreprise autorise : Microsoft 365 Copilot, ChatGPT, Claude, Le Chat de Mistral ou Gemini.",
     contenu: [
       'Trois tâches choisies en amont : fréquentes, coûteuses en temps, et peu risquées.',
       'Une méthode simple pour formuler une demande : objectif, contexte, contraintes, références, critères de qualité.',
@@ -250,6 +250,19 @@ const regles = [
   { couleur: 'rouge', titre: 'Rouge', texte: 'Données personnelles, clients, RH, financières sensibles : jamais sans cadre validé par les responsables compétents.' },
 ];
 
+/* Ce que les equipes savent faire en sortant. Des verbes d'action, pas des
+   themes : c'est ce qu'un dirigeant peut constater lui-meme deux mois apres. */
+const capacites = [
+  "Formuler une demande claire à l'IA : objectif, contexte, contraintes, critères de qualité.",
+  "Savoir ce que l'IA fait bien, ce qu'elle fait mal, et repérer une réponse inventée.",
+  'Classer une information en vert, orange ou rouge avant de la confier à un outil.',
+  "Vérifier un résultat avec une grille de contrôle avant de s'en servir.",
+  'Appliquer à leurs vrais dossiers des façons de faire testées et partagées par l’équipe.',
+  "Repérer les tâches qui méritent l'IA — et celles qui ne la méritent pas.",
+  'Mesurer ce qui change : temps passé, reprises, délais.',
+  "Faire vivre les usages en interne, avec des référents, sans dépendre d'un consultant.",
+];
+
 const villes = ['Nice', 'Sophia Antipolis', 'Cannes', 'Antibes', 'Grasse', 'Monaco'];
 const secteurs = [
   'Services aux entreprises',
@@ -267,15 +280,23 @@ const faqs = [
   },
   {
     q: 'Nos équipes utilisent déjà ChatGPT ou Copilot, chacune de leur côté. Par où commencer ?',
-    a: "C'est la situation la plus fréquente, et c'est un bon point de départ : les usages existent déjà. Le Déclic IA pose des règles communes et fait remonter ces usages en deux heures. Si plusieurs pistes apparaissent et qu'il faut choisir, la Cartographie IA utile vous dit lesquelles lancer.",
+    a: "C'est la situation la plus fréquente, et c'est un bon point de départ : les usages existent déjà. Le Premier pas IA pose des règles communes et fait remonter ces usages en deux heures. Si plusieurs pistes apparaissent et qu'il faut choisir, la Cartographie IA utile vous dit lesquelles lancer.",
   },
   {
     q: 'Est-ce une formation à ChatGPT ?',
     a: "Non. On apprend à se servir de l'outil que votre entreprise autorise, mais toujours sur vos vrais dossiers et au service d'un résultat observable : un temps gagné, une erreur évitée, une décision plus rapide. Le succès se mesure à ce qui est encore utilisé quinze jours plus tard.",
   },
   {
+    q: "J'utilise déjà ChatGPT tous les jours. Vais-je apprendre quelque chose ?",
+    a: "Sur l'outil lui-même, peut-être peu. Mais le parcours ne s'adresse pas à une personne : il s'adresse à une équipe. Ce qui manque presque toujours, ce sont des règles communes, des façons de faire partagées et vérifiées, et une mesure de ce que ça change. Votre pratique est d'ailleurs précieuse : c'est souvent d'elle que partent les premiers cas d'usage.",
+  },
+  {
+    q: 'Faut-il savoir coder ou être à l’aise avec la technique ?',
+    a: "Non. On ne code pas et on ne construit pas d'automatisations : on apprend à formuler une demande claire, à vérifier un résultat et à organiser le travail autour. Si vous savez expliquer une tâche à un collègue, vous avez le niveau requis.",
+  },
+  {
     q: 'Faut-il acheter un nouvel outil ?',
-    a: "Non, on part des outils que vous avez déjà ou que vous autorisez. Si un usage demande une automatisation, une connexion à vos logiciels ou un développement, je vous le dis, je qualifie le besoin, et vous orientez le chantier vers un spécialiste. Les licences et les développements ne sont pas compris dans l'accompagnement.",
+    a: "Non, on part des outils que vous avez déjà ou que vous autorisez : Microsoft 365 Copilot, ChatGPT, Claude, Le Chat de Mistral, Gemini. Le choix d'un outil vient après celui des usages, jamais avant. Si un usage demande une automatisation, une connexion à vos logiciels ou un développement, je vous le dis, je qualifie le besoin, et vous orientez le chantier vers un spécialiste. Les licences et les développements ne sont pas compris dans l'accompagnement.",
   },
   {
     q: 'Que deviennent nos données ?',
@@ -291,11 +312,11 @@ const faqs = [
   },
   {
     q: 'Peut-on commencer directement par la Cartographie ou le Sprint ?',
-    a: "Oui. Chaque étape se suffit à elle-même. Le Déclic et l'Atelier métier sont des portes d'entrée ; la Cartographie est le bon point de départ quand les idées sont déjà nombreuses ; le Sprint, quand un cas d'usage est déjà choisi.",
+    a: "Oui. Chaque étape se suffit à elle-même. Le Premier pas et l'Atelier métier sont des portes d'entrée ; la Cartographie est le bon point de départ quand les idées sont déjà nombreuses ; le Sprint, quand un cas d'usage est déjà choisi.",
   },
   {
     q: 'Combien coûte un accompagnement IA ?',
-    a: "Le Déclic IA commence à 1 500 € HT. Les étapes suivantes sont sur devis, selon la taille de l'équipe et le périmètre. Les licences, développements, audits juridiques et déplacements hors des Alpes-Maritimes ne sont pas compris.",
+    a: "Le Premier pas IA commence à 1 500 € HT. Les étapes suivantes sont sur devis, selon la taille de l'équipe et le périmètre. Les licences, développements, audits juridiques et déplacements hors des Alpes-Maritimes ne sont pas compris.",
   },
   {
     q: 'Intervenez-vous à Sophia Antipolis, Cannes ou Monaco ?',
@@ -401,6 +422,15 @@ const faqSchema = {
           </li>
         ))}
       </ol>
+
+      {/* Le fil rouge : ce qui relie les cinq etapes entre elles et les
+          distingue d'une suite de formations. */}
+      <p class="fil-rouge">
+        <strong>Le fil rouge&nbsp;: vos trois tâches.</strong> Dès la première étape, chaque équipe choisit trois
+        tâches réelles de son quotidien — fréquentes, chronophages, peu risquées. On les retrouve à chaque étape&nbsp;:
+        testées, cartographiées, mesurées, puis installées. Pas d'exercice générique&nbsp;: vous travaillez sur ce
+        qui vous coûte vraiment du temps.
+      </p>
     </div>
   </section>
 
@@ -537,6 +567,20 @@ const faqSchema = {
           personnellement — et ce qui mérite d'être travaillé avec l'équipe.
         </p>
       </aside>
+    </div>
+  </section>
+
+  <section class="section" data-reveal data-section-name="Ce que vos équipes sauront faire">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">En sortant du parcours</p>
+          <h2>Ce que vos équipes sauront faire</h2>
+        </div>
+      </div>
+      <ul class="capacites">
+        {capacites.map((c) => <li>{c}</li>)}
+      </ul>
     </div>
   </section>
 
@@ -782,6 +826,48 @@ const faqSchema = {
   .chemin-resultat {
     color: var(--color-muted);
     font-size: var(--text-sm);
+  }
+
+  .fil-rouge {
+    max-width: 50rem;
+    margin: var(--space-8) 0 0;
+    padding: var(--space-4) var(--space-6);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    box-shadow: inset 3px 0 0 var(--color-clay), var(--shadow-sm);
+    color: var(--color-muted);
+  }
+  .fil-rouge strong {
+    color: var(--color-navy);
+  }
+
+  /* ---------- Ce que vos equipes sauront faire ---------- */
+  .capacites {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3) var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .capacites li {
+    position: relative;
+    padding-left: 2rem;
+    color: var(--color-navy);
+  }
+  .capacites li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background: var(--color-orange);
+    color: #122033;
+    font-size: var(--text-xs);
+    font-weight: 800;
   }
 
   /* ---------- Chiffres ---------- */
@@ -1220,7 +1306,8 @@ const faqSchema = {
   @media (max-width: 640px) {
     .benefices,
     .chiffres,
-    .feux {
+    .feux,
+    .capacites {
       grid-template-columns: minmax(0, 1fr);
     }
     .etape {
