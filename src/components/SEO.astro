@@ -43,10 +43,24 @@ const localBusinessSchema = isHome
         addressRegion: SITE.address.region,
         addressCountry: SITE.address.country,
       },
-      areaServed: {
-        '@type': 'Country',
-        name: 'France',
-      },
+      // Le marché local d'abord (Nice, Sophia, Monaco), la France ensuite :
+      // c'est ce qui permet de ressortir sur « accompagnement IA Nice ».
+      areaServed: [
+        { '@type': 'AdministrativeArea', name: 'Alpes-Maritimes' },
+        { '@type': 'City', name: 'Nice' },
+        { '@type': 'City', name: 'Sophia Antipolis' },
+        { '@type': 'City', name: 'Cannes' },
+        { '@type': 'City', name: 'Antibes' },
+        { '@type': 'Country', name: 'Monaco' },
+        { '@type': 'Country', name: 'France' },
+      ],
+      knowsAbout: [
+        'Intelligence collective',
+        'Facilitation de séminaires',
+        'Facilitation graphique',
+        'Coaching de dirigeants',
+        "Accompagnement à l'adoption de l'IA en PME",
+      ],
       sameAs: [SITE.social.linkedin].filter(Boolean),
     }
   : null;

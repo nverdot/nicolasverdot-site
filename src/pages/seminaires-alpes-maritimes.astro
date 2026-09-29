@@ -18,6 +18,7 @@ const formats = [
   { i: '1', title: "Séminaire d'équipe ou de direction", text: "Une journée ou deux pour clarifier une stratégie, trancher des priorités et repartir avec un plan d'action réel." },
   { i: '2', title: "Atelier d'intelligence collective", text: "Un format court et structuré pour traiter un sujet précis : décision, organisation, tensions, projet." },
   { i: '3', title: 'Capture graphique en direct', text: "Une fresque visuelle réalisée pendant votre événement, qui en garde la mémoire et prolonge son impact." },
+  { i: '4', title: 'Accompagnement IA pour PME', text: "Choisir les bons usages de l'IA, les tester sur le travail réel et les faire adopter par les équipes, de Nice à Sophia Antipolis." },
 ];
 
 const missions = [
@@ -49,6 +50,10 @@ const faq = [
   {
     q: 'Travaillez-vous avec les collectivités et les associations ?',
     a: "Oui. J'accompagne des entreprises, des collectivités territoriales et des associations. Les démarches de concertation et les projets de territoire se prêtent particulièrement bien à la facilitation et à la capture graphique.",
+  },
+  {
+    q: "Accompagnez-vous les PME de la région sur l'intelligence artificielle ?",
+    a: "Oui. Le parcours IA utile aide les PME de 30 à 50 personnes des Alpes-Maritimes à choisir les bons usages de l'IA, à les tester sur leur travail réel, à les faire adopter par les équipes et à en mesurer le résultat. Il se déroule en cinq étapes, du Déclic IA de deux heures à un accompagnement de 90 jours.",
   },
   {
     q: "Pouvez-vous animer en anglais ?",
@@ -154,6 +159,7 @@ const faqSchema = {
       <h2>Un séminaire qui ne retombe pas le lundi suivant</h2>
       <p>Beaucoup de séminaires produisent de bons moments et peu de suites. Mon travail consiste à concevoir la conversation qui permettra à votre collectif de produire un résultat exploitable : des décisions assumées, des responsabilités claires, un plan d'action réaliste — et, si vous choisissez la <a href={withBase('/offres/capture-graphique/')}>capture graphique</a>, une trace visuelle que vos équipes gardent et réutilisent.</p>
       <p>Deux façons de travailler ensemble selon votre situation : vous me <a href={withBase('/offres/deleguer-animation/')}>déléguez l'animation</a> du séminaire, ou je vous accompagne en <a href={withBase('/offres/mentoring/')}>mentoring</a> pour que vous l'animiez vous-même. Et pour un enjeu d'équipe qui se joue dans la durée, le <a href={withBase('/offres/coaching-equipe/')}>coaching d'équipe</a>. Pour monter en compétence en interne, des <a href={withBase('/formations/')}>formations à l'intelligence collective et à la facilitation</a>.</p>
+      <p>Et si vos équipes utilisent déjà l'IA chacune dans leur coin, le parcours <a href={withBase('/accompagnement-ia-pme/')}>IA utile pour les PME</a> vous aide à choisir les bons usages, à les tester sur votre travail réel et à les faire adopter — à Nice, Sophia Antipolis, Cannes ou Monaco.</p>
     </div>
   </section>
 

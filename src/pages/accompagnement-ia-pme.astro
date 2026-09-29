@@ -1,0 +1,1251 @@
+---
+/**
+ * IA utile — l'offre d'accompagnement IA pour les PME de Nice à Sophia.
+ *
+ * Deux pages parlent d'IA sur le site, et elles ne repondent pas a la meme
+ * question. /intelligence-collective-augmentee/ dit a quel moment d'un atelier
+ * on se sert de l'IA ; celle-ci dit comment une PME passe d'usages disperses a
+ * des usages choisis, testes, adoptes et mesures. Elles se renvoient l'une a
+ * l'autre, sans se repeter.
+ *
+ * Positionnement (voir l'etude de marche de septembre 2026) : ni formateur
+ * ChatGPT de plus, ni integrateur technique. La place a prendre est entre la
+ * conference de sensibilisation — abondante et souvent gratuite dans le 06 —
+ * et l'integrateur qui construit des agents. D'ou la section « ce que je ne
+ * fais pas » : elle rend credible tout le reste, et c'est ce qu'aucun
+ * concurrent local n'ecrit.
+ *
+ * Tarifs : seul le prix d'entree est affiche (choix de Nicolas, 2026-09-29) ;
+ * les etapes suivantes sont sur devis tant que les trois premieres missions
+ * n'ont pas permis de les ajuster. L'offre pilote ne montre pas de montant
+ * pour la meme raison.
+ *
+ * SEO local : la page vise « accompagnement IA PME », « IA en entreprise
+ * Nice », « formation IA entreprise Sophia Antipolis ». Les villes sont dans
+ * le titre, le chapo, une section dediee, la FAQ et le balisage Service
+ * (areaServed) — pas en liste de mots-cles, mais la ou un lecteur les
+ * chercherait.
+ */
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { SITE } from '../data/site';
+import { withBase } from '../utils/url';
+
+const path = '/accompagnement-ia-pme/';
+
+/*
+ * Le parcours. Cinq etapes, toujours la meme grille de lecture : pour qui, le
+ * resultat, ce qu'on y fait, ce que vous gardez, et comment on sait que c'est
+ * reussi. Le « comment on sait » est ce qui distingue une prestation qui se
+ * mesure d'une prestation qui se raconte : il reste visible, jamais replie.
+ */
+const etapes = [
+  {
+    id: 'declic-ia',
+    phase: 'Comprendre',
+    nom: 'Déclic IA',
+    duree: '2 heures',
+    pourQui: "Le dirigeant, le comité de direction ou toute l'équipe, jusqu'à 30 personnes.",
+    resultat: "Une compréhension commune, des règles de base et les premières pistes utiles.",
+    promesse:
+      "En deux heures, l'équipe comprend ce que l'IA peut réellement changer dans son activité, ce qu'elle ne doit pas faire avec les données de l'entreprise, et par où commencer.",
+    contenu: [
+      "Ce que l'IA sait faire, ne sait pas faire, et pourquoi elle se trompe.",
+      'Trois démonstrations sur des tâches proches de votre quotidien, avec des données fictives ou anonymisées.',
+      'Les règles vert / orange / rouge pour les données, et ce qui doit toujours être validé par un humain.',
+      'Un repérage collectif des tâches à explorer, et un test concret par équipe pour les quinze jours suivants.',
+    ],
+    livrables: [
+      'Une synthèse visuelle de deux pages',
+      "Une première liste de pistes d'usage",
+      'Une fiche « outils, données et vérification »',
+    ],
+    preuve:
+      "Chacun sait citer les usages autorisés, ceux qui demandent une validation, et au moins une tâche concrète à tester. Cette étape sensibilise : elle ne promet pas encore de gain économique.",
+    deroule: [
+      ['Avant', "Un entretien de 45 minutes avec vous, et cinq questions aux participants : outils déjà utilisés, tâches répétitives, irritants, craintes, idées."],
+      ['Pendant', 'Deux heures : attentes et idées reçues, démonstrations, règles, repérage, engagement.'],
+      ['Après', 'Un questionnaire très court à quinze jours et un appel de 20 minutes pour décider de la suite.'],
+    ],
+    prix: 'À partir de 1 500 € HT',
+  },
+  {
+    id: 'atelier-metier-augmente',
+    phase: 'Pratiquer',
+    nom: 'Atelier métier augmenté',
+    duree: '1 journée',
+    pourQui:
+      'Une équipe de 6 à 12 personnes qui partage un même métier : commerce, opérations, RH, formation, gestion de projet ou direction.',
+    resultat: 'Trois façons de travailler, testées sur de vrais dossiers.',
+    promesse:
+      "Pas d'exercices génériques : l'équipe transforme trois tâches réelles en modes opératoires réutilisables, avec l'outil que votre entreprise autorise.",
+    contenu: [
+      'Trois tâches choisies en amont : fréquentes, coûteuses en temps, et peu risquées.',
+      'Une méthode simple pour formuler une demande : objectif, contexte, contraintes, références, critères de qualité.',
+      "Des tests sur des dossiers réels, puis le repérage des erreurs, des angles morts et des validations nécessaires.",
+      'Le processus avant / après cartographié au mur, et des tests croisés entre participants.',
+    ],
+    livrables: [
+      'Trois fiches de travail assisté par IA, testées',
+      "Une bibliothèque de départ d'instructions et de points de contrôle",
+      'Une grille de vérification de la qualité',
+      'Un tableau de mesure à quinze jours',
+    ],
+    preuve:
+      "Au moins une des trois nouvelles façons de travailler est réellement réutilisée quinze jours plus tard. Le succès, ce n'est pas le nombre de prompts écrits : c'est un usage qui se répète.",
+    deroule: [
+      ['Avant', "Une heure de cadrage avec le manager (et l'informatique ou le délégué à la protection des données si besoin), le choix des tâches, et une mesure de départ : temps passé, reprises, délais."],
+      ['Pendant', 'Une journée de 9 h à 17 h, du premier test sur un vrai dossier aux règles communes et aux engagements individuels.'],
+      ['Après', "Un point collectif de 45 minutes à quinze jours : on compare avec la mesure de départ, puis on abandonne, on améliore ou on élargit."],
+    ],
+  },
+  {
+    id: 'cartographie-ia-utile',
+    phase: 'Choisir',
+    nom: 'Cartographie IA utile',
+    duree: '3 semaines',
+    pourQui:
+      "Une PME de 30 à 50 personnes où les usages de l'IA se multiplient dans tous les sens, et qui doit choisir où investir.",
+    resultat: "Trois cas d'usage priorisés et une feuille de route à 90 jours.",
+    promesse:
+      'En trois semaines, la direction sait quoi lancer, quoi écarter, avec quel responsable, quel indicateur et quelles précautions.',
+    contenu: [
+      'Un cadrage avec le dirigeant : croissance, marge, qualité, délais, charge, expérience client ou recrutement ?',
+      "Six à huit entretiens dans différents métiers, pour repérer irritants, reprises, décisions lentes — et les usages de l'IA déjà pratiqués, y compris ceux dont personne ne parle.",
+      "Un atelier de cartographie : le travail réel au mur, les idées reformulées en problèmes métier, puis notées selon la valeur, la fréquence, la faisabilité, les données, le risque et l'adoption.",
+      "Un arbitrage : maintenant, plus tard, à ne pas faire. Et le choix d'un pilote.",
+    ],
+    livrables: [
+      'Une carte visuelle du travail et des irritants',
+      'Un portefeuille de 10 à 15 idées qualifiées',
+      "Trois fiches de cas d'usage : bénéfice attendu, risques, dépendances",
+      'Une matrice de priorisation et une feuille de route à 90 jours',
+      'La liste des besoins techniques ou juridiques à confier à des spécialistes',
+    ],
+    preuve:
+      "La direction ne repart pas avec une liste d'idées. Elle a choisi un pilote, un responsable, un indicateur, un groupe test et une date de démarrage.",
+    deroule: [
+      ['Semaine 1', 'Cadrage avec le dirigeant, puis entretiens dans les métiers.'],
+      ['Semaine 2', 'Observation de deux processus, et atelier de cartographie avec les personnes concernées.'],
+      ['Semaine 3', "Arbitrage en comité de direction et restitution de la feuille de route."],
+    ],
+  },
+  {
+    id: 'sprint-usage-ia',
+    phase: 'Prouver',
+    nom: 'Sprint Usage IA',
+    duree: '6 semaines',
+    pourQui:
+      "Une entreprise qui a choisi un cas d'usage et veut savoir s'il fonctionne avant de le déployer ou de développer davantage.",
+    resultat: "Un cas d'usage expérimenté, documenté et mesuré.",
+    promesse:
+      "En six semaines, un cas d'usage est testé par de vrais utilisateurs, et la direction a de quoi décider : arrêter, améliorer ou déployer.",
+    contenu: [
+      "Un contrat d'expérimentation : un sponsor, cinq à huit utilisateurs, une mesure de départ, une cible, des critères de réussite et d'arrêt.",
+      "Le futur travail dessiné précisément : ce que fait la personne, ce que fait l'IA, et ce qui reste validé par un humain.",
+      'Un premier fonctionnement monté dans les outils que vous avez déjà, puis deux semaines de test terrain.',
+      "Un test de transmission : quelqu'un qui n'a pas participé à la conception doit pouvoir s'en servir.",
+    ],
+    livrables: [
+      'Le mode opératoire et la grille de contrôle',
+      'Le bilan avant / après et les retours des utilisateurs',
+      'Une recommandation argumentée : arrêt, nouvelle itération ou déploiement',
+      'Le plan de déploiement si le résultat est probant',
+    ],
+    preuve:
+      "Un usage réel, une mesure réelle, une décision. Une décision d'arrêt argumentée est aussi un bon résultat : elle évite un investissement inutile.",
+    deroule: [
+      ['Semaine 0', "Contrat d'expérimentation : qui, quoi, avec quelles données, et comment on saura."],
+      ['Semaines 1 et 2', 'Conception du futur travail, puis premier prototype et mode opératoire.'],
+      ['Semaines 3 et 4', 'Test terrain sur un périmètre limité, deux points de retour, ajustements.'],
+      ['Semaines 5 et 6', 'Stabilisation, test de transmission, comparaison avant / après et décision.'],
+    ],
+  },
+  {
+    id: 'cap-ia-90',
+    phase: 'Transformer',
+    nom: 'Cap IA 90',
+    duree: '90 jours',
+    pourQui:
+      "Une PME dont la direction veut passer d'initiatives individuelles à une adoption pilotée, dans plusieurs équipes.",
+    resultat: "Deux usages installés, des référents internes et des règles d'usage partagées.",
+    promesse:
+      "En 90 jours, l'entreprise installe deux usages utiles, se dote d'un cadre minimal, et plusieurs personnes en interne sont capables de poursuivre sans moi.",
+    contenu: [
+      'Mois 1 — Aligner et choisir : diagnostic, atelier de direction sur les objectifs et les limites, deux pilotes, présentation transparente de la démarche aux salariés.',
+      "Mois 2 — Tester et apprendre : deux groupes pilotes, points hebdomadaires courts, coaching des managers, journal des apprentissages et des incidents.",
+      "Mois 3 — Ancrer et transmettre : stabilisation, formation des utilisateurs, réseau de quatre à six référents internes, règles intégrées à la charte informatique.",
+      'Un bilan final où ce sont les utilisateurs qui font la démonstration, pas le consultant.',
+    ],
+    livrables: [
+      'Deux usages documentés et mesurés',
+      "Une charte (ou un complément de charte) d'usage de l'IA",
+      "Un registre simple des cas d'usage",
+      "Un tableau de bord valeur / adoption / risques",
+      'Un kit pour les référents internes et une feuille de route à six mois',
+    ],
+    preuve:
+      'Deux usages réguliers, des responsables identifiés, des mesures suivies, et des personnes en interne capables de faire vivre la suite.',
+    deroule: [
+      ['Rythme', 'Un comité de pilotage de 45 minutes toutes les deux semaines, deux ateliers de direction, quatre à six ateliers métiers et six permanences de questions-réponses.'],
+    ],
+  },
+];
+
+/* Ce que le dirigeant achete vraiment — pas une technologie. */
+const benefices = [
+  { titre: 'Du temps rendu aux équipes', texte: 'Sur des tâches identifiées et mesurées, pas sur une promesse générale.' },
+  { titre: "Moins d'erreurs et de reprises", texte: 'Parce que chaque usage vient avec ses points de contrôle.' },
+  { titre: 'Des décisions plus rapides', texte: "L'information arrive au moment où on en a besoin." },
+  { titre: 'Un usage commun', texte: 'À la place de pratiques individuelles, souvent cachées, chacun dans son coin.' },
+  { titre: 'Des règles claires', texte: 'Sur les outils, les données, et ce qui reste validé par un humain.' },
+  { titre: 'Votre autonomie', texte: "Des référents internes qui font vivre la suite après mon départ." },
+];
+
+/* Les differences defendables — celles qu'on peut constater dans le
+   dispositif, pas celles qu'on affirme (« humain », tout le monde le dit). */
+const differences = [
+  {
+    titre: 'Je pars du travail réel',
+    texte: "Réunions, devis, appels d'offres, comptes rendus, dossiers clients : on regarde comment le travail se fait avant de parler d'outil.",
+  },
+  {
+    titre: 'Je fais travailler tout le monde ensemble',
+    texte: "Dirigeants, managers et opérationnels dans la même pièce. C'est souvent le chaînon manquant entre une idée d'usage et son adoption.",
+  },
+  {
+    titre: 'Je rends les arbitrages visibles',
+    texte: "La facilitation graphique sert à cartographier les irritants, les flux, les décisions et la future façon de travailler — au mur, pas dans un rapport.",
+  },
+  {
+    titre: 'Je ne vends aucun outil',
+    texte: "Indépendant des éditeurs, je peux vous recommander de ne pas automatiser un processus bancal, ou de renoncer à un usage trop risqué.",
+  },
+  {
+    titre: 'Je reste après la formation',
+    texte: "Une formation seule ne garantit pas un usage deux mois plus tard. Le parcours prévoit des points à 15 jours, 30, 60 et 90 jours.",
+  },
+  {
+    titre: 'Je mesure',
+    texte: "Temps de cycle, temps passé, erreurs, reprises, délai de décision, taux d'usage réel. Avant, et après.",
+  },
+];
+
+/* Ce que je ne fais pas. Liste courte, dite franchement : c'est elle qui
+   rend credible la promesse du reste. */
+const horsPerimetre = [
+  "Développer des agents d'IA complexes",
+  "Raccorder un outil à votre ERP, votre CRM ou votre système d'information",
+  'Réaliser un audit de cybersécurité',
+  "Garantir seul votre conformité au RGPD ou à l'AI Act",
+  "Choisir votre architecture de données",
+  "Promettre un retour sur investissement avant d'avoir expérimenté",
+];
+
+/* Les regles de protection, communes a toutes les etapes. */
+const regles = [
+  { couleur: 'vert', titre: 'Vert', texte: 'Informations publiques ou fictives : utilisables dans les outils autorisés par l’entreprise.' },
+  { couleur: 'orange', titre: 'Orange', texte: 'Informations internes : seulement dans un compte professionnel, et avec une relecture humaine.' },
+  { couleur: 'rouge', titre: 'Rouge', texte: 'Données personnelles, clients, RH, financières sensibles : jamais sans cadre validé par les responsables compétents.' },
+];
+
+const villes = ['Nice', 'Sophia Antipolis', 'Cannes', 'Antibes', 'Grasse', 'Monaco'];
+const secteurs = [
+  'Services aux entreprises',
+  "Cabinets (expertise comptable, conseil, avocats)",
+  "Bureaux d'études",
+  'Organismes de formation',
+  'Agences',
+  'Entreprises de services numériques',
+];
+
+const faqs = [
+  {
+    q: "Qu'est-ce qu'un accompagnement IA pour une PME ?",
+    a: "C'est aider l'entreprise à choisir les usages de l'IA qui valent la peine, à les tester sur son travail réel, à les faire adopter par les équipes et à mesurer ce qu'ils changent. Ce n'est ni une formation aux outils, ni un projet informatique : c'est un travail sur la façon de travailler.",
+  },
+  {
+    q: 'Nos équipes utilisent déjà ChatGPT ou Copilot, chacune de leur côté. Par où commencer ?',
+    a: "C'est la situation la plus fréquente, et c'est un bon point de départ : les usages existent déjà. Le Déclic IA pose des règles communes et fait remonter ces usages en deux heures. Si plusieurs pistes apparaissent et qu'il faut choisir, la Cartographie IA utile vous dit lesquelles lancer.",
+  },
+  {
+    q: 'Est-ce une formation à ChatGPT ?',
+    a: "Non. On apprend à se servir de l'outil que votre entreprise autorise, mais toujours sur vos vrais dossiers et au service d'un résultat observable : un temps gagné, une erreur évitée, une décision plus rapide. Le succès se mesure à ce qui est encore utilisé quinze jours plus tard.",
+  },
+  {
+    q: 'Faut-il acheter un nouvel outil ?',
+    a: "Non, on part des outils que vous avez déjà ou que vous autorisez. Si un usage demande une automatisation, une connexion à vos logiciels ou un développement, je vous le dis, je qualifie le besoin, et vous orientez le chantier vers un spécialiste. Les licences et les développements ne sont pas compris dans l'accompagnement.",
+  },
+  {
+    q: 'Que deviennent nos données ?',
+    a: "Elles restent sous votre contrôle. On utilise les comptes et les outils autorisés par l'entreprise, jamais un compte personnel. Les données servant aux formations sont anonymisées ou fictives. Chaque type d'information est classé vert, orange ou rouge, et toute communication ou décision importante reste validée par un humain.",
+  },
+  {
+    q: "L'AI Act oblige-t-il à former nos salariés à l'IA ?",
+    a: "L'article 4 du règlement européen sur l'IA demande aux entreprises qui utilisent des systèmes d'IA de prendre des mesures pour que leurs équipes en aient une culture suffisante, sans imposer de niveau ni de format unique. Je vous fournis des traces utiles — programme, présence, évaluation, règles d'usage — mais pas un « certificat de conformité ». Les questions juridiques se valident avec votre juriste ou votre délégué à la protection des données.",
+  },
+  {
+    q: "Développez-vous des agents d'IA ou des automatisations ?",
+    a: "Non. Mon rôle est de trouver les bons usages, de les faire tester et adopter, et de mesurer leur effet. Quand il faut construire ou connecter une solution, je rédige le besoin et vous travaillez avec un intégrateur. Je peux rester à vos côtés pour que l'usage tienne dans les équipes.",
+  },
+  {
+    q: 'Peut-on commencer directement par la Cartographie ou le Sprint ?',
+    a: "Oui. Chaque étape se suffit à elle-même. Le Déclic et l'Atelier métier sont des portes d'entrée ; la Cartographie est le bon point de départ quand les idées sont déjà nombreuses ; le Sprint, quand un cas d'usage est déjà choisi.",
+  },
+  {
+    q: 'Combien coûte un accompagnement IA ?',
+    a: "Le Déclic IA commence à 1 500 € HT. Les étapes suivantes sont sur devis, selon la taille de l'équipe et le périmètre. Les licences, développements, audits juridiques et déplacements hors des Alpes-Maritimes ne sont pas compris.",
+  },
+  {
+    q: 'Intervenez-vous à Sophia Antipolis, Cannes ou Monaco ?',
+    a: "Oui. Je suis basé à Nice et j'interviens dans tout le 06 : Nice, Sophia Antipolis, Cannes, Antibes, Grasse, et à Monaco. Les ateliers se font chez vous, sur votre travail réel. Je peux aussi intervenir ailleurs en France, avec des frais de déplacement en plus.",
+  },
+];
+
+const siteUrl = (p: string) => new URL(withBase(p), Astro.site).toString();
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'IA utile — accompagnement IA pour les PME',
+  serviceType: "Accompagnement à l'adoption de l'intelligence artificielle en entreprise",
+  description:
+    "Un parcours en cinq étapes pour aider les PME à choisir les bons usages de l'IA, à les tester sur le travail réel, à les faire adopter par les équipes et à en mesurer les résultats.",
+  url: siteUrl(path),
+  provider: {
+    '@type': 'Person',
+    name: 'Nicolas Verdot',
+    url: siteUrl('/a-propos/'),
+    email: SITE.email,
+    telephone: SITE.phone,
+  },
+  audience: { '@type': 'BusinessAudience', name: 'PME de 30 à 50 collaborateurs' },
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: 'Alpes-Maritimes' },
+    ...villes.filter((v) => v !== 'Monaco').map((v) => ({ '@type': 'City', name: v })),
+    { '@type': 'Country', name: 'Monaco' },
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'IA utile — de l’idée à l’usage',
+    itemListElement: etapes.map((e, i) => ({
+      '@type': 'Offer',
+      position: i + 1,
+      url: `${siteUrl(path)}#${e.id}`,
+      ...(e.prix
+        ? { priceSpecification: { '@type': 'PriceSpecification', minPrice: 1500, priceCurrency: 'EUR', valueAddedTaxIncluded: false } }
+        : {}),
+      itemOffered: {
+        '@type': 'Service',
+        name: e.nom,
+        description: `${e.resultat} Durée : ${e.duree}.`,
+      },
+    })),
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout
+  title="Accompagnement IA pour PME à Nice et Sophia Antipolis — by Nicolas Verdot"
+  description="Choisir les bons usages de l'IA, les tester sur le travail réel, les faire adopter et mesurer le résultat. Un parcours en 5 étapes pour les PME des Alpes-Maritimes."
+  path={path}
+  breadcrumbs={[
+    { name: 'Accueil', path: '/' },
+    { name: 'Accompagnement IA pour PME', path },
+  ]}
+>
+  <PageHero
+    eyebrow="IA utile · PME de Nice à Sophia Antipolis"
+    title="Vos équipes utilisent déjà l'IA."
+    titleAccent="Chacune dans son coin."
+    summary="La question n'est plus « faut-il y aller ? », mais <strong>où l'utiliser, avec quelles règles, et pour quel résultat</strong>. J'aide les PME de 30 à 50 personnes à transformer l'IA en usages concrets, adoptés par les équipes et mesurés — sans ajouter une usine à gaz."
+    pills={['PME de 30 à 50 personnes', 'Alpes-Maritimes & Monaco', 'Indépendant des éditeurs']}
+  />
+
+  {/* Le chemin en un coup d'oeil, juste sous le hero : c'est ce que le
+      visiteur vient chercher. Chaque etape est un lien vers son detail. */}
+  <section class="section parcours-apercu" data-reveal data-section-name="Le parcours en bref">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">IA utile — de l'idée à l'usage</p>
+          <h2>Un parcours en cinq étapes</h2>
+        </div>
+        <p>
+          Chaque étape se suffit à elle-même et prépare la suivante. Vous entrez là où vous en êtes&nbsp;: la
+          découverte, la pratique, le choix, la preuve, ou l'installation dans la durée.
+        </p>
+      </div>
+
+      <ol class="chemin">
+        {etapes.map((e, i) => (
+          <li>
+            <a href={`#${e.id}`} class="chemin-etape">
+              <span class="chemin-num" aria-hidden="true">{i + 1}</span>
+              <span class="chemin-phase">{e.phase}</span>
+              <strong class="chemin-nom">{e.nom}</strong>
+              <span class="chemin-duree">{e.duree}</span>
+              <span class="chemin-resultat">{e.resultat}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal data-section-name="Le constat">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Le constat</p>
+          <h2>L'IA est déjà dans vos murs. Ses résultats, pas encore.</h2>
+        </div>
+        <p>
+          Beaucoup de dirigeants ont déjà testé. Peu ont transformé ces essais en façons de travailler fiables,
+          partagées et mesurées. C'est exactement l'espace où j'interviens.
+        </p>
+      </div>
+      <div class="chiffres">
+        <div class="chiffre">
+          <span class="chiffre-val">53&nbsp;%</span>
+          <p>des PME utilisent déjà au moins une solution d'IA.</p>
+        </div>
+        <div class="chiffre">
+          <span class="chiffre-val">34&nbsp;%</span>
+          <p>s'en servent surtout pour générer du contenu&nbsp;; 9&nbsp;% seulement pour analyser leurs données.</p>
+        </div>
+        <div class="chiffre">
+          <span class="chiffre-val">5&nbsp;%</span>
+          <p>des TPE-PME ont investi dans une formation à l'IA, et 2&nbsp;% dans un accompagnement.</p>
+        </div>
+      </div>
+      <p class="source">
+        Source&nbsp;: <a href="https://www.francenum.gouv.fr/guides-et-conseils/strategie-numerique/comprendre-le-numerique/barometre-france-num-2026-le" target="_blank" rel="noopener">Baromètre France Num 2026</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" data-reveal data-section-name="Ce que vous achetez">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Ce que vous achetez vraiment</p>
+          <h2>Pas une technologie. Un changement qu'on peut constater.</h2>
+        </div>
+      </div>
+      <ul class="benefices">
+        {benefices.map((b) => (
+          <li>
+            <strong>{b.titre}</strong>
+            <span>{b.texte}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* Le detail des cinq etapes. Une seule colonne, la meme grille repetee
+      cinq fois : on l'apprend a la premiere etape, on parcourt les suivantes
+      en diagonale. Le deroule complet est replie — il interesse celui qui
+      achete, pas celui qui decouvre. */}
+  <section class="section alt" data-reveal data-section-name="Les cinq étapes en détail">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Le détail</p>
+          <h2>Ce que vous trouverez à chaque étape</h2>
+        </div>
+      </div>
+
+      <ol class="etapes">
+        {etapes.map((e, i) => (
+          <li class="etape" id={e.id}>
+            <div class="etape-rail" aria-hidden="true">
+              <span class="etape-num">{i + 1}</span>
+            </div>
+            <article class="etape-carte">
+              <header class="etape-tete">
+                <p class="etape-phase">Étape {i + 1} · {e.phase}</p>
+                <h3>{e.nom}</h3>
+                <p class="etape-resultat">{e.resultat}</p>
+                <ul class="etape-meta">
+                  <li><span>Durée</span> {e.duree}</li>
+                  <li><span>Tarif</span> {e.prix ?? 'Sur devis'}</li>
+                </ul>
+              </header>
+
+              <p class="etape-pourqui"><strong>Pour qui.</strong> {e.pourQui}</p>
+              <p class="etape-promesse">{e.promesse}</p>
+
+              <div class="etape-cols">
+                <div>
+                  <p class="etape-label">Ce qu'on y fait</p>
+                  <ul class="etape-liste">
+                    {e.contenu.map((c) => <li>{c}</li>)}
+                  </ul>
+                </div>
+                <div>
+                  <p class="etape-label">Ce que vous gardez</p>
+                  <ul class="etape-liste etape-livrables">
+                    {e.livrables.map((l) => <li>{l}</li>)}
+                  </ul>
+                </div>
+              </div>
+
+              <p class="etape-preuve"><strong>Comment on sait que c'est réussi.</strong> {e.preuve}</p>
+
+              <details class="etape-deroule">
+                <summary>Le déroulé</summary>
+                <dl>
+                  {e.deroule.map(([quand, quoi]) => (
+                    <>
+                      <dt>{quand}</dt>
+                      <dd>{quoi}</dd>
+                    </>
+                  ))}
+                </dl>
+              </details>
+            </article>
+          </li>
+        ))}
+      </ol>
+
+      {/* L'option dirigeant : une porte d'entree pour celui qui ne veut pas
+          encore engager son equipe. Placee apres le parcours, pas dedans —
+          ce n'est pas une etape. */}
+      <aside class="option-dirigeant" id="copilote-ia-dirigeant">
+        <p class="eyebrow">En option, avant d'embarquer l'équipe</p>
+        <h3>Copilote IA du dirigeant</h3>
+        <p>
+          Vous voulez d'abord vous faire votre propre idée&nbsp;? Quatre séances de 90 minutes sur six semaines,
+          sur <strong>vos</strong> dossiers&nbsp;: préparer une décision, synthétiser une information, communiquer,
+          déléguer, préparer une réunion. Avec un canal de questions entre les séances et un bilan final.
+        </p>
+        <p>
+          Le but n'est pas de faire de vous un spécialiste des outils, mais de repérer ce que vous gagnez
+          personnellement — et ce qui mérite d'être travaillé avec l'équipe.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  {/* L'offre pilote. Pas de montant (choix de Nicolas) : le tarif de
+      lancement se discute en rendez-vous. Elle dit aussi honnetement pourquoi
+      il n'y a pas encore d'etude de cas IA sur le site. */}
+  <section class="section" data-reveal data-section-name="Offre pilote">
+    <div class="container">
+      <div class="pilote">
+        <p class="pilote-badge">Automne 2026 · deux places</p>
+        <h2>Je cherche deux PME azuréennes pilotes</h2>
+        <p>
+          Pour la <a href="#cartographie-ia-utile">Cartographie IA utile</a>, je propose un <strong>tarif de
+          lancement</strong> à deux entreprises des Alpes-Maritimes. En échange&nbsp;: l'accès aux mesures avant /
+          après, et le droit de raconter votre cas, dans une version que vous aurez validée.
+        </p>
+        <p class="pilote-note">Ce n'est pas gratuit, et ce n'est pas un test à vos dépens&nbsp;: c'est le même travail, avec un regard partagé sur les résultats.</p>
+        <a href={withBase('/contact/')} class="btn">Candidater comme PME pilote →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal data-section-name="Ma différence">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Pourquoi moi</p>
+          <h2>Entre la conférence et l'intégrateur</h2>
+        </div>
+        <p>
+          Les conférences de sensibilisation sont nombreuses dans le 06, les intégrateurs construisent des
+          outils. Il manque souvent quelqu'un pour <strong>faire émerger les bons usages, décider collectivement,
+          tester vite, et prouver le résultat</strong>. C'est mon métier depuis bien avant l'IA&nbsp;: faire
+          travailler un collectif sur ce qui doit changer, jusqu'à ce que ça change.
+        </p>
+      </div>
+      <div class="cards differences">
+        {differences.map((d) => (
+          <article class="card">
+            <h3>{d.titre}</h3>
+            <p>{d.texte}</p>
+          </article>
+        ))}
+      </div>
+      <p class="credibilite">
+        Avant l'IA, j'ai accompagné des équipes en transformation chez Air France-KLM, Amadeus ou Schneider
+        Electric, comme coach agile et facilitateur&nbsp;: des références en conduite du changement, pas encore
+        en IA. <a href={withBase('/a-propos/')}>Mon parcours →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" data-reveal data-section-name="Ce que je ne fais pas">
+    <div class="container limites">
+      <div>
+        <p class="eyebrow">Dit franchement</p>
+        <h2>Ce que je ne fais pas</h2>
+        <p>
+          Quand un usage demande de construire ou de connecter une solution, je rédige le besoin et vous
+          oriente vers le bon spécialiste&nbsp;: intégrateur, juriste, délégué à la protection des données,
+          expert en cybersécurité. Mon rôle reste celui de l'architecte des usages et de l'adoption. Vous savez
+          toujours qui est responsable de quoi.
+        </p>
+      </div>
+      <ul class="hors-perimetre">
+        {horsPerimetre.map((h) => <li>{h}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal data-section-name="Les règles de protection">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Vos données</p>
+          <h2>Des règles simples, dès la première heure</h2>
+        </div>
+        <p>
+          Toutes les étapes partent des mêmes règles&nbsp;: les comptes et outils autorisés par l'entreprise,
+          jamais un compte personnel, des données anonymisées ou fictives pour s'entraîner, et une validation
+          humaine pour toute décision ou communication importante.
+        </p>
+      </div>
+      <ul class="feux">
+        {regles.map((r) => (
+          <li class={`feu feu-${r.couleur}`}>
+            <span class="feu-pastille" aria-hidden="true"></span>
+            <strong>{r.titre}</strong>
+            <p>{r.texte}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="feux-note">
+        Les règles d'usage de l'IA s'intègrent à votre charte informatique quand elle existe, et les sujets
+        juridiques, sociaux et de cybersécurité sont validés par les responsables compétents.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" data-reveal data-section-name="Près de chez vous">
+    <div class="container local">
+      <div>
+        <p class="eyebrow">Alpes-Maritimes & Monaco</p>
+        <h2>Un accompagnement IA à Nice, Sophia Antipolis et dans tout le 06</h2>
+        <p>
+          Je suis basé à Nice. Les ateliers se tiennent chez vous, sur votre travail réel, et le suivi à 15, 30,
+          60 et 90 jours se fait en personne quand c'est utile — sans frais de déplacement dans le département.
+        </p>
+        <ul class="villes" aria-label="Villes d'intervention">
+          {villes.map((v) => <li>{v}</li>)}
+        </ul>
+      </div>
+      <div class="secteurs">
+        <p class="etape-label">Particulièrement pour</p>
+        <ul>
+          {secteurs.map((s) => <li>{s}</li>)}
+        </ul>
+        <p class="secteurs-note">Et plus largement, toute entreprise où le travail passe par des documents, des projets et des décisions.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal data-section-name="Aller plus loin">
+    <div class="container prose">
+      <p class="eyebrow">Aller plus loin</p>
+      <h2>L'IA dans vos réunions et vos ateliers</h2>
+      <p>
+        Une fois les usages installés, reste la question de la décision collective&nbsp;: à quel moment d'un
+        comité ou d'un atelier on se sert de l'IA, et à quel moment on la range. C'est l'objet de la page
+        <a href={withBase('/intelligence-collective-augmentee/')}>intelligence collective augmentée</a> et des
+        formations <a href={withBase('/formations/codir-augmente/')}>Codir augmenté</a> et
+        <a href={withBase('/formations/chef-de-projet-augmente/')}>Chef de projet augmenté</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" data-reveal data-section-name="FAQ">
+    <div class="container prose">
+      <p class="eyebrow">FAQ</p>
+      <h2>Questions fréquentes sur l'accompagnement IA</h2>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABlock
+    dark
+    eyebrow="Premier échange, 30 minutes"
+    title="Regardons vos trois tâches les plus chronophages."
+    subtitle="Dites-moi comment votre équipe utilise l'IA aujourd'hui et ce qui vous fait perdre du temps. On voit ensemble par quelle étape commencer — ou s'il vaut mieux attendre."
+    ctaLabel="Prendre rendez-vous"
+  />
+
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Layout>
+
+<style>
+  /* ---------- Le chemin en bref ---------- */
+  .chemin {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+  }
+  /* Le fil qui relie les etapes : un trait de feutre derriere les pastilles. */
+  .chemin::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--space-6) + 22px);
+    left: 10%;
+    right: 10%;
+    height: 3px;
+    background: var(--color-orange);
+    border-radius: 2px;
+  }
+  .chemin li {
+    position: relative;
+  }
+  .chemin-etape {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    height: 100%;
+    padding: var(--space-6) var(--space-4);
+    border-radius: var(--radius-md);
+    color: inherit;
+    text-decoration: none;
+    transition: background var(--duration-hover) ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .chemin-etape:hover {
+      background: var(--color-surface);
+    }
+    .chemin-etape:hover .chemin-nom {
+      text-decoration: underline;
+      text-decoration-color: var(--color-orange);
+      text-decoration-thickness: 3px;
+      text-underline-offset: 4px;
+    }
+  }
+  .chemin-num {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-orange);
+    color: #122033;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+  }
+  .chemin-phase {
+    margin-top: var(--space-2);
+    color: var(--color-clay-ink);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .chemin-nom {
+    color: var(--color-navy);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    line-height: 1.25;
+  }
+  .chemin-duree {
+    color: var(--color-navy);
+    font-weight: 700;
+  }
+  .chemin-resultat {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* ---------- Chiffres ---------- */
+  .chiffres {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+  .chiffre {
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-sm);
+  }
+  .chiffre-val {
+    display: block;
+    color: var(--color-navy);
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    font-weight: 800;
+    line-height: 1;
+  }
+  .chiffre p {
+    margin: var(--space-3) 0 0;
+    color: var(--color-muted);
+  }
+  .source {
+    margin: var(--space-4) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* ---------- Benefices ---------- */
+  .benefices {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .benefices li {
+    padding-left: var(--space-4);
+    border-left: 3px solid var(--color-orange);
+  }
+  .benefices strong {
+    display: block;
+    margin-bottom: var(--space-1);
+    color: var(--color-navy);
+    font-size: var(--text-lg);
+  }
+  .benefices span {
+    color: var(--color-muted);
+  }
+
+  /* ---------- Les etapes en detail ---------- */
+  .etapes {
+    display: grid;
+    gap: var(--space-8);
+    max-width: 58rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .etape {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr);
+    gap: var(--space-4);
+    scroll-margin-top: 110px;
+  }
+  .etape-rail {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  /* Le fil vertical qui prolonge le chemin du haut de page. */
+  .etape:not(:last-child) .etape-rail::after {
+    content: '';
+    position: absolute;
+    top: 46px;
+    bottom: calc(-1 * var(--space-8));
+    width: 3px;
+    background: var(--color-orange);
+    border-radius: 2px;
+  }
+  .etape-num {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--color-orange);
+    color: #122033;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 800;
+  }
+  .etape-carte {
+    padding: var(--space-6) var(--space-8);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-sm);
+  }
+  .etape-phase {
+    margin: 0 0 var(--space-1);
+    color: var(--color-clay-ink);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .etape-tete h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-2xl, 1.6rem);
+  }
+  .etape-resultat {
+    margin: 0 0 var(--space-4);
+    color: var(--color-navy);
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+  .etape-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-6);
+    padding: 0;
+    list-style: none;
+  }
+  .etape-meta li {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--color-cream);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+    color: var(--color-navy);
+    font-weight: 700;
+  }
+  .etape-meta span {
+    margin-right: var(--space-1);
+    color: var(--color-muted);
+    font-weight: 400;
+  }
+  .etape-pourqui,
+  .etape-promesse {
+    margin: 0 0 var(--space-4);
+    color: var(--color-muted);
+  }
+  .etape-pourqui strong {
+    color: var(--color-navy);
+  }
+  .etape-promesse {
+    color: var(--color-navy);
+  }
+  .etape-cols {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--space-6);
+    margin: var(--space-6) 0;
+  }
+  .etape-label {
+    margin: 0 0 var(--space-3);
+    color: var(--color-blue);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .etape-liste {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--color-muted);
+  }
+  .etape-liste li {
+    margin-bottom: var(--space-2);
+  }
+  .etape-livrables {
+    padding-left: 0;
+    list-style: none;
+  }
+  .etape-livrables li {
+    position: relative;
+    padding-left: 1.6rem;
+  }
+  .etape-livrables li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-clay);
+    font-weight: 800;
+  }
+  .etape-preuve {
+    margin: 0 0 var(--space-4);
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-cream);
+    box-shadow: inset 3px 0 0 var(--color-blue);
+    color: var(--color-muted);
+  }
+  .etape-preuve strong {
+    color: var(--color-navy);
+  }
+  .etape-deroule summary {
+    cursor: pointer;
+    color: var(--color-blue);
+    font-weight: 700;
+  }
+  .etape-deroule dl {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: var(--space-2) var(--space-4);
+    margin: var(--space-4) 0 0;
+  }
+  .etape-deroule dt {
+    color: var(--color-navy);
+    font-weight: 700;
+  }
+  .etape-deroule dd {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .option-dirigeant {
+    max-width: 58rem;
+    margin-top: var(--space-12);
+    padding: var(--space-6) var(--space-8);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    scroll-margin-top: 110px;
+  }
+  .option-dirigeant h3 {
+    margin: 0 0 var(--space-3);
+  }
+  .option-dirigeant p:not(.eyebrow) {
+    color: var(--color-muted);
+  }
+  .option-dirigeant p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ---------- Offre pilote ---------- */
+  .pilote {
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    background: var(--color-blue-soft);
+    box-shadow: inset 0 0 0 2px var(--color-blue);
+    text-align: center;
+  }
+  .pilote h2 {
+    margin: var(--space-3) 0 var(--space-4);
+  }
+  .pilote p {
+    color: var(--color-navy);
+  }
+  .pilote-badge {
+    display: inline-block;
+    margin: 0;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--color-orange);
+    color: #122033;
+    font-size: var(--text-xs);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .pilote-note {
+    font-size: var(--text-sm);
+  }
+  .pilote .btn {
+    margin-top: var(--space-2);
+  }
+
+  /* ---------- Differences ---------- */
+  .credibilite {
+    margin: var(--space-8) 0 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------- Ce que je ne fais pas ---------- */
+  .limites {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .limites p:not(.eyebrow) {
+    color: var(--color-muted);
+  }
+  .hors-perimetre {
+    margin: 0;
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-sm);
+    list-style: none;
+  }
+  .hors-perimetre li {
+    position: relative;
+    padding: var(--space-2) 0 var(--space-2) 1.8rem;
+    color: var(--color-navy);
+  }
+  .hors-perimetre li:not(:last-child) {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .hors-perimetre li::before {
+    content: '✕';
+    position: absolute;
+    left: 0;
+    color: var(--color-brick);
+    font-weight: 800;
+  }
+
+  /* ---------- Feux vert / orange / rouge ---------- */
+  .feux {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .feu {
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-sm);
+  }
+  .feu-pastille {
+    display: block;
+    width: 22px;
+    height: 22px;
+    margin-bottom: var(--space-3);
+    border-radius: 50%;
+  }
+  .feu-vert .feu-pastille { background: #2f8a4c; }
+  .feu-orange .feu-pastille { background: #f08a00; }
+  .feu-rouge .feu-pastille { background: #d33a2c; }
+  .feu strong {
+    color: var(--color-navy);
+    font-size: var(--text-lg);
+  }
+  .feu p {
+    margin: var(--space-2) 0 0;
+    color: var(--color-muted);
+  }
+  .feux-note {
+    margin: var(--space-6) 0 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------- Local ---------- */
+  .local {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .local p:not(.eyebrow):not(.etape-label) {
+    color: var(--color-muted);
+  }
+  .villes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .villes li {
+    padding: var(--space-1) var(--space-4);
+    border-radius: var(--radius-pill);
+    background: var(--color-orange);
+    color: #122033;
+    font-weight: 700;
+  }
+  .secteurs {
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-sm);
+  }
+  .secteurs ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--color-navy);
+  }
+  .secteurs li {
+    margin-bottom: var(--space-2);
+  }
+  .secteurs-note {
+    margin: var(--space-4) 0 0;
+    font-size: var(--text-sm);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px) {
+    .chemin {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+    /* En colonne, le fil devient vertical, a gauche des pastilles. */
+    .chemin::before {
+      top: 22px;
+      bottom: 22px;
+      left: calc(var(--space-4) + 21px);
+      right: auto;
+      width: 3px;
+      height: auto;
+    }
+    .chemin-etape {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      column-gap: var(--space-4);
+      row-gap: var(--space-1);
+      padding: var(--space-3) var(--space-4);
+    }
+    .chemin-num {
+      grid-row: 1 / span 4;
+    }
+    .chemin-phase {
+      margin-top: 0;
+    }
+    .benefices,
+    .chiffres,
+    .feux {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .limites,
+    .local {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+  }
+  @media (max-width: 640px) {
+    .benefices,
+    .chiffres,
+    .feux {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .etape {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-3);
+    }
+    .etape-rail {
+      justify-content: flex-start;
+    }
+    .etape:not(:last-child) .etape-rail::after {
+      display: none;
+    }
+    .etape-carte,
+    .option-dirigeant,
+    .pilote {
+      padding: var(--space-6) var(--space-4);
+    }
+    .etape-cols {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .etape-deroule dl {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .etape-deroule dd {
+      margin-bottom: var(--space-2);
+    }
+  }
+</style>

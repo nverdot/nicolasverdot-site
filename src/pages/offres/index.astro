@@ -5,6 +5,7 @@ import CTABlock from '../../components/CTABlock.astro';
 import PriorityGrid from '../../components/PriorityGrid.astro';
 import OfferFinder from '../../components/OfferFinder.astro';
 import heroImg from '../../assets/offres/hero-accompagnements.png';
+import { withBase } from '../../utils/url';
 ---
 
 <Layout
@@ -34,6 +35,18 @@ import heroImg from '../../assets/offres/hero-accompagnements.png';
     lead=""
     description="Ils se combinent souvent : un séminaire animé pour vous, puis un coaching d'équipe pour ancrer ce qui s'y est décidé. Si vous hésitez entre deux, c'est en général que les deux sont utiles — dans un ordre."
   />
+
+  {/* L'offre IA a son propre parcours en cinq etapes, hors des six
+      accompagnements : on la signale ici plutot que de l'ajouter a la grille,
+      ou elle casserait le « six façons » repris dans toute la page. */}
+  <section class="section" data-reveal data-section-name="Parcours IA utile">
+    <div class="container">
+      <div class="callout-box callout-box-row">
+        <p><strong>Vos équipes utilisent déjà l'IA, chacune dans son coin&nbsp;?</strong><br /><span class="accent">Le parcours IA utile aide les PME à choisir les bons usages, à les tester sur le travail réel et à les faire adopter, en cinq étapes.</span></p>
+        <a href={withBase('/accompagnement-ia-pme/')} class="btn">Voir le parcours IA utile →</a>
+      </div>
+    </div>
+  </section>
 
   <CTABlock
     eyebrow="Vous hésitez sur le bon point d'entrée ?"
