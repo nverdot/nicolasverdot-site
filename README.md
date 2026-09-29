@@ -36,3 +36,13 @@ Dans les paramètres du repo GitHub (**Settings → Secrets and variables → Ac
 | `FTP_SERVER_DIR`    | Dossier distant cible (ex: `/httpdocs/` ou `/www/`)       |
 
 Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que via ces secrets chiffrés.
+
+## État — 29 septembre 2026
+
+- **Branche `ia-utile`** (pas encore en ligne) : nouvelle page [/accompagnement-ia-pme/](src/pages/accompagnement-ia-pme.astro), le parcours « IA utile » en 5 étapes pour les PME de 30 à 50 personnes des Alpes-Maritimes, reliée depuis le menu, le pied de page, l'accueil, /offres/, /seminaires-alpes-maritimes/ et /intelligence-collective-augmentee/.
+- Mise en ligne : après validation de l'aperçu, fusionner `ia-utile` dans `main` (le push sur `main` déploie), puis vérifier sur nicolasverdot.com.
+
+### Prochaines étapes SEO IA
+- Déclarer la nouvelle page dans la Search Console (inspection d'URL → demander l'indexation).
+- Écrire 3 à 5 articles de blog qui renvoient vers la page (ex. « Charte IA en entreprise : par où commencer », « AI Act article 4 : ce que doit faire une PME », « Cas d'usage IA dans une PME de services »).
+- Après les deux PME pilotes : publier deux études de cas IA avec chiffres et verbatims validés.
