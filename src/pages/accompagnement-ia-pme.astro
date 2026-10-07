@@ -618,6 +618,17 @@ const faqSchema = {
       <p class="source">
         Source&nbsp;: <a href="https://www.francenum.gouv.fr/guides-et-conseils/strategie-numerique/comprendre-le-numerique/barometre-france-num-2026-le" target="_blank" rel="noopener">Baromètre France Num 2026</a>.
       </p>
+
+      {/* L'ambition nationale, en regard des chiffres : l'objectif est fixe,
+          il ne dit pas par ou une entreprise commence. Chiffre et date
+          verifies sur entreprises.gouv.fr (octobre 2026). */}
+      <p class="ambition">
+        <strong>L'ambition est fixée&nbsp;: 80&nbsp;% des PME et des ETI utilisatrices de l'IA d'ici 2030.</strong>
+        C'est l'objectif du plan national
+        <a href="https://www.entreprises.gouv.fr/la-dge/actualites/osez-lia-le-plan-pour-diffuser-lia-dans-toutes-les-entreprises" target="_blank" rel="noopener">«&nbsp;Osez l'IA&nbsp;»</a>,
+        lancé en juillet 2025. Il dit où aller. Il ne dit pas, pour votre entreprise, par quel problème
+        commencer&nbsp;: c'est ce choix-là que je vous aide à faire.
+      </p>
     </div>
   </section>
 
@@ -1097,7 +1108,8 @@ const faqSchema = {
     font-size: var(--text-sm);
   }
 
-  .fil-rouge {
+  .fil-rouge,
+  .ambition {
     max-width: 50rem;
     margin: var(--space-8) 0 0;
     padding: var(--space-4) var(--space-6);
@@ -1106,7 +1118,8 @@ const faqSchema = {
     box-shadow: inset 3px 0 0 var(--color-clay), var(--shadow-sm);
     color: var(--color-muted);
   }
-  .fil-rouge strong {
+  .fil-rouge strong,
+  .ambition strong {
     color: var(--color-navy);
   }
 
