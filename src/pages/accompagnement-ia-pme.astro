@@ -146,7 +146,7 @@ const portes = [
       "La direction se donne d'abord les mêmes repères sur l'IA, puis passe de « il faut qu'on fasse de l'IA » à quelques questions précises : ce qu'on cherche à améliorer, à quoi on reconnaîtra une bonne piste, et ce qu'on décide maintenant.",
     contenu: [
       "Un entretien avec le dirigeant en amont : ce qui pousse le sujet aujourd'hui, ce qui a déjà été essayé, ce qui inquiète.",
-      "Un temps de mise à niveau pour commencer : ce qu'est l'IA, comment elle se manifeste concrètement dans une entreprise, et les grandes familles de solutions — de l'assistant du quotidien à l'outil construit sur mesure.",
+      "Un temps de mise à niveau pour commencer : ce qu'est l'IA, comment elle se manifeste concrètement dans une entreprise, les grandes familles de solutions — de l'assistant du quotidien à l'outil construit sur mesure — et les trois niveaux d'ambition possibles.",
       "Ensuite, on part des objectifs de l'entreprise — croissance, marge, qualité, délais, charge, recrutement — avant de parler d'outil.",
       'Chaque membre de la direction dit où il voit un problème métier qui mérite d’être traité. Les désaccords sont posés au mur, pas arrondis.',
       "On fixe les critères d'arbitrage, puis on décide : s'arrêter là, instruire quelques questions, ou engager un travail plus large.",
@@ -314,6 +314,27 @@ const chaine = [
   { qui: 'Avec moi', quoi: 'Décider ensemble où agir, pourquoi, dans quel ordre et avec quel résultat attendu.', moi: true },
   { qui: 'Votre DSI ou votre intégrateur', quoi: 'Concevoir et mettre en œuvre la solution.', moi: false },
   { qui: 'Avec moi et vos équipes', quoi: "Vérifier que c'est utile, bien utilisé, et adopté.", moi: true },
+];
+
+/* Les trois niveaux d'ambition. Reperes repris, reformules, de l'approche
+   « Deploy, Reshape, Invent » du Boston Consulting Group : c'est la premiere
+   chose a faire preciser a une direction, avant tout choix d'outil. */
+const niveaux = [
+  {
+    titre: 'Assister un travail existant',
+    texte: "L'IA aide sur une tâche qui existe déjà : rédiger, résumer, retrouver une information. On ne touche pas à l'organisation.",
+    limite: 'Facile à lancer. Le gain reste modeste si la façon de travailler ne change pas.',
+  },
+  {
+    titre: 'Repenser un processus',
+    texte: "L'IA intervient à plusieurs étapes d'une même chaîne : lire un document entrant, en extraire les données, les transmettre, et laisser les cas difficiles à une personne.",
+    limite: "Le gain est plus grand. Il dépend des données, de l'intégration technique, et surtout de l'appropriation par les équipes.",
+  },
+  {
+    titre: 'Inventer une nouvelle offre',
+    texte: "L'IA ouvre un service, une expérience client ou un revenu qui n'existait pas.",
+    limite: "Plus de moyens, plus d'incertitude. Il faut partir d'un savoir-faire ou de données que vous êtes seul à avoir.",
+  },
 ];
 
 /* Deux listes, une seule mise en forme de fiche. */
@@ -632,11 +653,43 @@ const faqSchema = {
     </div>
   </section>
 
+  <section class="section alt" data-reveal data-section-name="Trois niveaux d'ambition">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Avant de comparer les outils</p>
+          <h2>Quel niveau d'ambition pour votre projet IA&nbsp;?</h2>
+        </div>
+        <p>
+          «&nbsp;Faire de l'IA&nbsp;» peut vouloir dire trois choses très différentes. Elles n'engagent ni le même
+          budget, ni les mêmes personnes, ni les mêmes délais. C'est la première chose que je fais préciser à une
+          direction.
+        </p>
+      </div>
+      <div class="cards niveaux">
+        {niveaux.map((n, i) => (
+          <article class="card">
+            <span class="num">Niveau {i + 1}</span>
+            <h3>{n.titre}</h3>
+            <p>{n.texte}</p>
+            <p class="niveau-limite">{n.limite}</p>
+          </article>
+        ))}
+      </div>
+      <p class="ambition">
+        <strong>Ce n'est pas un escalier à monter marche après marche.</strong> Une PME tire parfois plus d'un
+        outil simple, bien installé, que d'une série de pilotes. Et dès le niveau 2, le sujet n'est plus
+        l'outil&nbsp;: c'est l'accord entre la direction, les métiers et la DSI. C'est là que j'interviens.
+      </p>
+      <p class="source">Repères inspirés de l'approche «&nbsp;Deploy, Reshape, Invent&nbsp;» du Boston Consulting Group.</p>
+    </div>
+  </section>
+
   {/* Le detail des trois portes. Une seule colonne, la meme grille repetee :
       on l'apprend a la premiere fiche, on parcourt les suivantes en diagonale.
       Le deroule complet est replie — il interesse celui qui achete, pas celui
       qui decouvre. */}
-  <section class="section alt" data-reveal data-section-name="Les trois portes en détail">
+  <section class="section" data-reveal data-section-name="Les trois portes en détail">
     <div class="container">
       <div class="section-head">
         <div>
@@ -657,7 +710,7 @@ const faqSchema = {
 
   {/* Le role vis-a-vis de la DSI. Dit sans detour, et sans pretendre que
       toutes les DSI savent tout faire : je ne construis pas, c'est tout. */}
-  <section class="section" data-reveal data-section-name="Avec votre DSI">
+  <section class="section alt" data-reveal data-section-name="Avec votre DSI">
     <div class="container dsi">
       <div>
         <p class="eyebrow">Avec votre DSI, pas à sa place</p>
@@ -695,7 +748,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section alt" data-reveal data-section-name="Ce que vous achetez">
+  <section class="section" data-reveal data-section-name="Ce que vous achetez">
     <div class="container">
       <div class="section-head">
         <div>
@@ -717,7 +770,7 @@ const faqSchema = {
   {/* Les formats pour les equipes. Ce ne sont pas des portes : ils servent a
       mettre tout le monde a niveau, avant, pendant ou apres le travail de
       decision. C'est ici que vit le seul prix affiche de la page. */}
-  <section class="section" data-reveal data-section-name="Mettre les équipes à niveau">
+  <section class="section alt" data-reveal data-section-name="Mettre les équipes à niveau">
     <div class="container">
       <div class="section-head">
         <div>
@@ -758,7 +811,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section alt" data-reveal data-section-name="Ce que vos équipes sauront faire">
+  <section class="section" data-reveal data-section-name="Ce que vos équipes sauront faire">
     <div class="container">
       <div class="section-head">
         <div>
@@ -775,7 +828,7 @@ const faqSchema = {
   {/* L'offre pilote. Pas de montant (choix de Nicolas) : le tarif de
       lancement se discute en rendez-vous. Elle dit aussi honnetement pourquoi
       il n'y a pas encore d'etude de cas IA sur le site. */}
-  <section class="section" data-reveal data-section-name="Offre pilote">
+  <section class="section alt" data-reveal data-section-name="Offre pilote">
     <div class="container">
       <div class="pilote">
         <p class="pilote-badge">Automne 2026 · deux places</p>
@@ -791,7 +844,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section alt" data-reveal data-section-name="Ma différence">
+  <section class="section" data-reveal data-section-name="Ma différence">
     <div class="container">
       <div class="section-head">
         <div>
@@ -821,7 +874,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section" data-reveal data-section-name="Ce que je ne fais pas">
+  <section class="section alt" data-reveal data-section-name="Ce que je ne fais pas">
     <div class="container limites">
       <div>
         <p class="eyebrow">Dit franchement</p>
@@ -839,7 +892,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section alt" data-reveal data-section-name="Les règles de protection">
+  <section class="section" data-reveal data-section-name="Les règles de protection">
     <div class="container">
       <div class="section-head">
         <div>
@@ -868,7 +921,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section" data-reveal data-section-name="Près de chez vous">
+  <section class="section alt" data-reveal data-section-name="Près de chez vous">
     <div class="container local">
       <div>
         <p class="eyebrow">Alpes-Maritimes & Monaco</p>
@@ -891,7 +944,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section alt" data-reveal data-section-name="Aller plus loin">
+  <section class="section" data-reveal data-section-name="Aller plus loin">
     <div class="container prose">
       <p class="eyebrow">Aller plus loin</p>
       <h2>L'IA dans vos réunions et vos ateliers</h2>
@@ -905,7 +958,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section" data-reveal data-section-name="FAQ">
+  <section class="section alt" data-reveal data-section-name="FAQ">
     <div class="container prose">
       <p class="eyebrow">FAQ</p>
       <h2>Questions fréquentes sur l'accompagnement IA</h2>
@@ -1106,6 +1159,13 @@ const faqSchema = {
   .chaine-note {
     margin: var(--space-4) 0 0;
     font-size: var(--text-sm);
+  }
+
+  .niveau-limite {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-navy) !important;
   }
 
   .fil-rouge,
