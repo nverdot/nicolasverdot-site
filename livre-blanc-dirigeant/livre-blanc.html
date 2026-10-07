@@ -1,0 +1,593 @@
+<title>Le dirigeant et l'IA</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Caveat:wght@600;700&family=Bricolage+Grotesque:opsz,wght@12..96,700..800&display=swap">
+<style>
+/* Mise en page : un livre qui se déroule. Une colonne de lecture étroite, et des planches larges
+   (lecteurs, peurs, étapes) qui sortent de la colonne. Charte BY Nicolas Verdot. */
+:root{
+  --fond:#fcf8ef; --surface:#fffdfa; --encre:#122033; --discret:#4c5158; --filet:#cfc3b1;
+  --jaune:#ffcb00; --sur-jaune:#122033;
+  --bleu:#173b73; --bleu-fort:#102a52; --sur-bleu:#fffdfa; --bleu-doux:#dfe9ff;
+  --rouge:#c1440e; --rouge-doux:#fbe6dc; --gris-doux:#ece7dc; --jaune-doux:#fff3bf;
+  --titre:'Bricolage Grotesque','Inter',system-ui,sans-serif;
+  --texte:'Inter',system-ui,-apple-system,sans-serif;
+  --main:'Caveat','Bradley Hand',cursive;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --fond:#111318; --surface:#1d2027; --encre:#f7f4ec; --discret:#d4d0c8; --filet:#3b414b;
+  --bleu:#7da2d8; --bleu-fort:#1b3558; --bleu-doux:#27364b;
+  --rouge:#e08350; --rouge-doux:#3a2419; --gris-doux:#262a32; --jaune-doux:#3b3413; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --fond:#111318; --surface:#1d2027; --encre:#f7f4ec; --discret:#d4d0c8; --filet:#3b414b;
+  --bleu:#7da2d8; --bleu-fort:#1b3558; --bleu-doux:#27364b;
+  --rouge:#e08350; --rouge-doux:#3a2419; --gris-doux:#262a32; --jaune-doux:#3b3413; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--fond);color:var(--encre);font-family:var(--texte);font-size:18px;line-height:1.65;padding-inline:20px}
+.page{max-width:1040px;margin-inline:auto;display:flex;flex-direction:column;gap:112px;padding-block:56px 96px}
+section{display:flex;flex-direction:column;gap:28px}
+.col{max-width:66ch;display:flex;flex-direction:column;gap:18px}
+p,ul,ol,h1,h2,h3,h4,figure,blockquote{margin:0}
+h1,h2,h3{font-family:var(--titre);line-height:1.12;text-wrap:balance}
+h1{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:800;letter-spacing:-.01em}
+h3{font-size:1.25rem;font-weight:700}
+strong{font-weight:700}
+a{color:var(--bleu)}
+.main{font-family:var(--main);font-size:1.6rem;line-height:1.15;color:var(--rouge)}
+.surligne{background:linear-gradient(transparent 58%,var(--jaune) 58%);color:inherit;padding-inline:2px}
+:root[data-theme="dark"] .surligne{background:linear-gradient(transparent 82%,var(--jaune) 82%)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .surligne{background:linear-gradient(transparent 82%,var(--jaune) 82%)}}
+
+/* Couverture */
+.couv{gap:24px;padding-block:40px 8px;border-bottom:3px solid var(--encre);padding-bottom:48px}
+.couv .marque{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.8rem}
+.couv .sous{font-size:1.35rem;max-width:34ch;line-height:1.4}
+.etiquette{display:inline-block;align-self:flex-start;background:var(--jaune);color:var(--sur-jaune);font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+
+/* En-tête de chapitre */
+.chap{display:flex;gap:20px;align-items:baseline;flex-wrap:wrap}
+.chap .num{font-family:var(--titre);font-weight:800;font-size:clamp(3rem,8vw,5rem);line-height:.9;color:var(--jaune);-webkit-text-stroke:1.5px var(--encre)}
+.chap h2{flex:1 1 16ch;min-width:0}
+
+/* Grilles */
+.grille{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))}
+.grille.deux{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.grille.trois{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.carte{background:var(--surface);border:1.5px solid var(--encre);border-radius:6px;padding:22px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.carte .qui{font-family:var(--titre);font-weight:700;font-size:1.15rem}
+.carte p{font-size:1rem}
+.petit{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--discret)}
+
+/* Bandeau thèse */
+.bandeau{background:var(--bleu-fort);color:var(--sur-bleu);border-radius:10px;padding:clamp(28px,5vw,56px);gap:18px;display:flex;flex-direction:column}
+.bandeau p{font-family:var(--titre);font-weight:700;font-size:clamp(1.3rem,2.8vw,1.9rem);line-height:1.25;max-width:26ch}
+.bandeau .trois{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.bandeau .petit{color:var(--jaune)}
+
+/* Gommette : trois gestes */
+.gestes{display:grid;gap:0;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));border:1.5px solid var(--encre);border-radius:6px;overflow:hidden}
+.geste{padding:22px;display:flex;flex-direction:column;gap:8px;background:var(--surface);border-right:1.5px solid var(--encre);border-bottom:1.5px solid var(--encre);margin:0 -1.5px -1.5px 0}
+.geste b{font-family:var(--titre);font-size:1.3rem}
+.oui,.non{font-weight:700;font-size:1rem}
+.oui{color:var(--bleu)} .non{color:var(--rouge)}
+.pastille{width:34px;height:34px;border-radius:50%;background:var(--jaune);border:1.5px solid var(--encre)}
+.geste.vide .pastille{background:transparent;border-style:dashed}
+
+/* Réactions */
+.reaction{border-radius:10px;padding:26px;display:flex;flex-direction:column;gap:14px;min-width:0;border:1.5px solid var(--encre)}
+.reaction h3{font-size:1.5rem}
+.reaction .nom{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+.reaction dl{margin:0;display:grid;gap:10px}
+.reaction dt{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--discret)}
+.reaction dd{margin:0;font-size:1rem}
+.r-fuite{background:var(--jaune-doux)} .r-combat{background:var(--rouge-doux)} .r-dorsal{background:var(--gris-doux)} .r-ventral{background:var(--bleu-doux)}
+
+/* Chiffres */
+.chiffre{font-family:var(--titre);font-weight:800;font-size:clamp(2.4rem,6vw,3.6rem);line-height:1;color:var(--bleu);font-variant-numeric:tabular-nums}
+
+/* Moments */
+.temps{display:flex;align-items:center;gap:14px;margin-top:20px}
+.temps span{font-family:var(--titre);font-weight:800;font-size:1.5rem;background:var(--jaune);color:var(--sur-jaune);padding:4px 16px;border-radius:999px}
+.temps::after{content:"";flex:1;border-top:3px solid var(--encre)}
+.moment{background:var(--surface);border:1.5px solid var(--encre);border-radius:10px;padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;gap:20px}
+.moment header{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.moment .n{font-family:var(--titre);font-weight:800;font-size:1.6rem;color:var(--bleu)}
+.avantapres{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.avantapres>div{padding:16px 18px;border-radius:6px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.sans{background:var(--gris-doux)} .avec{background:var(--bleu-doux)}
+.moment p{font-size:1rem}
+.moment p.salle{font-family:var(--main);font-size:1.55rem;line-height:1.2;color:var(--rouge)}
+.plusmoins{display:grid;gap:12px 24px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.plusmoins p{display:flex;gap:10px;min-width:0}
+.signe{flex:none;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1.5px solid var(--encre);line-height:1}
+.signe.p{background:var(--jaune);color:var(--sur-jaune)}
+.limite{border-top:1.5px dashed var(--encre);padding-top:14px}
+.vecu{align-self:flex-start;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1.5px solid var(--encre)}
+.vecu.oui{background:var(--jaune);color:var(--sur-jaune)}
+
+/* Règles */
+.regles{list-style:none;padding:0;display:grid;gap:0;counter-reset:r}
+.regles li{counter-increment:r;display:grid;grid-template-columns:64px 1fr;gap:16px;padding:18px 0;border-top:1.5px solid var(--filet);align-items:baseline}
+.regles li::before{content:counter(r);font-family:var(--titre);font-weight:800;font-size:2.2rem;line-height:1;color:var(--bleu)}
+.regles li>div{min-width:0}
+.jamais{background:var(--rouge-doux);border-radius:10px;padding:26px;display:flex;flex-direction:column;gap:12px}
+.jamais ul{padding-left:1.1em;display:grid;gap:8px}
+
+/* Questions */
+.theme{font-family:var(--titre);font-weight:800;font-size:1.3rem;margin-top:16px}
+.qh{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:8px 32px;padding:18px 0;border-top:1.5px solid var(--filet)}
+.qh .q{font-family:var(--titre);font-weight:700;font-size:1.1rem;line-height:1.3}
+.qh .h{font-size:1rem}
+.qh .h::before{content:"Hypothèse";display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--rouge)}
+
+/* Checklist commanditaire */
+.check{list-style:none;padding:0;display:grid;gap:14px}
+.check li{display:grid;grid-template-columns:28px 1fr;gap:14px;align-items:start}
+.check li::before{content:"";width:22px;height:22px;border:1.5px solid var(--encre);border-radius:4px;margin-top:4px;background:var(--surface)}
+
+/* Trous */
+.trou{border:2px dashed var(--rouge);border-radius:6px;padding:16px 18px;font-size:.98rem;display:flex;flex-direction:column;gap:4px;max-width:66ch}
+.trou b{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rouge)}
+.dessin{border:2px dashed var(--filet);border-radius:6px;min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;color:var(--discret);font-family:var(--main);font-size:1.4rem}
+table{border-collapse:collapse;width:100%;font-size:1rem;min-width:640px}
+th,td{text-align:left;padding:10px 12px;border-top:1px solid var(--filet);vertical-align:top}
+.defile{overflow-x:auto}
+.sources{font-size:.92rem;padding-left:1.1em;display:grid;gap:6px;overflow-wrap:anywhere}
+
+/* Fiches pratiques */
+.fiche{background:var(--surface);border:1.5px solid var(--encre);border-radius:10px;padding:clamp(20px,3.5vw,40px);display:flex;flex-direction:column;gap:22px;scroll-margin-top:16px}
+.fiche .tete{display:flex;flex-direction:column;gap:6px}
+.fiche .tete .petit{color:var(--rouge)}
+.fiche h3{font-size:clamp(1.4rem,3vw,1.8rem);font-weight:800}
+.fiche p,.fiche li{font-size:1rem}
+.fiche>p{max-width:66ch}
+.etapes{list-style:none;padding:0;margin:0;display:grid;gap:14px;counter-reset:e;max-width:70ch}
+.etapes li{counter-increment:e;display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start}
+.etapes li::before{content:counter(e);width:32px;height:32px;border-radius:50%;background:var(--jaune);color:var(--sur-jaune);font-family:var(--titre);font-weight:800;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--encre)}
+.etapes li>div{min-width:0}
+.dire{background:var(--jaune-doux);border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;max-width:66ch}
+.dire q{font-family:var(--main);font-size:1.55rem;line-height:1.2;quotes:"« " " »"}
+.demande{background:var(--gris-doux);border-radius:6px;padding:16px 18px;display:grid;gap:8px;max-width:70ch}
+.demande div{display:grid;grid-template-columns:minmax(0,150px) 1fr;gap:12px}
+.demande b{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--discret);padding-top:3px}
+@media (max-width:520px){.demande div{grid-template-columns:1fr;gap:2px}}
+.feu{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+.feu>div{border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0;border:1.5px solid var(--encre)}
+.feu .rond{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--encre)}
+.f-vert{background:var(--bleu-doux)} .f-vert .rond{background:var(--bleu)}
+.f-orange{background:var(--jaune-doux)} .f-orange .rond{background:var(--jaune)}
+.f-rouge{background:var(--rouge-doux)} .f-rouge .rond{background:var(--rouge)}
+.duel{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.duel>div{border-radius:8px;padding:22px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.duel h4{font-family:var(--titre);font-size:1.3rem;font-weight:800;margin:0}
+.duel dl{margin:0;display:grid;gap:10px}
+.duel dt{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--discret)}
+.duel dd{margin:0;font-size:1rem}
+.sommaire-fiches{display:flex;flex-wrap:wrap;gap:10px;padding:0;margin:0;list-style:none}
+.sommaire-fiches a{display:inline-block;padding:8px 14px;border:1.5px solid var(--encre);border-radius:999px;text-decoration:none;color:var(--encre);font-weight:700;font-size:.95rem;background:var(--surface)}
+.sommaire-fiches a:focus-visible{outline:3px solid var(--rouge);outline-offset:2px}
+
+.dispo{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.dispo>div{border:1.5px solid var(--encre);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0;background:var(--surface)}
+.dispo .lettre{font-family:var(--titre);font-weight:800;font-size:1.6rem;width:42px;height:42px;border-radius:50%;background:var(--jaune);color:var(--sur-jaune);display:flex;align-items:center;justify-content:center;border:1.5px solid var(--encre)}
+.dispo h4{font-family:var(--titre);font-size:1.2rem;font-weight:800;margin:0}
+.dispo p{display:flex;gap:10px}
+.dispo p.corps{font-family:var(--main);font-size:1.45rem;line-height:1.2;color:var(--rouge);display:block}
+.dispo .choix{background:var(--jaune-doux)}
+.echelle{display:flex;justify-content:space-between;gap:12px;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--discret);border-top:3px solid var(--encre);padding-top:8px}
+
+/* Version PDF (A4) : fabriquée par faire-pdf.sh */
+@page{size:A4;margin:18mm 16mm 20mm;@bottom-left{content:"Le dirigeant et l'IA · BY Nicolas Verdot";font-family:Inter,sans-serif;font-size:8pt;color:#4c5158}@bottom-right{content:counter(page);font-family:Inter,sans-serif;font-size:9pt;color:#122033}}
+@page:first{@bottom-left{content:none}@bottom-right{content:none}}
+@media print{
+  :root{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html{font-size:10.5pt}
+  body{font-size:1rem;line-height:1.5;padding:0;background:#fff}
+  .page{max-width:none;gap:0;padding:0}
+  section{gap:14pt;break-before:page}
+  section.suite{break-before:auto;margin-top:26pt}
+  .couv{break-before:auto;height:255mm;padding:24mm 18mm;justify-content:flex-end;border:0;border-radius:10px;background:var(--bleu-fort);color:var(--sur-bleu);gap:20pt}
+  .couv h1{font-size:54pt}
+  .couv .surligne{background:none;color:var(--jaune);padding:0}
+  .couv .main{color:var(--jaune);font-size:22pt}
+  .couv .sous{font-size:16pt}
+  h2{font-size:22pt} .chap .num{font-size:48pt}
+  h1,h2,h3,h4,.chap,.temps,.theme,.tete,.echelle{break-after:avoid}
+  .carte,.reaction,.moment,.geste,.jamais,.dire,.demande,.feu>div,.duel>div,.dispo>div,.bandeau,.trou,.qh,.regles li,.etapes li,.check li,tr,.avantapres>div,.rex{break-inside:avoid}
+  .fiche{border:0;padding:0;break-before:page;gap:13pt}
+  #f1{break-before:auto}
+  .grille,.grille.deux,.dispo,.duel,.avantapres,.plusmoins{grid-template-columns:1fr 1fr;gap:12pt}
+  .grille.trois,.feu,.gestes,.bandeau .trois{grid-template-columns:1fr 1fr 1fr}
+  .reaction,.carte,.moment,.dispo>div{padding:13pt}
+  .bandeau{padding:20pt}
+  table{min-width:0;font-size:.9rem}
+  .sommaire-fiches{display:none}
+  a{color:inherit;text-decoration:none}
+  .dessin{min-height:90pt}
+}
+
+.etudes{display:grid;gap:0}
+.etude{display:grid;grid-template-columns:minmax(0,210px) 1fr;gap:10px 32px;padding:20px 0;border-top:1.5px solid var(--filet)}
+.etude>div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.etude .chiffre{font-size:clamp(1.9rem,4.5vw,2.6rem)}
+.etude p{font-size:1rem}
+.lecon{font-family:var(--main);font-size:1.45rem;line-height:1.2;color:var(--rouge)}
+.etude p.lecon{font-size:1.45rem}
+@media (max-width:640px){.etude{grid-template-columns:1fr}}
+@media print{.etude{break-inside:avoid;grid-template-columns:130pt 1fr;padding:11pt 0}}
+
+.rex .pm{display:flex;gap:10px}
+.rex .pm>span:last-child{min-width:0}
+.lecons{margin:0;padding:0;list-style:none;counter-reset:l;display:grid;gap:14px}
+.lecons li{counter-increment:l;display:grid;grid-template-columns:40px 1fr;gap:12px;font-family:var(--titre);font-weight:700;font-size:1.15rem;line-height:1.3}
+.lecons li::before{content:counter(l);color:var(--jaune);font-weight:800;font-size:1.6rem;line-height:1}
+@media print{.lecons li{break-inside:avoid}}
+.note{font-size:1rem;color:var(--discret);border-left:3px solid var(--filet);padding-left:14px}
+</style>
+
+<div class="page">
+
+<section class="couv">
+  <span class="marque">BY Nicolas Verdot · Livre blanc</span>
+  <h1>Le dirigeant <span class="surligne">et l'IA</span></h1>
+  <p class="sous">Tout le monde vous dit d'y aller. Personne ne vous dit par où.</p>
+  <p class="main">Prendre le taureau par les cornes, sans perdre personne en route.</p>
+  <span class="etiquette">Version de travail · 7 octobre 2026</span>
+</section>
+
+<section>
+  <div class="chap"><h2>Pour qui est ce livre</h2></div>
+  <div class="col"><p>Pour les personnes qui siègent au comité de direction d'une PME ou d'une ETI. Vous êtes sans doute l'un de ces quatre lecteurs.</p></div>
+  <div class="grille deux">
+    <div class="carte"><span class="petit">Dirigeant</span><span class="qui">Vous portez la décision.</span><p>On vous parle d'IA à chaque déjeuner. Vous sentez qu'il faut y aller, et vous ne voulez ni vous tromper ni abîmer votre équipe.</p><p><a href="#ch5">Les cinq questions à trancher</a></p></div>
+    <div class="carte"><span class="petit">Membre du comité de direction</span><span class="qui">Vous dirigez un métier.</span><p>Commerce, opérations, finance. Vos équipes essaient des choses. Vous ne savez pas si vous devez encourager, encadrer ou freiner.</p><p><a href="#ch6">Par où commencer</a></p></div>
+    <div class="carte"><span class="petit">Ressources humaines</span><span class="qui">Vous entendez les inquiétudes.</span><p>On vous demande déjà si des postes vont disparaître. Vous n'avez pas de réponse officielle à donner.</p><p><a href="#ch8">Parler de l'emploi</a></p></div>
+    <div class="carte"><span class="petit">Informatique</span><span class="qui">On vous a confié le sujet.</span><p>On attend de vous une solution, sans vous avoir dit quel problème résoudre.</p><p><a href="#ch9">Qui fait quoi</a></p></div>
+  </div>
+  <div class="col"><p>Vous ne trouverez ici ni comparatif d'outils, ni liste de prompts. Vous trouverez les décisions qui reviennent à une direction, dans l'ordre où les prendre.</p></div>
+</section>
+
+<section id="ch1">
+  <div class="chap"><span class="num">1</span><h2>« Il faut qu'on fasse de l'IA. »</h2></div>
+  <div class="col">
+    <p>La phrase revient à chaque comité de direction. Quelqu'un la prononce, tout le monde approuve, et l'on passe au point suivant.</p>
+    <p>Ce n'est pas de la mauvaise volonté. C'est qu'il manque la suite de la phrase : pour quoi faire, par où, avec qui, et pour quel résultat.</p>
+    <p>Pendant ce temps, l'IA est déjà entrée. Un commercial fait relire ses propositions par ChatGPT. Une assistante résume ses comptes rendus. Un chef de projet prépare ses réunions avec. Chacun dans son coin, avec son compte personnel, sans en parler.</p>
+  </div>
+  <div class="grille trois">
+    <div class="carte"><span class="petit">Ce que vous entendez</span><p>« Nos concurrents s'y mettent. Si on attend, on se fera manger. »</p></div>
+    <div class="carte"><span class="petit">Ce que vous voyez</span><p>Des essais individuels, par-ci par-là. Aucune priorité partagée.</p></div>
+    <div class="carte"><span class="petit">Ce qui vous manque</span><p>Une prise. Un endroit précis où poser les mains pour commencer.</p></div>
+  </div>
+  <div class="col">
+    <p>Si vous vous reconnaissez, vous n'êtes pas en retard. Vous êtes à l'endroit où se trouvent la plupart des directions aujourd'hui. Les signes sont toujours les mêmes.</p>
+  </div>
+  <ul class="check">
+    <li><div>Le sujet revient à chaque réunion de direction, sans qu'une décision en sorte.</div></li>
+    <li><div>On parle d'outils avant d'avoir nommé le problème à résoudre.</div></li>
+    <li><div>Personne ne sait dire ce que l'IA devrait améliorer chez vous : la marge, les délais, la qualité, la charge ?</div></li>
+    <li><div>L'informatique a été sollicitée, sans demande assez précise pour travailler.</div></li>
+    <li><div>Les équipes craignent une décision prise d'en haut, loin du terrain.</div></li>
+    <li><div>Vous ne savez pas comment vous mesureriez ce que cela rapporte.</div></li>
+  </ul>
+  <div class="bandeau">
+    <span class="petit">La thèse de ce livre</span>
+    <div class="trois">
+      <p>Vous n'avez plus à décider d'y aller. L'IA est déjà chez vous.</p>
+      <p>Le sujet n'est pas l'outil. C'est le travail, et ce que vous voulez en changer.</p>
+      <p>C'est une décision de direction. Elle ne se délègue ni à l'informatique, ni au hasard.</p>
+    </div>
+  </div>
+</section>
+
+<section class="suite">
+  <h3>Comme le mail, il y a des années</h3>
+  <div class="col">
+    <p>Souvenez-vous de l'arrivée du mail. Aucune entreprise n'a tenu de comité pour décider si elle « ferait du mail ». Il est entré par quelques postes. Puis il est devenu la manière normale de travailler.</p>
+    <p>Personne ne se demande plus s'il faut une adresse électronique. Une entreprise sans mail ne serait pas prudente. Elle serait injoignable.</p>
+    <p>L'IA suit le même chemin, plus vite. On ne peut pas passer à côté. <span class="surligne">La question n'est donc pas « faut-il y aller ? ». C'est « qui décide comment on y va ? ».</span></p>
+    <p>Le mail nous a appris autre chose. Il devait nous faire gagner du temps : nous avons eu plus de mails. Personne n'avait décidé ce qu'on ferait du temps gagné. Avec l'IA, cette décision vous appartient, et elle se prend au début.</p>
+  </div>
+  <div class="dessin">Emplacement pour un de vos dessins : le taureau, et les cornes</div>
+</section>
+
+<section id="ch2">
+  <div class="chap"><span class="num">2</span><h2>Ce qui se passe déjà chez vous</h2></div>
+  <div class="col">
+    <p>Vous pensez peut-être que votre entreprise n'a pas commencé. Les enquêtes disent l'inverse : les personnes ont commencé, les organisations suivent de loin.</p>
+  </div>
+  <div class="grille trois">
+    <div class="carte"><span class="chiffre">55 %</span><span class="petit">des dirigeants de TPE et PME</span><p>Fin 2025, plus d'un dirigeant sur deux utilise une IA générative. Ils étaient 31 % fin 2024 et 15 % fin 2023. Mais 17 % seulement s'en servent régulièrement.</p><p class="petit">Bpifrance Le Lab, janvier 2026</p></div>
+    <div class="carte"><span class="chiffre">2 sur 3</span><span class="petit">salariés l'utilisent déjà</span><p>Deux salariés sur trois utilisent l'IA générative. Un peu plus de la moitié seulement, 55 %, le disent à leur manager.</p><p class="petit">Ipsos pour Greenworking, 2025</p></div>
+    <div class="carte"><span class="chiffre">29 %</span><span class="petit">des cadres ont été formés</span><p>Moins d'un cadre sur trois dit avoir reçu une formation à l'IA. Dans les grandes entreprises, 27 % ont une charte et 37 % ont déployé des formations.</p><p class="petit">Apec, mai 2026</p></div>
+  </div>
+  <div class="col">
+    <p>Côté entreprises, 18 % de celles qui comptent dix personnes ou plus utilisent une technologie d'IA. C'est trois fois plus qu'en 2023. Au-delà de 250 salariés : 58 %.</p>
+    <p class="note">Source : Insee, juillet 2026.</p>
+    <p><strong>Ce que ces chiffres disent ensemble.</strong> Vos équipes vont plus vite que votre organisation. Près d'une personne sur deux qui se sert de l'IA ne le dit pas à son responsable. Elle ne se cache pas par malice : personne ne lui a dit si elle en avait le droit.</p>
+  </div>
+  <div class="avantapres">
+    <div class="sans"><span class="petit">Ce que coûte l'usage caché</span><p>Des informations de l'entreprise partent dans des comptes personnels. La qualité dépend de chacun. Ce qu'une personne a appris, sa voisine de bureau ne le sait pas.</p></div>
+    <div class="avec"><span class="petit">Ce qu'il vous offre</span><p>Vos premiers cas d'usage existent déjà. Ceux qui ont essayé savent ce qui marche et ce qui coince. Il suffit de leur donner le droit d'en parler.</p></div>
+  </div>
+</section>
+
+<section id="ch3">
+  <div class="chap"><span class="num">3</span><h2>Trois peurs autour de la table</h2></div>
+  <div class="col">
+    <p>Un comité de direction ne parle pas d'IA à froid. Trois peurs sont dans la pièce. Elles tirent dans des sens opposés, et c'est pour cela que rien ne se décide.</p>
+    <p>Aucune n'est idiote. Chacune protège quelque chose. Les nommer à voix haute est souvent le premier vrai travail d'une direction sur le sujet.</p>
+  </div>
+  <div class="grille trois">
+    <div class="reaction r-fuite">
+      <span class="nom">La peur de rater le train</span>
+      <h3>« Si on n'y va pas, on se fera manger. »</h3>
+      <dl>
+        <dt>Ce qu'on se dit</dt><dd>Les concurrents avancent. Nos clients vont nous comparer. Dans deux ans il sera trop tard.</dd>
+        <dt>Ce qu'elle protège</dt><dd>L'entreprise. Vous avez raison de ne pas regarder ailleurs.</dd>
+        <dt>Ce qu'elle coûte</dt><dd>On achète vite, pour avoir fait quelque chose. Des licences, une formation d'une journée, et rien ne change dans le travail.</dd>
+        <dt>Le premier pas</dt><dd>Remplacer « il faut y aller » par « qu'est-ce qu'on veut améliorer ? ». <a href="#ch5">Question 1</a>.</dd>
+      </dl>
+    </div>
+    <div class="reaction r-dorsal">
+      <span class="nom">La peur de perdre du monde en route</span>
+      <h3>« La moitié de l'équipe ne suivra pas. »</h3>
+      <dl>
+        <dt>Ce qu'on se dit</dt><dd>Certains sont déjà loin devant. D'autres n'ont jamais ouvert l'outil. On va couper l'entreprise en deux.</dd>
+        <dt>Ce qu'elle protège</dt><dd>Le collectif. Une entreprise qui avance à deux vitesses se fragilise.</dd>
+        <dt>Ce qu'elle coûte</dt><dd>On attend que tout le monde soit prêt. Personne ne l'est jamais en même temps.</dd>
+        <dt>Le premier pas</dt><dd>Donner du temps, des outils et le droit à l'erreur. <a href="#ch7">Chapitre 7</a>.</dd>
+      </dl>
+    </div>
+    <div class="reaction r-combat">
+      <span class="nom">La peur pour le travail</span>
+      <h3>« Et nos postes, là-dedans ? »</h3>
+      <dl>
+        <dt>Ce qu'on se dit</dt><dd>Si la machine fait en une heure ce que je fais en un jour, à quoi je sers ? La question se pose aussi dans votre tête, pour vos équipes.</dd>
+        <dt>Ce qu'elle protège</dt><dd>Les personnes, et la confiance qu'elles vous font.</dd>
+        <dt>Ce qu'elle coûte</dt><dd>Le silence. Personne n'en parle, donc chacun imagine le pire.</dd>
+        <dt>Le premier pas</dt><dd>Dire ce que vous savez, et ce que vous ne savez pas encore. <a href="#ch8">Chapitre 8</a>.</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="col">
+    <p>Ces peurs ne sont pas des impressions. Elles se mesurent.</p>
+  </div>
+  <div class="grille trois">
+    <div class="carte"><span class="chiffre">38 %</span><span class="petit">des salariés</span><p>Le risque le plus redouté est le remplacement des emplois. Et plus on utilise l'IA, plus on s'inquiète.</p><p class="petit">Ipsos pour Greenworking, 2025</p></div>
+    <div class="carte"><span class="chiffre">39 %</span><span class="petit">des cadres : les deux à la fois</span><p>Pour leur métier, 38 % des cadres voient dans l'IA une opportunité, 23 % une menace, et 39 % les deux en même temps.</p><p class="petit">Apec, mai 2026</p></div>
+    <div class="carte"><span class="chiffre">76 %</span><span class="petit">des Français</span><p>Trois Français sur quatre ont des craintes face aux IA génératives. Un sur trois en a « beaucoup ».</p><p class="petit">Ifop pour Talan, mars 2025</p></div>
+  </div>
+  <div class="col">
+    <p><span class="surligne">Opportunité et menace à la fois : c'est l'état normal d'un comité de direction devant l'IA.</span> Vouloir trancher entre les deux fait perdre du temps. Il faut avancer avec les deux.</p>
+  </div>
+  <div class="trou"><b>À valider par Nicolas</b>Ces trois peurs viennent de votre message. Les phrases entre guillemets sont des propositions : remplacez-les par celles que vous entendez vraiment chez les dirigeants. Faut-il en ajouter une quatrième, la peur de dépenser pour rien ?</div>
+</section>
+
+<section id="ch4">
+  <div class="chap"><span class="num">4</span><h2>Quatre faux départs</h2></div>
+  <div class="col">
+    <p>Sous la pression, une direction prend souvent l'un de ces quatre chemins. Chacun donne l'impression d'avoir agi. Aucun ne répond à la question de départ.</p>
+  </div>
+  <div class="grille deux">
+    <div class="carte"><span class="petit">Faux départ 1</span><span class="qui">Acheter des licences pour tout le monde</span><p><strong>Pourquoi c'est tentant.</strong> C'est rapide, visible, et cela se décide en une signature.</p><p><strong>Ce que cela donne.</strong> Quelques personnes s'en servent beaucoup. Les autres ouvrent l'outil deux fois. Personne ne sait dire ce qui a changé.</p><p><strong>À la place.</strong> Choisir d'abord une tâche et un groupe test. La licence vient après.</p></div>
+    <div class="carte"><span class="petit">Faux départ 2</span><span class="qui">Confier le sujet à l'informatique</span><p><strong>Pourquoi c'est tentant.</strong> C'est une technologie, donc c'est pour eux.</p><p><strong>Ce que cela donne.</strong> Votre informatique sait chercher une solution et la construire. Mais on ne lui a pas dit quel problème résoudre. Elle choisit seule, ou elle attend.</p><p><strong>À la place.</strong> La direction et les métiers formulent la demande. L'informatique construit.</p></div>
+    <div class="carte"><span class="petit">Faux départ 3</span><span class="qui">Interdire en attendant d'y voir clair</span><p><strong>Pourquoi c'est tentant.</strong> Les données sont sensibles. Mieux vaut bloquer.</p><p><strong>Ce que cela donne.</strong> L'usage continue, sur les téléphones et les comptes personnels. Vous avez perdu la vue sur ce qui se fait.</p><p><strong>À la place.</strong> Trois règles simples, vert, orange, rouge. <a href="#ch9">Chapitre 9</a>.</p></div>
+    <div class="carte"><span class="petit">Faux départ 4</span><span class="qui">Former tout le monde une journée, puis plus rien</span><p><strong>Pourquoi c'est tentant.</strong> On coche la case. Tout le monde a « vu » l'IA.</p><p><strong>Ce que cela donne.</strong> Deux mois plus tard, chacun est revenu à ses habitudes. Une formation seule ne garantit pas un usage.</p><p><strong>À la place.</strong> Un usage précis, testé sur de vrais dossiers, et revu à quinze jours.</p></div>
+  </div>
+  <div class="col">
+    <p>Ces quatre chemins ont un point commun. Ils commencent par la réponse. Le travail d'une direction, c'est de commencer par la question.</p>
+  </div>
+</section>
+
+<section id="ch5">
+  <div class="chap"><span class="num">5</span><h2>Cinq questions à trancher avant d'acheter quoi que ce soit</h2></div>
+  <div class="col">
+    <p>Voilà la prise que vous cherchiez. Cinq questions, dans cet ordre. Tant que la direction n'a pas répondu à la première, les quatre autres n'ont pas de sens.</p>
+  </div>
+  <ol class="regles">
+    <li><div><h3>Pourquoi voulez-vous mobiliser l'IA ?</h3><p>Pour la croissance, la marge, la qualité, les délais, la charge de travail, le recrutement ? Une seule réponse à la fois. « Parce que tout le monde le fait » n'en est pas une.</p><p class="lecon">Le test : chaque membre de la direction donne-t-il la même réponse ?</p></div></li>
+    <li><div><h3>Où sont les problèmes métier qui méritent d'être traités ?</h3><p>Pas « où pourrait-on mettre de l'IA ? ». Où perd-on du temps, où refait-on deux fois, où attend-on une décision ? On regarde le travail réel avant de parler d'outil.</p><p class="lecon">Le test : le problème se dit sans prononcer le mot « IA ».</p></div></li>
+    <li><div><h3>Quels cas d'usage valent le temps et l'argent ?</h3><p>On note chaque piste : ce qu'elle rapporte, sa fréquence, sa faisabilité, les données qu'elle demande, son risque, et les chances que l'équipe l'adopte. Puis on arbitre : maintenant, plus tard, jamais.</p><p class="lecon">Le test : vous avez écarté au moins autant de pistes que vous en avez gardé.</p></div></li>
+    <li><div><h3>Qui décide, qui contribue, qui construit ?</h3><p>La direction décide. Les métiers contribuent, parce qu'ils connaissent le travail. L'informatique ou un intégrateur construit. Quand ces trois rôles se mélangent, le projet s'enlise.</p><p class="lecon">Le test : chaque piste retenue a un responsable, avec un nom.</p></div></li>
+    <li><div><h3>Comment saurez-vous que c'est utile, et adopté ?</h3><p>Un indicateur, mesuré avant et après : temps passé, erreurs, reprises, délai de décision. Et un critère d'arrêt, fixé au départ. Un usage que personne ne répète n'est pas un usage.</p><p class="lecon">Le test : vous savez à quelle condition vous arrêterez.</p></div></li>
+  </ol>
+  <div class="avantapres">
+    <div class="sans"><span class="petit">Sans ces réponses</span><p>La direction approuve « un projet IA ». Six mois plus tard, on a des démonstrations, un prestataire, et personne ne peut dire ce qui a changé pour un client ou pour un salarié.</p></div>
+    <div class="avec"><span class="petit">Avec ces réponses</span><p>La direction a choisi un problème, un responsable, un groupe test, un indicateur et une date. Elle sait aussi ce qu'elle a décidé de ne pas faire.</p></div>
+  </div>
+</section>
+
+<section id="ch6">
+  <div class="chap"><span class="num">6</span><h2>Par où prendre le taureau : quatre étapes</h2></div>
+  <div class="col">
+    <p>Voici le chemin dans l'ordre. Vous pouvez le suivre seuls. Chaque étape se termine par une décision, et vous pouvez vous arrêter à chacune.</p>
+  </div>
+  <div class="fiche" id="f1">
+    <ol class="etapes">
+      <li><div><h3>Clarifier</h3><p class="petit">Une demi-journée de direction</p><p>Le comité de direction se réunit sur une seule question : qu'attendons-nous de l'IA ? Chacun dit où il voit un problème métier qui mérite d'être traité. Les désaccords sont posés au mur, pas arrondis.</p><p><strong>On en sort avec :</strong> les objectifs écrits noir sur blanc, les critères qui serviront à arbitrer, et une décision sur la suite.</p></div></li>
+      <li><div><h3>Choisir</h3><p class="petit">Quelques semaines</p><p>On va voir le travail réel. Des entretiens dans plusieurs métiers, pour repérer les irritants, les reprises, les décisions lentes, et les usages de l'IA déjà pratiqués. Puis on note les pistes et on arbitre.</p><p><strong>On en sort avec :</strong> un petit nombre de pistes classées, un pilote choisi, un responsable, un indicateur et une date de démarrage.</p></div></li>
+      <li><div><h3>Tester</h3><p class="petit">Environ six semaines</p><p>Un seul cas d'usage, cinq à huit utilisateurs, une mesure de départ. On dessine précisément ce que fait la personne, ce que fait l'IA, et ce qui reste validé par un humain. Puis on essaie sur de vrais dossiers.</p><p><strong>On en sort avec :</strong> une comparaison avant et après, et une décision. Arrêter, améliorer ou déployer. Un arrêt argumenté est un bon résultat : il évite une dépense inutile.</p></div></li>
+      <li><div><h3>Installer</h3><p class="petit">Environ trois mois</p><p>Ce qui a marché s'étend à d'autres équipes. On forme les utilisateurs, on nomme quelques référents internes, on écrit les règles dans la charte informatique.</p><p><strong>On en sort avec :</strong> des usages réguliers, des mesures suivies, et des personnes capables de continuer sans aide extérieure.</p></div></li>
+    </ol>
+  </div>
+  <div class="col">
+    <p>Remarquez l'ordre. L'outil n'apparaît qu'à la troisième étape. La formation de toute l'entreprise, à la quatrième. C'est l'inverse des quatre faux départs.</p>
+  </div>
+  <h3>Lundi matin, sans rien acheter</h3>
+  <div class="col"><p>Cinq gestes qui ne coûtent rien et qui changent déjà la conversation.</p></div>
+  <ul class="check">
+    <li><div><strong>Demandez qui utilise déjà quoi.</strong> Sans sanction, et en le disant d'avance. Vous cherchez des éclaireurs, pas des fautifs.</div></li>
+    <li><div><strong>Posez trois règles provisoires sur les données.</strong> Ce qui est permis, ce qui demande un compte professionnel, ce qui est interdit. Une page suffit.</div></li>
+    <li><div><strong>Mettez une seule question à l'ordre du jour de la direction.</strong> « Qu'est-ce qu'on cherche à améliorer ? » Pas « quel outil ? ».</div></li>
+    <li><div><strong>Choisissez une tâche, pas un outil.</strong> Fréquente, coûteuse en temps, et peu risquée.</div></li>
+    <li><div><strong>Dites à vos équipes où vous en êtes.</strong> Ce que vous avez décidé, ce que vous n'avez pas encore décidé, et quand vous en reparlerez.</div></li>
+  </ul>
+  <div class="trou"><b>À confirmer par Nicolas</b>Les durées reprennent celles de votre page « Stratégie IA » : atelier de direction de 2 à 3 heures (encore une hypothèse), cartographie en 3 semaines, sprint de 6 semaines, 90 jours. Si elles bougent sur le site, elles bougent ici.</div>
+</section>
+
+<section id="ch7">
+  <div class="chap"><span class="num">7</span><h2>Ne perdre personne en route</h2></div>
+  <div class="col">
+    <p>On dit partout aux salariés : soyez curieux, formez-vous, montez dans le train. Comme si c'était une affaire d'envie.</p>
+    <p>Regardez plutôt ce qu'on leur donne.</p>
+  </div>
+  <div class="grille trois">
+    <div class="carte"><span class="qui">Pas de temps</span><p>« Tu testeras le soir, sur le tien. »</p></div>
+    <div class="carte"><span class="qui">Pas d'outils</span><p>Ils sont bloqués par la sécurité. Reste le compte personnel.</p></div>
+    <div class="carte"><span class="qui">Pas de droit à l'erreur</span><p>Une culture où l'erreur se paie. Et un message jamais écrit : ceux qui n'y arrivent pas sont ceux qui n'ont pas voulu.</p></div>
+  </div>
+  <div class="col">
+    <p><strong>Votre équipe n'ira pas vers l'IA par passion.</strong> Elle ira si elle a le droit d'essayer, de se tromper et de recommencer sans que cela lui coûte. Créer ces conditions, c'est votre travail. Personne d'autre dans l'entreprise ne peut le faire.</p>
+    <p>La question à vous poser n'est donc pas « mes équipes sont-elles motivées ? ». C'est : ont-elles du temps pour essayer, des outils qui fonctionnent, et le droit de se tromper devant moi ?</p>
+  </div>
+  <h3>Trois décisions qui gardent tout le monde à bord</h3>
+  <ol class="regles">
+    <li><div><h3>Faire sortir l'usage caché</h3><p>Ceux qui utilisent déjà l'IA ne sont pas un problème de discipline. Ce sont vos premiers référents. Demandez-leur de montrer ce qu'ils font, y compris ce qui a raté.</p></div></li>
+    <li><div><h3>Mettre tout le monde dans la même pièce</h3><p>Dirigeants, managers et opérationnels, autour du travail réel. Une façon de travailler décidée sans ceux qui la pratiquent ne sera pas adoptée.</p></div></li>
+    <li><div><h3>Avancer par petits groupes, au grand jour</h3><p>Cinq à huit personnes testent. Les autres savent ce qui se teste et pourquoi. On ne demande pas à tous d'aller à la même vitesse. On demande que personne ne soit laissé sans nouvelles.</p></div></li>
+  </ol>
+  <div class="dire">
+    <span class="petit">Ce que vous pouvez dire à vos équipes</span>
+    <q>Certains d'entre vous utilisent déjà l'IA. C'est normal, et personne ne sera sanctionné. J'aimerais que vous nous montriez ce que ça donne, pour qu'on décide ensemble de ce qu'on garde.</q>
+  </div>
+  <div class="trou"><b>Vécu à ajouter par Nicolas</b>Une histoire courte irait bien ici : une équipe où l'usage caché est devenu une ressource, ou un atelier où dirigeants et opérationnels ont travaillé ensemble sur un vrai processus. Je n'en invente pas.</div>
+</section>
+
+<section id="ch8">
+  <div class="chap"><span class="num">8</span><h2>Et l'emploi ? Parler vrai</h2></div>
+  <div class="col">
+    <p>C'est la question que personne ne pose en réunion et que tout le monde se pose en rentrant chez soi.</p>
+    <p>Vous n'avez pas la réponse. Personne ne l'a. Ce n'est pas une raison pour vous taire : quand la direction ne dit rien, les équipes écrivent l'histoire à sa place, et elles écrivent la pire.</p>
+  </div>
+  <div class="etudes">
+    <div class="etude"><div><span class="chiffre">776</span><span class="petit">professionnels chez Procter &amp; Gamble</span></div><div><p><strong>Une personne seule avec l'IA fait aussi bien qu'un binôme sans.</strong> Sur des projets réels d'innovation, l'individu équipé d'une IA atteint la qualité d'une équipe de deux sans IA, et y passe 16,4 % de temps en moins.</p><p class="lecon">Pour vous : le gain existe. La question est ce que vous en faites.</p><p class="petit">Dell'Acqua et collègues, document de travail NBER, 2025.</p></div></div>
+    <div class="etude"><div><span class="chiffre">+ 50 %</span><span class="petit">de production par personne</span></div><div><p><strong>Avec l'IA, on produit plus et on se parle moins.</strong> 2 234 participants, en équipes humaines ou humain-IA. Les équipes avec IA produisent davantage. Elles échangent moins de messages personnels, et leurs productions se ressemblent.</p><p class="lecon">Pour vous : le lien entre les personnes ne se maintient pas tout seul.</p><p class="petit">Ju et Aral, 2025.</p></div></div>
+  </div>
+  <div class="col">
+    <p>L'IA ne supprime pas des métiers d'un bloc. Elle prend des tâches à l'intérieur des métiers : rédiger un premier jet, résumer, chercher, mettre en forme. Ce qui reste, c'est ce qui demande d'être responsable devant quelqu'un.</p>
+    <p><span class="surligne">L'IA peut rendre deux heures à une personne. Elle ne décide pas qui occupe ces deux heures.</span> Si vous ne décidez rien, elles seront remplies par davantage du même travail, ou comptées comme un poste en trop. Si vous décidez, elles peuvent aller au client, à la qualité, à la formation des plus jeunes.</p>
+  </div>
+  <div class="duel">
+    <div style="background:var(--bleu-doux)">
+      <h4>Ce que vous pouvez dire</h4>
+      <dl>
+        <dt>Sur l'intention</dt><dd>Pourquoi l'entreprise y va, et ce qu'elle cherche à améliorer.</dd>
+        <dt>Sur le temps gagné</dt><dd>À quoi il servira en priorité. Dites-le avant le premier test.</dd>
+        <dt>Sur la méthode</dt><dd>Les tests se font avec les personnes concernées, pas sur elles.</dd>
+        <dt>Sur ce que vous ignorez</dt><dd>« Je ne sais pas ce que sera ce métier dans trois ans. Je m'engage à vous le dire dès que je le saurai. »</dd>
+      </dl>
+    </div>
+    <div style="background:var(--rouge-doux)">
+      <h4>Ce qu'il vaut mieux ne pas dire</h4>
+      <dl>
+        <dt>« Rien ne changera. »</dt><dd>Personne ne vous croira, et vous ne pourrez pas le tenir.</dd>
+        <dt>« Aucun poste ne sera touché. »</dt><dd>Sauf si vous en êtes certain, et pour combien de temps.</dd>
+        <dt>« C'est juste un outil. »</dt><dd>Vos équipes voient bien que c'est plus que cela.</dd>
+        <dt>Rien du tout</dt><dd>Le silence est entendu comme une réponse.</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="trou"><b>À valider par Nicolas : ce chapitre vous engage</b>La position prise ici (des tâches plutôt que des métiers, décider d'avance où va le temps gagné, dire ce qu'on ignore) est une proposition à partir de vos textes. C'est le sujet le plus sensible du livre. Gardez ce que vous diriez face à un comité de direction, barrez le reste.</div>
+</section>
+
+<section id="ch9">
+  <div class="chap"><span class="num">9</span><h2>Qui fait quoi</h2></div>
+  <div class="col">
+    <p>La plupart des projets IA qui s'enlisent ont le même défaut : on a confié la décision à celui qui construit, ou la construction à celui qui décide. Voici une répartition simple.</p>
+  </div>
+  <div class="defile">
+    <table>
+      <thead><tr><th>Qui</th><th>Son rôle</th><th>Ce qu'on ne lui demande pas</th></tr></thead>
+      <tbody>
+        <tr><td><strong>La direction</strong></td><td>Dire pourquoi, fixer les critères, arbitrer, décider de l'usage du temps gagné.</td><td>Choisir l'outil.</td></tr>
+        <tr><td><strong>Les métiers</strong></td><td>Décrire le travail réel, proposer les pistes, tester, dire ce qui marche.</td><td>Porter seuls le risque d'un essai raté.</td></tr>
+        <tr><td><strong>L'informatique ou l'intégrateur</strong></td><td>Dire ce qui est faisable, sécuriser, construire et raccorder.</td><td>Deviner le problème à résoudre.</td></tr>
+        <tr><td><strong>Les ressources humaines</strong></td><td>Formation, dialogue avec les représentants du personnel, évolution des postes.</td><td>Rassurer sans information.</td></tr>
+        <tr><td><strong>Le juriste ou le délégué à la protection des données</strong></td><td>Valider ce qui touche aux données personnelles et aux obligations légales.</td><td>Tout bloquer par défaut.</td></tr>
+        <tr><td><strong>Un accompagnant extérieur</strong></td><td>Aider la direction et les métiers à décider ensemble, puis suivre l'adoption.</td><td>Décider à votre place.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Les données : trois couleurs, une page</h3>
+  <div class="feu">
+    <div class="f-vert"><span class="rond"></span><strong>Vert</strong><p>Informations publiques ou fictives. Utilisables dans les outils autorisés par l'entreprise.</p></div>
+    <div class="f-orange"><span class="rond"></span><strong>Orange</strong><p>Informations internes. Seulement dans un compte professionnel, et avec une relecture humaine.</p></div>
+    <div class="f-rouge"><span class="rond"></span><strong>Rouge</strong><p>Données personnelles, clients, RH, financières sensibles. Jamais sans cadre validé par les responsables compétents.</p></div>
+  </div>
+  <h3>Ce que la loi vous demande</h3>
+  <div class="col">
+    <p>Le règlement européen sur l'IA a un article sur la « maîtrise de l'IA », l'article 4. Il s'applique depuis le 2 février 2025 à toute organisation qui utilise l'IA dans un cadre professionnel.</p>
+    <p>Son texte a été assoupli en juillet 2026. Il demande de prendre des mesures pour favoriser le développement de la maîtrise de l'IA par le personnel, sans obligation de garantir un niveau précis pour chacun.</p>
+    <p>Autrement dit : dès que vos équipes utilisent l'IA, et elles l'utilisent, vous avez à vous en occuper. Laisser faire n'est pas une position neutre.</p>
+    <p class="note">Source : règlement (UE) 2024/1689, article 4, modifié par le règlement (UE) 2026/1744 du 8 juillet 2026.</p>
+  </div>
+  <div class="trou"><b>À faire relire par un juriste</b>Même réserve que dans « Le facilitateur et l'IA » : la modification de juillet 2026 est récente, à faire confirmer avant publication.</div>
+</section>
+
+<section id="ch10">
+  <div class="chap"><span class="num">10</span><h2>Les questions qu'on se pose, et mes hypothèses</h2></div>
+  <div class="col">
+    <p>Ce sont des hypothèses, pas des certitudes. Elles viennent de ce que j'observe dans les comités de direction. Dites-moi où elles tombent à côté.</p>
+  </div>
+  <div>
+    <p class="theme">Décider</p>
+    <div class="qh"><p class="q">Et si on attendait un an que ça se stabilise ?</p><p class="h">Vos équipes n'attendent pas. Dans un an, les usages seront installés sans cadre, et plus difficiles à reprendre. Attendre pour acheter, oui. Attendre pour décider, non.</p></div>
+    <div class="qh"><p class="q">Sommes-nous trop petits pour avoir une stratégie IA ?</p><p class="h">Une stratégie IA pour une PME tient sur une page : ce qu'on cherche, deux ou trois usages, trois règles, un responsable. Plus l'entreprise est petite, plus la décision est rapide à prendre.</p></div>
+    <div class="qh"><p class="q">Faut-il nommer un responsable IA ?</p><p class="h">Un responsable par usage, oui. Un « monsieur IA » pour toute l'entreprise, rarement au début : le sujet devient le sien et plus celui de la direction.</p></div>
+    <p class="theme">Dépenser</p>
+    <div class="qh"><p class="q">Faut-il acheter des licences pour tout le monde ?</p><p class="h">Pas avant d'avoir un usage testé. Quelques licences pour un groupe pilote suffisent à savoir si le reste vaut la dépense.</p></div>
+    <div class="qh"><p class="q">Combien cela va-t-il rapporter ?</p><p class="h">Personne ne peut le promettre avant d'avoir essayé. Ce qu'on peut faire : mesurer une tâche avant, la mesurer après, et décider sur ce chiffre.</p></div>
+    <div class="qh"><p class="q">Faut-il commencer par une charte ?</p><p class="h">Par trois règles sur les données, oui, tout de suite. La charte complète s'écrit mieux après les premiers tests : elle parle alors de vos usages réels.</p></div>
+    <p class="theme">Embarquer</p>
+    <div class="qh"><p class="q">Que faire de ceux qui ne veulent pas s'y mettre ?</p><p class="h">Chercher ce que leur refus protège : la qualité, la relation client, un savoir-faire. C'est souvent une information utile sur les limites à poser.</p></div>
+    <div class="qh"><p class="q">Et de ceux qui vont trop vite ?</p><p class="h">Les faire travailler à découvert. Leur avance devient utile dès qu'elle est partagée et vérifiée par d'autres.</p></div>
+    <div class="qh"><p class="q">Le dirigeant doit-il s'y mettre lui-même ?</p><p class="h">Oui, un peu. Pas pour devenir expert : pour savoir de quoi il parle quand il arbitre, et pour montrer qu'on a le droit d'essayer.</p></div>
+  </div>
+  <div class="trou"><b>À valider par Nicolas</b>Ces neuf hypothèses sont des propositions de Claude à partir de votre page « Stratégie IA ». Gardez celles que vous signeriez. Celles sur les licences et sur le responsable IA sont les plus tranchées.</div>
+</section>
+
+<section>
+  <div class="chap"><h2>Et maintenant</h2></div>
+  <div class="col">
+    <p>Vous pouvez suivre ce chemin seuls. Si vous préférez être accompagnés, je travaille avec les directions de PME à trois moments. Chacun se prend séparément.</p>
+  </div>
+  <div class="grille trois">
+    <div class="carte"><span class="petit">Clarifier</span><span class="qui">Atelier de décision IA</span><p>Le comité de direction passe de « il faut qu'on fasse de l'IA » à quelques questions précises, et décide de la suite.</p></div>
+    <div class="carte"><span class="petit">Choisir</span><span class="qui">Cartographie IA utile</span><p>Les pistes sont classées. Un pilote est choisi, avec un responsable, un indicateur et une feuille de route à 90 jours.</p></div>
+    <div class="carte"><span class="petit">Passer à l'action</span><span class="qui">Sprint Usage IA, puis Cap IA 90</span><p>Un cas d'usage testé et mesuré, puis des usages installés dans les équipes, avec des référents internes.</p></div>
+  </div>
+  <div class="col">
+    <p>Je ne vends aucun outil et je ne développe pas. J'aide la direction et les équipes à décider où agir, puis à vérifier que c'est utile et adopté. Le détail est sur nicolasverdot.com, rubrique Stratégie IA.</p>
+  </div>
+  <div class="trou"><b>À décider par Nicolas</b>Que proposer ici : un rendez-vous de 30 minutes, le formulaire de contact, ou l'Atelier de décision IA directement ? Et faut-il afficher un prix ?</div>
+</section>
+
+<section>
+  <h3>Sources</h3>
+  <p class="petit">Les enquêtes</p>
+  <ul class="sources">
+    <li>Bpifrance Le Lab, 82e baromètre de conjoncture des TPE-PME, 13 janvier 2026. Environ 4 700 TPE-PME interrogées du 5 novembre au 2 décembre 2025.</li>
+    <li>Insee Première n° 2120, « Les technologies de l'information et de la communication dans les entreprises en 2025 », 21 juillet 2026. insee.fr/fr/statistiques/9025878</li>
+    <li>Apec, « Les cadres et l'IA », mai 2026. 2 000 cadres et 1 000 entreprises.</li>
+    <li>Ipsos pour Greenworking, « IA générative au bureau », juin 2025. 1 000 salariés du privé. ipsos.com/fr-fr/node/1049801</li>
+    <li>Ifop pour Talan, baromètre « Les Français et les IA génératives », mars 2025. 1 100 personnes.</li>
+  </ul>
+  <p class="petit">Les études</p>
+  <ul class="sources">
+    <li>Dell'Acqua et collègues, « The Cybernetic Teammate », NBER Working Paper 33641, avril 2025. nber.org/papers/w33641</li>
+    <li>Ju et Aral, « Collaborating with AI Agents », mars 2025. arxiv.org/abs/2503.18238</li>
+  </ul>
+  <p class="petit">Les textes officiels</p>
+  <ul class="sources">
+    <li>Règlement (UE) 2024/1689 sur l'intelligence artificielle, article 4, modifié par le règlement (UE) 2026/1744 du 8 juillet 2026. Journal officiel de l'Union européenne.</li>
+  </ul>
+  <p class="petit">De l'auteur</p>
+  <ul class="sources">
+    <li>Nicolas Verdot, « Le facilitateur et l'IA », livre blanc, version de travail, octobre 2026.</li>
+    <li>Nicolas Verdot, « Stratégie IA », nicolasverdot.com/accompagnement-ia-pme</li>
+  </ul>
+  <p class="note">Sources consultées le 7 octobre 2026. Le chiffre Bpifrance a été relevé dans la presse : à relire dans le rapport complet avant publication.</p>
+</section>
+
+</div>
