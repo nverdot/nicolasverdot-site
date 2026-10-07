@@ -47,7 +47,7 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
 - Mise en ligne : après validation de l'aperçu local, fusionner `positionnement-ia` dans `main` (le push déploie), puis vérifier sur nicolasverdot.com.
 
 ### À confirmer par Nicolas avant fusion
-- Durée de l'Atelier de décision IA (« 2 à 3 heures » : hypothèse) et son nom.
+- Durée de l'Atelier de décision IA : aucune n'est affichée (« calée avec vous ») tant qu'elle n'est pas fixée. Son nom reste à confirmer. Les autres durées (3 semaines, 6 semaines, 90 jours, 2 heures, 1 journée) sont inchangées.
 - Prix : rien de nouveau n'est affiché. Hypothèses de travail non publiées : atelier 2–3 k€, cartographie 8–12 k€, passage à l'action 15–30 k€.
 - La cible « PME de 30 à 50 personnes » a été élargie à « PME » sur cette page.
 - Nouveau titre de l'accueil (effet sur le référencement « facilitateur »).

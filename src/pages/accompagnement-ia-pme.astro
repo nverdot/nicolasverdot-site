@@ -126,9 +126,11 @@ const formats = [
 ];
 
 /*
- * Les trois portes. La premiere est nouvelle (octobre 2026) : sa duree vient
- * de la reflexion de positionnement, pas encore d'une mission — a confirmer
- * par Nicolas. Aucun prix affiche sur ces fiches : sur devis.
+ * Les trois portes. La premiere est nouvelle (octobre 2026) : pas de duree
+ * affichee tant que Nicolas ne l'a pas fixee sur une vraie mission. Elle
+ * commence par un temps de mise a niveau descendant — une direction ne peut
+ * pas arbitrer sur un sujet dont elle n'a pas les reperes. Aucun prix affiche
+ * sur ces fiches : sur devis.
  */
 const portes = [
   {
@@ -136,19 +138,21 @@ const portes = [
     badge: '1',
     phase: 'Porte 1 · Clarifier',
     nom: 'Atelier de décision IA',
-    duree: '2 à 3 heures',
+    duree: 'calée avec vous',
     pourQui:
       "Le dirigeant et son comité de direction, quand le sujet IA revient à chaque réunion sans qu'une décision en sorte.",
     resultat: "Une direction d'accord sur ce qu'elle attend de l'IA, et sur la suite.",
     promesse:
-      "En un atelier, la direction passe de « il faut qu'on fasse de l'IA » à quelques questions précises : ce qu'on cherche à améliorer, à quoi on reconnaîtra une bonne piste, et ce qu'on décide maintenant.",
+      "La direction se donne d'abord les mêmes repères sur l'IA, puis passe de « il faut qu'on fasse de l'IA » à quelques questions précises : ce qu'on cherche à améliorer, à quoi on reconnaîtra une bonne piste, et ce qu'on décide maintenant.",
     contenu: [
       "Un entretien avec le dirigeant en amont : ce qui pousse le sujet aujourd'hui, ce qui a déjà été essayé, ce qui inquiète.",
-      "En atelier, on part des objectifs de l'entreprise — croissance, marge, qualité, délais, charge, recrutement — avant de parler d'outil.",
+      "Un temps de mise à niveau pour commencer : ce qu'est l'IA, comment elle se manifeste concrètement dans une entreprise, et les grandes familles de solutions — de l'assistant du quotidien à l'outil construit sur mesure.",
+      "Ensuite, on part des objectifs de l'entreprise — croissance, marge, qualité, délais, charge, recrutement — avant de parler d'outil.",
       'Chaque membre de la direction dit où il voit un problème métier qui mérite d’être traité. Les désaccords sont posés au mur, pas arrondis.',
       "On fixe les critères d'arbitrage, puis on décide : s'arrêter là, instruire quelques questions, ou engager un travail plus large.",
     ],
     livrables: [
+      "Des repères communs sur l'IA et les familles de solutions",
       'Les objectifs et les enjeux, écrits noir sur blanc',
       'Les critères qui serviront à arbitrer',
       'Les premières questions à instruire, avec un responsable pour chacune',
@@ -158,7 +162,7 @@ const portes = [
       "La direction repart avec une décision écrite sur la suite, et chacun de ses membres donne la même réponse à la question « pourquoi l'IA, chez nous ? ». Ce n'est pas un audit technique : on n'y choisit ni outil ni architecture.",
     deroule: [
       ['Avant', 'Un entretien avec le dirigeant, pour cadrer ce que la direction a besoin de trancher.'],
-      ['Pendant', "L'atelier avec le comité de direction : objectifs, problèmes métier, critères, décision."],
+      ['Pendant', "Avec le comité de direction : la mise à niveau d'abord, puis les objectifs, les problèmes métier, les critères et la décision."],
       ['Après', "Le relevé de décisions, et un échange pour caler la suite s'il y en a une."],
     ],
   },
@@ -265,8 +269,8 @@ const apercu = [
     href: '#atelier-decision-codir',
     verbe: 'Clarifier',
     nom: 'Atelier de décision IA',
-    duree: '2 à 3 heures',
-    resultat: "La direction sait ce qu'elle attend de l'IA, et décide de la suite.",
+    duree: 'Durée calée avec vous',
+    resultat: "La direction partage les mêmes repères, sait ce qu'elle attend de l'IA, et décide de la suite.",
   },
   {
     href: '#cartographie-ia-utile',
