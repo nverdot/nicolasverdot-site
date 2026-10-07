@@ -46,6 +46,10 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
   - La fiche d'étape est sortie dans [src/components/FicheEtape.astro](src/components/FicheEtape.astro).
 - Mise en ligne : après validation de l'aperçu local, fusionner `positionnement-ia` dans `main` (le push déploie), puis vérifier sur nicolasverdot.com.
 
+- **Livre blanc « Le dirigeant et l'IA »** (version de travail 1, pas en ligne) : [livre-blanc-dirigeant/livre-blanc.html](livre-blanc-dirigeant/livre-blanc.html), un seul fichier, même mise en page que « Le facilitateur et l'IA ». PDF : `livre-blanc-dirigeant/faire-pdf.sh`. Page privée : https://claude.ai/artifact/GcL5su9VvHZcKS1qUJtSAp
+  - Dix chapitres : la phrase « il faut qu'on fasse de l'IA », comme le mail, ce qui se passe déjà chez vous, trois peurs, quatre faux départs, cinq questions, quatre étapes, ne perdre personne, l'emploi, qui fait quoi, hypothèses.
+  - Chaque trou est un cadre en pointillés rouges. Reste à faire : relecture de Nicolas (surtout le chapitre 8 sur l'emploi), un vécu à ajouter, le chiffre Bpifrance à relire dans le rapport complet, l'article 4 à faire relire par un juriste, l'invitation finale, puis la page de téléchargement sur le site.
+
 ### À confirmer par Nicolas avant fusion
 - Durée de l'Atelier de décision IA : aucune n'est affichée (« calée avec vous ») tant qu'elle n'est pas fixée. Son nom reste à confirmer. Les autres durées (3 semaines, 6 semaines, 90 jours, 2 heures, 1 journée) sont inchangées.
 - Prix : rien de nouveau n'est affiché. Hypothèses de travail non publiées : atelier 2–3 k€, cartographie 8–12 k€, passage à l'action 15–30 k€.
