@@ -1,6 +1,7 @@
 ---
 import { getImage } from 'astro:assets';
 import { withBase } from '../utils/url';
+import { SITE } from '../data/site';
 import heroBg from '../assets/hero-mountain.jpg';
 import heroBgMobile from '../assets/hero-mountain-mobile.png';
 
@@ -38,50 +39,36 @@ const mobileFallback = await getImage({ src: heroBgMobile, width: 750, format: '
 
   <div class="hero-inner">
     <div class="hero-copy">
-      {/* Les trois verbes que vend ce site, posés avant le titre : converger,
-          décider, agir. C'est la promesse en trois mots, et elle revient
-          ensuite dans le lead et dans l'outil de diagnostic. */}
-      <p class="hero-kicker">Converger · Décider · Agir</p>
+      {/* Octobre 2026 : l'accueil s'ouvre sur l'IA, vue depuis le fauteuil du
+          dirigeant. Les trois verbes du site — converger, décider, agir —
+          restent, mais dans le lead : ils disent comment je travaille, plus
+          ce que je vends. */}
+      <p class="hero-kicker">Stratégie et adoption de l'IA · Nice · Sophia Antipolis</p>
 
       <h1 id="hero-title">
-        Produire va désormais très vite.
-        <span class="script-accent">Décider ensemble,</span>
-        <span class="hero-tail">c'est là que tout ralentit.</span>
+        Passez de «&nbsp;il faut qu'on fasse de l'IA&nbsp;»
+        <span class="script-accent">à des choix clairs.</span>
+        <span class="hero-tail">Et à un premier passage à l'action.</span>
       </h1>
 
-      {/*
-        Le lead ne dit pas « vos réunions coûtent cher ». Ce serait vrai, et
-        sans effet : les entreprises le savent depuis vingt ans et ne le règlent
-        pas. Elles ne le règlent pas parce que reporter est confortable et que
-        trancher fait des perdants — c'est cette raison-là qu'il faut nommer ici,
-        parce que c'est elle qui fait appeler quelqu'un de l'extérieur.
-      */}
       <p class="hero-lead">
-        L'IA a fait fondre le temps d'exécution. Le temps de décision, lui, n'a pas bougé — et si ça dure,
-        ce n'est pas faute d'outils&nbsp;: trancher oblige à nommer ce que le collectif préfère éviter.
-        Mon travail est là&nbsp;: faire <strong>converger</strong>, faire <strong>décider</strong>,
-        faire <strong>agir</strong>.
+        J'aide les dirigeants et les comités de direction à décider <strong>où l'IA crée vraiment de la
+        valeur</strong>, quel problème traiter en premier, et comment avancer avec les métiers et la DSI.
+        Je ne vends pas d'outil&nbsp;: je fais <strong>converger</strong>, <strong>décider</strong>,
+        <strong>agir</strong>.
       </p>
 
-      {/*
-        Une seule action, et ce n'est pas le catalogue.
-        « Voir les accompagnements » demandait au visiteur de s'intéresser à ce
-        que je vends avant d'avoir reconnu son problème — et le menu y mène
-        déjà. Le hero ouvre donc sur le diagnostic : on repart avec quelque
-        chose sur SA situation, pas avec une liste de prestations.
-
-        Le chiffre n'est pas la promesse affichée : il est la raison de
-        répondre aux douze questions. Ce qu'on vient chercher, c'est pourquoi ça
-        ne bouge pas.
-      */}
       <div class="hero-actions">
-        <a href={withBase('/outils/cout-de-linaction/')} class="btn">
-          Pourquoi ça ne se décide pas chez vous&nbsp;? →
-        </a>
+        <a href={withBase('/accompagnement-ia-pme/')} class="btn">Voir comment commencer →</a>
+        <a href={SITE.bookingUrl} class="btn-outline" target="_blank" rel="noopener">Parler de votre situation</a>
       </div>
+
+      {/* Le diagnostic reste accessible depuis le hero, en second rideau : le
+          clic l'ouvre toujours sur place (voir CoutInaction, prop « modal »). */}
       <p class="hero-tool-note">
-        Douze questions, deux minutes. Vous repartez avec <strong>la cause</strong> du blocage — celle qui
-        ressort de vos réponses, pas celle que vous auriez déclarée — et avec ce qu'elle vous coûte chaque mois.
+        Le sujet n'est pas l'IA, mais une décision qui n'arrive pas&nbsp;?
+        <a href={withBase('/outils/cout-de-linaction/')}>Pourquoi ça ne se décide pas chez vous</a>&nbsp;:
+        douze questions, deux minutes, et vous repartez avec <strong>la cause</strong> du blocage.
       </p>
     </div>
   </div>
@@ -214,6 +201,17 @@ const mobileFallback = await getImage({ src: heroBgMobile, width: 750, format: '
     }
     .hero :global(.hero-photo) {
       object-position: 45% 15%;
+    }
+    /* Deux boutons et la note du diagnostic : le texte descend plus bas
+       qu'avant, le voile creme le suit pour qu'il ne se lise pas sur la photo. */
+    .hero-scrim {
+      background: linear-gradient(
+        180deg,
+        var(--color-cream) 0%,
+        var(--color-cream) 80%,
+        color-mix(in srgb, var(--color-cream) 80%, transparent) 90%,
+        color-mix(in srgb, var(--color-cream) 45%, transparent) 100%
+      );
     }
   }
 

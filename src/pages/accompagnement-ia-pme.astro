@@ -15,6 +15,15 @@
  * fais pas » : elle rend credible tout le reste, et c'est ce qu'aucun
  * concurrent local n'ecrit.
  *
+ * Octobre 2026 — recentrage. La page ne s'ouvre plus sur « vos equipes
+ * utilisent deja l'IA » mais sur la phrase du dirigeant : « il faut qu'on fasse
+ * de l'IA ». L'offre se lit en trois portes, achetables separement :
+ * clarifier (atelier de direction), choisir (cartographie), passer a l'action
+ * (sprint, puis Cap IA 90). Le Premier pas IA et l'Atelier metier restent, mais
+ * a leur place : des formats pour mettre les equipes a niveau, pas l'entree du
+ * parcours. Et le role vis-a-vis de la DSI est dit noir sur blanc : je ne
+ * construis pas, j'aide a construire la bonne chose.
+ *
  * Tarifs : seul le prix d'entree est affiche (choix de Nicolas, 2026-09-29) ;
  * les etapes suivantes sont sur devis tant que les trois premieres missions
  * n'ont pas permis de les ajuster. L'offre pilote ne montre pas de montant
@@ -29,21 +38,23 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import CTABlock from '../components/CTABlock.astro';
+import FicheEtape from '../components/FicheEtape.astro';
 import { SITE } from '../data/site';
 import { withBase } from '../utils/url';
 
 const path = '/accompagnement-ia-pme/';
 
 /*
- * Le parcours. Cinq etapes, toujours la meme grille de lecture : pour qui, le
+ * Les fiches. Toujours la meme grille de lecture : pour qui, le
  * resultat, ce qu'on y fait, ce que vous gardez, et comment on sait que c'est
  * reussi. Le « comment on sait » est ce qui distingue une prestation qui se
  * mesure d'une prestation qui se raconte : il reste visible, jamais replie.
  */
-const etapes = [
+const formats = [
   {
     id: 'premier-pas-ia',
-    phase: 'Comprendre',
+    badge: 'A',
+    phase: 'Pour les équipes · Comprendre',
     nom: 'Premier pas IA',
     duree: '2 heures',
     pourQui: "Le dirigeant, le comité de direction ou toute l'équipe, jusqu'à 30 personnes.",
@@ -83,7 +94,8 @@ const etapes = [
   },
   {
     id: 'atelier-metier-augmente',
-    phase: 'Pratiquer',
+    badge: 'B',
+    phase: 'Pour les équipes · Pratiquer',
     nom: 'Atelier métier augmenté',
     duree: '1 journée',
     pourQui:
@@ -111,26 +123,67 @@ const etapes = [
       ['Après', "Un point collectif de 45 minutes à quinze jours : on compare avec la mesure de départ, puis on abandonne, on améliore ou on élargit."],
     ],
   },
+];
+
+/*
+ * Les trois portes. La premiere est nouvelle (octobre 2026) : sa duree vient
+ * de la reflexion de positionnement, pas encore d'une mission — a confirmer
+ * par Nicolas. Aucun prix affiche sur ces fiches : sur devis.
+ */
+const portes = [
+  {
+    id: 'atelier-decision-codir',
+    badge: '1',
+    phase: 'Porte 1 · Clarifier',
+    nom: 'Atelier de décision IA',
+    duree: '2 à 3 heures',
+    pourQui:
+      "Le dirigeant et son comité de direction, quand le sujet IA revient à chaque réunion sans qu'une décision en sorte.",
+    resultat: "Une direction d'accord sur ce qu'elle attend de l'IA, et sur la suite.",
+    promesse:
+      "En un atelier, la direction passe de « il faut qu'on fasse de l'IA » à quelques questions précises : ce qu'on cherche à améliorer, à quoi on reconnaîtra une bonne piste, et ce qu'on décide maintenant.",
+    contenu: [
+      "Un entretien avec le dirigeant en amont : ce qui pousse le sujet aujourd'hui, ce qui a déjà été essayé, ce qui inquiète.",
+      "En atelier, on part des objectifs de l'entreprise — croissance, marge, qualité, délais, charge, recrutement — avant de parler d'outil.",
+      'Chaque membre de la direction dit où il voit un problème métier qui mérite d’être traité. Les désaccords sont posés au mur, pas arrondis.',
+      "On fixe les critères d'arbitrage, puis on décide : s'arrêter là, instruire quelques questions, ou engager un travail plus large.",
+    ],
+    livrables: [
+      'Les objectifs et les enjeux, écrits noir sur blanc',
+      'Les critères qui serviront à arbitrer',
+      'Les premières questions à instruire, avec un responsable pour chacune',
+      'Un relevé de décisions sur la suite',
+    ],
+    preuve:
+      "La direction repart avec une décision écrite sur la suite, et chacun de ses membres donne la même réponse à la question « pourquoi l'IA, chez nous ? ». Ce n'est pas un audit technique : on n'y choisit ni outil ni architecture.",
+    deroule: [
+      ['Avant', 'Un entretien avec le dirigeant, pour cadrer ce que la direction a besoin de trancher.'],
+      ['Pendant', "L'atelier avec le comité de direction : objectifs, problèmes métier, critères, décision."],
+      ['Après', "Le relevé de décisions, et un échange pour caler la suite s'il y en a une."],
+    ],
+  },
   {
     id: 'cartographie-ia-utile',
-    phase: 'Choisir',
+    badge: '2',
+    phase: 'Porte 2 · Choisir',
     nom: 'Cartographie IA utile',
     duree: '3 semaines',
     pourQui:
-      "Une PME de 30 à 50 personnes où les usages de l'IA se multiplient dans tous les sens, et qui doit choisir où investir.",
-    resultat: "Trois cas d'usage priorisés et une feuille de route à 90 jours.",
+      "Une PME où les idées et les usages de l'IA se multiplient dans tous les sens, et qui doit choisir où investir.",
+    resultat: "Un portefeuille de cas d'usage priorisés et une feuille de route à 90 jours.",
     promesse:
       'En trois semaines, la direction sait quoi lancer, quoi écarter, avec quel responsable, quel indicateur et quelles précautions.',
     contenu: [
       'Un cadrage avec le dirigeant : croissance, marge, qualité, délais, charge, expérience client ou recrutement ?',
       "Six à huit entretiens dans différents métiers, pour repérer irritants, reprises, décisions lentes — et les usages de l'IA déjà pratiqués, y compris ceux dont personne ne parle.",
       "Un atelier de cartographie : le travail réel au mur, les idées reformulées en problèmes métier, puis notées selon la valeur, la fréquence, la faisabilité, les données, le risque et l'adoption.",
+      "Un point avec votre DSI ou votre prestataire informatique : les données disponibles, les contraintes techniques et les risques de chaque piste.",
       "Un arbitrage : maintenant, plus tard, à ne pas faire. Et le choix d'un pilote.",
     ],
     livrables: [
       'Une carte visuelle du travail et des irritants',
-      'Un portefeuille de 10 à 15 idées qualifiées',
-      "Trois fiches de cas d'usage : bénéfice attendu, risques, dépendances",
+      'Un portefeuille d’idées qualifiées, avec les hypothèses à vérifier',
+      "Une fiche par cas d'usage retenu : bénéfice attendu, risques, dépendances",
       'Une matrice de priorisation et une feuille de route à 90 jours',
       'La liste des besoins techniques ou juridiques à confier à des spécialistes',
     ],
@@ -144,7 +197,8 @@ const etapes = [
   },
   {
     id: 'sprint-usage-ia',
-    phase: 'Prouver',
+    badge: '3',
+    phase: 'Porte 3 · Tester',
     nom: 'Sprint Usage IA',
     duree: '6 semaines',
     pourQui:
@@ -155,7 +209,7 @@ const etapes = [
     contenu: [
       "Un contrat d'expérimentation : un sponsor, cinq à huit utilisateurs, une mesure de départ, une cible, des critères de réussite et d'arrêt.",
       "Le futur travail dessiné précisément : ce que fait la personne, ce que fait l'IA, et ce qui reste validé par un humain.",
-      'Un premier fonctionnement monté dans les outils que vous avez déjà, puis deux semaines de test terrain.',
+      'Un premier fonctionnement monté dans les outils que vous avez déjà — ou construit par votre DSI ou votre intégrateur quand il faut développer — puis deux semaines de test terrain.',
       "Un test de transmission : quelqu'un qui n'a pas participé à la conception doit pouvoir s'en servir.",
     ],
     livrables: [
@@ -175,7 +229,8 @@ const etapes = [
   },
   {
     id: 'cap-ia-90',
-    phase: 'Transformer',
+    badge: '3',
+    phase: 'Porte 3 · Installer',
     nom: 'Cap IA 90',
     duree: '90 jours',
     pourQui:
@@ -203,6 +258,62 @@ const etapes = [
     ],
   },
 ];
+
+/* Les trois portes en un coup d'oeil, sous le hero. */
+const apercu = [
+  {
+    href: '#atelier-decision-codir',
+    verbe: 'Clarifier',
+    nom: 'Atelier de décision IA',
+    duree: '2 à 3 heures',
+    resultat: "La direction sait ce qu'elle attend de l'IA, et décide de la suite.",
+  },
+  {
+    href: '#cartographie-ia-utile',
+    verbe: 'Choisir',
+    nom: 'Cartographie IA utile',
+    duree: '3 semaines',
+    resultat: 'Un portefeuille priorisé, un pilote choisi, une feuille de route à 90 jours.',
+  },
+  {
+    href: '#sprint-usage-ia',
+    verbe: "Passer à l'action",
+    nom: 'Sprint Usage IA, puis Cap IA 90',
+    duree: '6 semaines, puis 90 jours',
+    resultat: "Un cas d'usage testé et mesuré, puis des usages installés dans les équipes.",
+  },
+];
+
+/* Les signaux : le visiteur doit se reconnaitre avant qu'on lui parle d'offre. */
+const signaux = [
+  '« Tout le monde nous dit qu’il faut faire de l’IA. Mais par où commencer ? »',
+  'Des essais individuels, chacun dans son coin, sans priorité partagée.',
+  "Des idées d'outils, avant d'avoir nommé le problème à résoudre.",
+  'Une direction qui ne sait pas quoi arbitrer, ni comment mesurer ce que ça rapporte.',
+  'Une DSI ou un prestataire sollicité sans demande assez précise pour travailler.',
+  "Des équipes qui craignent une décision imposée d'en haut, loin du terrain.",
+];
+
+const questions = [
+  "Pourquoi voulez-vous mobiliser l'IA ?",
+  'Où sont les problèmes métier qui méritent d’être traités ?',
+  "Quels cas d'usage valent le temps et l'investissement ?",
+  'Qui décide, qui contribue, qui construit ?',
+  'Comment vérifier que le résultat est utile, et adopté ?',
+];
+
+/* Qui fait quoi. Aucun acteur local n'est nomme : on decrit des roles, pas
+   l'offre de quelqu'un d'autre, qu'on ne connait jamais en entier. */
+const chaine = [
+  { qui: 'Conférence, formation, atelier de sensibilisation', quoi: "Comprendre ce que l'IA permet.", moi: false },
+  { qui: 'Premier diagnostic', quoi: 'Repérer des pistes et recevoir des recommandations.', moi: false },
+  { qui: 'Avec moi', quoi: 'Décider ensemble où agir, pourquoi, dans quel ordre et avec quel résultat attendu.', moi: true },
+  { qui: 'Votre DSI ou votre intégrateur', quoi: 'Concevoir et mettre en œuvre la solution.', moi: false },
+  { qui: 'Avec moi et vos équipes', quoi: "Vérifier que c'est utile, bien utilisé, et adopté.", moi: true },
+];
+
+/* Deux listes, une seule mise en forme de fiche. */
+const etapes = [...portes, ...formats];
 
 /* Ce que le dirigeant achete vraiment — pas une technologie. */
 const benefices = [
@@ -291,7 +402,15 @@ const faqs = [
   },
   {
     q: 'Nos équipes utilisent déjà ChatGPT ou Copilot, chacune de leur côté. Par où commencer ?',
-    a: "C'est la situation la plus fréquente, et c'est un bon point de départ : les usages existent déjà. Le Premier pas IA pose des règles communes et fait remonter ces usages en deux heures. Si plusieurs pistes apparaissent et qu'il faut choisir, la Cartographie IA utile vous dit lesquelles lancer.",
+    a: "C'est la situation la plus fréquente, et c'est un bon point de départ : les usages existent déjà. Si la direction n'a pas encore dit ce qu'elle en attend, l'Atelier de décision IA est la première marche. Si les pistes sont déjà nombreuses et qu'il faut choisir, la Cartographie IA utile vous dit lesquelles lancer. Et pour poser des règles communes dans une équipe, le Premier pas IA le fait en deux heures.",
+  },
+  {
+    q: 'Nous avons déjà une DSI. Que venez-vous faire de plus ?',
+    a: "Je ne viens pas faire son travail. Votre DSI sait chercher une solution et la construire. Ce qui lui manque le plus souvent, c'est une demande claire : quel problème métier, pour qui, avec quel résultat attendu, et dans quel ordre. Mon rôle est d'aider la direction et les métiers à formuler ces choix, puis de suivre l'adoption avec les utilisateurs. Le développement, l'intégration, la sécurité et l'architecture restent chez elle.",
+  },
+  {
+    q: 'Nous avons déjà suivi une conférence ou fait un premier diagnostic. Est-ce utile de continuer ?',
+    a: "Oui, et c'est souvent le bon moment. Après un atelier ou un premier diagnostic, vous avez repéré des pistes. Il reste à décider lesquelles méritent vraiment un investissement, et à organiser leur mise en œuvre avec vos équipes. C'est là que je commence : on part de ce que vous avez déjà, on ne refait pas le travail.",
   },
   {
     q: 'Est-ce une formation à ChatGPT ?',
@@ -323,18 +442,18 @@ const faqs = [
   },
   {
     q: 'Peut-on commencer directement par la Cartographie ou le Sprint ?',
-    a: "Oui. Chaque étape se suffit à elle-même. Le Premier pas et l'Atelier métier sont des portes d'entrée ; la Cartographie est le bon point de départ quand les idées sont déjà nombreuses ; le Sprint, quand un cas d'usage est déjà choisi.",
+    a: "Oui. Chaque porte s'achète séparément. L'Atelier de décision est le bon départ quand la direction n'est pas encore alignée ; la Cartographie, quand les idées sont déjà nombreuses ; le Sprint, quand un cas d'usage est déjà choisi.",
   },
   {
     q: 'Combien coûte un accompagnement IA ?',
-    a: "Le Premier pas IA commence à 1 500 € HT, préparation, synthèse visuelle et point à quinze jours compris. Les étapes suivantes sont sur devis, selon la taille de l'équipe et le périmètre. Les licences, développements, audits juridiques et déplacements hors des Alpes-Maritimes ne sont pas compris.",
+    a: "L'Atelier de décision, la Cartographie, le Sprint et Cap IA 90 sont sur devis, selon le périmètre et le nombre de personnes associées. Le Premier pas IA, pour mettre une équipe à niveau, commence à 1 500 € HT, préparation, synthèse visuelle et point à quinze jours compris. Les licences, développements, audits juridiques et déplacements hors des Alpes-Maritimes ne sont pas compris.",
   },
   {
     /* Nicolas n'est pas certifie Qualiopi (2026-09-29) : le financement passe
        par un organisme partenaire, qui prend une commission. On le dit tel
        quel, sans promettre de prise en charge. */
     q: "Est-ce finançable par l'OPCO ?",
-    a: "Les étapes de formation — le Premier pas IA et l'Atelier métier augmenté — peuvent l'être. Je ne suis pas moi-même certifié Qualiopi : le financement passe alors par un organisme de formation partenaire certifié, dont les frais de gestion s'ajoutent au tarif. La Cartographie, le Sprint et Cap IA 90 relèvent de l'accompagnement et ne sont en général pas finançables de cette façon. On regarde ensemble au premier échange ce qui est possible pour votre entreprise.",
+    a: "Les étapes de formation — le Premier pas IA et l'Atelier métier augmenté — peuvent l'être. Je ne suis pas moi-même certifié Qualiopi : le financement passe alors par un organisme de formation partenaire certifié, dont les frais de gestion s'ajoutent au tarif. L'Atelier de décision, la Cartographie, le Sprint et Cap IA 90 relèvent de l'accompagnement et ne sont en général pas finançables de cette façon. On regarde ensemble au premier échange ce qui est possible pour votre entreprise.",
   },
   {
     q: 'Intervenez-vous à Sophia Antipolis, Cannes ou Monaco ?',
@@ -347,10 +466,10 @@ const siteUrl = (p: string) => new URL(withBase(p), Astro.site).toString();
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: 'IA utile — accompagnement IA pour les PME',
-  serviceType: "Accompagnement à l'adoption de l'intelligence artificielle en entreprise",
+  name: 'Stratégie et adoption de l’IA — accompagnement des PME',
+  serviceType: "Accompagnement à la stratégie et à l'adoption de l'intelligence artificielle en entreprise",
   description:
-    "Un parcours en cinq étapes pour aider les PME à choisir les bons usages de l'IA, à les tester sur le travail réel, à les faire adopter par les équipes et à en mesurer les résultats.",
+    "Un accompagnement en trois étapes pour aider les dirigeants de PME à décider où l'IA crée de la valeur, à choisir les cas d'usage prioritaires avec les métiers et la DSI, puis à les tester et à les faire adopter.",
   url: siteUrl(path),
   provider: {
     '@type': 'Person',
@@ -359,7 +478,7 @@ const serviceSchema = {
     email: SITE.email,
     telephone: SITE.phone,
   },
-  audience: { '@type': 'BusinessAudience', name: 'PME de 30 à 50 collaborateurs' },
+  audience: { '@type': 'BusinessAudience', name: 'Dirigeants et comités de direction de PME' },
   areaServed: [
     { '@type': 'AdministrativeArea', name: 'Alpes-Maritimes' },
     ...villes.filter((v) => v !== 'Monaco').map((v) => ({ '@type': 'City', name: v })),
@@ -367,7 +486,7 @@ const serviceSchema = {
   ],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
-    name: 'IA utile — de l’idée à l’usage',
+    name: 'IA utile — de la décision à l’usage',
     itemListElement: etapes.map((e, i) => ({
       '@type': 'Offer',
       position: i + 1,
@@ -397,7 +516,7 @@ const faqSchema = {
 
 <Layout
   title="Accompagnement IA pour PME à Nice et Sophia Antipolis — by Nicolas Verdot"
-  description="Choisir les bons usages de l'IA, les tester sur le travail réel, les faire adopter et mesurer le résultat. Un parcours en 5 étapes pour les PME des Alpes-Maritimes."
+  description="Passez de « il faut qu'on fasse de l'IA » à des choix clairs : où agir, dans quel ordre, avec vos métiers et votre DSI. Trois étapes pour les PME des Alpes-Maritimes."
   path={path}
   breadcrumbs={[
     { name: 'Accueil', path: '/' },
@@ -405,34 +524,34 @@ const faqSchema = {
   ]}
 >
   <PageHero
-    eyebrow="IA utile · PME de Nice à Sophia Antipolis"
-    title="Vos équipes utilisent déjà l'IA."
-    titleAccent="Chacune dans son coin."
-    summary="La question n'est plus « faut-il y aller ? », mais <strong>où l'utiliser, avec quelles règles, et pour quel résultat</strong>. J'aide les PME de 30 à 50 personnes à transformer l'IA en usages concrets, adoptés par les équipes et mesurés — sans ajouter une usine à gaz."
-    pills={['PME de 30 à 50 personnes', 'Alpes-Maritimes & Monaco', 'Indépendant des éditeurs']}
+    eyebrow="Stratégie et adoption de l'IA · PME de Nice à Sophia Antipolis"
+    title="« Il faut qu'on fasse de l'IA. »"
+    titleAccent="Oui, mais par où ?"
+    summary="J'aide les dirigeants et les comités de direction de PME à décider <strong>où l'IA crée vraiment de la valeur, quel problème traiter en premier, et comment embarquer les métiers et la DSI</strong>. Des choix clairs, des priorités partagées, un premier passage à l'action — sans vous vendre d'outil."
+    pills={['Dirigeants et comités de direction', 'Alpes-Maritimes & Monaco', 'Indépendant des éditeurs']}
   />
 
-  {/* Le chemin en un coup d'oeil, juste sous le hero : c'est ce que le
-      visiteur vient chercher. Chaque etape est un lien vers son detail. */}
-  <section class="section parcours-apercu" data-reveal data-section-name="Le parcours en bref">
+  {/* Les trois portes, juste sous le hero : c'est ce que le visiteur vient
+      chercher. Chacune est un lien vers son detail. */}
+  <section class="section parcours-apercu" data-reveal data-section-name="Les trois portes en bref">
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow">IA utile — de l'idée à l'usage</p>
-          <h2>Un parcours en cinq étapes</h2>
+          <p class="eyebrow">Comment commencer</p>
+          <h2>Trois portes d'entrée, selon où vous en êtes</h2>
         </div>
         <p>
-          Chaque étape se suffit à elle-même et prépare la suivante. Vous entrez là où vous en êtes&nbsp;: la
-          découverte, la pratique, le choix, la preuve, ou l'installation dans la durée.
+          Chacune s'achète séparément et prépare la suivante. Vous n'êtes pas obligé de commencer par la
+          première&nbsp;: on entre par celle qui correspond à votre situation.
         </p>
       </div>
 
       <ol class="chemin">
-        {etapes.map((e, i) => (
+        {apercu.map((e, i) => (
           <li>
-            <a href={`#${e.id}`} class="chemin-etape">
+            <a href={e.href} class="chemin-etape">
               <span class="chemin-num" aria-hidden="true">{i + 1}</span>
-              <span class="chemin-phase">{e.phase}</span>
+              <span class="chemin-phase">{e.verbe}</span>
               <strong class="chemin-nom">{e.nom}</strong>
               <span class="chemin-duree">{e.duree}</span>
               <span class="chemin-resultat">{e.resultat}</span>
@@ -441,18 +560,32 @@ const faqSchema = {
         ))}
       </ol>
 
-      {/* Le fil rouge : ce qui relie les cinq etapes entre elles et les
-          distingue d'une suite de formations. */}
-      <p class="fil-rouge">
-        <strong>Le fil rouge&nbsp;: vos trois tâches.</strong> Dès la première étape, chaque équipe choisit trois
-        tâches réelles de son quotidien — fréquentes, chronophages, peu risquées. On les retrouve à chaque étape&nbsp;:
-        testées, cartographiées, mesurées, puis installées. Pas d'exercice générique&nbsp;: vous travaillez sur ce
-        qui vous coûte vraiment du temps.
-      </p>
+      <div class="apercu-actions">
+        <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Parler de votre situation →</a>
+        <p>Un premier échange de 30 minutes, pour voir par quelle porte entrer — ou s'il vaut mieux attendre.</p>
+      </div>
     </div>
   </section>
 
-  <section class="section alt" data-reveal data-section-name="Le constat">
+  <section class="section alt" data-reveal data-section-name="Vous vous reconnaissez">
+    <div class="container reconnaitre">
+      <div>
+        <p class="eyebrow">Vous vous reconnaissez&nbsp;?</p>
+        <h2>Le sujet est sur la table. La décision, pas encore.</h2>
+        <ul class="signaux">
+          {signaux.map((x) => <li>{x}</li>)}
+        </ul>
+      </div>
+      <div class="questions">
+        <p class="etape-label">Les cinq questions auxquelles je vous aide à répondre</p>
+        <ol>
+          {questions.map((q) => <li>{q}</li>)}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal data-section-name="Le constat">
     <div class="container">
       <div class="section-head">
         <div>
@@ -484,7 +617,70 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section" data-reveal data-section-name="Ce que vous achetez">
+  {/* Le detail des trois portes. Une seule colonne, la meme grille repetee :
+      on l'apprend a la premiere fiche, on parcourt les suivantes en diagonale.
+      Le deroule complet est replie — il interesse celui qui achete, pas celui
+      qui decouvre. */}
+  <section class="section alt" data-reveal data-section-name="Les trois portes en détail">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Le détail</p>
+          <h2>Ce qui se passe derrière chaque porte</h2>
+        </div>
+        <p>
+          Pour chacune&nbsp;: à qui elle s'adresse, ce qu'on y fait, ce que vous gardez, et comment on sait que
+          c'est réussi. La troisième porte tient en deux temps&nbsp;: tester un cas d'usage, puis l'installer.
+        </p>
+      </div>
+
+      <ol class="etapes">
+        {portes.map((e) => <FicheEtape e={e} />)}
+      </ol>
+    </div>
+  </section>
+
+  {/* Le role vis-a-vis de la DSI. Dit sans detour, et sans pretendre que
+      toutes les DSI savent tout faire : je ne construis pas, c'est tout. */}
+  <section class="section" data-reveal data-section-name="Avec votre DSI">
+    <div class="container dsi">
+      <div>
+        <p class="eyebrow">Avec votre DSI, pas à sa place</p>
+        <h2>Vous avez une DSI&nbsp;? Tant mieux.</h2>
+        <p>
+          Vos équipes techniques savent chercher une solution et la construire. Ce qui leur manque le plus
+          souvent, c'est une demande claire&nbsp;: quel problème métier, pour qui, avec quel résultat attendu, et
+          dans quel ordre. <strong>Je les aide à travailler sur le bon problème.</strong>
+        </p>
+        <p>
+          Je ne développe pas, je n'intègre pas, je ne choisis pas votre architecture. Je travaille avec votre
+          DSI, ou avec le prestataire que vous avez choisi, et je reste aux côtés des utilisateurs pour que ce
+          qui est construit soit réellement utilisé.
+        </p>
+        <p class="dsi-note">
+          Pas de DSI&nbsp;? Le travail est le même&nbsp;: je formule le besoin, et vous le confiez au spécialiste
+          de votre choix.
+        </p>
+      </div>
+      <div class="chaine-bloc">
+        <p class="etape-label">Qui fait quoi</p>
+        <ol class="chaine">
+          {chaine.map((c) => (
+            <li class:list={{ 'chaine-moi': c.moi }}>
+              <strong>{c.qui}</strong>
+              <span>{c.quoi}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="chaine-note">
+          Après un atelier ou un premier diagnostic, vous avez repéré des pistes. Il reste à décider lesquelles
+          méritent vraiment un investissement, et à organiser leur mise en œuvre avec vos équipes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-reveal data-section-name="Ce que vous achetez">
     <div class="container">
       <div class="section-head">
         <div>
@@ -503,86 +699,34 @@ const faqSchema = {
     </div>
   </section>
 
-  {/* Le detail des cinq etapes. Une seule colonne, la meme grille repetee
-      cinq fois : on l'apprend a la premiere etape, on parcourt les suivantes
-      en diagonale. Le deroule complet est replie — il interesse celui qui
-      achete, pas celui qui decouvre. */}
-  <section class="section alt" data-reveal data-section-name="Les cinq étapes en détail">
+  {/* Les formats pour les equipes. Ce ne sont pas des portes : ils servent a
+      mettre tout le monde a niveau, avant, pendant ou apres le travail de
+      decision. C'est ici que vit le seul prix affiche de la page. */}
+  <section class="section" data-reveal data-section-name="Mettre les équipes à niveau">
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow">Le détail</p>
-          <h2>Ce que vous trouverez à chaque étape</h2>
+          <p class="eyebrow">Et pour les équipes</p>
+          <h2>Deux formats pour mettre tout le monde à niveau</h2>
         </div>
+        <p>
+          Décider en comité de direction ne suffit pas si les équipes n'ont ni les bases ni les règles. Ces deux
+          formats de formation se prennent seuls, ou en appui d'une des trois portes.
+        </p>
       </div>
 
       <ol class="etapes">
-        {etapes.map((e, i) => (
-          <li class="etape" id={e.id}>
-            <div class="etape-rail" aria-hidden="true">
-              <span class="etape-num">{i + 1}</span>
-            </div>
-            <article class="etape-carte">
-              <header class="etape-tete">
-                <p class="etape-phase">Étape {i + 1} · {e.phase}</p>
-                <h3>{e.nom}</h3>
-                <p class="etape-resultat">{e.resultat}</p>
-                <ul class="etape-meta">
-                  <li><span>Durée</span> {e.duree}</li>
-                  <li><span>Tarif</span> {e.prix ?? 'Sur devis'}</li>
-                </ul>
-              </header>
-
-              {e.inclus && <p class="etape-inclus"><strong>Compris dans le prix.</strong> {e.inclus}</p>}
-              <p class="etape-pourqui"><strong>Pour qui.</strong> {e.pourQui}</p>
-              <p class="etape-promesse">{e.promesse}</p>
-
-              <div class="etape-cols">
-                <div>
-                  <p class="etape-label">Ce qu'on y fait</p>
-                  <ul class="etape-liste">
-                    {e.contenu.map((c) => <li>{c}</li>)}
-                  </ul>
-                </div>
-                <div>
-                  <p class="etape-label">Ce que vous gardez</p>
-                  <ul class="etape-liste etape-livrables">
-                    {e.livrables.map((l) => <li>{l}</li>)}
-                  </ul>
-                </div>
-              </div>
-
-              {e.objectifs && (
-                <div class="etape-objectifs">
-                  <p class="etape-label">Objectifs — chaque participant sera capable de</p>
-                  <ul class="etape-liste">
-                    {e.objectifs.map((o) => <li>{o}</li>)}
-                  </ul>
-                  {e.prerequis && <p class="etape-prerequis"><strong>Prérequis.</strong> {e.prerequis}</p>}
-                </div>
-              )}
-
-              <p class="etape-preuve"><strong>Comment on sait que c'est réussi.</strong> {e.preuve}</p>
-
-              <details class="etape-deroule">
-                <summary>Le déroulé</summary>
-                <dl>
-                  {e.deroule.map(([quand, quoi]) => (
-                    <>
-                      <dt>{quand}</dt>
-                      <dd>{quoi}</dd>
-                    </>
-                  ))}
-                </dl>
-              </details>
-            </article>
-          </li>
-        ))}
+        {formats.map((e) => <FicheEtape e={e} />)}
       </ol>
 
-      {/* L'option dirigeant : une porte d'entree pour celui qui ne veut pas
-          encore engager son equipe. Placee apres le parcours, pas dedans —
-          ce n'est pas une etape. */}
+      <p class="fil-rouge">
+        <strong>Le fil rouge&nbsp;: vos trois tâches.</strong> Chaque équipe choisit trois tâches réelles de son
+        quotidien — fréquentes, chronophages, peu risquées — et travaille dessus. Pas d'exercice
+        générique&nbsp;: vous travaillez sur ce qui vous coûte vraiment du temps.
+      </p>
+
+      {/* L'option dirigeant : pour celui qui veut d'abord se faire sa propre
+          idee, avant d'engager qui que ce soit. */}
       <aside class="option-dirigeant" id="copilote-ia-dirigeant">
         <p class="eyebrow">En option, avant d'embarquer l'équipe</p>
         <h3>Copilote IA du dirigeant</h3>
@@ -599,11 +743,11 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section" data-reveal data-section-name="Ce que vos équipes sauront faire">
+  <section class="section alt" data-reveal data-section-name="Ce que vos équipes sauront faire">
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow">En sortant du parcours</p>
+          <p class="eyebrow">Après ces formats</p>
           <h2>Ce que vos équipes sauront faire</h2>
         </div>
       </div>
@@ -655,9 +799,9 @@ const faqSchema = {
         ))}
       </div>
       <p class="credibilite">
-        Avant l'IA, j'ai accompagné des équipes en transformation chez Air France-KLM, Amadeus ou Schneider
-        Electric, comme coach agile et facilitateur&nbsp;: des références en conduite du changement, pas encore
-        en IA. <a href={withBase('/a-propos/')}>Mon parcours →</a>
+        Ancien développeur, je parle la langue de votre DSI. Devenu coach agile et facilitateur, j'ai
+        accompagné des équipes en transformation chez Air France-KLM, Amadeus ou Schneider Electric&nbsp;: des
+        références en conduite du changement, pas encore en IA. <a href={withBase('/a-propos/')}>Mon parcours →</a>
       </p>
     </div>
   </section>
@@ -764,8 +908,8 @@ const faqSchema = {
   <CTABlock
     dark
     eyebrow="Premier échange, 30 minutes"
-    title="Regardons vos trois tâches les plus chronophages."
-    subtitle="Dites-moi comment votre équipe utilise l'IA aujourd'hui et ce qui vous fait perdre du temps. On voit ensemble par quelle étape commencer — ou s'il vaut mieux attendre."
+    title="Parlons de votre situation."
+    subtitle="Dites-moi où en est le sujet IA chez vous : ce qui a été essayé, ce qui coince, ce que la direction attend. On voit ensemble par quelle porte entrer — ou s'il vaut mieux attendre."
     ctaLabel="Prendre rendez-vous"
   />
 
@@ -777,7 +921,7 @@ const faqSchema = {
   /* ---------- Le chemin en bref ---------- */
   .chemin {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-3);
     margin: 0;
     padding: 0;
@@ -789,8 +933,8 @@ const faqSchema = {
     content: '';
     position: absolute;
     top: calc(var(--space-6) + 22px);
-    left: 10%;
-    right: 10%;
+    left: 16%;
+    right: 16%;
     height: 3px;
     background: var(--color-orange);
     border-radius: 2px;
@@ -854,6 +998,98 @@ const faqSchema = {
   }
   .chemin-resultat {
     color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .apercu-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-6);
+    margin-top: var(--space-8);
+  }
+  .apercu-actions p {
+    flex: 1 1 18rem;
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------- Vous vous reconnaissez ---------- */
+  .reconnaitre,
+  .dsi {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .signaux {
+    display: grid;
+    gap: var(--space-3);
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .signaux li {
+    padding-left: var(--space-4);
+    border-left: 3px solid var(--color-orange);
+    color: var(--color-navy);
+  }
+  .questions,
+  .chaine-bloc {
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-sm);
+  }
+  .questions ol {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding-left: 1.3rem;
+    color: var(--color-navy);
+    font-weight: 600;
+  }
+  .questions li::marker {
+    color: var(--color-clay-ink);
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+
+  /* ---------- Avec votre DSI ---------- */
+  .dsi p:not(.eyebrow):not(.etape-label) {
+    color: var(--color-muted);
+  }
+  .dsi p strong {
+    color: var(--color-navy);
+  }
+  .chaine {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .chaine li {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-cream);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+  }
+  .chaine strong {
+    color: var(--color-navy);
+  }
+  .chaine span {
+    color: var(--color-muted);
+  }
+  /* Les deux moments ou j'interviens : un trait de feutre a gauche. */
+  .chaine-moi {
+    box-shadow: inset 4px 0 0 var(--color-orange), inset 0 0 0 1px var(--color-border) !important;
+    background: var(--color-surface) !important;
+  }
+  .chaine-note {
+    margin: var(--space-4) 0 0;
     font-size: var(--text-sm);
   }
 
@@ -961,120 +1197,6 @@ const faqSchema = {
     padding: 0;
     list-style: none;
   }
-  .etape {
-    display: grid;
-    grid-template-columns: 46px minmax(0, 1fr);
-    gap: var(--space-4);
-    scroll-margin-top: 110px;
-  }
-  .etape-rail {
-    position: relative;
-    display: flex;
-    justify-content: center;
-  }
-  /* Le fil vertical qui prolonge le chemin du haut de page. */
-  .etape:not(:last-child) .etape-rail::after {
-    content: '';
-    position: absolute;
-    top: 46px;
-    bottom: calc(-1 * var(--space-8));
-    width: 3px;
-    background: var(--color-orange);
-    border-radius: 2px;
-  }
-  .etape-num {
-    display: grid;
-    place-items: center;
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    background: var(--color-orange);
-    color: #122033;
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 800;
-  }
-  .etape-carte {
-    padding: var(--space-6) var(--space-8);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-    box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-sm);
-  }
-  .etape-phase {
-    margin: 0 0 var(--space-1);
-    color: var(--color-clay-ink);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-  .etape-tete h3 {
-    margin: 0 0 var(--space-2);
-    font-size: var(--text-2xl, 1.6rem);
-  }
-  .etape-resultat {
-    margin: 0 0 var(--space-4);
-    color: var(--color-navy);
-    font-size: var(--text-lg);
-    font-weight: 600;
-  }
-  .etape-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-6);
-    padding: 0;
-    list-style: none;
-  }
-  .etape-meta li {
-    padding: var(--space-1) var(--space-3);
-    border-radius: var(--radius-pill);
-    background: var(--color-cream);
-    box-shadow: inset 0 0 0 1px var(--color-border);
-    color: var(--color-navy);
-    font-weight: 700;
-  }
-  .etape-meta span {
-    margin-right: var(--space-1);
-    color: var(--color-muted);
-    font-weight: 400;
-  }
-  .etape-inclus {
-    margin: 0 0 var(--space-4);
-    padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius-sm);
-    background: var(--color-cream);
-    box-shadow: inset 0 0 0 1px var(--color-border);
-    color: var(--color-muted);
-  }
-  .etape-inclus strong,
-  .etape-prerequis strong {
-    color: var(--color-navy);
-  }
-  .etape-objectifs {
-    margin: 0 0 var(--space-6);
-  }
-  .etape-prerequis {
-    margin: var(--space-3) 0 0;
-    color: var(--color-muted);
-  }
-  .etape-pourqui,
-  .etape-promesse {
-    margin: 0 0 var(--space-4);
-    color: var(--color-muted);
-  }
-  .etape-pourqui strong {
-    color: var(--color-navy);
-  }
-  .etape-promesse {
-    color: var(--color-navy);
-  }
-  .etape-cols {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: var(--space-6);
-    margin: var(--space-6) 0;
-  }
   .etape-label {
     margin: 0 0 var(--space-3);
     color: var(--color-blue);
@@ -1082,59 +1204,6 @@ const faqSchema = {
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-  }
-  .etape-liste {
-    margin: 0;
-    padding-left: 1.1rem;
-    color: var(--color-muted);
-  }
-  .etape-liste li {
-    margin-bottom: var(--space-2);
-  }
-  .etape-livrables {
-    padding-left: 0;
-    list-style: none;
-  }
-  .etape-livrables li {
-    position: relative;
-    padding-left: 1.6rem;
-  }
-  .etape-livrables li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--color-clay);
-    font-weight: 800;
-  }
-  .etape-preuve {
-    margin: 0 0 var(--space-4);
-    padding: var(--space-4);
-    border-radius: var(--radius-sm);
-    background: var(--color-cream);
-    box-shadow: inset 3px 0 0 var(--color-blue);
-    color: var(--color-muted);
-  }
-  .etape-preuve strong {
-    color: var(--color-navy);
-  }
-  .etape-deroule summary {
-    cursor: pointer;
-    color: var(--color-blue);
-    font-weight: 700;
-  }
-  .etape-deroule dl {
-    display: grid;
-    grid-template-columns: max-content minmax(0, 1fr);
-    gap: var(--space-2) var(--space-4);
-    margin: var(--space-4) 0 0;
-  }
-  .etape-deroule dt {
-    color: var(--color-navy);
-    font-weight: 700;
-  }
-  .etape-deroule dd {
-    margin: 0;
-    color: var(--color-muted);
   }
 
   .option-dirigeant {
@@ -1346,7 +1415,9 @@ const faqSchema = {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .limites,
-    .local {
+    .local,
+    .reconnaitre,
+    .dsi {
       grid-template-columns: minmax(0, 1fr);
       gap: var(--space-8);
     }
@@ -1358,29 +1429,9 @@ const faqSchema = {
     .capacites {
       grid-template-columns: minmax(0, 1fr);
     }
-    .etape {
-      grid-template-columns: minmax(0, 1fr);
-      gap: var(--space-3);
-    }
-    .etape-rail {
-      justify-content: flex-start;
-    }
-    .etape:not(:last-child) .etape-rail::after {
-      display: none;
-    }
-    .etape-carte,
     .option-dirigeant,
     .pilote {
       padding: var(--space-6) var(--space-4);
-    }
-    .etape-cols {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .etape-deroule dl {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .etape-deroule dd {
-      margin-bottom: var(--space-2);
     }
   }
 </style>

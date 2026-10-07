@@ -31,6 +31,32 @@ const proofItems = [
   { icon: 'trending', title: 'Des actions concrètes', text: 'Pour transformer les décisions en résultats visibles.' },
 ];
 
+// Les trois portes de l'accompagnement IA, version courte. Le détail, les
+// durées et les livrables sont sur /accompagnement-ia-pme/ : une seule source.
+const iaPortes = [
+  {
+    verbe: 'Clarifier',
+    titre: 'La direction ne sait pas encore ce qu’elle attend de l’IA',
+    texte: "Un atelier avec le comité de direction pour dire ce qu'on cherche à améliorer, fixer les critères d'arbitrage et décider de la suite.",
+    lien: "L'atelier de décision IA",
+    ancre: '#atelier-decision-codir',
+  },
+  {
+    verbe: 'Choisir',
+    titre: 'Les idées ne manquent pas, il faut choisir où investir',
+    texte: "Trois semaines avec la direction, les métiers et la DSI : le travail réel au mur, un portefeuille priorisé, un pilote et une feuille de route.",
+    lien: 'La cartographie IA utile',
+    ancre: '#cartographie-ia-utile',
+  },
+  {
+    verbe: "Passer à l'action",
+    titre: 'Un cas d’usage est choisi, reste à prouver qu’il sert',
+    texte: "Un test avec de vrais utilisateurs, une mesure avant / après, puis l'installation dans les équipes — en lien avec ceux qui construisent.",
+    lien: 'Le sprint, puis Cap IA 90',
+    ancre: '#sprint-usage-ia',
+  },
+];
+
 const resourceArticles = [
   { slug: 'reunionite-sept-signes', title: 'Réunionite : sept signes que vos réunions tournent à vide', description: 'Sept signes concrets que vos réunions tournent à vide, et un remède actionnable pour chacun.', visual: 'orange' },
   { slug: 'organiser-seminaire-equipe', title: 'Organiser un séminaire d\'équipe qui change vraiment quelque chose', description: "Intention, déroulé, lieu, facilitation, suites : la méthode pour un séminaire qui produit des effets durables.", visual: 'orange' },
@@ -91,8 +117,8 @@ const journeyStepsAfterFork = [
 ---
 
 <Layout
-  title="Facilitateur professionnel, coach et formateur — by Nicolas Verdot"
-  description="Séminaires facilités, ateliers d'intelligence collective, coaching et formations : trouvez le service qui débloquera votre équipe et passez à l'action."
+  title="Stratégie IA, facilitation et coaching de dirigeants à Nice — by Nicolas Verdot"
+  description="J'aide les dirigeants de PME de la Côte d'Azur à décider où l'IA crée de la valeur et à passer à l'action avec leurs équipes. Facilitation, coaching, séminaires."
   path="/"
 >
   <Hero />
@@ -101,6 +127,38 @@ const journeyStepsAfterFork = [
       existe pour la recherche et le partage — mais ici le clic l'ouvre sur
       place, sans quitter l'accueil. Voir la prop « modal » du composant. */}
   <CoutInaction modal />
+
+  {/* Les trois portes de l'accompagnement IA, des l'accueil : le hero pose la
+      question, cette section dit comment on commence. Le detail vit sur
+      /accompagnement-ia-pme/. */}
+  <section class="section ia-portes" data-reveal data-section-name="IA : trois portes d'entrée">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Stratégie et adoption de l'IA</p>
+          <h2>Par où commencer&nbsp;? Trois portes d'entrée.</h2>
+        </div>
+        <p>
+          Chacune s'achète séparément. On entre par celle qui correspond à votre situation, pas forcément par
+          la première.
+        </p>
+      </div>
+      <div class="cards">
+        {iaPortes.map((p, i) => (
+          <a class="card ia-porte" href={withBase(`/accompagnement-ia-pme/${p.ancre}`)}>
+            <span class="num">Porte {i + 1} · {p.verbe}</span>
+            <h3>{p.titre}</h3>
+            <p>{p.texte}</p>
+            <span class="card-link">{p.lien}</span>
+          </a>
+        ))}
+      </div>
+      <p class="ia-portes-dsi">
+        <strong>Vous avez une DSI&nbsp;? Tant mieux.</strong> Je ne viens pas faire son travail&nbsp;: je l'aide
+        à travailler sur le bon problème, avec des besoins métier clairs, priorisés et mesurables.
+      </p>
+    </div>
+  </section>
 
   <section class="proof-band" data-reveal data-section-name="Bénéfices">
     <div class="container proof-inner">
@@ -376,6 +434,31 @@ const journeyStepsAfterFork = [
 </script>
 
 <style>
+  /* --- Les trois portes IA, sous le hero --- */
+  .ia-porte {
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+  }
+  .ia-porte .card-link {
+    margin-top: auto;
+    padding-top: var(--space-3);
+    color: var(--color-blue);
+  }
+  .ia-portes-dsi {
+    max-width: 50rem;
+    margin: var(--space-8) 0 0;
+    padding: var(--space-4) var(--space-6);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    box-shadow: inset 3px 0 0 var(--color-clay), var(--shadow-sm);
+    color: var(--color-muted);
+  }
+  .ia-portes-dsi strong {
+    color: var(--color-navy);
+  }
+
   .complementary-label {
     margin: var(--space-6) 0 0;
     font-size: var(--text-sm);

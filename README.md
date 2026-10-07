@@ -37,12 +37,23 @@ Dans les paramètres du repo GitHub (**Settings → Secrets and variables → Ac
 
 Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que via ces secrets chiffrés.
 
-## État — 29 septembre 2026
+## État — 7 octobre 2026
 
-- **Branche `ia-utile`** (pas encore en ligne) : nouvelle page [/accompagnement-ia-pme/](src/pages/accompagnement-ia-pme.astro), le parcours « IA utile » en 5 étapes pour les PME de 30 à 50 personnes des Alpes-Maritimes, reliée depuis le menu, le pied de page, l'accueil, /offres/, /seminaires-alpes-maritimes/ et /intelligence-collective-augmentee/.
-- Mise en ligne : après validation de l'aperçu, fusionner `ia-utile` dans `main` (le push sur `main` déploie), puis vérifier sur nicolasverdot.com.
+- **Branche `positionnement-ia`** (pas en ligne, en attente de validation) : l'accompagnement IA passe au premier plan, vu depuis le dirigeant (« il faut qu'on fasse de l'IA, mais par où commencer ? »).
+  - [/accompagnement-ia-pme/](src/pages/accompagnement-ia-pme.astro) : trois portes achetables séparément — Atelier de décision IA (nouveau), Cartographie IA utile, Sprint Usage IA puis Cap IA 90. Le Premier pas IA (1 500 € HT) et l'Atelier métier deviennent « deux formats pour les équipes ». Nouvelles sections : signaux, cinq questions, « Vous avez une DSI ? Tant mieux », qui fait quoi. L'adresse et les ancres ne changent pas.
+  - Accueil : nouveau hero IA, section « trois portes » sous le hero, nouveau titre et nouvelle description.
+  - Menu : « Stratégie IA » en deuxième position. Pied de page et renvois (/offres/, séminaires 06, intelligence collective augmentée) mis à jour.
+  - La fiche d'étape est sortie dans [src/components/FicheEtape.astro](src/components/FicheEtape.astro).
+- Mise en ligne : après validation de l'aperçu local, fusionner `positionnement-ia` dans `main` (le push déploie), puis vérifier sur nicolasverdot.com.
+
+### À confirmer par Nicolas avant fusion
+- Durée de l'Atelier de décision IA (« 2 à 3 heures » : hypothèse) et son nom.
+- Prix : rien de nouveau n'est affiché. Hypothèses de travail non publiées : atelier 2–3 k€, cartographie 8–12 k€, passage à l'action 15–30 k€.
+- La cible « PME de 30 à 50 personnes » a été élargie à « PME » sur cette page.
+- Nouveau titre de l'accueil (effet sur le référencement « facilitateur »).
+- Sort des pages facilitation graphique (/facilitation-graphique/, /offres/capture-graphique/, /materiel/) : non touchées.
 
 ### Prochaines étapes SEO IA
-- Déclarer la nouvelle page dans la Search Console (inspection d'URL → demander l'indexation).
+- Redemander l'indexation de /accompagnement-ia-pme/ et de l'accueil dans la Search Console après mise en ligne.
 - Écrire 3 à 5 articles de blog qui renvoient vers la page (ex. « Charte IA en entreprise : par où commencer », « AI Act article 4 : ce que doit faire une PME », « Cas d'usage IA dans une PME de services »).
 - Après les deux PME pilotes : publier deux études de cas IA avec chiffres et verbatims validés.
