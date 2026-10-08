@@ -38,6 +38,7 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
 
 ## État — 8 octobre 2026
 
+- Sur la même branche, le 8 octobre au soir : les limites de largeur qui coupaient les phrases sont retirées sur tout le site (introductions de section, résumés et titres de haut de page) ; la calculatrice compte par profil (dirigeants, managers, collaborateurs, chacun avec son coût journalier) et affiche trois chiffres de l'enquête Atlassian sur les réunions (72 %, 76 %, 54 %), vérifiés à la source et appliqués au conditionnel ; l'ancien « 55 % Microsoft », non vérifié, devient « 54 % Atlassian » ; image de la salle en U dans « On se réunit pour quoi ? ».
 - **Branche `accueil-allege`** (pas en ligne, en attente du feu vert) : l'accueil passe de douze blocs à huit. Retirés : le calculateur en popup et son lien dans l'en-tête, la section « IA : trois portes » (doublon de la carte IA), le bloc « L'IA dans l'atelier », l'explorateur d'expertises, la frise « Ensemble, mettons votre collectif en mouvement ». Le bloc portrait garde deux paragraphes et renvoie vers « Qui suis-je ». Les logos clients remontent sous les cartes. Composants supprimés car plus utilisés nulle part : `IAEquipe`, `ExpertiseExplorer`, `BookingModal`, `data/expertise.ts` (récupérables dans git).
 
 - **En ligne depuis le 8 octobre 2026** (feu vert de Nicolas) : les branches `seminaires` et `positionnement-ia` sont fusionnées dans `main`. Vérifié sur nicolasverdot.com : les dix pages clés répondent, l'ancienne adresse `/offres/deleguer-animation/` renvoie bien en 301.
@@ -60,7 +61,7 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
 - La proposition de valeur de l'accueil.
 - Les prix : aucun n'est affiché sur les pages séminaires. Les fourchettes du document ChatGPT (3 200 à 11 000 € HT) sont des hypothèses, non publiées.
 - Phrases qui engagent sa pratique : confidentialité des entretiens avant un CODIR (« je restitue des thèmes, pas des noms »), point d'étape quelques semaines après, format « kick-off commercial et convention ».
-- Calculatrice : les valeurs de départ (500 € par jour et par personne, 120 € de lieu et repas, jours de préparation par type d'atelier) sont des exemples à valider ou à corriger.
+- Calculatrice : les valeurs de départ (1 200 € par jour pour un dirigeant, 700 € pour un manager, 400 € pour un collaborateur, 120 € de lieu et repas, la répartition et les jours de préparation par type d'atelier) sont des exemples à valider ou à corriger dans `src/data/tempsCollectifs.ts`.
 - PwC : la phrase « j'ai co-préparé, sans animer moi-même » est tout ce que dit le site. À compléter (sujet, format) si le client l'autorise.
 - Cas FIBOIS : le texte alternatif de la photo dit « Nicolas Verdot réalisant la capture graphique », alors que la photo montre une autre personne au feutre. À corriger dans `src/content/caseStudies/fibois.md`.
 - Déroulé Acoss sur la page CODIR : confirmer le rôle exact de Nicolas (la page dit « conçu ») et l'accord du client pour ce niveau de détail.

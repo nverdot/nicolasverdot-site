@@ -451,7 +451,6 @@ section {
   margin-bottom: var(--space-8);
 }
 .section-head p:not(.eyebrow) {
-  max-width: 600px;
   color: var(--color-muted);
   margin: 0;
 }
@@ -984,7 +983,6 @@ section {
 }
 .banner p {
   margin: var(--space-2) 0 0;
-  max-width: 650px;
   color: var(--color-ink-solid);
 }
 .banner .eyebrow {
@@ -1190,7 +1188,6 @@ section {
 .hero-bg-copy {
   flex: 1 1 0;
   min-width: 0;
-  max-width: 720px;
 }
 /* Vraie photo de mission posée à côté du texte, dans tous les hero du site
    (accueil, PageHero, pages d'offre). Remplace les illustrations de fond. */
@@ -1226,7 +1223,6 @@ section {
   }
 }
 .hero-bg-copy h1 {
-  max-width: 17ch;
   font-size: clamp(2rem, 3.6vw, 3rem);
   line-height: 1.2;
   color: var(--color-navy);
@@ -1245,7 +1241,6 @@ section {
 }
 .hero-bg-copy .page-summary {
   margin: var(--space-4) 0 0;
-  max-width: 56ch;
   font-size: var(--text-lg);
   color: var(--color-muted);
 }
@@ -1288,6 +1283,14 @@ section {
   flex-wrap: wrap;
   margin-top: var(--space-2);
   margin-bottom: 0;
+}
+/* Un libellé long (« Le sujet est trop sensible ? Déléguez-moi… ») doit passer
+   à la ligne dans son bouton plutôt que de pousser la page hors de l'écran. */
+.hero-cta-row > a,
+.callout-box .btn {
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
 }
 
 /* --- Bandeau sombre entre le hero et les logos, même traitement que
@@ -1604,7 +1607,6 @@ section {
 /* --- "Combien de temps faut-il prévoir" : intro, brackets de timing,
    callout de clôture --- */
 .timing-intro {
-  max-width: 62ch;
 }
 .timing-intro-lead {
   margin: 0 0 var(--space-2);
