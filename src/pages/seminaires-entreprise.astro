@@ -196,6 +196,8 @@ const causes = [
   {
     cause: 'Les niveaux de délégation sont flous',
     detail: "Qui peut trancher quoi ? Dans le doute, tout remonte pour validation. L'autonomie reste un mot, et le dirigeant un goulot.",
+    // Observation de Nicolas, dite le 8 octobre 2026 : pas un chiffre, un vécu.
+    terrain: "Vu sur le terrain : un atelier productif, puis tout s'arrête deux semaines, le temps d'obtenir la validation d'un simple courriel d'invitation ou d'acter une étape.",
     travail: "Passer les vrais sujets au crible de sept niveaux de délégation, puis les afficher sur un tableau de délégation construit en séance : chaque responsable et ceux qui lui rapportent y clarifient ce qu'ils attendent l'un de l'autre.",
   },
   {
@@ -417,6 +419,7 @@ const takeCharge = [
               <p class="cause-label">À cause de…</p>
               <h3>{c.cause}</h3>
               <p>{c.detail}</p>
+              {c.terrain && <p class="cause-terrain">{c.terrain}</p>}
             </div>
             <div class="cause-travail">
               <p class="cause-label">On y travaille</p>
@@ -735,8 +738,18 @@ const takeCharge = [
   .cause p:last-child {
     margin: 0;
   }
-  .cause-mal p:last-child {
+  .cause-mal p {
     color: var(--color-muted);
+  }
+  .cause-mal .cause-label {
+    color: var(--color-clay-ink);
+  }
+  .cause-mal .cause-terrain {
+    margin-top: var(--space-3);
+    padding-left: var(--space-3);
+    border-left: 3px solid var(--color-orange);
+    color: var(--color-navy);
+    font-style: italic;
   }
   .cause-travail p:last-child {
     font-weight: 600;
