@@ -115,12 +115,13 @@ const journeeSlides = [
   'Un compte rendu que personne ne relit.',
 ];
 const journeeTravail = [
-  { verbe: 'Réfléchir ensemble', texte: 'sur une vraie question, pas sur une présentation.' },
+  { verbe: 'Réfléchir et discuter', texte: 'sur une vraie question, pas sur une présentation.' },
   { verbe: 'Imaginer', texte: 'des options que personne n’aurait trouvées seul.' },
   { verbe: 'Diverger, puis converger', texte: 'ouvrir large, puis choisir.' },
   { verbe: 'Lever les doutes', texte: 'dire les objections dans la salle, pas dans le couloir.' },
   { verbe: 'Décider', texte: 'et savoir qui porte quoi.' },
   { verbe: 'S’engager', texte: 'sur une première action, avec une date.' },
+  { verbe: 'S’énergiser', texte: 'repartir avec plus d’élan qu’en arrivant.' },
 ];
 
 // Missions réelles, racontées dans les grandes lignes : le format, le groupe,
@@ -389,7 +390,7 @@ const takeCharge = [
         <div class="versus-col versus-oui">
           <img class="versus-photo" src={withBase('/cas-clients/jci-monaco-atelier-collectif-facilitation-graphique.jpg')} alt="Des participants assis en cercle travaillent ensemble pendant un séminaire, devant des affiches dessinées au feutre." width="1800" height="1350" loading="lazy" decoding="async" />
           <p class="versus-label">Celui qui vaut le déplacement</p>
-          <h3>Une journée à travailler</h3>
+          <h3>Une journée à collaborer</h3>
           <ul>
             {journeeTravail.map((l) => <li><strong>{l.verbe}</strong> — {l.texte}</li>)}
           </ul>
