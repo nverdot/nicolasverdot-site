@@ -57,7 +57,7 @@ const situations = [
   {
     num: 'Vous animez vous-même',
     title: 'Co-préparation et mentoring',
-    text: "Quelqu'un chez vous tient l'animation. Je co-prépare avec cette personne : le déroulé, les questions, les moments sensibles. C'est ce que j'ai fait chez PwC, sans animer moi-même.",
+    text: "Quelqu'un chez vous tient l'animation. Je co-prépare avec cette personne : le déroulé, les questions, les moments sensibles. C'est ce que je fais chez PwC, sur une série d'ateliers d'une demi-journée animés par une personne de l'équipe.",
     href: '/offres/mentoring/',
     link: 'Voir le mentoring',
   },
@@ -113,6 +113,25 @@ const faqSchema = {
     acceptedAnswer: { '@type': 'Answer', text: f.a.replace(/<[^>]+>/g, '') },
   })),
 };
+
+// Le séminaire que tout le monde a déjà vécu, face à celui qui vaut le
+// déplacement. Les mots sont ceux de Nicolas.
+const journeeSlides = [
+  'Des tables en U, tournées vers un écran.',
+  'Une journée de diapositives, intervenant après intervenant.',
+  'Des téléphones sous la table, des ordinateurs ouverts sur autre chose.',
+  'Dix minutes de questions en fin de matinée, « s’il reste du temps ».',
+  'Des « oui, oui » de politesse, et les vrais avis à la pause.',
+  'Un compte rendu que personne ne relit.',
+];
+const journeeTravail = [
+  { verbe: 'Réfléchir ensemble', texte: 'sur une vraie question, pas sur une présentation.' },
+  { verbe: 'Imaginer', texte: 'des options que personne n’aurait trouvées seul.' },
+  { verbe: 'Diverger, puis converger', texte: 'ouvrir large, puis choisir.' },
+  { verbe: 'Lever les doutes', texte: 'dire les objections dans la salle, pas dans le couloir.' },
+  { verbe: 'Décider', texte: 'et savoir qui porte quoi.' },
+  { verbe: 'S’engager', texte: 'sur une première action, avec une date.' },
+];
 
 const icons: Record<string, string> = {
   compass: '<path d="M4 17c2.5-6 5 6 8 0s4.5-5 8 0"/><circle cx="4" cy="17" r="1" fill="currentColor" stroke="none"/><circle cx="20" cy="17" r="1" fill="currentColor" stroke="none"/>',
@@ -305,6 +324,35 @@ const takeCharge = [
           </div>
         ))}
       </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal data-section-name="On se réunit pour quoi ?">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Avant de réserver la salle</p>
+          <h2>On se réunit pour quoi, au juste&nbsp;?</h2>
+        </div>
+        <p>Pour écouter et lire des diapositives, un courriel suffit. A-t-on vraiment besoin de rassembler autant de monde pour cela&nbsp;?</p>
+      </div>
+      <div class="versus">
+        <div class="versus-col versus-non">
+          <p class="versus-label">Le séminaire que tout le monde a déjà vécu</p>
+          <h3>Une journée à écouter</h3>
+          <ul>
+            {journeeSlides.map((l) => <li>{l}</li>)}
+          </ul>
+        </div>
+        <div class="versus-col versus-oui">
+          <p class="versus-label">Celui qui vaut le déplacement</p>
+          <h3>Une journée à travailler</h3>
+          <ul>
+            {journeeTravail.map((l) => <li><strong>{l.verbe}</strong> — {l.texte}</li>)}
+          </ul>
+        </div>
+      </div>
+      <p class="versus-chute">Ce que l'on ne peut faire <strong>qu'ensemble, dans la même pièce</strong>&nbsp;: voilà ce qui justifie un séminaire. Le reste s'envoie avant.</p>
     </div>
   </section>
 
@@ -575,6 +623,82 @@ const takeCharge = [
      que les deux utilitaires propres à cette page. */
   .muted {
     color: var(--color-muted);
+  }
+  .versus {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .versus-col {
+    padding: var(--space-8) var(--space-6);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+  .versus-oui {
+    background: var(--color-ink-solid);
+    border-color: var(--color-ink-solid);
+    color: #fff;
+    box-shadow: var(--shadow-md);
+  }
+  .versus-label {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .versus-oui .versus-label {
+    color: var(--color-orange);
+  }
+  .versus-col h3 {
+    margin: 0 0 var(--space-4);
+  }
+  .versus-oui h3 {
+    color: #fff;
+  }
+  .versus-col ul {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .versus-col li {
+    position: relative;
+    padding-left: var(--space-6);
+  }
+  .versus-col li::before {
+    content: '×';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+  .versus-non li {
+    color: var(--color-muted);
+  }
+  .versus-oui li::before {
+    content: '→';
+    color: var(--color-orange);
+  }
+  .versus-oui li strong {
+    color: #fff;
+  }
+  .versus-chute {
+    margin: var(--space-8) 0 0;
+    max-width: 62ch;
+    font-size: var(--text-lg);
+  }
+  @media (max-width: 760px) {
+    .versus {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .versus-col {
+      padding: var(--space-6) var(--space-4);
+    }
   }
   .situation-card {
     text-decoration: none;

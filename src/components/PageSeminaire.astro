@@ -31,6 +31,9 @@ interface Props {
   signaux: { eyebrow: string; title: string; intro: string; items: Bloc[]; chute: string };
   resultats: { eyebrow: string; title: string; intro: string; items: Bloc[]; citation: string };
   etapes: { eyebrow: string; title: string; intro: string; items: Bloc[] };
+  /** Déroulé d'une mission réelle, séquence par séquence. Tiré des préparations
+      de séance : aucun nom de personne, rien qui ne soit pas arrivé. */
+  exemple?: { eyebrow: string; title: string; intro: string; items: Bloc[]; note?: string; href?: string; link?: string };
   formats?: { eyebrow: string; title: string; intro: string; items: (Bloc & { href?: string; link?: string })[] };
   /** Slugs de cas clients réels à montrer. Jamais de cas inventé. */
   cas?: string[];
@@ -41,7 +44,7 @@ interface Props {
   cta: { eyebrow: string; title: string; subtitle: string };
 }
 
-const { seo, zones = ['France'], hero, signaux, resultats, etapes, formats, cas = [], casIntro, articles = [], faq, cta } = Astro.props;
+const { seo, zones = ['France'], hero, signaux, resultats, etapes, exemple, formats, cas = [], casIntro, articles = [], faq, cta } = Astro.props;
 
 const casClients = (await getCollection('caseStudies', ({ data }) => !data.draft))
   .filter((c) => cas.includes(c.slug))
@@ -159,8 +162,32 @@ const faqSchema = {
     </div>
   </section>
 
+  {exemple && (
+    <section class="section alt" data-reveal data-section-name="Un exemple réel">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{exemple.eyebrow}</p>
+            <h2>{exemple.title}</h2>
+          </div>
+          <p>{exemple.intro}</p>
+        </div>
+        <div class="cards">
+          {exemple.items.map((e, i) => (
+            <article class="card">
+              <div class="num">Séquence {i + 1}</div>
+              <h3>{e.title}</h3>
+              <p>{e.text}</p>
+            </article>
+          ))}
+        </div>
+        {exemple.note && <p class="page-seminaire-more">{exemple.note} {exemple.href && <a href={withBase(exemple.href)}>{exemple.link} →</a>}</p>}
+      </div>
+    </section>
+  )}
+
   {formats && (
-    <section class="section alt" data-reveal data-section-name="Formats">
+    <section class={`section${exemple ? '' : ' alt'}`} data-reveal data-section-name="Formats">
       <div class="container">
         <div class="section-head">
           <div>
