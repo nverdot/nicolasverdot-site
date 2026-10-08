@@ -21,10 +21,9 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
   <div class="container">
     <div class="section-head">
       <div>
-        <p class="eyebrow">2 · Ce que ça coûte</p>
-        <h2>Combien coûte vraiment votre séminaire&nbsp;?</h2>
+        <p class="eyebrow">2 · Ce que disent les chiffres</p>
+        <h2>Et si cette journée ressemblait à une réunion ordinaire&nbsp;?</h2>
       </div>
-      <p>Le jour J, la préparation, le lieu&nbsp;: mettez vos chiffres. Rien n'est envoyé, le calcul se fait sur votre écran.</p>
     </div>
 
     <div data-cout-seminaire>
@@ -32,7 +31,6 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
           Le pourcentage est fixe (c'est la donnée de l'enquête) ; la ligne du
           dessous se recalcule avec le séminaire saisi plus bas. */}
       <div class="cs-stats">
-        <p class="cs-stats-titre">Et si cette journée ressemblait à une réunion ordinaire&nbsp;?</p>
         <div class="cs-stat">
           <p class="cs-stat-chiffre">72&nbsp;%</p>
           <p class="cs-stat-texte"><strong>des réunions sont jugées inefficaces.</strong> Sur votre séminaire&nbsp;: <span data-cs-out="perdu">—</span> de temps collectif sans effet.</p>
@@ -48,6 +46,10 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
         <p class="cs-stats-source">Chiffres sur les réunions&nbsp;: <a href={SOURCE} target="_blank" rel="noopener">enquête Atlassian auprès de 5&nbsp;000 salariés</a>, appliqués au séminaire calculé ci-dessous. Un séminaire bien conçu sert précisément à ne pas leur ressembler.</p>
       </div>
 
+    <div class="cs-calc-tete">
+      <h3>Combien coûte vraiment votre séminaire&nbsp;?</h3>
+      <p>Le jour J, la préparation, le lieu&nbsp;: mettez vos chiffres. Rien n'est envoyé, le calcul se fait sur votre écran.</p>
+    </div>
     <div class="cs-grid">
       <form class="cs-form" onsubmit="return false">
         <fieldset class="cs-types">
@@ -394,6 +396,17 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-4);
     margin-bottom: var(--space-12);
+  }
+  .cs-calc-tete {
+    margin-bottom: var(--space-6);
+  }
+  .cs-calc-tete h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-xl);
+  }
+  .cs-calc-tete p {
+    margin: 0;
+    color: var(--color-muted);
   }
   .cs-stats-titre {
     grid-column: 1 / -1;
