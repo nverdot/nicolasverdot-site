@@ -183,6 +183,43 @@ const interventions = [
   },
 ];
 
+// Les causes du temps perdu, et ce que l'on y travaille. Les trois chiffres
+// viennent de l'enquête Atlassian déjà citée sur la page (vérifiée à la
+// source) ; les autres causes sont celles que nomme l'enquête McKinsey
+// (rôles flous, manque de délégation) et celles du terrain.
+const causes = [
+  {
+    cause: 'Le cadre n’est pas clair',
+    detail: "On ne sait pas si l'on vient s'informer, donner un avis ou décider. Chacun repart avec sa propre idée de ce qui s'est passé.",
+    travail: "Dire dès l'ouverture ce qui est déjà décidé, ce qui reste ouvert, et ce que l'on attend de la salle.",
+  },
+  {
+    cause: 'Les niveaux de délégation sont flous',
+    detail: "Qui peut trancher quoi ? Dans le doute, tout remonte pour validation. L'autonomie reste un mot, et le dirigeant un goulot.",
+    travail: "Passer les vrais sujets au crible de sept niveaux de délégation, de « je décide seul » à « vous décidez sans m'en référer ».",
+  },
+  {
+    cause: 'Quelques voix prennent toute la place',
+    detail: "43 % des salariés disent que quelques personnes dominent les réunions. Les autres se taisent, et leurs objections ressortent plus tard.",
+    travail: "Faire réfléchir chacun seul, puis à deux, avant le grand groupe : tout le monde arrive avec quelque chose à dire.",
+  },
+  {
+    cause: 'On discute, on ne décide pas',
+    detail: "77 % sont souvent dans des réunions qui se terminent par la décision d'en organiser une autre.",
+    travail: "Une seule question par séquence, et la manière de trancher annoncée avant d'ouvrir le débat.",
+  },
+  {
+    cause: 'Personne ne repart avec une action',
+    detail: "54 % quittent souvent une réunion sans savoir quelle est la prochaine étape, ni qui la porte.",
+    travail: "Chaque décision quitte la salle avec un nom et une date. Et un point de suivi est fixé avant de se séparer.",
+  },
+  {
+    cause: 'On s’informe en salle au lieu de travailler',
+    detail: "Des diapositives lues à voix haute devant des gens qui auraient pu les lire seuls.",
+    travail: "Ce qui s'envoie s'envoie avant. La salle sert à ce que l'on ne peut faire qu'ensemble.",
+  },
+];
+
 const icons: Record<string, string> = {
   compass: '<path d="M4 17c2.5-6 5 6 8 0s4.5-5 8 0"/><circle cx="4" cy="17" r="1" fill="currentColor" stroke="none"/><circle cx="20" cy="17" r="1" fill="currentColor" stroke="none"/>',
   chat: '<rect x="3" y="5" width="18" height="11" rx="2"/><path d="M8 16l-2 3v-3"/>',
@@ -364,11 +401,39 @@ const takeCharge = [
     <a href={withBase('/contact/')} class="btn">Sécuriser cet investissement →</a>
   </CoutSeminaire>
 
-  <section class="section" id="methode" data-reveal data-section-name="Ma façon de faire">
+  <section class="section" id="causes" data-reveal data-section-name="Les causes">
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow">3 · Ma façon de faire</p>
+          <p class="eyebrow">3 · Les causes</p>
+          <h2>D'où vient tout ce temps perdu&nbsp;?</h2>
+        </div>
+        <p>Six causes reviennent, dans les enquêtes comme sur le terrain. Aucune ne tient aux personnes. Toutes se travaillent.</p>
+      </div>
+      <div class="causes">
+        {causes.map((c) => (
+          <div class="cause">
+            <div class="cause-mal">
+              <p class="cause-label">À cause de…</p>
+              <h3>{c.cause}</h3>
+              <p>{c.detail}</p>
+            </div>
+            <div class="cause-travail">
+              <p class="cause-label">On y travaille</p>
+              <p>{c.travail}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="versus-chute">C'est exactement ce que je travaille avec vous&nbsp;: <strong>avant, pendant et après</strong> votre séminaire.</p>
+    </div>
+  </section>
+
+  <section class="section alt" id="methode" data-reveal data-section-name="Ma façon de faire">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">4 · Ma façon de faire</p>
           <h2>Ce que je prends en charge, du cadrage aux suites</h2>
         </div>
       </div>
@@ -407,11 +472,11 @@ const takeCharge = [
     </div>
   ))}
 
-  <section class="section alt" id="situation" data-reveal data-section-name="Votre situation">
+  <section class="section" id="situation" data-reveal data-section-name="Votre situation">
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow">4 · Votre situation</p>
+          <p class="eyebrow">5 · Votre situation</p>
           <h2>Quel séminaire ou atelier pour quelle situation&nbsp;?</h2>
         </div>
         <p>On ne cherche presque jamais «&nbsp;un séminaire&nbsp;». On a un projet à lancer, un comité de direction à remettre d'accord, ou une équipe qui tourne en rond.</p>
@@ -432,11 +497,11 @@ const takeCharge = [
 
   <ClientLogoStrip />
 
-  <section class="section" id="terrain" data-reveal data-section-name="Interventions récentes">
+  <section class="section alt" id="terrain" data-reveal data-section-name="Interventions récentes">
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow">5 · Sur le terrain</p>
+          <p class="eyebrow">6 · Sur le terrain</p>
           <h2>Le type de séminaires et d'ateliers que j'accompagne</h2>
         </div>
         <p>Quelques missions, dans les grandes lignes&nbsp;: le format, le groupe, et ce qui a été travaillé.</p>
@@ -456,11 +521,11 @@ const takeCharge = [
     </div>
   </section>
 
-  <section class="section alt" id="organiser" data-reveal data-section-name="S'organiser">
+  <section class="section" id="organiser" data-reveal data-section-name="S'organiser">
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow">6 · S'organiser</p>
+          <p class="eyebrow">7 · S'organiser</p>
           <h2>Délais, taille du groupe, préparation</h2>
         </div>
       </div>
@@ -498,11 +563,11 @@ const takeCharge = [
     </div>
   </section>
 
-  <section class="section" id="questions" data-reveal data-section-name="Questions fréquentes">
+  <section class="section alt" id="questions" data-reveal data-section-name="Questions fréquentes">
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow">7 · Vos questions</p>
+          <p class="eyebrow">8 · Vos questions</p>
           <h2>Ce que l'on me demande avant un séminaire</h2>
         </div>
       </div>
@@ -632,6 +697,58 @@ const takeCharge = [
   .intervention-format {
     font-weight: 700;
     color: var(--color-navy);
+  }
+  .causes {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .cause {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    overflow: hidden;
+  }
+  .cause-mal,
+  .cause-travail {
+    padding: var(--space-6);
+  }
+  .cause-travail {
+    background: var(--color-orange);
+    color: #122033;
+  }
+  .cause-label {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-clay-ink);
+  }
+  .cause-travail .cause-label {
+    color: #122033;
+  }
+  .cause h3 {
+    margin: 0 0 var(--space-2);
+  }
+  .cause p:last-child {
+    margin: 0;
+  }
+  .cause-mal p:last-child {
+    color: var(--color-muted);
+  }
+  .cause-travail p:last-child {
+    font-weight: 600;
+  }
+  @media (max-width: 760px) {
+    .cause {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .cause-mal,
+    .cause-travail {
+      padding: var(--space-4);
+    }
   }
   .situation-card {
     text-decoration: none;
