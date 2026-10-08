@@ -38,7 +38,7 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
 
 ## État — 8 octobre 2026
 
-- **Branche `seminaires`** (pas en ligne, en attente de validation). Elle part de `positionnement-ia` : la fusionner dans `main` met en ligne les deux chantiers d'un coup.
+- **En ligne depuis le 8 octobre 2026** (feu vert de Nicolas) : les branches `seminaires` et `positionnement-ia` sont fusionnées dans `main`. Vérifié sur nicolasverdot.com : les dix pages clés répondent, l'ancienne adresse `/offres/deleguer-animation/` renvoie bien en 301.
   - **Proposition de valeur commune** aux séminaires et à l'IA, sur l'accueil : « Une direction qui tranche. Des équipes qui s'en emparent. Sur un projet, une stratégie ou l'IA. » Deux boutons, deux portes. Une section « séminaires » avant les trois portes IA.
   - [/seminaires-entreprise/](src/pages/seminaires-entreprise.astro) : page d'entrée. Elle remplace `/offres/deleguer-animation/` (301 dans `public/.htaccess`, filet de secours dans `astro.config.mjs`). Trois situations, questions fréquentes.
   - [/seminaire-kick-off/](src/pages/seminaire-kick-off.astro), [/seminaire-codir/](src/pages/seminaire-codir.astro), [/seminaire-sophia-antipolis/](src/pages/seminaire-sophia-antipolis.astro) : trois pages bâties sur [src/components/PageSeminaire.astro](src/components/PageSeminaire.astro).
@@ -54,7 +54,7 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
   - Menu : « Séminaires » remplace « Accueil » (le logo ramène à l'accueil).
   - Aperçu local : `npm run dev -- --port 4331` (configuration « seminaires » dans `.claude/launch.json`).
 
-### À confirmer par Nicolas avant fusion (séminaires)
+### Mis en ligne sans attendre, à confirmer par Nicolas (séminaires)
 - La proposition de valeur de l'accueil.
 - Les prix : aucun n'est affiché sur les pages séminaires. Les fourchettes du document ChatGPT (3 200 à 11 000 € HT) sont des hypothèses, non publiées.
 - Phrases qui engagent sa pratique : confidentialité des entretiens avant un CODIR (« je restitue des thèmes, pas des noms »), point d'étape quelques semaines après, format « kick-off commercial et convention ».
@@ -76,12 +76,11 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
 ## État — 7 octobre 2026 (branche IA)
 
 
-- **Branche `positionnement-ia`** (pas en ligne, en attente de validation) : l'accompagnement IA passe au premier plan, vu depuis le dirigeant (« il faut qu'on fasse de l'IA, mais par où commencer ? »).
+- **Branche `positionnement-ia`** (en ligne depuis le 8 octobre 2026) : l'accompagnement IA passe au premier plan, vu depuis le dirigeant (« il faut qu'on fasse de l'IA, mais par où commencer ? »).
   - [/accompagnement-ia-pme/](src/pages/accompagnement-ia-pme.astro) : trois portes achetables séparément — Atelier de décision IA (nouveau), Cartographie IA utile, Sprint Usage IA puis Cap IA 90. Le Premier pas IA (1 500 € HT) et l'Atelier métier deviennent « deux formats pour les équipes ». Nouvelles sections : signaux, cinq questions, « Vous avez une DSI ? Tant mieux », qui fait quoi. L'adresse et les ancres ne changent pas.
   - Accueil : nouveau hero IA, section « trois portes » sous le hero, nouveau titre et nouvelle description.
   - Menu : « Stratégie IA » en deuxième position. Pied de page et renvois (/offres/, séminaires 06, intelligence collective augmentée) mis à jour.
   - La fiche d'étape est sortie dans [src/components/FicheEtape.astro](src/components/FicheEtape.astro).
-- Mise en ligne : après validation de l'aperçu local, fusionner `positionnement-ia` dans `main` (le push déploie), puis vérifier sur nicolasverdot.com.
 
 - **Livre blanc « Le dirigeant et l'IA »** (version de travail 1, pas en ligne) : [livre-blanc-dirigeant/livre-blanc.html](livre-blanc-dirigeant/livre-blanc.html), un seul fichier, même mise en page que « Le facilitateur et l'IA ». PDF : `livre-blanc-dirigeant/faire-pdf.sh`. Page privée : https://claude.ai/artifact/GcL5su9VvHZcKS1qUJtSAp
   - Onze chapitres : la phrase « il faut qu'on fasse de l'IA », comme le mail, l'évolution des IA et l'arrivée des agents (page sans numéro), ce qui se passe déjà chez vous, quatre peurs, quatre faux départs, cinq questions, quatre étapes, ne perdre personne, l'emploi, rester maître de ses données (souveraineté, trois couleurs, six questions au fournisseur), qui fait quoi et le pour et le contre d'une charte, hypothèses.
