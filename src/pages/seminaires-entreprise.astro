@@ -115,13 +115,12 @@ const journeeSlides = [
   'Un compte rendu que personne ne relit.',
 ];
 const journeeTravail = [
-  { verbe: 'Réfléchir et discuter', texte: 'sur une vraie question, pas sur une présentation.' },
+  { verbe: 'Réfléchir ensemble', texte: 'sur une vraie question, pas sur une présentation.' },
   { verbe: 'Imaginer', texte: 'des options que personne n’aurait trouvées seul.' },
   { verbe: 'Diverger, puis converger', texte: 'ouvrir large, puis choisir.' },
   { verbe: 'Lever les doutes', texte: 'dire les objections dans la salle, pas dans le couloir.' },
   { verbe: 'Décider', texte: 'et savoir qui porte quoi.' },
   { verbe: 'S’engager', texte: 'sur une première action, avec une date.' },
-  { verbe: 'S’énergiser', texte: 'repartir avec plus d’élan qu’en arrivant.' },
 ];
 
 // Missions réelles, racontées dans les grandes lignes : le format, le groupe,
@@ -220,57 +219,6 @@ const causes = [
     cause: 'On s’informe en salle au lieu de travailler',
     detail: "Des diapositives lues à voix haute devant des gens qui auraient pu les lire seuls.",
     travail: "Ce qui s'envoie s'envoie avant. La salle sert à ce que l'on ne peut faire qu'ensemble.",
-  },
-];
-
-// Ce que la recherche dit du travail d'un facilitateur. Chaque point renvoie
-// à une étude identifiée, recherchée le 8 octobre 2026. Ce sont des travaux
-// sur des groupes en laboratoire ou sur des réunions : ils éclairent une
-// pratique, ils ne promettent pas un résultat. Ne pas ajouter ici de chiffre
-// sans source vérifiée (« 43 % plus persuasif » et « 60 000 fois plus vite »
-// ont été écartés : sources fragiles).
-const recherche = [
-  {
-    repere: '699 participants · Science, 2010',
-    titre: 'Un processus équilibré',
-    texte: "L'intelligence d'un groupe tient peu au niveau de ses membres les plus brillants. Elle tient à la façon dont la parole se répartit et à l'attention portée aux autres. Mon rôle : que personne ne monopolise, que personne ne se taise.",
-    source: 'Woolley et al., Science',
-    href: 'https://doi.org/10.1126/science.1193147',
-  },
-  {
-    repere: 'Méta-analyse · 1991',
-    titre: 'Diverger sans se brider',
-    texte: "Un groupe qui cherche des idées à voix haute en produit moins que les mêmes personnes réfléchissant d'abord seules. D'où des séquences en trois temps : seul, à deux, puis tous ensemble.",
-    source: 'Mullen, Johnson et Salas',
-    href: 'https://doi.org/10.1207/s15324834basp1201_1',
-  },
-  {
-    repere: '− 10 % par personne en trop · Bain',
-    titre: 'Les bonnes personnes dans la salle',
-    texte: "Au-delà de sept personnes dans un groupe qui décide, chaque participant de plus réduit l'efficacité de la décision d'environ 10 %. La préparation sert à choisir qui décide, qui contribue, et comment découper le groupe.",
-    source: 'Bain, la règle des sept',
-    href: 'https://www.bain.com/insights/effective-decision-making-and-the-rule-of-7/',
-  },
-  {
-    repere: 'Mesure de l’activité du cerveau · Microsoft, 2021',
-    titre: 'Le rythme et l’énergie du groupe',
-    texte: "Quatre réunions enchaînées : le stress s'accumule et l'attention décroche. Les mêmes, séparées par dix minutes de pause : il ne s'accumule pas. Un déroulé se construit avec l'énergie du groupe, pas contre elle.",
-    source: 'Microsoft, laboratoire des facteurs humains',
-    href: 'https://www.microsoft.com/en-us/worklab/work-trend-index/brain-research',
-  },
-  {
-    repere: 'Étude expérimentale · 1999',
-    titre: 'Tenir le cadre, pas le fond',
-    texte: "Un facilitateur qui agit sur la manière de travailler aide le groupe. S'il intervient sur le contenu, la participation baisse : on s'en remet à lui. Je tiens le processus, vous gardez le fond.",
-    source: 'Journal of Management Information Systems',
-    href: 'https://dl.acm.org/doi/10.1080/07421222.1999.11518223',
-  },
-  {
-    repere: '7 expériences · université de Waterloo, 2016',
-    titre: 'Dessiner pour retenir',
-    texte: "On retient nettement mieux ce que l'on a dessiné que ce que l'on a seulement écrit. C'est la raison d'être de la facilitation visuelle : ce qui se décide reste sous les yeux, puis en mémoire.",
-    source: 'Wammes, Meade et Fernandes',
-    href: 'https://uwaterloo.ca/news/news/need-remember-something-better-draw-it-study-finds',
   },
 ];
 
@@ -441,7 +389,7 @@ const takeCharge = [
         <div class="versus-col versus-oui">
           <img class="versus-photo" src={withBase('/cas-clients/jci-monaco-atelier-collectif-facilitation-graphique.jpg')} alt="Des participants assis en cercle travaillent ensemble pendant un séminaire, devant des affiches dessinées au feutre." width="1800" height="1350" loading="lazy" decoding="async" />
           <p class="versus-label">Celui qui vaut le déplacement</p>
-          <h3>Une journée à collaborer</h3>
+          <h3>Une journée à travailler</h3>
           <ul>
             {journeeTravail.map((l) => <li><strong>{l.verbe}</strong> — {l.texte}</li>)}
           </ul>
@@ -511,22 +459,6 @@ const takeCharge = [
         ))}
       </div>
       <p class="ideal-if"><strong>Idéal si :</strong> le sujet est stratégique, sensible ou complexe, ou si vous souhaitez qu'une personne neutre garantisse le processus.</p>
-
-      <div class="recherche-tete">
-        <h3>Pourquoi un facilitateur&nbsp;? Ce que montre la recherche</h3>
-        <p>Un processus équilibré, les bonnes personnes, le bon rythme&nbsp;: ce ne sont pas des convictions, ce sont des résultats d'études.</p>
-      </div>
-      <div class="cards">
-        {recherche.map((r) => (
-          <article class="card">
-            <div class="num">{r.repere}</div>
-            <h3>{r.titre}</h3>
-            <p>{r.texte}</p>
-            <a class="card-link" href={r.href} target="_blank" rel="noopener">{r.source}</a>
-          </article>
-        ))}
-      </div>
-      <p class="recherche-note">Ces travaux portent sur des groupes étudiés en laboratoire ou sur des réunions de travail. Ils éclairent une façon de faire&nbsp;; ils ne promettent pas un résultat.</p>
     </div>
   </section>
 
@@ -830,22 +762,6 @@ const takeCharge = [
     .cause-travail {
       padding: var(--space-4);
     }
-  }
-  .recherche-tete {
-    margin: var(--space-12) 0 var(--space-6);
-  }
-  .recherche-tete h3 {
-    margin: 0 0 var(--space-2);
-    font-size: var(--text-xl);
-  }
-  .recherche-tete p {
-    margin: 0;
-    color: var(--color-muted);
-  }
-  .recherche-note {
-    margin: var(--space-6) 0 0;
-    color: var(--color-muted);
-    font-size: var(--text-sm);
   }
   .situation-card {
     text-decoration: none;
