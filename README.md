@@ -38,6 +38,8 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
 
 ## État — 8 octobre 2026
 
+- **Branche `accueil-allege`** (pas en ligne, en attente du feu vert) : l'accueil passe de douze blocs à huit. Retirés : le calculateur en popup et son lien dans l'en-tête, la section « IA : trois portes » (doublon de la carte IA), le bloc « L'IA dans l'atelier », l'explorateur d'expertises, la frise « Ensemble, mettons votre collectif en mouvement ». Le bloc portrait garde deux paragraphes et renvoie vers « Qui suis-je ». Les logos clients remontent sous les cartes. Composants supprimés car plus utilisés nulle part : `IAEquipe`, `ExpertiseExplorer`, `BookingModal`, `data/expertise.ts` (récupérables dans git).
+
 - **En ligne depuis le 8 octobre 2026** (feu vert de Nicolas) : les branches `seminaires` et `positionnement-ia` sont fusionnées dans `main`. Vérifié sur nicolasverdot.com : les dix pages clés répondent, l'ancienne adresse `/offres/deleguer-animation/` renvoie bien en 301.
   - **Proposition de valeur commune** aux séminaires et à l'IA, sur l'accueil : « Une direction qui tranche. Des équipes qui s'en emparent. Sur un projet, une stratégie ou l'IA. » Deux boutons, deux portes. Une section « séminaires » avant les trois portes IA.
   - [/seminaires-entreprise/](src/pages/seminaires-entreprise.astro) : page d'entrée. Elle remplace `/offres/deleguer-animation/` (301 dans `public/.htaccess`, filet de secours dans `astro.config.mjs`). Trois situations, questions fréquentes.

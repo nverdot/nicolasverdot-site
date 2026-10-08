@@ -34,14 +34,6 @@ const photo = await getImage({ src: action, width: 1100, format: 'webp' });
         <a href={withBase('/seminaires-entreprise/')} class="btn">Préparer un séminaire →</a>
         <a href={withBase('/offres/')} class="btn-outline">Voir les accompagnements</a>
       </div>
-
-      {/* Le diagnostic reste accessible depuis le hero, en second rideau : le
-          clic l'ouvre toujours sur place (voir CoutInaction, prop « modal »). */}
-      <p class="hero-tool-note">
-        Une décision qui n'arrive pas&nbsp;?
-        <a href={withBase('/outils/cout-de-linaction/')}>Pourquoi ça ne se décide pas chez vous</a>&nbsp;:
-        douze questions, deux minutes, et vous repartez avec <strong>la cause</strong> du blocage.
-      </p>
     </div>
 
     {/* Une vraie photo, à côté du texte : la facilitation visuelle est ce qui
@@ -112,16 +104,6 @@ const photo = await getImage({ src: action, width: 1100, format: 'webp' });
     display: flex;
     gap: var(--space-4);
     flex-wrap: wrap;
-  }
-
-  /* La ligne sous le bouton : elle dit le prix à payer (douze questions) et ce
-     qu'on obtient. Un bouton seul laisse craindre un formulaire ; cette phrase
-     lève la crainte sans devenir un deuxième appel à l'action. */
-  .hero-tool-note {
-    max-width: 44ch;
-    margin: var(--space-4) 0 0;
-    color: var(--color-muted);
-    font-size: var(--text-sm);
   }
 
   @media (max-width: 900px) {
