@@ -4,7 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import EcosystemBlock from '../components/EcosystemBlock.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { Image } from 'astro:assets';
-import portrait from '../assets/nicolas-portrait.png';
+import portrait from '../assets/nicolas-portrait-2026.jpg';
 import { SITE } from '../data/site';
 import { withBase } from '../utils/url';
 import { getCollection } from 'astro:content';
@@ -115,7 +115,7 @@ const diffs = [
   <section class="section" data-reveal>
     <div class="container split">
       <div class="portrait-block">
-        <Image src={portrait} alt="Portrait de Nicolas Verdot" width={420} height={520} class="portrait" />
+        <Image src={portrait} alt="Portrait de Nicolas Verdot" width={640} height={640} class="portrait" />
         <div class="hero-grain" aria-hidden="true"></div>
         <p class="bubble">Je ne viens pas plaquer une méthode. Je cherche ce qui doit devenir plus clair pour que les personnes puissent agir.</p>
       </div>

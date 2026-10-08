@@ -11,7 +11,7 @@ import ClientLogoStrip from '../components/ClientLogoStrip.astro';
 import BookingModal from '../components/BookingModal.astro';
 import { withBase } from '../utils/url';
 import { SITE } from '../data/site';
-import portrait from '../assets/nicolas-portrait.png';
+import portrait from '../assets/nicolas-portrait-2026.jpg';
 
 // Convention icônes du site : traits feutre currentColor, viewBox 24×24
 // (mêmes tracés que Footer.astro, pour rester cohérent d'une section à l'autre).
@@ -245,7 +245,7 @@ const journeyStepsAfterFork = [
   <section class="partner-intro section" data-reveal data-section-name="Nicolas Verdot, votre partenaire">
     <div class="container split split-top">
       <div class="split-photo portrait portrait-overlay-wrap">
-        <Image src={portrait} alt="Portrait de Nicolas Verdot" width={640} height={853} />
+        <Image src={portrait} alt="Portrait de Nicolas Verdot" width={800} height={800} />
         <div class="portrait-overlay">
           <p class="portrait-name">Nicolas VERDOT</p>
           <p class="portrait-role">Booster de leaders et d'équipes</p>
