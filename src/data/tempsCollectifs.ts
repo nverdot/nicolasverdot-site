@@ -104,7 +104,7 @@ export const tempsCollectifs: TempsCollectif[] = [
     label: "Séminaire · chaque trimestre",
     phrase: "Un séminaire trimestriel",
     description: 'Un jour ou un jour et demi, une fois par trimestre, souvent une trentaine de personnes.',
-    participants: { direction: 3, managers: 9, equipes: 18 },
+    participants: { direction: 2, managers: 5, equipes: 23 },
     jours: 1, prepa: 3, parAn: 4, lieu: 120,
   },
   {
@@ -112,7 +112,7 @@ export const tempsCollectifs: TempsCollectif[] = [
     label: "Séminaire · chaque année",
     phrase: "Un séminaire annuel",
     description: 'Le temps fort de l’année : deux jours, une cinquantaine de personnes, parfois plus.',
-    participants: { direction: 5, managers: 15, equipes: 30 },
+    participants: { direction: 4, managers: 8, equipes: 38 },
     jours: 2, prepa: 6, parAn: 1, lieu: 120,
   },
 ];
