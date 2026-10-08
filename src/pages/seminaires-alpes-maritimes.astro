@@ -3,7 +3,6 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
-import heroImg from '../assets/hero-contact.png';
 
 // Un vrai paragraphe par bassin plutôt qu'une page par ville : des pages
 // quasi identiques se concurrencent entre elles. Seule Sophia Antipolis a sa
@@ -134,10 +133,11 @@ const faqSchema = {
     titleTail="basé dans le 06."
     summary="Séminaire de direction, kick-off de projet, séminaire d'équipe : je conçois et j'anime votre séminaire là où vos équipes travaillent — <strong>Nice, Sophia Antipolis, Antibes, Cannes, Carros, Grasse, Monaco</strong> — et partout en France."
     pills={['Séminaire de direction', 'Kick-off', "Séminaire d'équipe", 'Basé à Nice']}
-    image={heroImg}
-    imageAlt="Un facilitateur accueille une personne et lui indique un chemin, devant un panneau aux flèches vierges."
-    flip
-    tall
+    photo={{
+      src: withBase('/cas-clients/fibois-cedre-atlas-facilitation-graphique-nicolas-verdot.jpg'),
+      alt: "Une grande fresque se dessine en direct pendant qu'un intervenant présente, lors du colloque FIBOIS.",
+      legende: 'Capture graphique en direct, colloque FIBOIS Sud Provence-Alpes-Côte d’Azur.',
+    }}
   />
 
   <section class="section" data-reveal>

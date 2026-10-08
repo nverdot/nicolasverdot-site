@@ -1,5 +1,3 @@
-import type { ImageMetadata } from 'astro';
-import heroCoachingEquipe from '../assets/offres/hero-coaching-equipe.png';
 
 export interface OfferQuestion {
   text: string;
@@ -20,9 +18,6 @@ export interface Offer {
   titleAccent?: string;
   titleTail?: string;
   summary: string;
-  heroImage?: ImageMetadata;
-  heroImageAlt?: string;
-  heroFlip?: boolean;
   price: string;
   useCaseLead: string;
   problems: { title: string; text: string }[];
@@ -44,9 +39,6 @@ export const offers: Offer[] = [
     title: 'Coaching',
     titleAccent: 'd’équipe.',
     summary: 'Un dispositif combiné — séminaires, ateliers réguliers et coaching du manager — pour faire <strong>évoluer durablement</strong> la manière de travailler, de décider et de <strong>responsabiliser l’équipe</strong>.',
-    heroImage: heroCoachingEquipe,
-    heroImageAlt: 'Une petite équipe soudée marche en formation resserrée sur une terrasse en hauteur, rythme synchronisé.',
-    heroFlip: true,
     price: 'À partir de 12 000 € HT',
     useCaseLead: 'Pour les organisations qui vivent régulièrement les mêmes difficultés malgré les plans d’action, les séminaires ou les réorganisations.',
     problems: [

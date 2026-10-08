@@ -1,10 +1,8 @@
 ---
-import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import ClientLogoStrip from '../../components/ClientLogoStrip.astro';
 import { withBase } from '../../utils/url';
-import heroImg from '../../assets/offres/hero-coaching-professionnel.png';
 
 const serviceSchema = {
   '@context': 'https://schema.org',
@@ -166,8 +164,6 @@ const faqSchema = {
   ]}
 >
   <section class="hero-bg" data-reveal>
-    <Image src={heroImg} alt="Deux personnes assises en conversation, l'une prenant des notes dans un carnet, ambiance calme et posée." widths={[800, 1400, 2000]} sizes="100vw" class="hero-bg-img" />
-    <div class="hero-bg-scrim" aria-hidden="true"></div>
     <div class="hero-bg-inner">
       <div class="hero-bg-copy">
         <p class="eyebrow">Coaching professionnel · Posture · Leadership</p>

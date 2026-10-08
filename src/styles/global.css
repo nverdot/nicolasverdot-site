@@ -1167,33 +1167,11 @@ section {
    valeur ici n'est spécifique à une offre en particulier.
    ========================================================================== */
 
-/* --- Hero plein fond : illustration en arrière-plan complet, scrim clair
-   directionnel (au lieu du scrim sombre de PageHero, pensé pour des photos —
-   trop fort sur une illustration pâle, qui devenait grise et illisible).
-   Texte en encre foncée, lisible directement sur le dégradé clair. --- */
+/* --- Hero des pages d'offre : texte à gauche, vraie photo de mission à
+   droite quand elle existe. Plus d'illustration de fond (octobre 2026). --- */
 .hero-bg {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  min-height: clamp(480px, 62vw, 700px);
-  padding: var(--space-24) 0 var(--space-16);
-}
-.hero-bg-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-.hero-bg-scrim {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background:
-    linear-gradient(100deg, var(--color-cream) 0%, var(--color-cream) 38%, rgba(252, 248, 239, 0.85) 52%, rgba(252, 248, 239, 0.3) 68%, rgba(252, 248, 239, 0.05) 82%),
-    linear-gradient(0deg, rgba(252, 248, 239, 0.55) 0%, rgba(252, 248, 239, 0) 40%);
+  padding: var(--space-16) 0 var(--space-12);
+  border-bottom: 1px solid var(--color-border);
 }
 /* Même cadre que .hero-inner sur l'accueil (Hero.astro) : plus large et
    avec un padding qui grandit avec le viewport, contrairement au
@@ -1201,15 +1179,51 @@ section {
    de la page comme sur la home. Le texte lui-même reste capé à 600px via
    .hero-bg-copy, comme .hero-copy sur l'accueil. */
 .hero-bg-inner {
-  position: relative;
-  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
   width: 100%;
   max-width: 1400px;
   margin-inline: auto;
   padding-inline: clamp(1.5rem, 4vw, 4rem);
 }
 .hero-bg-copy {
-  max-width: 600px;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 720px;
+}
+/* Vraie photo de mission posée à côté du texte, dans tous les hero du site
+   (accueil, PageHero, pages d'offre). Remplace les illustrations de fond. */
+.hero-figure {
+  flex: 0 1 42%;
+  margin: 0;
+}
+.hero-figure img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+.hero-figure.is-portrait {
+  flex-basis: 30%;
+}
+.hero-figure.is-portrait img {
+  aspect-ratio: 4 / 5;
+  object-position: center 70%;
+}
+.hero-figure figcaption {
+  margin-top: var(--space-3);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+@media (max-width: 900px) {
+  .hero-figure,
+  .hero-figure.is-portrait {
+    flex-basis: auto;
+    width: 100%;
+  }
 }
 .hero-bg-copy h1 {
   max-width: 17ch;
@@ -1257,30 +1271,14 @@ section {
     max-width: none;
   }
 }
-/* Sous 640px, le cadrage plein fond ne fonctionne plus : la tranche verticale
-   de l'image (object-fit:cover sur un mobile étroit) tombe en plein sur le
-   visage/le corps du personnage, juste sous un h1 sur 4-5 lignes — aucun
-   réglage de scrim ne peut à la fois montrer l'image et rester lisible.
-   On bascule en bandeau image + texte empilés, en gardant la même image. */
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .hero-bg {
-    display: block;
-    min-height: 0;
-    padding: 0 0 var(--space-8);
-  }
-  .hero-bg-img {
-    position: static;
-    width: 100%;
-    height: 46vw;
-    min-height: 200px;
-    max-height: 320px;
-    object-position: center 30%;
-  }
-  .hero-bg-scrim {
-    display: none;
+    padding: var(--space-8) 0;
   }
   .hero-bg-inner {
-    padding-top: var(--space-6);
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-6);
   }
 }
 

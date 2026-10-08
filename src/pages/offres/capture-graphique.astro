@@ -1,11 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import ClientLogoStrip from '../../components/ClientLogoStrip.astro';
 import { withBase } from '../../utils/url';
-import heroImg from '../../assets/offres/hero-capture-graphique.png';
 
 const relatedCaseStudies = (
   await getCollection('caseStudies', ({ data }) => !data.draft && data.offerHref === '/offres/capture-graphique/')
@@ -175,8 +173,6 @@ const faqSchema = {
   ]}
 >
   <section class="hero-bg" data-reveal>
-    <Image src={heroImg} alt="Un facilitateur graphique dessine une grande fresque colorée en direct devant un public nombreux, lors d'un événement." widths={[800, 1400, 2000]} sizes="100vw" class="hero-bg-img" />
-    <div class="hero-bg-scrim" aria-hidden="true"></div>
     <div class="hero-bg-inner">
       <div class="hero-bg-copy">
         <p class="eyebrow">Facilitation graphique · Capture graphique · Événementiel</p>
@@ -194,6 +190,10 @@ const faqSchema = {
           <a href={withBase('/seminaires-entreprise/')} class="btn-outline">Besoin aussi d'animer l'atelier ? Voir les séminaires d'entreprise</a>
         </div>
       </div>
+      <figure class="hero-figure">
+        <img src={withBase('/cas-clients/fibois-cedre-atlas-facilitation-graphique-nicolas-verdot.jpg')} alt="Une grande fresque se dessine en direct pendant qu'un intervenant présente, lors du colloque FIBOIS." loading="eager" decoding="async" />
+        <figcaption>Capture graphique en direct, colloque FIBOIS.</figcaption>
+      </figure>
     </div>
   </section>
 

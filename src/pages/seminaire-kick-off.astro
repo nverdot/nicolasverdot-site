@@ -1,6 +1,5 @@
 ---
 import PageSeminaire from '../components/PageSeminaire.astro';
-import heroImg from '../assets/offres/hero-accompagnements.png';
 
 // Les situations ci-dessous sont des cas de figure fréquents, pas des
 // citations de clients : aucune n'est présentée comme un témoignage.
@@ -25,8 +24,11 @@ import heroImg from '../assets/offres/hero-accompagnements.png';
     summary:
       "Annoncer un projet ne suffit pas à le mettre en route. Je conçois et j'anime votre <strong>séminaire kick-off</strong> pour que chacun comprenne le cap, y trouve sa place et reparte avec <strong>ses premières actions</strong> — que le lancement réunisse quinze personnes ou plusieurs équipes.",
     pills: ['Kick-off de projet', 'Séminaire de rentrée', 'Kick-off commercial', 'Réunion de lancement'],
-    image: heroImg,
-    imageAlt: "Plusieurs groupes travaillent en parallèle au sommet d'une montagne, autour d'un chemin qui bifurque.",
+    photo: {
+      src: '/cas-clients/jci-monaco-fresque-agenda-seminaire-prise-presidence.jpg',
+      alt: "L'agenda d'un séminaire dessiné sur deux grandes affiches : dix étapes cochées, un repère « nous sommes ici », et les règles de fonctionnement du groupe.",
+      legende: "L'agenda dessiné d'un séminaire de lancement : chacun voit où en est la journée. JCI Monaco.",
+    },
   }}
   signaux={{
     eyebrow: 'Avant le lancement',

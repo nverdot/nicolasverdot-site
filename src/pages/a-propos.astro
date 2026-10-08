@@ -5,7 +5,6 @@ import EcosystemBlock from '../components/EcosystemBlock.astro';
 import CTABlock from '../components/CTABlock.astro';
 import { Image } from 'astro:assets';
 import portrait from '../assets/nicolas-portrait.png';
-import heroImg from '../assets/hero-a-propos.png';
 import { SITE } from '../data/site';
 import { withBase } from '../utils/url';
 import { getCollection } from 'astro:content';
@@ -111,10 +110,6 @@ const diffs = [
     title="Je fais bouger"
     titleAccent="ce qui est bloqué."
     summary="Ancien développeur, <strong>coach agile, facilitateur, formateur</strong>, facilitateur graphique et moniteur de plongée : un parcours qui relie structure, observation, sécurité, transmission et <strong>mise en mouvement</strong>."
-    image={heroImg}
-    imageAlt="Un facilitateur vu de dos, une pause sur un chemin en hauteur, un carnet de croquis à la main, face à un paysage qui s'ouvre devant lui."
-    flip
-    tall
   />
 
   <section class="section" data-reveal>

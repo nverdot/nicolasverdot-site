@@ -1,11 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import ClientLogoStrip from '../../components/ClientLogoStrip.astro';
 import { withBase } from '../../utils/url';
-import heroImg from '../../assets/offres/hero-coaching-equipe.png';
 
 const relatedCaseStudies = (
   await getCollection('caseStudies', ({ data }) => !data.draft && data.offerHref === '/offres/mentoring/')
@@ -150,8 +148,6 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
   ]}
 >
   <section class="hero-bg" data-reveal>
-    <Image src={heroImg} alt="Un groupe de collègues marche avec assurance sur une terrasse dominant un paysage dégagé, symbolisant l'autonomie retrouvée." widths={[800, 1400, 2000]} sizes="100vw" class="hero-bg-img" />
-    <div class="hero-bg-scrim" aria-hidden="true"></div>
     <div class="hero-bg-inner">
       <div class="hero-bg-copy">
         <p class="eyebrow">Mentoring · Co-construction · Posture de facilitateur</p>

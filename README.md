@@ -45,6 +45,9 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
   - [/seminaires-alpes-maritimes/](src/pages/seminaires-alpes-maritimes.astro) : nouveau titre, un paragraphe par bassin (Nice, Sophia, Antibes et Villeneuve-Loubet, Carros, Cannes, Grasse, Monaco, région). Pas de page par ville, sauf Sophia.
   - [/blog/](src/pages/blog/index.astro) : vrai sommaire des articles par thème (la page disait « arrive bientôt »). Chaque article renvoie vers la page d'offre de son thème. 52 liens d'articles qui passaient par d'anciennes adresses pointent sur les adresses finales.
   - Nouvel article : kick-off de projet (n° 36 du plan éditorial).
+  - **Plus aucune illustration générée en fond.** Les en-têtes sont typographiques ; une vraie photo de mission (fresque, atelier, capture en direct) se pose à côté du texte quand elle existe : accueil, séminaires, kick-off, CODIR, Sophia, 06, capture graphique, facilitation graphique. Pas d'autoportrait en en-tête : le site s'adresse à des directeurs. Les quinze illustrations ont été supprimées de `src/assets` (récupérables dans git).
+  - **Calculatrice « Combien coûte vraiment votre séminaire ? »** sur /seminaires-entreprise/ ([src/components/CoutSeminaire.astro](src/components/CoutSeminaire.astro)) : jour J, préparation en interne, lieu et repas, déplacements. L'animation n'y est pas chiffrée. Pour ajouter un type d'atelier : une ligne dans [src/data/tempsCollectifs.ts](src/data/tempsCollectifs.ts).
+  - Deux situations ajoutées sur la page séminaires : atelier feuille de route (cas Urssaf / Acoss) et co-préparation avec un animateur interne (PwC).
   - Menu : « Séminaires » remplace « Accueil » (le logo ramène à l'accueil).
   - Aperçu local : `npm run dev -- --port 4331` (configuration « seminaires » dans `.claude/launch.json`).
 
@@ -52,6 +55,10 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
 - La proposition de valeur de l'accueil.
 - Les prix : aucun n'est affiché sur les pages séminaires. Les fourchettes du document ChatGPT (3 200 à 11 000 € HT) sont des hypothèses, non publiées.
 - Phrases qui engagent sa pratique : confidentialité des entretiens avant un CODIR (« je restitue des thèmes, pas des noms »), point d'étape quelques semaines après, format « kick-off commercial et convention ».
+- Calculatrice : les valeurs de départ (500 € par jour et par personne, 120 € de lieu et repas, jours de préparation par type d'atelier) sont des exemples à valider ou à corriger.
+- PwC : la phrase « j'ai co-préparé, sans animer moi-même » est tout ce que dit le site. À compléter (sujet, format) si le client l'autorise.
+- Cas FIBOIS : le texte alternatif de la photo dit « Nicolas Verdot réalisant la capture graphique », alors que la photo montre une autre personne au feutre. À corriger dans `src/content/caseStudies/fibois.md`.
+- SessionLab : aucun connecteur disponible dans Claude. Pour nourrir les pages avec le détail des interventions, exporter les sessions (PDF ou Word) dans le dossier du projet.
 - Preuves : aucun cas client de CODIR en entreprise. La page CODIR montre Urssaf / Acoss et JCI Monaco. Un vrai cas et un témoignage changeraient la page.
 - Les situations décrites sur les pages sont des cas de figure, pas des citations de clients.
 

@@ -1,6 +1,5 @@
 ---
 import PageSeminaire from '../components/PageSeminaire.astro';
-import heroImg from '../assets/hero-seminaires-alpes-maritimes.png';
 
 // Seule ville des Alpes-Maritimes à avoir sa propre page : c'est la seule
 // pour laquelle il y a une matière vraiment distincte (équipes techniques et
@@ -28,8 +27,11 @@ import heroImg from '../assets/hero-seminaires-alpes-maritimes.png';
     summary:
       "Lancement de projet, séminaire d'équipe ou comité de direction de site : je conçois et j'anime votre séminaire à <strong>Sophia Antipolis</strong> pour qu'il en sorte des décisions et des suites. Basé à Nice, je prépare avec vous sur place, <strong>sans frais de déplacement</strong> à prévoir.",
     pills: ['Kick-off de projet', 'Séminaire de direction', "Séminaire d'équipe", 'Français ou anglais'],
-    image: heroImg,
-    imageAlt: 'Un facilitateur face à un groupe en plein air, sur fond de collines et de mer.',
+    photo: {
+      src: '/cas-clients/cec-groupe-dirigeants-guillaume-nery-anatomie-plongee.jpg',
+      alt: "Un groupe de dirigeants de la CEC devant la fresque réalisée en direct pendant une conférence, à Sophia Antipolis.",
+      legende: 'Capture graphique en direct pour une cohorte de dirigeants CEC, à Sophia Antipolis.',
+    },
   }}
   signaux={{
     eyebrow: 'Ce qui revient souvent sur la technopole',

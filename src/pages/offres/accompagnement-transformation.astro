@@ -1,11 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import ClientLogoStrip from '../../components/ClientLogoStrip.astro';
 import { withBase } from '../../utils/url';
-import heroImg from '../../assets/offres/hero-accompagnement-transformation.png';
 
 const relatedCaseStudies = (
   await getCollection('caseStudies', ({ data }) => !data.draft && data.offerHref === '/offres/accompagnement-transformation/')
@@ -177,8 +175,6 @@ const faqSchema = {
   ]}
 >
   <section class="hero-bg" data-reveal>
-    <Image src={heroImg} alt="Un groupe traverse un passage de pierres et un pont, depuis un chemin envahi de broussailles vers un chemin dégagé, symbolisant une transformation en cours." widths={[800, 1400, 2000]} sizes="100vw" class="hero-bg-img" />
-    <div class="hero-bg-scrim" aria-hidden="true"></div>
     <div class="hero-bg-inner">
       <div class="hero-bg-copy">
         <p class="eyebrow">Transformation · Alignement · Intelligence collective</p>

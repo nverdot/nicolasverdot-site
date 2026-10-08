@@ -23,7 +23,6 @@ import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { formationGroups } from '../../data/formations';
 import { withBase } from '../../utils/url';
-import heroImg from '../../assets/hero-seminaires-alpes-maritimes.png';
 
 const total = formationGroups.reduce((n, g) => n + g.items.length, 0);
 
@@ -60,9 +59,6 @@ const icones: Record<string, string> = {
     titleAccent="qui se pratiquent,"
     titleTail="pas qui s'écoutent."
     summary="Facilitation graphique, intelligence collective, posture de leader, IA appliquée, pédagogie active. Toutes se travaillent <strong>sur vos sujets réels</strong>, jamais sur des cas d'école — et toutes s'adaptent à votre contexte."
-    image={heroImg}
-    imageAlt="Un facilitateur anime un atelier en petit groupe sur une terrasse dominant la Méditerranée."
-    tall
   />
 
   {/* Le sommaire : l'ampleur du catalogue en un coup d'œil, et une porte par

@@ -2,41 +2,12 @@
 import { getImage } from 'astro:assets';
 import { withBase } from '../utils/url';
 import { SITE } from '../data/site';
-import heroBg from '../assets/hero-mountain.jpg';
-import heroBgMobile from '../assets/hero-mountain-mobile.png';
+import action from '../assets/nicolas-action.jpeg';
 
-const desktopSrcset = (
-  await Promise.all(
-    [640, 1200, 1920].map(async (w) => {
-      const img = await getImage({ src: heroBg, width: w, format: 'webp' });
-      return `${img.src} ${w}w`;
-    })
-  )
-).join(', ');
-const mobileSrcset = (
-  await Promise.all(
-    [480, 750, 940].map(async (w) => {
-      const img = await getImage({ src: heroBgMobile, width: w, format: 'webp' });
-      return `${img.src} ${w}w`;
-    })
-  )
-).join(', ');
-const mobileFallback = await getImage({ src: heroBgMobile, width: 750, format: 'webp' });
+const photo = await getImage({ src: action, width: 1100, format: 'webp' });
 ---
 
-{/* La photo porte la classe `hero-photo`, et surtout PAS `hero-bg` :
-    `.hero-bg` est deja pris dans global.css par le <section> d'en-tete des
-    pages d'offre, avec un `padding: 96px 0 64px`. Sur une <img>, ce padding
-    retrecit la boite de contenu — a laquelle `object-fit` s'applique — et
-    l'illustration se retrouvait encadree de creme en haut et en bas alors que
-    sa boite, elle, faisait bien toute la hauteur. */}
 <section class="hero" aria-labelledby="hero-title" data-section-name="Hero">
-  <picture>
-    <source media="(max-width: 640px)" srcset={mobileSrcset} sizes="100vw" />
-    <img class="hero-photo" src={mobileFallback.src} srcset={desktopSrcset} sizes="100vw" alt="" aria-hidden="true" />
-  </picture>
-  <div class="hero-scrim" aria-hidden="true"></div>
-
   <div class="hero-inner">
     <div class="hero-copy">
       {/* Octobre 2026 : une seule promesse pour les deux offres. Qu'il
@@ -55,7 +26,8 @@ const mobileFallback = await getImage({ src: heroBgMobile, width: 750, format: '
         J'aide les dirigeants et leurs comités de direction à <strong>décider ce qui compte</strong>, puis à
         <strong>embarquer les équipes</strong> qui devront le faire vivre. Deux façons de commencer&nbsp;: un
         <strong>séminaire</strong> conçu et animé pour qu'il en sorte des décisions, ou un accompagnement pour
-        savoir <strong>où l'IA a vraiment sa place</strong> chez vous.
+        savoir <strong>où l'IA a vraiment sa place</strong> chez vous. Ma méthode&nbsp;: la
+        <strong>facilitation visuelle</strong>, qui rend les échanges et les décisions lisibles par tous.
       </p>
 
       <div class="hero-actions">
@@ -71,49 +43,34 @@ const mobileFallback = await getImage({ src: heroBgMobile, width: 750, format: '
         douze questions, deux minutes, et vous repartez avec <strong>la cause</strong> du blocage.
       </p>
     </div>
+
+    {/* Une vraie photo, à côté du texte : la facilitation visuelle est ce qui
+        distingue ces séminaires, autant la montrer telle qu'elle est. */}
+    <figure class="hero-figure">
+      <img src={photo.src} alt="Nicolas Verdot, feutre en main, dessine une fresque en direct pendant un atelier." width={photo.attributes.width} height={photo.attributes.height} loading="eager" decoding="async" />
+      <figcaption>Ce qui se dit et se décide est dessiné en direct, sous les yeux de tous.</figcaption>
+    </figure>
   </div>
 </section>
 
 <style>
   .hero {
-    position: relative;
-    overflow: hidden;
-    min-height: 720px;
-    display: flex;
-    align-items: center;
-    padding: var(--space-16) 0;
-  }
-  .hero :global(.hero-photo) {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 68% 33%;
-  }
-  .hero-scrim {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(
-      90deg,
-      var(--color-cream) 0%,
-      color-mix(in srgb, var(--color-cream) 88%, transparent) 32%,
-      color-mix(in srgb, var(--color-cream) 35%, transparent) 52%,
-      transparent 68%
-    );
+    padding: var(--space-16) 0 var(--space-12);
+    border-bottom: 1px solid var(--color-border);
   }
   .hero-inner {
-    position: relative;
-    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
     width: 100%;
     max-width: 1400px;
     margin-inline: auto;
     padding-inline: clamp(1.5rem, 4vw, 4rem);
   }
   .hero-copy {
-    max-width: 640px;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 680px;
   }
   .hero-kicker {
     margin: 0 0 var(--space-4);
@@ -169,55 +126,15 @@ const mobileFallback = await getImage({ src: heroBgMobile, width: 750, format: '
 
   @media (max-width: 900px) {
     .hero {
-      min-height: 0;
-      padding-bottom: var(--space-8);
+      padding: var(--space-8) 0;
     }
-    .hero :global(.hero-photo) {
-      object-position: 75% 33%;
-    }
-    .hero-scrim {
-      background: linear-gradient(
-        180deg,
-        var(--color-cream) 0%,
-        var(--color-cream) 58%,
-        color-mix(in srgb, var(--color-cream) 75%, transparent) 74%,
-        color-mix(in srgb, var(--color-cream) 30%, transparent) 100%
-      );
+    .hero-inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-6);
     }
     .hero-copy {
       max-width: none;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .hero {
-      /* Le hero porte désormais une accroche, un titre en trois temps, deux
-         boutons et l'entrée de l'outil : la hauteur suit le contenu au lieu
-         d'être imposée, sinon le dernier bloc tombe sous la ligne de flottaison
-         du dégradé et se lit sur la photo. */
-      min-height: 0;
-      align-items: flex-start;
-      padding-top: var(--space-8);
-    }
-    .hero :global(.hero-photo) {
-      object-position: 45% 15%;
-    }
-    /* Deux boutons et la note du diagnostic : le texte descend plus bas
-       qu'avant, le voile creme le suit pour qu'il ne se lise pas sur la photo. */
-    .hero-scrim {
-      background: linear-gradient(
-        180deg,
-        var(--color-cream) 0%,
-        var(--color-cream) 80%,
-        color-mix(in srgb, var(--color-cream) 80%, transparent) 90%,
-        color-mix(in srgb, var(--color-cream) 45%, transparent) 100%
-      );
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce), (max-width: 640px) {
-    .hero-copy h1 {
-      text-shadow: none;
     }
   }
 </style>

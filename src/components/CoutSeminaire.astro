@@ -1,0 +1,306 @@
+---
+// Calculatrice « combien coûte votre séminaire » : le jour J (temps des
+// participants), la préparation en interne, le lieu et les repas.
+// Tout se calcule dans le navigateur, rien n'est envoyé.
+// Les valeurs de départ sont des exemples que le visiteur remplace par les
+// siennes : ce ne sont pas des prix de marché. L'animation n'est pas comptée,
+// elle se chiffre au cadrage.
+// La liste des types d'atelier vit dans src/data/tempsCollectifs.ts.
+import { tempsCollectifs as types } from '../data/tempsCollectifs';
+
+const depart = types[0];
+---
+
+<section class="section cout-seminaire" data-reveal data-section-name="Calculatrice : le coût de votre séminaire" id="cout-seminaire">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Calculatrice</p>
+        <h2>Combien coûte vraiment votre séminaire&nbsp;?</h2>
+      </div>
+      <p>Le jour J, la préparation, le lieu&nbsp;: mettez vos chiffres. Rien n'est envoyé, le calcul se fait sur votre écran.</p>
+    </div>
+
+    <div class="cs-grid" data-cout-seminaire>
+      <form class="cs-form" onsubmit="return false">
+        <fieldset class="cs-types">
+          <legend>Quel temps collectif préparez-vous&nbsp;?</legend>
+          <div class="cs-types-row">
+            {types.map((t, i) => (
+              <label class="cs-type">
+                <input type="radio" name="cs-type" value={t.id} checked={i === 0} data-participants={t.participants} data-jours={t.jours} data-prepa={t.prepa} />
+                <span>{t.label}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div class="cs-fields">
+          <label class="cs-field">
+            <span>Participants</span>
+            <input type="number" inputmode="numeric" min="1" max="2000" step="1" value={depart.participants} data-cs="participants" />
+          </label>
+          <label class="cs-field">
+            <span>Durée du séminaire (jours)</span>
+            <input type="number" inputmode="decimal" min="0.5" max="10" step="0.5" value={depart.jours} data-cs="jours" />
+          </label>
+          <label class="cs-field">
+            <span>Coût moyen d'une journée par personne (€)</span>
+            <input type="number" inputmode="numeric" min="0" step="50" value="500" data-cs="cout" />
+            <small>Salaire chargé ramené à la journée. 500&nbsp;€ est un exemple.</small>
+          </label>
+          <label class="cs-field">
+            <span>Préparation en interne (jours, toutes personnes confondues)</span>
+            <input type="number" inputmode="decimal" min="0" step="0.5" value={depart.prepa} data-cs="prepa" />
+            <small>Réunions de cadrage, programme, invitations, logistique.</small>
+          </label>
+          <label class="cs-field">
+            <span>Lieu, repas, hébergement (€ par personne et par jour)</span>
+            <input type="number" inputmode="numeric" min="0" step="10" value="120" data-cs="lieu" />
+            <small>Reprenez votre devis. Mettez 0 si le séminaire se tient chez vous.</small>
+          </label>
+          <label class="cs-field">
+            <span>Déplacements (€ au total)</span>
+            <input type="number" inputmode="numeric" min="0" step="100" value="0" data-cs="trajets" />
+          </label>
+        </div>
+      </form>
+
+      <div class="cs-result" aria-live="polite">
+        <p class="cs-result-label">Votre séminaire mobilise</p>
+        <p class="cs-total" data-cs-out="total">—</p>
+        <dl class="cs-lines">
+          <div><dt>Le jour J <span>temps des participants</span></dt><dd data-cs-out="jourj">—</dd></div>
+          <div><dt>La préparation <span>temps passé en interne</span></dt><dd data-cs-out="prepa">—</dd></div>
+          <div><dt>Le lieu et les repas <span>location, restauration, hébergement</span></dt><dd data-cs-out="lieu">—</dd></div>
+          <div data-cs-row="trajets"><dt>Les déplacements</dt><dd data-cs-out="trajets">—</dd></div>
+        </dl>
+        <p class="cs-heure">Soit <strong data-cs-out="heure">—</strong> par heure passée ensemble.</p>
+        <p class="cs-note">L'animation n'est pas comptée ici&nbsp;: elle se chiffre lors du cadrage. Elle sert à une chose, que cette somme produise des décisions et des suites.</p>
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const racine = document.querySelector<HTMLElement>('[data-cout-seminaire]');
+  if (racine) {
+    const euros = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+    const champ = (nom: string) => racine.querySelector<HTMLInputElement>(`[data-cs="${nom}"]`)!;
+    const sortie = (nom: string) => racine.querySelector<HTMLElement>(`[data-cs-out="${nom}"]`)!;
+    const lire = (nom: string) => Math.max(0, parseFloat(champ(nom).value.replace(',', '.')) || 0);
+    // Une journée de séminaire : 7 heures de travail ensemble.
+    const HEURES_PAR_JOUR = 7;
+
+    const calculer = () => {
+      const participants = lire('participants');
+      const jours = lire('jours');
+      const cout = lire('cout');
+      const jourJ = participants * jours * cout;
+      const prepa = lire('prepa') * cout;
+      const lieu = participants * jours * lire('lieu');
+      const trajets = lire('trajets');
+      const total = jourJ + prepa + lieu + trajets;
+      const heures = jours * HEURES_PAR_JOUR;
+
+      sortie('jourj').textContent = euros.format(jourJ);
+      sortie('prepa').textContent = euros.format(prepa);
+      sortie('lieu').textContent = euros.format(lieu);
+      sortie('trajets').textContent = euros.format(trajets);
+      sortie('total').textContent = euros.format(total);
+      sortie('heure').textContent = heures > 0 ? euros.format(total / heures) : '—';
+      racine.querySelector<HTMLElement>('[data-cs-row="trajets"]')!.hidden = trajets === 0;
+    };
+
+    racine.querySelectorAll<HTMLInputElement>('[data-cs]').forEach((el) => el.addEventListener('input', calculer));
+    racine.querySelectorAll<HTMLInputElement>('input[name="cs-type"]').forEach((radio) =>
+      radio.addEventListener('change', () => {
+        champ('participants').value = radio.dataset.participants ?? '';
+        champ('jours').value = radio.dataset.jours ?? '';
+        champ('prepa').value = radio.dataset.prepa ?? '';
+        calculer();
+      })
+    );
+    calculer();
+  }
+</script>
+
+<style>
+  .cs-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+  .cs-form {
+    display: grid;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+  .cs-types {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .cs-types legend,
+  .cs-field > span {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--color-navy);
+    font-weight: 700;
+  }
+  .cs-types-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .cs-type {
+    position: relative;
+    cursor: pointer;
+  }
+  .cs-type input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
+  }
+  .cs-type span {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-cream);
+    color: var(--color-navy);
+    font-weight: 600;
+  }
+  .cs-type input:checked + span {
+    border-color: var(--color-orange);
+    background: var(--color-orange);
+    color: var(--color-ink-solid);
+  }
+  .cs-type input:focus-visible + span {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 2px;
+  }
+  .cs-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-4);
+  }
+  .cs-field {
+    display: flex;
+    flex-direction: column;
+  }
+  .cs-field > span {
+    flex: 1;
+  }
+  .cs-field input {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-cream);
+    color: var(--color-navy);
+    font: inherit;
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+  .cs-field input:focus-visible {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 2px;
+  }
+  .cs-field small {
+    margin-top: var(--space-2);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .cs-result {
+    position: sticky;
+    top: var(--space-24);
+    padding: var(--space-8) var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-ink-solid);
+    color: #fff;
+    box-shadow: var(--shadow-md);
+  }
+  .cs-result-label {
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-orange);
+  }
+  .cs-total {
+    margin: var(--space-2) 0 var(--space-6);
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: #fff;
+  }
+  .cs-lines {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+  }
+  .cs-lines > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .cs-lines > div[hidden] {
+    display: none;
+  }
+  .cs-lines dt {
+    font-weight: 700;
+  }
+  .cs-lines dt span {
+    display: block;
+    font-weight: 400;
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.72);
+  }
+  .cs-lines dd {
+    margin: 0;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .cs-heure {
+    margin: var(--space-6) 0 0;
+    font-size: var(--text-lg);
+  }
+  .cs-heure strong {
+    color: var(--color-orange);
+  }
+  .cs-note {
+    margin: var(--space-4) 0 0;
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.78);
+  }
+  .cs-result :global(.btn) {
+    margin-top: var(--space-6);
+  }
+  @media (max-width: 900px) {
+    .cs-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .cs-result {
+      position: static;
+    }
+  }
+  @media (max-width: 560px) {
+    .cs-fields {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .cs-form {
+      padding: var(--space-4);
+    }
+  }
+</style>

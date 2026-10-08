@@ -1,11 +1,10 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import CTABlock from '../components/CTABlock.astro';
+import CoutSeminaire from '../components/CoutSeminaire.astro';
 import ClientLogoStrip from '../components/ClientLogoStrip.astro';
 import { withBase } from '../utils/url';
-import heroImg from '../assets/offres/hero-deleguer-animation-bg.png';
 
 const relatedCaseStudies = (
   await getCollection('caseStudies', ({ data }) => !data.draft && data.offerHref === '/seminaires-entreprise/')
@@ -47,6 +46,20 @@ const situations = [
     text: "Des directeurs compétents, mais chacun dans son périmètre. Deux jours pour trancher les priorités, traiter les désaccords et repartir avec des décisions tenues.",
     href: '/seminaire-codir/',
     link: 'Voir le séminaire de direction',
+  },
+  {
+    num: 'Vous construisez la suite',
+    title: 'Atelier feuille de route',
+    text: "Une stratégie à traduire en priorités, une démarche agile à installer : un atelier ou une série d'ateliers pour bâtir une feuille de route que les équipes s'approprient.",
+    href: '/cas-clients/urssaf-acoss/',
+    link: 'Voir le cas Urssaf / Acoss',
+  },
+  {
+    num: 'Vous animez vous-même',
+    title: 'Co-préparation et mentoring',
+    text: "Quelqu'un chez vous tient l'animation. Je co-prépare avec cette personne : le déroulé, les questions, les moments sensibles. C'est ce que j'ai fait chez PwC, sans animer moi-même.",
+    href: '/offres/mentoring/',
+    link: 'Voir le mentoring',
   },
   {
     num: 'Une équipe qui patine',
@@ -250,8 +263,6 @@ const takeCharge = [
   ]}
 >
   <section class="hero-bg" data-reveal>
-    <Image src={heroImg} alt="Un facilitateur anime un atelier collaboratif devant un groupe de participants, avec un support visuel couvert de notes autocollantes, sur fond de littoral méditerranéen." widths={[800, 1400, 2000]} sizes="100vw" class="hero-bg-img" />
-    <div class="hero-bg-scrim" aria-hidden="true"></div>
     <div class="hero-bg-inner">
       <div class="hero-bg-copy">
         <p class="eyebrow">Séminaire d'entreprise · Conception et animation</p>
@@ -269,6 +280,10 @@ const takeCharge = [
           <a href={withBase('/offres/mentoring/')} class="btn-outline">Vous préférez garder l'animation ? Voir le Mentoring</a>
         </div>
       </div>
+      <figure class="hero-figure">
+        <img src={withBase('/cas-clients/jci-monaco-atelier-collectif-facilitation-graphique.jpg')} alt="Des participants travaillent en petit groupe pendant un séminaire, devant des affiches dessinées au feutre." loading="eager" decoding="async" />
+        <figcaption>Séminaire de prise de présidence, JCI Monaco.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -293,6 +308,10 @@ const takeCharge = [
     </div>
   </section>
 
+  <CoutSeminaire>
+    <a href={withBase('/contact/')} class="btn">Sécuriser cet investissement →</a>
+  </CoutSeminaire>
+
   <ClientLogoStrip />
 
   <section class="section alt" data-reveal data-section-name="Trois situations">
@@ -300,7 +319,7 @@ const takeCharge = [
       <div class="section-head">
         <div>
           <p class="eyebrow">Par où entrer</p>
-          <h2>Quel séminaire pour quelle situation&nbsp;?</h2>
+          <h2>Quel séminaire ou atelier pour quelle situation&nbsp;?</h2>
         </div>
         <p>On ne cherche presque jamais «&nbsp;un séminaire&nbsp;». On a un projet à lancer, un comité de direction à remettre d'accord, ou une équipe qui tourne en rond.</p>
       </div>

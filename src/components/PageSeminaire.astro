@@ -2,7 +2,6 @@
 // Gabarit commun aux pages « une situation, un séminaire » : kick-off, CODIR,
 // Sophia Antipolis. Même ossature que /seminaires-alpes-maritimes/ (classes
 // de global.css), pour que ces pages se ressemblent sans dupliquer le balisage.
-import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import PageHero from './PageHero.astro';
@@ -26,9 +25,8 @@ interface Props {
     titleTail?: string;
     summary: string;
     pills: string[];
-    image: ImageMetadata;
-    imageAlt: string;
-    flip?: boolean;
+    /** Vraie photo de mission (chemin dans public/). Absente s'il n'y en a pas : jamais d'image générée. */
+    photo?: { src: string; alt: string; legende?: string; portrait?: boolean };
   };
   signaux: { eyebrow: string; title: string; intro: string; items: Bloc[]; chute: string };
   resultats: { eyebrow: string; title: string; intro: string; items: Bloc[]; citation: string };
@@ -92,10 +90,7 @@ const faqSchema = {
     titleTail={hero.titleTail}
     summary={hero.summary}
     pills={hero.pills}
-    image={hero.image}
-    imageAlt={hero.imageAlt}
-    flip={hero.flip}
-    tall
+    photo={hero.photo}
   />
 
   <section class="section" data-reveal data-section-name="Votre situation">

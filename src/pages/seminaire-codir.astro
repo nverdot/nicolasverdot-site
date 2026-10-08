@@ -1,6 +1,5 @@
 ---
 import PageSeminaire from '../components/PageSeminaire.astro';
-import heroImg from '../assets/offres/hero-coaching-equipe.png';
 
 // Les situations ci-dessous sont des cas de figure fréquents, pas des
 // citations de clients : aucune n'est présentée comme un témoignage.
@@ -25,9 +24,11 @@ import heroImg from '../assets/offres/hero-coaching-equipe.png';
     summary:
       "Vous avez un comité de direction. Avez-vous une équipe de direction ? Un <strong>séminaire de direction</strong> ne sert pas à passer deux jours agréables ensemble. Il sert à trancher ce qui traîne, à dire ce qui ne se dit pas en réunion, et à repartir avec des <strong>décisions que chacun défendra</strong> devant ses équipes.",
     pills: ['Séminaire de direction', 'COMEX', 'Séminaire stratégique', 'Cohésion de CODIR'],
-    image: heroImg,
-    imageAlt: 'Une petite équipe soudée marche en formation resserrée sur une terrasse en hauteur.',
-    flip: true,
+    photo: {
+      src: '/cas-clients/cec-fresque-former-un-collectif-humanite-jean-pierre-goux.jpg',
+      alt: "Grande fresque dessinée en direct pendant une conférence, pour une cohorte de dirigeants de la CEC.",
+      legende: 'Ce qui se dit est dessiné en direct, sous les yeux de tous. Ici pour une cohorte de dirigeants (CEC, Sophia Antipolis).',
+    },
   }}
   signaux={{
     eyebrow: 'Ce qui se joue dans un comité',

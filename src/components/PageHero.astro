@@ -1,34 +1,25 @@
 ---
-import type { ImageMetadata } from 'astro';
-import { Image } from 'astro:assets';
-
+// Octobre 2026 : plus aucune illustration générée en fond. Le hero est
+// typographique ; quand une vraie photo de mission existe, elle se pose à
+// côté du texte, avec sa légende. Jamais de photo recréée.
 interface Props {
   eyebrow: string;
   title: string;
-  /** Mot ou groupe de mots accentué en script orange, comme sur le hero de l'accueil (optionnel, uniquement pour la variante has-image). */
+  /** Mot ou groupe de mots accentué en script orange, comme sur le hero de l'accueil. */
   titleAccent?: string;
   /** Fin de phrase après l'accent (optionnel, requiert titleAccent). */
   titleTail?: string;
-  /** Rendu via set:html : les <strong> y sont acceptés pour reprendre le traitement du hero d'accueil. Contenu toujours fourni par le développeur, jamais par un utilisateur. */
+  /** Rendu via set:html : les <strong> y sont acceptés. Contenu toujours fourni par le développeur, jamais par un utilisateur. */
   summary: string;
   pills?: string[];
-  image?: ImageMetadata;
-  imageAlt?: string;
-  tall?: boolean;
-  /** Si la zone dégagée de l'illustration est à droite plutôt qu'à gauche (cas par cas selon l'image générée) : inverse le scrim et pousse le texte à droite. */
-  flip?: boolean;
+  /** Vraie photo (chemin dans public/), affichée à droite du texte. */
+  photo?: { src: string; alt: string; legende?: string; portrait?: boolean };
 }
 
-const { eyebrow, title, titleAccent, titleTail, summary, pills = [], image, imageAlt = '', tall = false, flip = false } = Astro.props;
+const { eyebrow, title, titleAccent, titleTail, summary, pills = [], photo } = Astro.props;
 ---
 
-<section class={`page-hero${image ? ' has-image' : ''}${tall ? ' is-tall' : ''}${flip ? ' is-flipped' : ''}`} data-reveal>
-  {image && (
-    <>
-      <Image src={image} alt="" role="presentation" widths={[640, 1200, 1920]} sizes="100vw" class="page-hero-bg" />
-      <div class="page-hero-scrim" aria-hidden="true"></div>
-    </>
-  )}
+<section class={`page-hero${photo ? ' has-photo' : ''}`} data-reveal>
   <div class="page-hero-inner">
     <div class="page-hero-copy">
       <p class="eyebrow">{eyebrow}</p>
@@ -48,99 +39,37 @@ const { eyebrow, title, titleAccent, titleTail, summary, pills = [], image, imag
         </div>
       )}
     </div>
+    {photo && (
+      <figure class={`hero-figure${photo.portrait ? ' is-portrait' : ''}`}>
+        <img src={photo.src} alt={photo.alt} loading="eager" decoding="async" />
+        {photo.legende && <figcaption>{photo.legende}</figcaption>}
+      </figure>
+    )}
   </div>
-  {image && imageAlt && <p class="visually-hidden">{imageAlt}</p>}
 </section>
 
 <style>
   .page-hero {
-    padding: var(--space-16) 0 var(--space-8);
+    padding: var(--space-16) 0 var(--space-12);
     border-bottom: 1px solid var(--color-border);
   }
-  .page-hero.has-image {
-    position: relative;
-    overflow: hidden;
-    padding: var(--space-24) 0 var(--space-16);
-    border-bottom: none;
-  }
-  /* Section plus haute pour laisser respirer l'illustration : object-fit:cover
-     recadre d'autant moins que la boîte se rapproche du ratio de l'image. */
-  .page-hero.is-tall {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    min-height: clamp(520px, 68vh, 780px);
-  }
-  .page-hero.is-tall .page-summary {
-    font-size: var(--text-xl);
-  }
-  .page-hero-bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-  }
-  /* Même traitement que le hero de l'accueil (Hero.astro), la référence
-     visuelle du site : scrim clair directionnel, texte en encre foncée.
-     L'ancien scrim sombre (pensé pour des photos) écrasait les
-     illustrations pâles utilisées ici - cf. deleguer-animation.astro. */
-  .page-hero-scrim {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(
-      90deg,
-      var(--color-cream) 0%,
-      color-mix(in srgb, var(--color-cream) 88%, transparent) 32%,
-      color-mix(in srgb, var(--color-cream) 35%, transparent) 52%,
-      transparent 68%
-    );
-  }
-  /* Même cadre que .hero-inner sur l'accueil (Hero.astro) : plus large et
-     avec un padding qui grandit avec le viewport, contrairement au
-     .container standard (1180px, padding fixe) - pour que le texte
-     exploite la largeur de la page comme sur la home. Appliqué à toutes
-     les variantes (avec ou sans image) pour une largeur cohérente. */
   .page-hero-inner {
-    position: relative;
-    z-index: 2;
     width: 100%;
     max-width: 1400px;
     margin-inline: auto;
     padding-inline: clamp(1.5rem, 4vw, 4rem);
   }
-  .page-hero.has-image .page-hero-copy {
-    max-width: 600px;
+  .page-hero.has-photo .page-hero-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
   }
-  /* Certaines illustrations ont leur zone dégagée à droite plutôt qu'à
-     gauche : on inverse le dégradé du scrim et on pousse le texte à
-     droite du cadre, sans dupliquer tout le reste du composant. */
-  .page-hero.is-flipped .page-hero-scrim {
-    background: linear-gradient(
-      270deg,
-      var(--color-cream) 0%,
-      color-mix(in srgb, var(--color-cream) 88%, transparent) 32%,
-      color-mix(in srgb, var(--color-cream) 35%, transparent) 52%,
-      transparent 68%
-    );
+  .page-hero.has-photo .page-hero-copy {
+    flex: 1 1 0;
+    min-width: 0;
   }
-  .page-hero.is-flipped .page-hero-copy {
-    margin-left: auto;
-  }
-  .page-hero.has-image .eyebrow {
-    color: var(--color-clay-ink);
-  }
-  .page-hero.has-image h1,
-  .page-hero.has-image .page-summary {
-    color: var(--color-navy);
-  }
-  .page-hero.has-image .page-summary {
-    color: var(--color-muted);
-  }
-  .page-hero.has-image .page-summary :global(strong) {
-    color: var(--color-navy);
+  .page-hero:not(.has-photo) .page-hero-copy {
+    max-width: 900px;
   }
   .script-accent {
     display: block;
@@ -154,65 +83,18 @@ const { eyebrow, title, titleAccent, titleTail, summary, pills = [], image, imag
   .hero-tail {
     display: block;
   }
-  @media (max-width: 900px) {
-    .page-hero.has-image .page-hero-scrim {
-      background: linear-gradient(
-        180deg,
-        var(--color-cream) 0%,
-        var(--color-cream) 58%,
-        color-mix(in srgb, var(--color-cream) 75%, transparent) 74%,
-        color-mix(in srgb, var(--color-cream) 30%, transparent) 100%
-      );
-    }
-    .page-hero.has-image .page-hero-copy {
-      max-width: none;
-    }
-  }
-  /* Sous 640px, le chevauchement image+texte n'est plus fiable : selon le
-     recadrage de chaque illustration (object-fit:cover sur un mobile
-     étroit), le scrim vertical peut rendre l'image quasiment invisible -
-     cf. hero-accompagnements.png où seul un fragment dépasse en bas.
-     Même solution que le hero de deleguer-animation : bandeau image fixe
-     au-dessus, texte en dessous sur fond plein, sans scrim. */
-  @media (max-width: 640px) {
-    .page-hero.has-image {
-      display: block;
-      padding: 0 0 var(--space-8);
-    }
-    .page-hero.has-image.is-tall {
-      min-height: 0;
-    }
-    .page-hero.has-image .page-hero-bg {
-      position: static;
-      width: 100%;
-      height: 46vw;
-      min-height: 200px;
-      max-height: 320px;
-      object-position: center 30%;
-    }
-    .page-hero.has-image .page-hero-scrim {
-      display: none;
-    }
-    .page-hero.has-image .page-hero-inner {
-      padding-top: var(--space-6);
-    }
-  }
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-  }
   .page-hero h1 {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-size: clamp(2.2rem, 4.2vw, 3.6rem);
+    color: var(--color-navy);
   }
   .page-summary {
     margin: var(--space-4) 0 0;
     max-width: 62ch;
     font-size: var(--text-lg);
     color: var(--color-muted);
+  }
+  .page-summary :global(strong) {
+    color: var(--color-navy);
   }
   .meta-pills {
     display: flex;
@@ -227,5 +109,15 @@ const { eyebrow, title, titleAccent, titleTail, summary, pills = [], image, imag
     border-radius: var(--radius-pill);
     font-size: var(--text-xs);
     font-weight: 700;
+  }
+  @media (max-width: 900px) {
+    .page-hero {
+      padding: var(--space-8) 0;
+    }
+    .page-hero.has-photo .page-hero-inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-6);
+    }
   }
 </style>
