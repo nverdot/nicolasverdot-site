@@ -84,19 +84,24 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
 
     <div class="cs-calc-tete">
       <h3>Et chez vous&nbsp;? Mettez vos chiffres.</h3>
-      <p>Une réunion hebdomadaire, une journée par trimestre, deux jours par an&nbsp;: choisissez, ajustez, le texte et les montants suivent. Rien n'est envoyé, le calcul se fait sur votre écran.</p>
+      <p>Réunion récurrente, comité de pilotage, CODIR, séminaire trimestriel ou annuel&nbsp;: choisissez, ajustez, le texte et les montants suivent. Rien n'est envoyé, le calcul se fait sur votre écran.</p>
     </div>
     <div class="cs-grid">
       <form class="cs-form" onsubmit="return false">
+        {/* Trois groupes numérotés, chacun dans son cadre : on voit d'un coup
+            d'œil que « Qui sera dans la salle ? » est une rubrique à part. */}
+        <fieldset class="cs-groupe">
+          <legend><i>1</i>Le temps collectif</legend>
         {/* Une liste déroulante plutôt que sept pastilles : alignées sur
             quatre lignes inégales, elles faisaient brouillon. */}
         <label class="cs-field cs-field-type">
-          <span><Fragment set:html={svg('type')} />Quel temps collectif&nbsp;?</span>
+          <span><Fragment set:html={svg('type')} />Lequel&nbsp;?</span>
           <select data-cs-type>
             {types.map((t) => (
-              <option value={t.id} selected={t.id === depart.id} data-label={t.label} data-participants={JSON.stringify(t.participants)} data-jours={t.jours} data-prepa={t.prepa} data-paran={t.parAn} data-lieu={t.lieu}>{t.label}</option>
+              <option value={t.id} selected={t.id === depart.id} data-label={t.label} data-phrase={t.phrase} data-description={t.description} data-participants={JSON.stringify(t.participants)} data-jours={t.jours} data-prepa={t.prepa} data-paran={t.parAn} data-lieu={t.lieu}>{t.label}</option>
             ))}
           </select>
+          <small data-cs-out="description">{depart.description}</small>
         </label>
 
         {/* Durée et fréquence viennent tout de suite après le type : ce sont
@@ -116,11 +121,12 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
             <small>Sur une année de travail&nbsp;: 46 semaines, 11 mois.</small>
           </label>
         </div>
+        </fieldset>
 
         {/* Une journée de directeur ne coûte pas une journée de collaborateur :
             on compte donc les participants profil par profil. */}
-        <fieldset class="cs-profils">
-          <legend><Fragment set:html={svg('salle')} />Qui sera dans la salle&nbsp;?</legend>
+        <fieldset class="cs-groupe cs-profils">
+          <legend><i>2</i>Qui sera dans la salle&nbsp;?</legend>
           <div class="cs-profils-tete" aria-hidden="true">
             <span></span>
             <span>Nombre</span>
@@ -136,6 +142,8 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
           <small>Coût d'une journée = salaire chargé ramené au jour. Ces montants sont des exemples&nbsp;: mettez les vôtres.</small>
         </fieldset>
 
+        <fieldset class="cs-groupe">
+          <legend><i>3</i>Autour de la salle</legend>
         <div class="cs-fields">
           <label class="cs-field">
             <span><Fragment set:html={svg('prepa')} />Préparation interne (jours)</span>
@@ -152,6 +160,7 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
             <input type="number" inputmode="numeric" min="0" step="100" value="0" data-cs="trajets" />
           </label>
         </div>
+        </fieldset>
       </form>
 
       <div class="cs-result" aria-live="polite">
@@ -221,8 +230,10 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
 
       // Le contexte, en une phrase qui suit la saisie.
       const rythme = frequence.selectedOptions[0]?.dataset.phrase ?? '';
+      const choisi = typeSelect.selectedOptions[0];
+      sortie('description').textContent = choisi?.dataset.description ?? '';
       sortie('contexte').textContent = presents.length
-        ? `${liste(presents)}, réunis ${duree()}, ${rythme}.`
+        ? `${choisi?.dataset.phrase ?? 'Un temps collectif'} : ${liste(presents)}, réunis ${duree()}, ${rythme}.`
         : 'Indiquez qui sera dans la salle.';
 
       sortie('titre').textContent = parAn > 1 ? 'Chaque séance mobilise' : 'Ce temps collectif mobilise';
@@ -266,7 +277,10 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
       frequence.value = choix.dataset.paran ?? '1';
       calculer();
     });
-    calculer();
+    // À chaque chargement, un exemple différent : le visiteur ne voit pas
+    // toujours le même cas, et comprend que la simulation se règle.
+    typeSelect.selectedIndex = Math.floor(Math.random() * typeSelect.options.length);
+    typeSelect.dispatchEvent(new Event('change'));
   }
 </script>
 
@@ -279,17 +293,48 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
   }
   .cs-form {
     display: grid;
-    gap: var(--space-6);
+    gap: var(--space-4);
+  }
+  /* Chaque rubrique est un cadre, avec son numéro et son titre. */
+  .cs-groupe {
+    display: grid;
+    gap: var(--space-4);
+    min-width: 0;
+    margin: 0;
     padding: var(--space-6);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     background: var(--color-surface);
   }
-  .cs-profils {
-    margin: 0;
-    padding: 0;
-    border: 0;
+  .cs-groupe > legend {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    float: left;
+    width: 100%;
+    margin: 0 0 var(--space-2);
+    padding: 0 0 var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-navy);
+    font-size: var(--text-lg);
+    font-weight: 800;
+  }
+  .cs-groupe > legend + * {
+    clear: both;
+  }
+  .cs-groupe > legend i {
     display: grid;
+    place-items: center;
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--color-orange);
+    color: #122033;
+    font-style: normal;
+    font-weight: 800;
+  }
+  .cs-profils {
     gap: var(--space-3);
   }
   /* Les lignes sont en retrait sous « Qui sera dans la salle ? », et la case
@@ -300,7 +345,6 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
     grid-template-columns: minmax(0, 1fr) 4.5rem 7.5rem;
     gap: var(--space-3);
     align-items: center;
-    padding-left: var(--space-6);
   }
   .cs-profil input[data-cs-nb] {
     text-align: center;
@@ -335,8 +379,6 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
     color: var(--color-muted);
     font-size: var(--text-sm);
   }
-  .cs-profils legend,
-  .cs-types legend,
   .cs-field > span {
     display: block;
     margin-bottom: var(--space-2);

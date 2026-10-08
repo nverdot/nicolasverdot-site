@@ -27,6 +27,10 @@ export const profils: Profil[] = [
 export interface TempsCollectif {
   id: string;
   label: string;
+  /** Début de la phrase « Imaginons… », avec son article. */
+  phrase: string;
+  /** Ce qui s'y passe, en quelques mots, affiché sous la liste. */
+  description: string;
   /** Nombre de participants par profil (clé = id du profil). */
   participants: Record<string, number>;
   /** Durée en jours (0.5 = une demi-journée). */
@@ -58,14 +62,59 @@ export const durees = [
   { jours: 3, label: '3 jours', phrase: 'trois jours' },
 ];
 
-// Quatre temps collectifs, nommés par leur durée et leur rythme : c'est ainsi
-// qu'un dirigeant les reconnaît dans son agenda. `parDefaut` désigne celui
-// qui s'affiche à l'ouverture de la page.
+// Six temps collectifs, nommés de la même façon : ce que c'est, puis son
+// rythme. Du plus fréquent au plus rare, du plus petit cercle au plus large.
+// `parDefaut` sert au rendu initial ; au chargement, la page en tire un au
+// hasard pour ne pas toujours montrer le même exemple.
 export const tempsCollectifs: TempsCollectif[] = [
-  { id: 'reunion', label: 'Une réunion de 1 h 30 à 2 h, chaque semaine', participants: { direction: 1, managers: 3, equipes: 4 }, jours: 0.25, prepa: 0, parAn: 46, lieu: 0 },
-  { id: 'demi-journee', label: 'Une demi-journée, chaque semaine', participants: { direction: 4, managers: 3, equipes: 0 }, jours: 0.5, prepa: 0.5, parAn: 46, lieu: 0 },
-  { id: 'trimestre', label: '1 jour ou 1,5 jour, chaque trimestre', participants: { direction: 2, managers: 6, equipes: 12 }, jours: 1, prepa: 3, parAn: 4, lieu: 120 },
-  { id: 'annuel', label: '2 jours, une fois par an', participants: { direction: 4, managers: 8, equipes: 18 }, jours: 2, prepa: 6, parAn: 1, lieu: 120 },
+  {
+    id: 'reunion',
+    label: "Point d'équipe · chaque semaine",
+    phrase: "Un point d'équipe",
+    description: "Le point d'équipe ou de projet, sans directeur : 1 h 30 à 2 h, chaque semaine.",
+    participants: { direction: 0, managers: 1, equipes: 7 },
+    jours: 0.25, prepa: 0, parAn: 46, lieu: 0,
+  },
+  {
+    id: 'copil',
+    label: "Comité de pilotage · chaque semaine",
+    phrase: "Un comité de pilotage",
+    description: "On présente l'avancement, on tranche, on ajuste : 1 h 30 à 2 h, chaque semaine.",
+    participants: { direction: 2, managers: 4, equipes: 2 },
+    jours: 0.25, prepa: 0.5, parAn: 46, lieu: 0,
+  },
+  {
+    id: 'codir',
+    label: "CODIR · chaque semaine",
+    phrase: "Un CODIR hebdomadaire",
+    description: 'Tous les directeurs de la branche et quelques invités : une demi-journée, chaque semaine.',
+    participants: { direction: 6, managers: 2, equipes: 0 },
+    jours: 0.5, prepa: 0.5, parAn: 46, lieu: 0,
+  },
+  {
+    id: 'codir-mensuel',
+    label: "CODIR élargi · chaque mois",
+    phrase: "Un CODIR élargi",
+    description: 'Le comité de direction élargi : une journée, une fois par mois.',
+    participants: { direction: 8, managers: 6, equipes: 0 },
+    jours: 1, prepa: 1, parAn: 11, lieu: 0,
+  },
+  {
+    id: 'trimestre',
+    label: "Séminaire · chaque trimestre",
+    phrase: "Un séminaire trimestriel",
+    description: 'Un jour ou un jour et demi, une fois par trimestre.',
+    participants: { direction: 2, managers: 6, equipes: 12 },
+    jours: 1, prepa: 3, parAn: 4, lieu: 120,
+  },
+  {
+    id: 'annuel',
+    label: "Séminaire · chaque année",
+    phrase: "Un séminaire annuel",
+    description: 'Le temps fort de l’année : deux jours, une fois par an.',
+    participants: { direction: 4, managers: 8, equipes: 18 },
+    jours: 2, prepa: 6, parAn: 1, lieu: 120,
+  },
 ];
 
-export const parDefaut = 'demi-journee';
+export const parDefaut = 'codir';
