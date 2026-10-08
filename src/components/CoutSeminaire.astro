@@ -32,6 +32,7 @@ const ico: Record<string, string> = {
   flou: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7"/><circle cx="12" cy="16.5" r="0.8" fill="currentColor" stroke="none"/>',
 };
 ico.remonte = '<path d="M12 20V6"/><path d="M6 11l6-6 6 6"/><path d="M5 20h14"/>';
+ico.apres = '<path d="M4 12h13"/><path d="M13 6l6 6-6 6"/><path d="M4 5v14"/>';
 const svg = (nom: string) =>
   `<svg class="cs-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ico[nom]}</svg>`;
 
@@ -161,6 +162,17 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
           </label>
         </div>
         </fieldset>
+        {/* L'après : ce que l'inefficacité coûte une fois la salle vidée.
+            Aucune enquête ne le chiffre proprement : le champ part d'une heure
+            par personne, présentée comme un exemple que le visiteur corrige. */}
+        <fieldset class="cs-groupe">
+          <legend><i>4</i>Et après&nbsp;?</legend>
+          <label class="cs-field">
+            <span><Fragment set:html={svg('apres')} />Heures perdues après chaque séance, par personne</span>
+            <input type="number" inputmode="decimal" min="0" max="40" step="0.5" value="1" data-cs="apres" />
+            <small>Relances, travail repris, réunion à refaire parce que rien n'a été tranché. Une heure est un exemple&nbsp;: mettez votre estimation.</small>
+          </label>
+        </fieldset>
       </form>
 
       <div class="cs-result" aria-live="polite">
@@ -182,6 +194,7 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
           <li><Fragment set:html={svg('inefficace')} /><span><strong>72&nbsp;%</strong> des réunions jugées inefficaces&nbsp;: <b data-cs-out="perdu2">—</b> sans effet<span data-cs-out="paran2"></span>.</span></li>
           <li><Fragment set:html={svg('energie')} /><span><strong>76&nbsp;%</strong> en sortent épuisés&nbsp;: <b data-cs-out="vides2">—</b>.</span></li>
           <li><Fragment set:html={svg('flou')} /><span><strong>54&nbsp;%</strong> repartent sans prochaine étape&nbsp;: <b data-cs-out="flou2">—</b>.</span></li>
+          <li data-cs-row="apres"><Fragment set:html={svg('apres')} /><span><strong>Et après</strong>&nbsp;: <b data-cs-out="apres">—</b> de relances et de reprises<span data-cs-out="apres-an"></span>.</span></li>
           <li><Fragment set:html={svg('remonte')} /><span><strong>61&nbsp;%</strong> jugent inefficace la moitié du temps passé à décider&nbsp;: <b data-cs-out="decide2">—</b>.</span></li>
         </ul>
         </div>
@@ -206,7 +219,7 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
           <label><input type="radio" name="cs-recup" value="0.25" data-mot="un quart" checked /><span>25&nbsp;%</span></label>
           <label><input type="radio" name="cs-recup" value="0.5" data-mot="la moitié" /><span>50&nbsp;%</span></label>
         </fieldset>
-        <p class="cs-recup-note">Ce n'est pas une promesse&nbsp;: c'est un ordre de grandeur, calculé sur les 72&nbsp;% de réunions jugées inefficaces et sur vos chiffres.</p>
+        <p class="cs-recup-note">Ce n'est pas une promesse&nbsp;: c'est un ordre de grandeur, calculé sur les 72&nbsp;% de réunions jugées inefficaces, sur le temps perdu ensuite si vous l'avez indiqué, et sur vos chiffres.</p>
       </div>
     </div>
   </div>
@@ -256,6 +269,14 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
       const trajets = lire('trajets');
       const total = jourJ + prepa + lieu + trajets;
       const annuel = total * parAn;
+      // L'après : heures perdues par personne, valorisées au coût horaire de
+      // chaque profil (coût de la journée ÷ 7 heures).
+      const heuresApres = lire('apres');
+      let apres = 0;
+      nombres.forEach((el) => {
+        apres += valeur(el) * heuresApres * (coutDe(el.dataset.csNb ?? '') / HEURES_PAR_JOUR);
+      });
+      const apresAnnuel = apres * parAn;
       const heures = jours * HEURES_PAR_JOUR;
 
       // Le contexte, en une phrase qui suit la saisie.
@@ -294,7 +315,10 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
       sortie('decide2').textContent = personnes(0.61);
       const choix = racine.querySelector<HTMLInputElement>('input[name="cs-recup"]:checked');
       const part = parseFloat(choix?.value ?? '0.25');
-      sortie('recup').textContent = euros.format(annuel * 0.72 * part);
+      sortie('recup').textContent = euros.format((annuel * 0.72 + apresAnnuel) * part);
+      sortie('apres').textContent = euros.format(apres);
+      sortie('apres-an').textContent = parAn > 1 ? `, soit ${euros.format(apresAnnuel)} par an` : '';
+      racine.querySelector<HTMLElement>('[data-cs-row="apres"]')!.hidden = apres === 0;
       sortie('recup-part').textContent = choix?.dataset.mot ?? 'un quart';
       sortie('recup-periode').textContent = parAn > 1 ? 'par an' : 'sur ce séminaire';
     };
@@ -905,5 +929,9 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
       grid-template-columns: minmax(0, 1fr);
       padding: var(--space-6) var(--space-4);
     }
+  }
+
+  .cs-rappel li[hidden] {
+    display: none;
   }
 </style>
