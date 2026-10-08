@@ -10,6 +10,8 @@
 export interface Profil {
   id: string;
   label: string;
+  /** Forme au singulier, pour la phrase « Imaginons… ». */
+  singulier: string;
   /** Coût d'une journée, salaire chargé (exemple de départ, modifiable). */
   cout: number;
 }
@@ -17,9 +19,9 @@ export interface Profil {
 // Une journée de directeur ne coûte pas ce que coûte une journée de
 // collaborateur : le calcul se fait donc profil par profil.
 export const profils: Profil[] = [
-  { id: 'direction', label: 'Dirigeants et directeurs', cout: 1200 },
-  { id: 'managers', label: 'Managers et cadres', cout: 700 },
-  { id: 'equipes', label: 'Collaborateurs', cout: 400 },
+  { id: 'direction', label: 'Dirigeants et directeurs', singulier: 'dirigeant ou directeur', cout: 1200 },
+  { id: 'managers', label: 'Managers et cadres', singulier: 'manager ou cadre', cout: 700 },
+  { id: 'equipes', label: 'Collaborateurs', singulier: 'collaborateur', cout: 400 },
 ];
 
 export interface TempsCollectif {
@@ -40,19 +42,30 @@ export interface TempsCollectif {
 // Les fréquences proposées. 46 semaines et 11 mois : une année de travail,
 // congés déduits. C'est une hypothèse affichée au visiteur.
 export const frequences = [
-  { parAn: 1, label: 'Une seule fois', phrase: '' },
-  { parAn: 11, label: 'Chaque mois', phrase: 'Elle revient chaque mois.' },
-  { parAn: 46, label: 'Chaque semaine', phrase: 'Elle revient chaque semaine.' },
+  { parAn: 46, label: 'Chaque semaine', phrase: 'chaque semaine' },
+  { parAn: 11, label: 'Chaque mois', phrase: 'chaque mois' },
+  { parAn: 4, label: 'Chaque trimestre', phrase: 'une fois par trimestre' },
+  { parAn: 1, label: 'Une fois par an', phrase: 'une fois par an' },
 ];
 
-export const tempsCollectifs: TempsCollectif[] = [
-  // Le premier de la liste est l'exemple affiché à l'ouverture de la page :
-  // une réunion ordinaire, puisque les chiffres de l'enquête parlent de réunions.
-  { id: 'comex-hebdo', label: 'Réunion de direction', participants: { direction: 4, managers: 3, equipes: 0 }, jours: 0.5, prepa: 0.5, parAn: 46, lieu: 0 },
-  { id: 'codir', label: 'Séminaire de direction', participants: { direction: 8, managers: 0, equipes: 0 }, jours: 2, prepa: 4, parAn: 1, lieu: 120 },
-  { id: 'kickoff', label: 'Kick-off de projet', participants: { direction: 2, managers: 6, equipes: 22 }, jours: 1, prepa: 6, parAn: 1, lieu: 120 },
-  { id: 'equipe', label: "Séminaire d'équipe", participants: { direction: 1, managers: 2, equipes: 12 }, jours: 1, prepa: 3, parAn: 1, lieu: 120 },
-  { id: 'feuille-de-route', label: 'Atelier feuille de route', participants: { direction: 2, managers: 5, equipes: 5 }, jours: 1, prepa: 3, parAn: 1, lieu: 120 },
-  { id: 'agilite', label: "Mise en place de l'agilité", participants: { direction: 2, managers: 6, equipes: 12 }, jours: 2, prepa: 5, parAn: 1, lieu: 120 },
-  { id: 'convention', label: 'Convention', participants: { direction: 5, managers: 15, equipes: 80 }, jours: 1, prepa: 15, parAn: 1, lieu: 120 },
+// Les durées proposées, en jours (une journée = 7 heures de travail).
+export const durees = [
+  { jours: 0.25, label: '1 h 30 à 2 h', phrase: 'deux heures' },
+  { jours: 0.5, label: 'Une demi-journée', phrase: 'une demi-journée' },
+  { jours: 1, label: '1 jour', phrase: 'une journée' },
+  { jours: 1.5, label: '1,5 jour', phrase: 'un jour et demi' },
+  { jours: 2, label: '2 jours', phrase: 'deux jours' },
+  { jours: 3, label: '3 jours', phrase: 'trois jours' },
 ];
+
+// Quatre temps collectifs, nommés par leur durée et leur rythme : c'est ainsi
+// qu'un dirigeant les reconnaît dans son agenda. `parDefaut` désigne celui
+// qui s'affiche à l'ouverture de la page.
+export const tempsCollectifs: TempsCollectif[] = [
+  { id: 'reunion', label: 'Une réunion de 1 h 30 à 2 h, chaque semaine', participants: { direction: 1, managers: 3, equipes: 4 }, jours: 0.25, prepa: 0, parAn: 46, lieu: 0 },
+  { id: 'demi-journee', label: 'Une demi-journée, chaque semaine', participants: { direction: 4, managers: 3, equipes: 0 }, jours: 0.5, prepa: 0.5, parAn: 46, lieu: 0 },
+  { id: 'trimestre', label: '1 jour ou 1,5 jour, chaque trimestre', participants: { direction: 2, managers: 6, equipes: 12 }, jours: 1, prepa: 3, parAn: 4, lieu: 120 },
+  { id: 'annuel', label: '2 jours, une fois par an', participants: { direction: 4, managers: 8, equipes: 18 }, jours: 2, prepa: 6, parAn: 1, lieu: 120 },
+];
+
+export const parDefaut = 'demi-journee';

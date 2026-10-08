@@ -6,14 +6,34 @@
 // siennes : ce ne sont pas des prix de marché. L'animation n'est pas comptée,
 // elle se chiffre au cadrage.
 // La liste des types d'atelier vit dans src/data/tempsCollectifs.ts.
-import { tempsCollectifs as types, profils, frequences } from '../data/tempsCollectifs';
+import { tempsCollectifs as types, profils, frequences, durees, parDefaut } from '../data/tempsCollectifs';
 
-const depart = types[0];
+const depart = types.find((t) => t.id === parDefaut) ?? types[0];
 
 // Chiffres de l'enquête Atlassian « Workplace Woes: Meetings » (5 000 salariés
 // de bureau, quatre continents), vérifiés à la source le 8 octobre 2026. Ils
 // portent sur les réunions, pas sur les séminaires : la calculatrice les
 // applique donc au conditionnel (« si cette journée ressemblait à… »).
+// Une icône par notion, pour repérer d'un coup d'œil ce que l'on règle.
+// Même convention que le reste du site : trait feutre, viewBox 24×24.
+const ico: Record<string, string> = {
+  type: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  duree: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3.2 2"/>',
+  frequence: '<path d="M4 12a8 8 0 0 1 13.5-5.8"/><path d="M20 12a8 8 0 0 1-13.5 5.8"/><path d="M17 3v4h-4"/><path d="M7 21v-4h4"/>',
+  salle: '<circle cx="8" cy="8" r="3"/><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M14.5 20c.2-2.6 2.1-4.7 4.6-5"/>',
+  direction: '<path d="M6 3v18"/><path d="M6 4h13l-3 4 3 4H6"/>',
+  managers: '<circle cx="8" cy="8" r="3"/><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M14.5 20c.2-2.6 2.1-4.7 4.6-5"/>',
+  equipes: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>',
+  prepa: '<rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M8.5 11h7M8.5 15h7"/>',
+  lieu: '<path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+  trajets: '<path d="M3 16l1.5-5.5A2 2 0 0 1 6.4 9h11.2a2 2 0 0 1 1.9 1.5L21 16v3h-3v-2H6v2H3z"/><circle cx="7.5" cy="14.5" r="1" fill="currentColor" stroke="none"/><circle cx="16.5" cy="14.5" r="1" fill="currentColor" stroke="none"/>',
+  inefficace: '<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>',
+  energie: '<rect x="3" y="8" width="16" height="9" rx="2"/><path d="M21 11v3"/><path d="M6 11v3"/>',
+  flou: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7"/><circle cx="12" cy="16.5" r="0.8" fill="currentColor" stroke="none"/>',
+};
+const svg = (nom: string) =>
+  `<svg class="cs-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ico[nom]}</svg>`;
+
 const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
 ---
 
@@ -26,7 +46,7 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
       </div>
     </div>
 
-    <div data-cout-seminaire data-profils={JSON.stringify(profils.map((pr) => ({ id: pr.id, label: pr.label.toLowerCase() })))}>
+    <div data-cout-seminaire data-profils={JSON.stringify(profils.map((pr) => ({ id: pr.id, label: pr.label.toLowerCase(), singulier: pr.singulier })))}>
       {/* Le contexte, écrit en clair : il se réécrit à chaque changement dans
           la calculatrice, pour que les chiffres parlent d'une situation précise. */}
       <p class="cs-contexte"><strong>Imaginons.</strong> <span data-cs-out="contexte">—</span></p>
@@ -36,15 +56,15 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
           dessous se recalcule avec le séminaire saisi plus bas. */}
       <div class="cs-stats">
         <div class="cs-stat">
-          <p class="cs-stat-chiffre">72&nbsp;%</p>
+          <p class="cs-stat-chiffre"><Fragment set:html={svg('inefficace')} />72&nbsp;%</p>
           <p class="cs-stat-texte"><strong>des réunions sont jugées inefficaces.</strong> Ici&nbsp;: <span data-cs-out="perdu">—</span> de temps collectif sans effet<span data-cs-out="paran-perdu"></span>.</p>
         </div>
         <div class="cs-stat">
-          <p class="cs-stat-chiffre">76&nbsp;%</p>
+          <p class="cs-stat-chiffre"><Fragment set:html={svg('energie')} />76&nbsp;%</p>
           <p class="cs-stat-texte"><strong>des salariés se disent épuisés les jours chargés en réunions.</strong> Ici&nbsp;: <span data-cs-out="vides">—</span> repartiraient vidées.</p>
         </div>
         <div class="cs-stat">
-          <p class="cs-stat-chiffre">54&nbsp;%</p>
+          <p class="cs-stat-chiffre"><Fragment set:html={svg('flou')} />54&nbsp;%</p>
           <p class="cs-stat-texte"><strong>quittent souvent une réunion sans prochaine étape claire.</strong> Ici&nbsp;: <span data-cs-out="flou">—</span> ne sauraient pas qui fait quoi.</p>
         </div>
         <p class="cs-stats-source">Chiffres sur les réunions&nbsp;: <a href={SOURCE} target="_blank" rel="noopener">enquête Atlassian auprès de 5&nbsp;000 salariés</a>, appliqués à la situation décrite ci-dessus, que vous pouvez modifier plus bas. Un séminaire bien conçu sert précisément à ne pas leur ressembler.</p>
@@ -52,25 +72,43 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
 
     <div class="cs-calc-tete">
       <h3>Et chez vous&nbsp;? Mettez vos chiffres.</h3>
-      <p>Une réunion qui revient chaque semaine, un séminaire, un kick-off&nbsp;: choisissez, ajustez, le texte et les montants suivent. Rien n'est envoyé, le calcul se fait sur votre écran.</p>
+      <p>Une réunion hebdomadaire, une journée par trimestre, deux jours par an&nbsp;: choisissez, ajustez, le texte et les montants suivent. Rien n'est envoyé, le calcul se fait sur votre écran.</p>
     </div>
     <div class="cs-grid">
       <form class="cs-form" onsubmit="return false">
         {/* Une liste déroulante plutôt que sept pastilles : alignées sur
             quatre lignes inégales, elles faisaient brouillon. */}
         <label class="cs-field cs-field-type">
-          <span>Quel temps collectif&nbsp;?</span>
+          <span><Fragment set:html={svg('type')} />Quel temps collectif&nbsp;?</span>
           <select data-cs-type>
-            {types.map((t, i) => (
-              <option value={t.id} selected={i === 0} data-label={t.label} data-participants={JSON.stringify(t.participants)} data-jours={t.jours} data-prepa={t.prepa} data-paran={t.parAn} data-lieu={t.lieu}>{t.label}</option>
+            {types.map((t) => (
+              <option value={t.id} selected={t.id === depart.id} data-label={t.label} data-participants={JSON.stringify(t.participants)} data-jours={t.jours} data-prepa={t.prepa} data-paran={t.parAn} data-lieu={t.lieu}>{t.label}</option>
             ))}
           </select>
         </label>
 
+        {/* Durée et fréquence viennent tout de suite après le type : ce sont
+            elles qui définissent le temps collectif, avant de dire qui y vient. */}
+        <div class="cs-fields">
+          <label class="cs-field">
+            <span><Fragment set:html={svg('duree')} />Durée</span>
+            <select data-cs="jours">
+              {durees.map((d) => <option value={d.jours} data-phrase={d.phrase} selected={d.jours === depart.jours}>{d.label}</option>)}
+            </select>
+          </label>
+          <label class="cs-field">
+            <span><Fragment set:html={svg('frequence')} />Fréquence</span>
+            <select data-cs-freq>
+              {frequences.map((f) => <option value={f.parAn} data-phrase={f.phrase} selected={f.parAn === depart.parAn}>{f.label}</option>)}
+            </select>
+            <small>Sur une année de travail&nbsp;: 46 semaines, 11 mois.</small>
+          </label>
+        </div>
+
         {/* Une journée de directeur ne coûte pas une journée de collaborateur :
             on compte donc les participants profil par profil. */}
         <fieldset class="cs-profils">
-          <legend>Qui sera dans la salle&nbsp;?</legend>
+          <legend><Fragment set:html={svg('salle')} />Qui sera dans la salle&nbsp;?</legend>
           <div class="cs-profils-tete" aria-hidden="true">
             <span></span>
             <span>Nombre</span>
@@ -78,7 +116,7 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
           </div>
           {profils.map((pr) => (
             <div class="cs-profil">
-              <span class="cs-profil-nom">{pr.label}</span>
+              <span class="cs-profil-nom"><Fragment set:html={svg(pr.id)} />{pr.label}</span>
               <input type="number" inputmode="numeric" min="0" max="2000" step="1" value={depart.participants[pr.id] ?? 0} data-cs-nb={pr.id} aria-label={`Nombre de ${pr.label.toLowerCase()}`} />
               <input type="number" inputmode="numeric" min="0" step="50" value={pr.cout} data-cs-cout={pr.id} aria-label={`Coût d'une journée, ${pr.label.toLowerCase()}`} />
             </div>
@@ -88,29 +126,17 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
 
         <div class="cs-fields">
           <label class="cs-field">
-            <span>Durée (jours)</span>
-            <input type="number" inputmode="decimal" min="0.5" max="10" step="0.5" value={depart.jours} data-cs="jours" />
-            <small>0,5 = une demi-journée.</small>
-          </label>
-          <label class="cs-field">
-            <span>Fréquence</span>
-            <select data-cs-freq>
-              {frequences.map((f) => <option value={f.parAn} data-phrase={f.phrase} selected={f.parAn === depart.parAn}>{f.label}</option>)}
-            </select>
-            <small>Sur une année de travail&nbsp;: 46 semaines, 11 mois.</small>
-          </label>
-          <label class="cs-field">
-            <span>Préparation interne (jours)</span>
+            <span><Fragment set:html={svg('prepa')} />Préparation interne (jours)</span>
             <input type="number" inputmode="decimal" min="0" step="0.5" value={depart.prepa} data-cs="prepa" />
             <small>Toutes personnes confondues&nbsp;: cadrage, programme, invitations, logistique. Comptée au coût d'un manager.</small>
           </label>
           <label class="cs-field">
-            <span>Lieu et repas (€ par personne)</span>
+            <span><Fragment set:html={svg('lieu')} />Lieu et repas (€ par personne)</span>
             <input type="number" inputmode="numeric" min="0" step="10" value={depart.lieu} data-cs="lieu" />
             <small>Par jour, hébergement compris. Reprenez votre devis, ou mettez 0 si cela se tient chez vous.</small>
           </label>
           <label class="cs-field">
-            <span>Déplacements (€ au total)</span>
+            <span><Fragment set:html={svg('trajets')} />Déplacements (€ au total)</span>
             <input type="number" inputmode="numeric" min="0" step="100" value="0" data-cs="trajets" />
           </label>
         </div>
@@ -120,10 +146,10 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
         <p class="cs-result-label" data-cs-out="titre">Ce temps collectif mobilise</p>
         <p class="cs-total" data-cs-out="total">—</p>
         <dl class="cs-lines">
-          <div><dt>Le jour J <span data-cs-out="detail">temps des participants</span></dt><dd data-cs-out="jourj">—</dd></div>
-          <div><dt>La préparation <span>temps passé en interne</span></dt><dd data-cs-out="prepa">—</dd></div>
-          <div><dt>Le lieu et les repas <span>location, restauration, hébergement</span></dt><dd data-cs-out="lieu">—</dd></div>
-          <div data-cs-row="trajets"><dt>Les déplacements</dt><dd data-cs-out="trajets">—</dd></div>
+          <div><dt><Fragment set:html={svg('salle')} />Le jour J <span data-cs-out="detail">temps des participants</span></dt><dd data-cs-out="jourj">—</dd></div>
+          <div><dt><Fragment set:html={svg('prepa')} />La préparation <span>temps passé en interne</span></dt><dd data-cs-out="prepa">—</dd></div>
+          <div><dt><Fragment set:html={svg('lieu')} />Le lieu et les repas <span>location, restauration, hébergement</span></dt><dd data-cs-out="lieu">—</dd></div>
+          <div data-cs-row="trajets"><dt><Fragment set:html={svg('trajets')} />Les déplacements</dt><dd data-cs-out="trajets">—</dd></div>
         </dl>
         <p class="cs-heure">Soit <strong data-cs-out="heure">—</strong> par heure passée ensemble.</p>
         <p class="cs-an" data-cs-row="an">Sur un an&nbsp;: <strong data-cs-out="an">—</strong></p>
@@ -149,16 +175,12 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
     const couts = Array.from(racine.querySelectorAll<HTMLInputElement>('[data-cs-cout]'));
     const frequence = racine.querySelector<HTMLSelectElement>('[data-cs-freq]')!;
     const typeSelect = racine.querySelector<HTMLSelectElement>('[data-cs-type]')!;
-    const profils = JSON.parse(racine.dataset.profils ?? '[]') as { id: string; label: string }[];
+    const profils = JSON.parse(racine.dataset.profils ?? '[]') as { id: string; label: string; singulier: string }[];
     const valeur = (el?: HTMLInputElement | null) => Math.max(0, parseFloat((el?.value ?? '').replace(',', '.')) || 0);
     const coutDe = (id: string) => valeur(couts.find((c) => c.dataset.csCout === id));
 
-    const duree = (jours: number) => {
-      if (jours === 0.5) return 'une matinée';
-      if (jours === 1) return 'une journée';
-      if (jours === 1.5) return 'un jour et demi';
-      return `${String(jours).replace('.', ',')} jours`;
-    };
+    const dureeSelect = racine.querySelector<HTMLSelectElement>('select[data-cs="jours"]')!;
+    const duree = () => dureeSelect.selectedOptions[0]?.dataset.phrase ?? '';
     const liste = (mots: string[]) =>
       mots.length <= 1 ? mots.join('') : `${mots.slice(0, -1).join(', ')} et ${mots[mots.length - 1]}`;
 
@@ -174,7 +196,8 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
         const id = el.dataset.csNb ?? '';
         participants += nb;
         jourJ += nb * jours * coutDe(id);
-        if (nb > 0) presents.push(`${nb} ${profils.find((p) => p.id === id)?.label ?? ''}`);
+        const profil = profils.find((p) => p.id === id);
+        if (nb > 0) presents.push(`${nb} ${nb > 1 ? profil?.label ?? '' : profil?.singulier ?? ''}`);
       });
       // La préparation est le plus souvent portée par des managers.
       const prepa = lire('prepa') * (coutDe('managers') || coutDe('equipes') || coutDe('direction'));
@@ -185,14 +208,13 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
       const heures = jours * HEURES_PAR_JOUR;
 
       // Le contexte, en une phrase qui suit la saisie.
-      const type = typeSelect.selectedOptions[0]?.dataset.label?.toLowerCase() ?? 'temps collectif';
       const rythme = frequence.selectedOptions[0]?.dataset.phrase ?? '';
-      const debut = `${type.charAt(0).toUpperCase()}${type.slice(1)}`;
-      sortie('contexte').textContent =
-        `${debut} : ${liste(presents) || 'personne pour le moment'}. Durée : ${duree(jours)}. ${rythme}`.trim();
+      sortie('contexte').textContent = presents.length
+        ? `${liste(presents)}, réunis ${duree()}, ${rythme}.`
+        : 'Indiquez qui sera dans la salle.';
 
       sortie('titre').textContent = parAn > 1 ? 'Chaque séance mobilise' : 'Ce temps collectif mobilise';
-      sortie('detail').textContent = `${participants} personne${participants > 1 ? 's' : ''} pendant ${duree(jours)}`;
+      sortie('detail').textContent = `${participants} personne${participants > 1 ? 's' : ''} pendant ${duree()}`;
       sortie('jourj').textContent = euros.format(jourJ);
       sortie('prepa').textContent = euros.format(prepa);
       sortie('lieu').textContent = euros.format(lieu);
@@ -214,7 +236,10 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
     };
 
     [...nombres, ...couts].forEach((el) => el.addEventListener('input', calculer));
-    racine.querySelectorAll<HTMLInputElement>('[data-cs]').forEach((el) => el.addEventListener('input', calculer));
+    racine.querySelectorAll<HTMLElement>('[data-cs]').forEach((el) => {
+      el.addEventListener('input', calculer);
+      el.addEventListener('change', calculer);
+    });
     frequence.addEventListener('change', calculer);
     typeSelect.addEventListener('change', () => {
       const choix = typeSelect.selectedOptions[0];
@@ -432,6 +457,25 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-4);
     margin-bottom: var(--space-12);
+  }
+  /* Les icônes sont injectées en HTML brut : il faut le sélecteur global. */
+  .cs-form :global(.cs-ico),
+  .cs-result :global(.cs-ico),
+  .cs-stats :global(.cs-ico) {
+    flex: none;
+    width: 1.25em;
+    height: 1.25em;
+    margin-right: var(--space-2);
+    vertical-align: -0.22em;
+    color: var(--color-clay-ink);
+  }
+  .cs-result :global(.cs-ico) {
+    color: var(--color-orange);
+  }
+  .cs-stat-chiffre :global(.cs-ico) {
+    width: 0.8em;
+    height: 0.8em;
+    vertical-align: -0.05em;
   }
   .cs-contexte {
     margin: 0 0 var(--space-6);
