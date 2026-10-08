@@ -26,8 +26,7 @@
  *
  * Tarifs : seul le prix d'entree est affiche (choix de Nicolas, 2026-09-29) ;
  * les etapes suivantes sont sur devis tant que les trois premieres missions
- * n'ont pas permis de les ajuster. L'offre pilote ne montre pas de montant
- * pour la meme raison.
+ * n'ont pas permis de les ajuster.
  *
  * SEO local : la page vise « accompagnement IA PME », « IA en entreprise
  * Nice », « formation IA entreprise Sophia Antipolis ». Les villes sont dans
@@ -825,26 +824,7 @@ const faqSchema = {
     </div>
   </section>
 
-  {/* L'offre pilote. Pas de montant (choix de Nicolas) : le tarif de
-      lancement se discute en rendez-vous. Elle dit aussi honnetement pourquoi
-      il n'y a pas encore d'etude de cas IA sur le site. */}
-  <section class="section alt" data-reveal data-section-name="Offre pilote">
-    <div class="container">
-      <div class="pilote">
-        <p class="pilote-badge">Automne 2026 · deux places</p>
-        <h2>Je cherche deux PME azuréennes pilotes</h2>
-        <p>
-          Pour la <a href="#cartographie-ia-utile">Cartographie IA utile</a>, je propose un <strong>tarif de
-          lancement</strong> à deux entreprises des Alpes-Maritimes. En échange&nbsp;: l'accès aux mesures avant /
-          après, et le droit de raconter votre cas, dans une version que vous aurez validée.
-        </p>
-        <p class="pilote-note">Ce n'est pas gratuit, et ce n'est pas un test à vos dépens&nbsp;: c'est le même travail, avec un regard partagé sur les résultats.</p>
-        <a href={withBase('/contact/')} class="btn">Candidater comme PME pilote →</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" data-reveal data-section-name="Ma différence">
+  <section class="section alt" data-reveal data-section-name="Ma différence">
     <div class="container">
       <div class="section-head">
         <div>
@@ -874,7 +854,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section alt" data-reveal data-section-name="Ce que je ne fais pas">
+  <section class="section" data-reveal data-section-name="Ce que je ne fais pas">
     <div class="container limites">
       <div>
         <p class="eyebrow">Dit franchement</p>
@@ -892,7 +872,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section" data-reveal data-section-name="Les règles de protection">
+  <section class="section alt" data-reveal data-section-name="Les règles de protection">
     <div class="container">
       <div class="section-head">
         <div>
@@ -921,7 +901,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section alt" data-reveal data-section-name="Près de chez vous">
+  <section class="section" data-reveal data-section-name="Près de chez vous">
     <div class="container local">
       <div>
         <p class="eyebrow">Alpes-Maritimes & Monaco</p>
@@ -944,7 +924,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section" data-reveal data-section-name="Aller plus loin">
+  <section class="section alt" data-reveal data-section-name="Aller plus loin">
     <div class="container prose">
       <p class="eyebrow">Aller plus loin</p>
       <h2>L'IA dans vos réunions et vos ateliers</h2>
@@ -958,7 +938,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section alt" data-reveal data-section-name="FAQ">
+  <section class="section" data-reveal data-section-name="FAQ">
     <div class="container prose">
       <p class="eyebrow">FAQ</p>
       <h2>Questions fréquentes sur l'accompagnement IA</h2>
@@ -1301,41 +1281,6 @@ const faqSchema = {
     margin-bottom: 0;
   }
 
-  /* ---------- Offre pilote ---------- */
-  .pilote {
-    max-width: 50rem;
-    margin: 0 auto;
-    padding: var(--space-8);
-    border-radius: var(--radius-lg);
-    background: var(--color-blue-soft);
-    box-shadow: inset 0 0 0 2px var(--color-blue);
-    text-align: center;
-  }
-  .pilote h2 {
-    margin: var(--space-3) 0 var(--space-4);
-  }
-  .pilote p {
-    color: var(--color-navy);
-  }
-  .pilote-badge {
-    display: inline-block;
-    margin: 0;
-    padding: var(--space-1) var(--space-3);
-    border-radius: var(--radius-pill);
-    background: var(--color-orange);
-    color: #122033;
-    font-size: var(--text-xs);
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  .pilote-note {
-    font-size: var(--text-sm);
-  }
-  .pilote .btn {
-    margin-top: var(--space-2);
-  }
-
   /* ---------- Differences ---------- */
   .credibilite {
     margin: var(--space-8) 0 0;
@@ -1506,8 +1451,7 @@ const faqSchema = {
     .capacites {
       grid-template-columns: minmax(0, 1fr);
     }
-    .option-dirigeant,
-    .pilote {
+    .option-dirigeant {
       padding: var(--space-6) var(--space-4);
     }
   }

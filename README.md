@@ -97,4 +97,4 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
 ### Prochaines étapes SEO IA
 - Redemander l'indexation de /accompagnement-ia-pme/ et de l'accueil dans la Search Console après mise en ligne.
 - Écrire 3 à 5 articles de blog qui renvoient vers la page (ex. « Charte IA en entreprise : par où commencer », « AI Act article 4 : ce que doit faire une PME », « Cas d'usage IA dans une PME de services »).
-- Après les deux PME pilotes : publier deux études de cas IA avec chiffres et verbatims validés.
+- Après les deux premières missions IA : publier deux études de cas avec chiffres et verbatims validés. (Le bloc « Je cherche deux PME pilotes » a été retiré de la page le 8 octobre 2026 : il donnait l'impression de ne pas maîtriser.)
