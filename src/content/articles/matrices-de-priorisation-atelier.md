@@ -55,7 +55,7 @@ Chaque participant reçoit un capital de points — souvent des gommettes — à
 
 **Comment l'animer.** Deux règles font la différence. D'abord, un temps de plaidoyer avant le vote : une minute par option, portée par quelqu'un qui y croit. Ensuite, le vote simultané — tout le monde pose ses gommettes en même temps — pour limiter l'effet de mimétisme, ce réflexe qui pousse à voter là où les gommettes s'accumulent déjà.
 
-**Ses limites.** Le vote pondéré mesure la popularité, pas la pertinence. Il écrase les signaux faibles : l'option qu'une seule personne défend avec de bonnes raisons disparaît sous la masse. Et il ne produit pas d'engagement en soi : un classement voté n'est pas encore une décision assumée. C'est tout l'enjeu d'un [processus de décision collective](/offres/decider-ensemble/) bien construit : le vote y est une étape, jamais le point final.
+**Ses limites.** Le vote pondéré mesure la popularité, pas la pertinence. Il écrase les signaux faibles : l'option qu'une seule personne défend avec de bonnes raisons disparaît sous la masse. Et il ne produit pas d'engagement en soi : un classement voté n'est pas encore une décision assumée. C'est tout l'enjeu d'un [processus de décision collective](/seminaires-entreprise/) bien construit : le vote y est une étape, jamais le point final.
 
 ## Quelle matrice de priorisation choisir pour votre situation ?
 
@@ -69,4 +69,4 @@ Il n'existe pas de meilleure matrice, seulement des matrices adaptées à un mom
 
 Un dernier conseil, le plus important peut-être : la matrice ne décide pas. Elle organise la conversation qui permet de décider. J'ai vu des ateliers échouer avec un outil impeccable, parce que le groupe remplissait les cases sans se parler. Et j'ai vu des comités trancher des sujets enkystés depuis des mois avec une simple grille à quatre cases, parce que le cadre d'animation autorisait enfin le désaccord. L'outil compte pour un tiers ; la qualité du processus et la posture d'animation font le reste. C'est d'ailleurs ce que je travaille en priorité dans mes [formations à la facilitation](/formations/) : savoir quand poser la matrice, et quand la ranger.
 
-*Vous préparez un comité, une revue de portefeuille ou un séminaire où il faudra vraiment trancher ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez mon accompagnement [Décider ensemble](/offres/decider-ensemble/).*
+*Vous préparez un comité, une revue de portefeuille ou un séminaire où il faudra vraiment trancher ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez mon accompagnement [séminaires et ateliers de décision](/seminaires-entreprise/).*

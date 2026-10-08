@@ -1,27 +1,61 @@
 ---
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import CTABlock from '../../components/CTABlock.astro';
-import ClientLogoStrip from '../../components/ClientLogoStrip.astro';
-import { withBase } from '../../utils/url';
-import heroImg from '../../assets/offres/hero-deleguer-animation-bg.png';
+import Layout from '../layouts/Layout.astro';
+import CTABlock from '../components/CTABlock.astro';
+import ClientLogoStrip from '../components/ClientLogoStrip.astro';
+import { withBase } from '../utils/url';
+import heroImg from '../assets/offres/hero-deleguer-animation-bg.png';
 
 const relatedCaseStudies = (
-  await getCollection('caseStudies', ({ data }) => !data.draft && data.offerHref === '/offres/deleguer-animation/')
+  await getCollection('caseStudies', ({ data }) => !data.draft && data.offerHref === '/seminaires-entreprise/')
 ).sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  serviceType: 'Facilitation complète de séminaires et ateliers',
-  name: "Déléguer l'animation d'un temps collectif",
+  serviceType: "Conception et animation de séminaires d'entreprise",
+  name: "Séminaire d'entreprise conçu et animé par un facilitateur",
   description:
-    "Je conçois et j'anime votre séminaire ou atelier de bout en bout : cadrage, conception, facilitation graphique, synthèse et prochaines étapes.",
+    "Conception et animation de séminaires d'entreprise : séminaire de direction, kick-off de projet, séminaire d'équipe, convention. Cadrage, déroulé sur mesure, facilitation le jour J, synthèse visuelle et suites.",
   provider: { '@type': 'Person', name: 'Nicolas Verdot', url: new URL(withBase('/a-propos/'), Astro.site).toString() },
-  areaServed: { '@type': 'Country', name: 'France' },
-  url: new URL(withBase('/offres/deleguer-animation/'), Astro.site).toString(),
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: 'Alpes-Maritimes' },
+    { '@type': 'City', name: 'Nice' },
+    { '@type': 'City', name: 'Sophia Antipolis' },
+    { '@type': 'City', name: 'Cannes' },
+    { '@type': 'Country', name: 'Monaco' },
+    { '@type': 'Country', name: 'France' },
+  ],
+  url: new URL(withBase('/seminaires-entreprise/'), Astro.site).toString(),
 };
+
+// Les trois situations qui déclenchent un séminaire. Chacune a sa page : le
+// visiteur arrive rarement en cherchant « un séminaire », plus souvent avec
+// un projet à lancer ou un comité de direction à remettre d'accord.
+const situations = [
+  {
+    num: 'Vous lancez un projet',
+    title: 'Séminaire kick-off',
+    text: "Un projet, une feuille de route ou une nouvelle année à lancer. Les équipes doivent comprendre, contribuer et repartir en sachant qui fait quoi.",
+    href: '/seminaire-kick-off/',
+    link: 'Voir le séminaire kick-off',
+  },
+  {
+    num: 'Votre comité de direction',
+    title: 'Séminaire CODIR',
+    text: "Des directeurs compétents, mais chacun dans son périmètre. Deux jours pour trancher les priorités, traiter les désaccords et repartir avec des décisions tenues.",
+    href: '/seminaire-codir/',
+    link: 'Voir le séminaire de direction',
+  },
+  {
+    num: 'Une équipe qui patine',
+    title: "Coaching d'équipe",
+    text: "Les mêmes blocages reviennent malgré les plans d'action. Un séminaire seul ne suffira pas : il faut un dispositif dans la durée.",
+    href: '/offres/coaching-equipe/',
+    link: "Voir le coaching d'équipe",
+  },
+];
 
 const icons: Record<string, string> = {
   compass: '<path d="M4 17c2.5-6 5 6 8 0s4.5-5 8 0"/><circle cx="4" cy="17" r="1" fill="currentColor" stroke="none"/><circle cx="20" cy="17" r="1" fill="currentColor" stroke="none"/>',
@@ -163,13 +197,12 @@ const takeCharge = [
 ---
 
 <Layout
-  title="Déléguer l'animation d'un temps collectif — by Nicolas Verdot"
-  description="Je conçois et j'anime votre séminaire ou atelier de bout en bout : cadrage, conception, facilitation graphique, synthèse et prochaines étapes."
-  path="/offres/deleguer-animation/"
+  title="Animation de séminaire d'entreprise : facilitateur à Nice et en France"
+  description="Séminaire de direction, kick-off de projet, séminaire d'équipe : je conçois et j'anime votre séminaire d'entreprise pour qu'il en sorte des décisions et des suites. Nice, Sophia Antipolis, Monaco, France."
+  path="/seminaires-entreprise/"
   breadcrumbs={[
     { name: 'Accueil', path: '/' },
-    { name: 'Les offres', path: '/offres/' },
-    { name: "Déléguer l'animation", path: '/offres/deleguer-animation/' },
+    { name: "Séminaires d'entreprise", path: '/seminaires-entreprise/' },
   ]}
 >
   <section class="hero-bg" data-reveal>
@@ -177,15 +210,15 @@ const takeCharge = [
     <div class="hero-bg-scrim" aria-hidden="true"></div>
     <div class="hero-bg-inner">
       <div class="hero-bg-copy">
-        <p class="eyebrow">Déléguer l'animation · Facilitation complète</p>
+        <p class="eyebrow">Séminaire d'entreprise · Conception et animation</p>
         <h1>
-          Vous me déléguez la facilitation,
-          <span class="script-accent">je conçois et j'anime</span>
-          <span class="hero-tail">de bout en bout.</span>
+          Votre séminaire d'entreprise,
+          <span class="script-accent">conçu et animé</span>
+          <span class="hero-tail">pour qu'il en sorte des décisions.</span>
         </h1>
-        <p class="page-summary">Intelligence collective, facilitation graphique et expérience du terrain pour transformer un temps collectif en <strong>décisions claires</strong> et en <strong>actions concrètes</strong> — sans que vous ayez à porter l'animation.</p>
+        <p class="page-summary">Vous réunissez vos équipes une journée ou deux. Je conçois le déroulé et j'anime le séminaire de bout en bout, pour que vous repartiez avec des <strong>décisions prises</strong>, des <strong>responsables nommés</strong> et une suite déjà calée — pendant que vous restez dans votre rôle de dirigeant.</p>
         <div class="meta-pills">
-          {['Séminaires', 'Ateliers stratégiques', "Journées d'équipe", 'Conventions'].map((pill) => <span>{pill}</span>)}
+          {['Séminaire de direction', 'Kick-off de projet', "Séminaire d'équipe", 'Convention'].map((pill) => <span>{pill}</span>)}
         </div>
         <div class="hero-cta-row">
           <a href={withBase('/contact/')} class="btn">Parler de votre séminaire →</a>
@@ -217,6 +250,29 @@ const takeCharge = [
   </section>
 
   <ClientLogoStrip />
+
+  <section class="section alt" data-reveal data-section-name="Trois situations">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Par où entrer</p>
+          <h2>Quel séminaire pour quelle situation&nbsp;?</h2>
+        </div>
+        <p>On ne cherche presque jamais «&nbsp;un séminaire&nbsp;». On a un projet à lancer, un comité de direction à remettre d'accord, ou une équipe qui tourne en rond.</p>
+      </div>
+      <div class="cards">
+        {situations.map((s) => (
+          <a class="card situation-card" href={withBase(s.href)}>
+            <span class="num">{s.num}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <span class="card-link">{s.link}</span>
+          </a>
+        ))}
+      </div>
+      <p class="situations-more">Votre séminaire porte sur l'intelligence artificielle&nbsp;? L'<a href={withBase('/accompagnement-ia-pme/')}>atelier de décision IA</a> se tient en comité de direction, avant tout choix d'outil. Vous êtes dans les Alpes-Maritimes&nbsp;? Voyez les <a href={withBase('/seminaires-alpes-maritimes/')}>séminaires à Nice, Cannes et Monaco</a> et la page <a href={withBase('/seminaire-sophia-antipolis/')}>Sophia Antipolis</a>.</p>
+    </div>
+  </section>
 
   <section class="section" data-reveal>
     <div class="container">
@@ -435,6 +491,14 @@ const takeCharge = [
      que les deux utilitaires propres à cette page. */
   .muted {
     color: var(--color-muted);
+  }
+  .situation-card {
+    text-decoration: none;
+    color: inherit;
+  }
+  .situations-more {
+    margin: var(--space-8) 0 0;
+    max-width: 70ch;
   }
   .card p:not(:last-child) {
     margin-bottom: var(--space-3);

@@ -69,7 +69,7 @@ On compare les versions ligne par ligne. Là où tout le monde a écrit la même
 
 Avant de clore, on prend deux ou trois situations récentes qui ont mal tourné et on les rejoue avec la matrice : qu'est-ce qui se serait passé différemment ? Ce test rend l'outil concret et révèle les dernières ambiguïtés.
 
-En tant que facilitateur, mon rôle dans cet atelier n'est pas de remplir la matrice à la place de l'équipe. C'est de tenir le cadre pour que les désaccords sortent, se discutent et se tranchent — plutôt que de rester sous le tapis. Cette clarification des rôles est d'ailleurs l'un des piliers d'une [dynamique d'équipe durable](/offres/dynamique-durable/) : une équipe qui sait qui décide quoi n'use pas son énergie en frictions invisibles.
+En tant que facilitateur, mon rôle dans cet atelier n'est pas de remplir la matrice à la place de l'équipe. C'est de tenir le cadre pour que les désaccords sortent, se discutent et se tranchent — plutôt que de rester sous le tapis. Cette clarification des rôles est d'ailleurs l'un des piliers d'une [dynamique d'équipe durable](/offres/coaching-equipe/) : une équipe qui sait qui décide quoi n'use pas son énergie en frictions invisibles.
 
 ## Les pièges classiques (et comment les éviter)
 
@@ -91,6 +91,6 @@ Le troisième piège : considérer la matrice comme un livrable terminé. Les pr
 
 Pas besoin de refondre toute votre gouvernance. Choisissez un périmètre qui frotte : un projet qui patine, un processus où les décisions traînent. Réunissez les acteurs concernés — pas plus de dix — pendant deux à trois heures. Listez, remplissez individuellement, confrontez, tranchez, testez. Vous sortirez avec une matrice imparfaite mais partagée, ce qui vaut infiniment mieux qu'une matrice parfaite mais ignorée.
 
-Et si les désaccords sont trop chargés pour être tranchés entre vous — c'est fréquent quand la question « qui décide » touche au pouvoir réel —, faire tenir le cadre par un tiers change la donne. C'est le cœur de mon métier : vous trouverez dans [mon approche](/approche/) la manière dont je structure ce type de travail.
+Et si les désaccords sont trop chargés pour être tranchés entre vous — c'est fréquent quand la question « qui décide » touche au pouvoir réel —, faire tenir le cadre par un tiers change la donne. C'est le cœur de mon métier : vous trouverez dans [mon approche](/a-propos/) la manière dont je structure ce type de travail.
 
-*Vous reconnaissez ces réunions où personne ne tranche ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment l'offre [Dynamique durable](/offres/dynamique-durable/) installe cette clarté des rôles dans la durée.*
+*Vous reconnaissez ces réunions où personne ne tranche ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment l'offre [Dynamique durable](/offres/coaching-equipe/) installe cette clarté des rôles dans la durée.*

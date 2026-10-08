@@ -101,4 +101,4 @@ Quel que soit le format choisi, trois garde-fous :
 
 Ce comité de direction du début ? La fois suivante, l'ouverture a été la ligne de positionnement sur une affirmation qui fâchait. Vingt minutes de débat dense ont suivi, celles que le groupe évitait depuis des mois. Personne n'a levé les yeux au ciel. C'est toute la différence entre briser la glace et ouvrir le travail.
 
-*Vous préparez un séminaire ou une série d'ateliers et vous voulez des ouvertures qui servent vraiment le fond ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez [mon approche de la facilitation](/approche/).*
+*Vous préparez un séminaire ou une série d'ateliers et vous voulez des ouvertures qui servent vraiment le fond ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez [mon approche de la facilitation](/a-propos/).*

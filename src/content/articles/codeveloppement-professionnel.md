@@ -86,4 +86,4 @@ Trois écueils reviennent régulièrement, et ils se préviennent tous en amont.
 
 À quoi s'ajoute une exigence de patience. Les directions qui lancent un groupe attendent parfois des résultats mesurables au bout de deux séances. Le codéveloppement professionnel est un investissement à horizon de six mois minimum. Ceux qui tiennent cette durée ne reviennent généralement pas en arrière.
 
-*Vous envisagez de lancer un groupe de codéveloppement dans votre organisation, ou de vous former à son animation ? [Prenez rendez-vous](/contact/) pour en parler, ou explorez ma manière de travailler sur la page [approche](/approche/).*
+*Vous envisagez de lancer un groupe de codéveloppement dans votre organisation, ou de vous former à son animation ? [Prenez rendez-vous](/contact/) pour en parler, ou explorez ma manière de travailler sur la page [approche](/a-propos/).*

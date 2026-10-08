@@ -50,6 +50,6 @@ Parler en dernier n'est pas une règle absolue, et il serait naïf d'en faire un
 
 De même, un dirigeant durablement silencieux, qui ne partage jamais sa pensée même en fin de réunion, finit par être perçu comme absent ou insaisissable — ce qui abîme la [sécurité psychologique](/blog/securite-psychologique/) de l'équipe presque autant qu'une prise de parole trop précoce. L'objectif n'est pas de disparaître, mais de déplacer le moment où l'on pèse de tout son poids : après avoir entendu, plutôt qu'avant.
 
-C'est un des points que je travaille systématiquement lors des [séminaires d'alignement d'équipe](/offres/aligner-equipe/) que j'anime : donner au dirigeant un cadre concret pour tenir ce silence sans se sentir dépossédé de son rôle, et donner à l'équipe la preuve, dans les faits, que sa parole compte réellement.
+C'est un des points que je travaille systématiquement lors des [séminaires d'alignement d'équipe](/seminaires-entreprise/) que j'anime : donner au dirigeant un cadre concret pour tenir ce silence sans se sentir dépossédé de son rôle, et donner à l'équipe la preuve, dans les faits, que sa parole compte réellement.
 
-*Vous reconnaissez ce réflexe de parler en premier dans vos propres réunions ? [Prenez rendez-vous](/contact/) pour en discuter, ou découvrez comment un [séminaire d'équipe](/offres/aligner-equipe/) peut installer durablement cette habitude d'écoute.*
+*Vous reconnaissez ce réflexe de parler en premier dans vos propres réunions ? [Prenez rendez-vous](/contact/) pour en discuter, ou découvrez comment un [séminaire d'équipe](/seminaires-entreprise/) peut installer durablement cette habitude d'écoute.*

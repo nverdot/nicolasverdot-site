@@ -1,0 +1,165 @@
+---
+import PageSeminaire from '../components/PageSeminaire.astro';
+import heroImg from '../assets/offres/hero-accompagnements.png';
+
+// Les situations ci-dessous sont des cas de figure fréquents, pas des
+// citations de clients : aucune n'est présentée comme un témoignage.
+---
+
+<PageSeminaire
+  seo={{
+    title: 'Séminaire kick-off : lancer un projet et embarquer vos équipes',
+    description:
+      "Kick-off de projet, lancement d'année, nouvelle feuille de route : un séminaire de lancement conçu et animé pour que vos équipes comprennent, contribuent et sachent quoi faire dès le lundi. Nice, Sophia Antipolis, France.",
+    path: '/seminaire-kick-off/',
+    fil: 'Séminaire kick-off',
+    serviceType: 'Conception et animation de séminaire kick-off',
+    serviceName: 'Séminaire kick-off et lancement de projet',
+  }}
+  zones={['Nice', 'Sophia Antipolis', 'Cannes', 'Monaco', 'Alpes-Maritimes', 'France']}
+  hero={{
+    eyebrow: 'Séminaire kick-off · Lancement de projet',
+    title: 'Un projet lancé,',
+    titleAccent: 'des équipes qui le portent.',
+    titleTail: 'Pas seulement des équipes informées.',
+    summary:
+      "Annoncer un projet ne suffit pas à le mettre en route. Je conçois et j'anime votre <strong>séminaire kick-off</strong> pour que chacun comprenne le cap, y trouve sa place et reparte avec <strong>ses premières actions</strong> — que le lancement réunisse quinze personnes ou plusieurs équipes.",
+    pills: ['Kick-off de projet', "Lancement d'année", 'Nouvelle feuille de route', 'Projet transverse'],
+    image: heroImg,
+    imageAlt: "Plusieurs groupes travaillent en parallèle au sommet d'une montagne, autour d'un chemin qui bifurque.",
+  }}
+  signaux={{
+    eyebrow: 'Avant le lancement',
+    title: 'Le risque n’est pas le programme. C’est le lundi suivant.',
+    intro:
+      "Un kick-off se juge une semaine plus tard : qui a commencé quelque chose, et qui attend encore qu'on lui dise quoi faire.",
+    items: [
+      {
+        title: 'Le projet est annoncé, pas encore compris',
+        text: "Tout le monde a vu la présentation. Peu de gens sauraient dire ce qui change pour eux, ni ce qu'on attend d'eux en premier.",
+      },
+      {
+        title: 'Plusieurs équipes, plusieurs priorités',
+        text: "Métiers, technique, sites, prestataires : le projet les oblige à travailler ensemble alors que leurs objectifs ne sont pas les mêmes.",
+      },
+      {
+        title: 'Le souvenir du dernier kick-off',
+        text: "Une matinée de diapositives, un atelier avec des notes autocollantes, un repas. Puis plus de nouvelles. Vos équipes s'en souviennent.",
+      },
+      {
+        title: 'Une partie est déjà décidée',
+        text: "Vous voulez de vraies contributions, pas une consultation de façade. Encore faut-il dire clairement ce qui est ouvert et ce qui ne l'est pas.",
+      },
+      {
+        title: 'Le calendrier est serré',
+        text: "Réunir tout le monde une journée coûte cher. Elle doit faire gagner du temps au projet, pas en prendre.",
+      },
+      {
+        title: 'Vous portez le message',
+        text: "Difficile d'incarner le projet, d'écouter les objections et de tenir le déroulé en même temps. Il faut choisir un rôle.",
+      },
+    ],
+    chute:
+      "<strong>Un kick-off n'est pas une réunion d'information en plus grand.</strong><br /><span class=\"accent\">C'est le moment où un projet passe de celui qui l'a décidé à ceux qui vont le faire.</span>",
+  }}
+  resultats={{
+    eyebrow: 'À la sortie du séminaire',
+    title: 'Ce que vos équipes emportent avec elles',
+    intro:
+      "Le résultat attendu est fixé avec vous avant la conception. Voici ce qu'un séminaire de lancement produit le plus souvent.",
+    items: [
+      { title: 'Un cap dit en clair', text: "Pourquoi ce projet, pourquoi maintenant, ce qui est décidé et ce qui reste à construire." },
+      { title: 'Des rôles et des interfaces', text: "Qui fait quoi, qui décide quoi, et comment les équipes se passent le relais." },
+      { title: 'Les objections sorties en salle', text: "Les risques et les doutes sont dits devant tout le monde, plutôt qu'à la machine à café." },
+      { title: 'Les premières actions', text: "Chacune avec un responsable et une date. Pas une liste d'intentions." },
+      { title: 'Une trace visuelle', text: "Une synthèse de la journée que l'on peut montrer à ceux qui n'étaient pas là." },
+      { title: 'Un point de suivi', text: "Quelques semaines après, on regarde ce qui a avancé et ce qui a besoin d'un coup de main." },
+    ],
+    citation:
+      "Si une décision est déjà prise, dites-le en ouvrant la journée. Les équipes acceptent un cadre. Elles n'acceptent pas qu'on leur demande leur avis pour rien.",
+  }}
+  etapes={{
+    eyebrow: 'Avant, pendant, après',
+    title: 'Un lancement se prépare, se tient, puis se suit',
+    intro: "La journée elle-même n'est que la partie visible du travail.",
+    items: [
+      {
+        title: 'Avant : cadrer avec le sponsor',
+        text: "Échanges avec vous et les personnes clés : ce qui doit être différent à la fin, ce qui est négociable, les tensions connues, l'expérience que les équipes ont déjà des séminaires. Puis conception d'un déroulé sur mesure.",
+      },
+      {
+        title: 'Pendant : comprendre, contribuer, s’engager',
+        text: "Le cadre est posé dès l'ouverture. Les équipes travaillent sur de vraies questions, confrontent leurs points de vue, puis convergent vers des décisions et des engagements. Vous restez dans votre rôle de dirigeant ou de sponsor.",
+      },
+      {
+        title: 'Après : tenir les engagements',
+        text: "Synthèse visuelle, liste des décisions avec responsables et échéances, débrief avec vous, puis un point d'étape pour vérifier ce qui s'est réellement passé.",
+      },
+    ],
+  }}
+  formats={{
+    eyebrow: 'Selon ce que vous lancez',
+    title: 'Quatre lancements, quatre séminaires différents',
+    intro: "Le mot « kick-off » recouvre des situations qui n'appellent pas le même déroulé.",
+    items: [
+      {
+        title: 'Kick-off de projet',
+        text: "Un projet transverse démarre. L'enjeu : une compréhension commune, des rôles clairs et un plan pour les premières semaines.",
+      },
+      {
+        title: "Kick-off annuel ou séminaire de rentrée",
+        text: "Un nouveau cycle commence. L'enjeu : partager les priorités de l'année et les traduire équipe par équipe.",
+      },
+      {
+        title: 'Lancement d’une transformation',
+        text: "Une réorganisation, un nouvel outil, l'arrivée de l'IA. L'enjeu : dire ce qui change, et écouter ce que cela provoque.",
+        href: '/accompagnement-ia-pme/',
+        link: "Voir l'accompagnement IA",
+      },
+      {
+        title: 'Prise de fonction d’un dirigeant',
+        text: "Une nouvelle direction, une nouvelle présidence. L'enjeu : faire connaissance, partager une ambition et construire le cap ensemble.",
+        href: '/cas-clients/jci-monaco/',
+        link: 'Voir le cas JCI Monaco',
+      },
+    ],
+  }}
+  cas={['jci-monaco', 'lamarec']}
+  casIntro="Deux séminaires qui ouvraient un nouveau cycle : une prise de présidence à Monaco, et des acteurs d'un territoire à faire coopérer."
+  articles={['organiser-seminaire-equipe', 'brief-parfait-facilitateur', 'cout-seminaire-rate']}
+  faq={[
+    {
+      q: 'Combien de temps dure un séminaire kick-off ?',
+      a: "Le plus souvent une journée. La durée se décide au cadrage, selon le nombre d'équipes concernées et ce qui doit être produit à la fin : un lancement d'année pour un comité élargi ne demande pas le même temps qu'un projet qui réunit plusieurs métiers pour la première fois.",
+    },
+    {
+      q: 'Combien de participants peut-on réunir ?',
+      a: "Je facilite seul jusqu'à une quinzaine de personnes, pour que chacun soit vraiment entendu. Au-delà, je m'appuie sur mon réseau de facilitateurs partenaires, y compris pour des conventions et de grands groupes.",
+    },
+    {
+      q: 'Le projet est déjà décidé. À quoi bon faire participer les équipes ?',
+      a: "À leur faire construire ce qui ne l'est pas encore : la mise en œuvre, l'organisation, les risques, les premières étapes. La condition est de dire dès l'ouverture ce qui est fermé et ce qui est ouvert. Faire semblant de consulter crée plus de défiance qu'une annonce franche.",
+    },
+    {
+      q: 'Quelle différence avec un team building ?',
+      a: "Un team building crée un bon moment partagé. Un séminaire kick-off produit des décisions, des rôles et des engagements sur un projet précis. La cohésion en est souvent un effet, mais ce n'est pas l'objet de la journée.",
+    },
+    {
+      q: "Combien de temps à l'avance faut-il s'y prendre ?",
+      a: "Comptez quatre à six semaines pour un séminaire d'une journée, davantage si plusieurs équipes ou plusieurs sites sont concernés. Si votre lancement est dans moins de quatre semaines, parlons-en quand même : selon ce qui est déjà préparé, on peut parfois aller plus vite.",
+    },
+    {
+      q: 'Combien coûte un séminaire kick-off animé par un facilitateur ?',
+      a: "Le tarif dépend du nombre de participants, du temps de préparation, des entretiens en amont, des supports, du nombre de facilitateurs et de la restitution attendue. Le lieu, les repas et la logistique restent à votre charge. Un échange de cadrage suffit pour vous donner un chiffre.",
+    },
+    {
+      q: 'Pouvez-vous animer le kick-off en anglais ?',
+      a: "Oui, en français ou en anglais, ce qui est fréquent pour les équipes internationales de Sophia Antipolis et de Monaco.",
+    },
+  ]}
+  cta={{
+    eyebrow: 'Un lancement en préparation ?',
+    title: "Qu'est-ce qui doit être différent à la sortie de cette journée ?",
+    subtitle: "C'est la première question que je vous poserai. Trente minutes pour cadrer l'intention, les participants et les contraintes — le programme vient après.",
+  }}
+/>

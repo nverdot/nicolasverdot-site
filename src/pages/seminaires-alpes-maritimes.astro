@@ -5,20 +5,62 @@ import CTABlock from '../components/CTABlock.astro';
 import { withBase } from '../utils/url';
 import heroImg from '../assets/hero-contact.png';
 
+// Un vrai paragraphe par bassin plutôt qu'une page par ville : des pages
+// quasi identiques se concurrencent entre elles. Seule Sophia Antipolis a sa
+// propre page, parce qu'elle a une matière distincte.
 const villes = [
-  { name: 'Nice', text: "Sièges régionaux, collectivités, scale-ups : des séminaires qui produisent des décisions, pas seulement des souvenirs." },
-  { name: 'Sophia Antipolis', text: "Tech et innovation : ateliers d'intelligence collective pour équipes produit, R&D et directions en croissance." },
-  { name: 'Cannes', text: "Conventions, événements d'entreprise et comités de direction, avec ou sans capture graphique en direct." },
-  { name: 'Grasse', text: "Parfumerie, artisanat de luxe et PME industrielles familiales : clarifier une transmission, une réorganisation ou une nouvelle stratégie sans y laisser des mois." },
-  { name: 'Monaco', text: "Comités exécutifs et équipes internationales : un cadre exigeant, une facilitation à la hauteur." },
-  { name: 'Antibes & Mandelieu', text: "PME et ETI locales : redonner de l'élan à une équipe sans traverser la France pour le faire." },
+  {
+    name: 'Séminaire à Nice',
+    zone: 'Nice · Saint-Laurent-du-Var · Cagnes-sur-Mer',
+    text: "Sièges régionaux, collectivités, entreprises de l'Arénas et de la plaine du Var : séminaires de direction, lancements de projet et séminaires d'équipe, dans vos locaux ou dans un lieu qui sort du quotidien. Je suis basé à Nice : la préparation se fait en présentiel.",
+  },
+  {
+    name: 'Séminaire à Sophia Antipolis',
+    zone: 'Valbonne · Biot · Mougins',
+    text: "Équipes techniques et internationales, projets transverses, comités de site : des séminaires animés en français ou en anglais, pour des participants qui attendent une vraie question et un vrai résultat.",
+    href: '/seminaire-sophia-antipolis/',
+    link: 'Voir la page Sophia Antipolis',
+  },
+  {
+    name: 'Séminaire à Antibes et Villeneuve-Loubet',
+    zone: 'Antibes · Juan-les-Pins · Villeneuve-Loubet · Vallauris',
+    text: "Entre Nice et Sophia Antipolis, des PME et des entreprises de taille intermédiaire qui veulent redonner de l'élan à une équipe ou lancer une nouvelle année sans traverser la France pour le faire.",
+  },
+  {
+    name: 'Séminaire à Carros et dans la plaine du Var',
+    zone: 'Carros · Le Broc · Saint-Jeannet · Gattières',
+    text: "Entreprises industrielles et sites de production : des séminaires qui réunissent encadrement, production et fonctions support autour d'un projet, d'une réorganisation ou des priorités de l'année, avec des formats adaptés aux contraintes d'un site.",
+  },
+  {
+    name: 'Séminaire à Cannes et Mandelieu',
+    zone: 'Cannes · Le Cannet · Mandelieu-la-Napoule',
+    text: "Conventions, événements d'entreprise et comités de direction, avec ou sans capture graphique en direct pour garder la mémoire de l'événement et la faire circuler ensuite.",
+  },
+  {
+    name: 'Séminaire à Grasse',
+    zone: 'Grasse · Mouans-Sartoux · Pays de Grasse',
+    text: "Parfumerie, artisanat de luxe et PME industrielles familiales : clarifier une transmission, une réorganisation ou une nouvelle stratégie sans y laisser des mois.",
+  },
+  {
+    name: 'Séminaire à Monaco',
+    zone: 'Monaco · Menton · Beausoleil',
+    text: "Comités exécutifs, associations et équipes internationales : un cadre exigeant, une facilitation à la hauteur, en français ou en anglais.",
+    href: '/cas-clients/jci-monaco/',
+    link: 'Voir le séminaire JCI Monaco',
+  },
+  {
+    name: 'Séminaire en Provence-Alpes-Côte d’Azur',
+    zone: 'Var · Bouches-du-Rhône · partout en France',
+    text: "Toulon, Aix-en-Provence, Marseille et le reste de la région : j'interviens aussi pour des séminaires résidentiels, et partout en France pour des séminaires et des formations.",
+  },
 ];
 
 const formats = [
-  { i: '1', title: "Séminaire d'équipe ou de direction", text: "Une journée ou deux pour clarifier une stratégie, trancher des priorités et repartir avec un plan d'action réel." },
-  { i: '2', title: "Atelier d'intelligence collective", text: "Un format court et structuré pour traiter un sujet précis : décision, organisation, tensions, projet." },
-  { i: '3', title: 'Capture graphique en direct', text: "Une fresque visuelle réalisée pendant votre événement, qui en garde la mémoire et prolonge son impact." },
-  { i: '4', title: 'Accompagnement IA pour PME', text: "Choisir les bons usages de l'IA, les tester sur le travail réel et les faire adopter par les équipes, de Nice à Sophia Antipolis." },
+  { i: '1', title: 'Séminaire de direction (CODIR)', text: "Deux jours pour trancher les priorités, traiter les désaccords et repartir avec des décisions tenues.", href: '/seminaire-codir/' },
+  { i: '2', title: 'Séminaire kick-off', text: "Lancer un projet, une feuille de route ou une nouvelle année avec des équipes qui savent quoi faire ensuite.", href: '/seminaire-kick-off/' },
+  { i: '3', title: "Séminaire d'équipe et atelier", text: "Un format d'une journée ou plus court pour traiter un sujet précis : décision, organisation, tensions, projet.", href: '/seminaires-entreprise/' },
+  { i: '4', title: 'Capture graphique en direct', text: "Une fresque visuelle réalisée pendant votre événement, qui en garde la mémoire et prolonge son impact.", href: '/offres/capture-graphique/' },
+  { i: '5', title: 'Stratégie et adoption de l’IA', text: "Décider où l'IA crée de la valeur, tester sur le travail réel et faire adopter par les équipes.", href: '/accompagnement-ia-pme/' },
 ];
 
 const missions = [
@@ -41,7 +83,15 @@ const missions = [
 const faq = [
   {
     q: 'Intervenez-vous uniquement dans les Alpes-Maritimes ?',
-    a: "Non. Je suis basé dans les Alpes-Maritimes, ce qui rend mes interventions à Nice, Cannes, Sophia Antipolis, Grasse, Antibes, Mandelieu ou Monaco simples et sans frais de déplacement importants — mais j'interviens partout en France pour des séminaires et des formations.",
+    a: "Non. Je suis basé à Nice, ce qui rend mes interventions à Nice, Cannes, Sophia Antipolis, Antibes, Villeneuve-Loubet, Carros, Grasse, Mandelieu ou Monaco simples et sans frais de déplacement importants — mais j'interviens partout en Provence-Alpes-Côte d'Azur et en France pour des séminaires et des formations.",
+  },
+  {
+    q: "Louez-vous des salles ou organisez-vous la logistique du séminaire ?",
+    a: "Non. Je conçois et j'anime le séminaire : le cadrage, le déroulé, la facilitation le jour J et les suites. Le lieu, l'hébergement et la restauration restent à votre charge ou à celle de votre agence. Je vous aide en revanche à choisir un lieu adapté au travail prévu.",
+  },
+  {
+    q: "Quelle différence entre un facilitateur et un animateur de séminaire ?",
+    a: "Un animateur fait vivre une journée. Un facilitateur conçoit le chemin qui mène un groupe d'une question à une décision, puis tient ce cadre le jour J. Le premier se juge à l'ambiance, le second à ce qui a changé un mois après.",
   },
   {
     q: "Quel est le délai pour organiser un séminaire facilité ?",
@@ -73,16 +123,17 @@ const faqSchema = {
 ---
 
 <Layout
-  title="Séminaires & facilitation dans les Alpes-Maritimes — Nice, Cannes, Monaco"
-  description="Facilitateur professionnel dans les Alpes-Maritimes : séminaires, ateliers d'intelligence collective et capture graphique à Nice, Cannes, Grasse, Antibes et Monaco."
+  title="Séminaire d'entreprise à Nice, Cannes, Monaco : facilitateur dans le 06"
+  description="Séminaire de direction, kick-off ou séminaire d'équipe dans les Alpes-Maritimes : un facilitateur basé à Nice conçoit et anime votre séminaire à Nice, Sophia Antipolis, Antibes, Cannes, Carros, Grasse et Monaco."
   path="/seminaires-alpes-maritimes/"
 >
   <PageHero
     eyebrow="Alpes-Maritimes & Monaco"
-    title="Un facilitateur professionnel"
-    titleAccent="basé dans le 06."
-    summary="Animation de séminaires, ateliers d'intelligence collective, facilitation graphique : j'interviens là où vos équipes travaillent — <strong>Nice, Cannes, Sophia Antipolis, Grasse, Antibes, Mandelieu, Monaco</strong> — et partout en France."
-    pills={['Séminaires', 'Ateliers', 'Capture graphique', 'Basé dans le 06']}
+    title="Séminaire d'entreprise à Nice et dans les Alpes-Maritimes :"
+    titleAccent="un facilitateur"
+    titleTail="basé dans le 06."
+    summary="Séminaire de direction, kick-off de projet, séminaire d'équipe : je conçois et j'anime votre séminaire là où vos équipes travaillent — <strong>Nice, Sophia Antipolis, Antibes, Cannes, Carros, Grasse, Monaco</strong> — et partout en France."
+    pills={['Séminaire de direction', 'Kick-off', "Séminaire d'équipe", 'Basé à Nice']}
     image={heroImg}
     imageAlt="Un facilitateur accueille une personne et lui indique un chemin, devant un panneau aux flèches vierges."
     flip
@@ -97,7 +148,7 @@ const faqSchema = {
         <p class="hero-copy">Un séminaire réussi se joue avant le jour J : comprendre l'intention, rencontrer le commanditaire, sentir le contexte. Être basé dans les Alpes-Maritimes me permet de préparer vos temps forts en présentiel, de repérer les lieux et d'intervenir sans les coûts et les aléas d'un intervenant qui traverse la France.</p>
         <div class="checks">
           {formats.map((f) => (
-            <div class="check"><i>{f.i}</i><div><strong>{f.title}</strong><br /><span class="muted">{f.text}</span></div></div>
+            <div class="check"><i>{f.i}</i><div><a href={withBase(f.href)}><strong>{f.title}</strong></a><br /><span class="muted">{f.text}</span></div></div>
           ))}
         </div>
       </div>
@@ -113,17 +164,17 @@ const faqSchema = {
       <div class="section-head">
         <div>
           <p class="eyebrow">Zones d'intervention</p>
-          <h2>Nice, Cannes, Sophia Antipolis, Grasse, Monaco et au-delà</h2>
+          <h2>De Nice à Monaco, de Carros à Cannes : où j'anime vos séminaires</h2>
         </div>
         <p>Chaque bassin a ses contextes. Les enjeux, eux, se ressemblent : clarifier, décider, faire avancer.</p>
       </div>
       <div class="cards">
         {villes.map((v) => (
           <article class="card">
-            <div class="num">Alpes-Maritimes · 06</div>
+            <div class="num">{v.zone}</div>
             <h3>{v.name}</h3>
             <p>{v.text}</p>
-            <a class="card-link" href={withBase('/contact/')}>Parler de votre projet</a>
+            <a class="card-link" href={withBase(v.href ?? '/contact/')}>{v.link ?? 'Parler de votre séminaire'}</a>
           </article>
         ))}
       </div>
@@ -158,7 +209,7 @@ const faqSchema = {
       <p class="eyebrow">Ce que vous obtenez</p>
       <h2>Un séminaire qui ne retombe pas le lundi suivant</h2>
       <p>Beaucoup de séminaires produisent de bons moments et peu de suites. Mon travail consiste à concevoir la conversation qui permettra à votre collectif de produire un résultat exploitable : des décisions assumées, des responsabilités claires, un plan d'action réaliste — et, si vous choisissez la <a href={withBase('/offres/capture-graphique/')}>capture graphique</a>, une trace visuelle que vos équipes gardent et réutilisent.</p>
-      <p>Deux façons de travailler ensemble selon votre situation : vous me <a href={withBase('/offres/deleguer-animation/')}>déléguez l'animation</a> du séminaire, ou je vous accompagne en <a href={withBase('/offres/mentoring/')}>mentoring</a> pour que vous l'animiez vous-même. Et pour un enjeu d'équipe qui se joue dans la durée, le <a href={withBase('/offres/coaching-equipe/')}>coaching d'équipe</a>. Pour monter en compétence en interne, des <a href={withBase('/formations/')}>formations à l'intelligence collective et à la facilitation</a>.</p>
+      <p>Selon votre situation : un <a href={withBase('/seminaire-kick-off/')}>séminaire kick-off</a> pour lancer un projet, un <a href={withBase('/seminaire-codir/')}>séminaire de direction</a> pour votre comité, ou un <a href={withBase('/seminaires-entreprise/')}>séminaire d'entreprise</a> conçu sur mesure. Vous pouvez me confier toute l'animation, ou je vous accompagne en <a href={withBase('/offres/mentoring/')}>mentoring</a> pour que vous l'animiez vous-même. Et pour un enjeu d'équipe qui se joue dans la durée, le <a href={withBase('/offres/coaching-equipe/')}>coaching d'équipe</a>. Pour monter en compétence en interne, des <a href={withBase('/formations/')}>formations à l'intelligence collective et à la facilitation</a>.</p>
       <p>Et si la question du moment est «&nbsp;il faut qu'on fasse de l'IA, mais par où commencer&nbsp;?&nbsp;», l'<a href={withBase('/accompagnement-ia-pme/')}>accompagnement IA pour les PME</a> vous aide à décider où agir, à tester sur votre travail réel et à faire adopter — à Nice, Sophia Antipolis, Cannes ou Monaco.</p>
     </div>
   </section>

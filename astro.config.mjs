@@ -46,9 +46,13 @@ export default defineConfig({
     // ensemble/Aligner l'équipe deviennent des thématiques traitées via
     // Déléguer l'animation ; Séminaires et ateliers est scindé en deux
     // pages ; Dynamique durable devient Coaching d'équipe.
-    '/offres/decider-ensemble': '/offres/deleguer-animation/',
-    '/offres/aligner-equipe': '/offres/deleguer-animation/',
-    '/offres/seminaires-ateliers': '/offres/deleguer-animation/',
+    '/offres/decider-ensemble': '/seminaires-entreprise/',
+    '/offres/aligner-equipe': '/seminaires-entreprise/',
+    '/offres/seminaires-ateliers': '/seminaires-entreprise/',
+    // « Déléguer l'animation » devient la page d'entrée « Séminaires
+    // d'entreprise » (2026-10) : personne ne cherchait l'ancien intitulé.
+    // Le vrai 301 est dans public/.htaccess ; ceci est le filet de secours.
+    '/offres/deleguer-animation': '/seminaires-entreprise/',
     '/offres/dynamique-durable': '/offres/coaching-equipe/',
     // Fusion des pages "Qui suis-je" et "Approche" en une seule (2026-08).
     '/approche': '/a-propos/',

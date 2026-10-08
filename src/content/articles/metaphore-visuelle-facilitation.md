@@ -58,4 +58,4 @@ La métaphore datée ou clivante : certaines images vieillissent mal ou excluent
 
 Utilisée avec justesse, une métaphore visuelle n'est pas un gadget de facilitateur. C'est un raccourci vers une conversation que le groupe n'arrivait pas à avoir autrement — et c'est souvent la conversation qui compte le plus.
 
-*Vous sentez qu'un sujet sensible tourne en rond dans votre équipe sans jamais se dire vraiment ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment je conçois mes accompagnements sur la page [approche](/approche/).*
+*Vous sentez qu'un sujet sensible tourne en rond dans votre équipe sans jamais se dire vraiment ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment je conçois mes accompagnements sur la page [approche](/a-propos/).*

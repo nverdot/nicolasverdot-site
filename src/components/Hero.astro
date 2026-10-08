@@ -39,34 +39,34 @@ const mobileFallback = await getImage({ src: heroBgMobile, width: 750, format: '
 
   <div class="hero-inner">
     <div class="hero-copy">
-      {/* Octobre 2026 : l'accueil s'ouvre sur l'IA, vue depuis le fauteuil du
-          dirigeant. Les trois verbes du site — converger, décider, agir —
-          restent, mais dans le lead : ils disent comment je travaille, plus
-          ce que je vends. */}
-      <p class="hero-kicker">Stratégie et adoption de l'IA · Nice · Sophia Antipolis</p>
+      {/* Octobre 2026 : une seule promesse pour les deux offres. Qu'il
+          s'agisse d'un séminaire ou de l'IA, le dirigeant achète la même
+          chose : une décision prise à plusieurs, puis portée par ceux qui
+          doivent la faire vivre. Les deux boutons sont les deux portes. */}
+      <p class="hero-kicker">Séminaires de direction · Kick-off · Stratégie IA — Nice · Sophia Antipolis · Monaco</p>
 
       <h1 id="hero-title">
-        Passez de «&nbsp;il faut qu'on fasse de l'IA&nbsp;»
-        <span class="script-accent">à des choix clairs.</span>
-        <span class="hero-tail">Et à un premier passage à l'action.</span>
+        Une direction qui tranche.
+        <span class="script-accent">Des équipes qui s'en emparent.</span>
+        <span class="hero-tail">Sur un projet, une stratégie ou l'IA.</span>
       </h1>
 
       <p class="hero-lead">
-        J'aide les dirigeants et les comités de direction à décider <strong>où l'IA crée vraiment de la
-        valeur</strong>, quel problème traiter en premier, et comment avancer avec les métiers et la DSI.
-        Je ne vends pas d'outil&nbsp;: je fais <strong>converger</strong>, <strong>décider</strong>,
-        <strong>agir</strong>.
+        J'aide les dirigeants et leurs comités de direction à <strong>décider ce qui compte</strong>, puis à
+        <strong>embarquer les équipes</strong> qui devront le faire vivre. Deux façons de commencer&nbsp;: un
+        <strong>séminaire</strong> conçu et animé pour qu'il en sorte des décisions, ou un accompagnement pour
+        savoir <strong>où l'IA a vraiment sa place</strong> chez vous.
       </p>
 
       <div class="hero-actions">
-        <a href={withBase('/accompagnement-ia-pme/')} class="btn">Voir comment commencer →</a>
-        <a href={SITE.bookingUrl} class="btn-outline" target="_blank" rel="noopener">Parler de votre situation</a>
+        <a href={withBase('/seminaires-entreprise/')} class="btn">Préparer un séminaire →</a>
+        <a href={withBase('/accompagnement-ia-pme/')} class="btn-outline">Décider où mettre l'IA</a>
       </div>
 
       {/* Le diagnostic reste accessible depuis le hero, en second rideau : le
           clic l'ouvre toujours sur place (voir CoutInaction, prop « modal »). */}
       <p class="hero-tool-note">
-        Le sujet n'est pas l'IA, mais une décision qui n'arrive pas&nbsp;?
+        Une décision qui n'arrive pas&nbsp;?
         <a href={withBase('/outils/cout-de-linaction/')}>Pourquoi ça ne se décide pas chez vous</a>&nbsp;:
         douze questions, deux minutes, et vous repartez avec <strong>la cause</strong> du blocage.
       </p>

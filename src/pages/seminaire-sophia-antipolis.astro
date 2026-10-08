@@ -1,0 +1,167 @@
+---
+import PageSeminaire from '../components/PageSeminaire.astro';
+import heroImg from '../assets/hero-seminaires-alpes-maritimes.png';
+
+// Seule ville des Alpes-Maritimes à avoir sa propre page : c'est la seule
+// pour laquelle il y a une matière vraiment distincte (équipes techniques et
+// internationales, mission CEC sur place, antenne Sud de Goood). Les autres
+// bassins vivent sur /seminaires-alpes-maritimes/, pour ne pas multiplier
+// des pages quasi identiques.
+---
+
+<PageSeminaire
+  seo={{
+    title: "Séminaire d'entreprise à Sophia Antipolis : facilitateur local",
+    description:
+      "Séminaire d'équipe, kick-off de projet ou séminaire de direction à Sophia Antipolis : un facilitateur basé à Nice conçoit et anime votre séminaire, en français ou en anglais. Valbonne, Biot, Antibes, Mougins.",
+    path: '/seminaire-sophia-antipolis/',
+    fil: 'Sophia Antipolis',
+    serviceType: "Conception et animation de séminaires d'entreprise",
+    serviceName: "Séminaire d'entreprise à Sophia Antipolis",
+  }}
+  zones={['Sophia Antipolis', 'Valbonne', 'Biot', 'Antibes', 'Mougins', 'Vallauris', 'Villeneuve-Loubet']}
+  hero={{
+    eyebrow: 'Sophia Antipolis · Valbonne · Biot · Antibes',
+    title: 'Séminaire d’entreprise à Sophia Antipolis :',
+    titleAccent: 'un facilitateur sur place,',
+    titleTail: 'en français ou en anglais.',
+    summary:
+      "Lancement de projet, séminaire d'équipe ou comité de direction de site : je conçois et j'anime votre séminaire à <strong>Sophia Antipolis</strong> pour qu'il en sorte des décisions et des suites. Basé à Nice, je prépare avec vous sur place, <strong>sans frais de déplacement</strong> à prévoir.",
+    pills: ['Kick-off de projet', 'Séminaire de direction', "Séminaire d'équipe", 'Français ou anglais'],
+    image: heroImg,
+    imageAlt: 'Un facilitateur face à un groupe en plein air, sur fond de collines et de mer.',
+  }}
+  signaux={{
+    eyebrow: 'Ce qui revient souvent sur la technopole',
+    title: 'Des équipes brillantes, qui ne tirent pas toujours dans le même sens',
+    intro: "Les entreprises de Sophia Antipolis ont rarement un problème de compétences. Elles ont des problèmes de coordination.",
+    items: [
+      {
+        title: 'Un projet à lancer entre plusieurs équipes',
+        text: "Produit, recherche et développement, commerce, support : chacun a ses priorités, et le projet les traverse tous.",
+      },
+      {
+        title: 'Une équipe internationale',
+        text: "Plusieurs nationalités, parfois plusieurs sites. La réunion se tient en anglais, et tout le monde n'y prend pas la parole de la même façon.",
+      },
+      {
+        title: 'Un site qui a grandi vite',
+        text: "Les habitudes de la petite équipe ne tiennent plus. Il faut redire qui décide quoi et comment on travaille ensemble.",
+      },
+      {
+        title: 'Une direction de site entre deux feux',
+        text: "Les orientations viennent du siège, la réalité vient du terrain. Le comité local doit se mettre d'accord sur ce qu'il porte.",
+      },
+      {
+        title: 'Des experts qui se méfient des ateliers',
+        text: "Des ingénieurs qui ont déjà vécu des séminaires sans suite ne se laissent pas embarquer par un jeu. Il leur faut une vraie question et un vrai résultat.",
+      },
+      {
+        title: 'L’IA à mettre à l’ordre du jour',
+        text: "Tout le monde s'en sert déjà un peu. La direction doit décider où cela vaut la peine d'investir, et dans quel ordre.",
+      },
+    ],
+    chute:
+      "<strong>Vous n'avez pas besoin d'un animateur qui vient de loin avec un déroulé tout fait.</strong><br /><span class=\"accent\">Vous avez besoin de quelqu'un qui prépare avec vous, sur place, et qui connaît le monde des équipes techniques.</span>",
+  }}
+  resultats={{
+    eyebrow: 'Pourquoi un facilitateur local',
+    title: 'Ce que la proximité change vraiment',
+    intro:
+      "J'ai été développeur, puis coach agile auprès d'équipes techniques, avant de contribuer à la création d'une antenne de conseil à Sophia Antipolis. Je connais ce terrain.",
+    items: [
+      { title: 'Une préparation en présentiel', text: "Je rencontre le commanditaire et les personnes clés chez vous, pas seulement en visioconférence." },
+      { title: 'Le lieu repéré à l’avance', text: "Vos locaux, une salle sur la technopole ou un lieu à Valbonne, Biot ou Antibes : je sais où le groupe va travailler." },
+      { title: 'Le langage des équipes techniques', text: "Projets, produit, agilité, priorisation : je n'ai pas besoin qu'on me traduise votre quotidien." },
+      { title: 'Français ou anglais', text: "Le séminaire s'anime dans la langue de travail de votre équipe." },
+      { title: 'Pas de frais de déplacement importants', text: "Ni billets, ni nuits d'hôtel, ni aléas d'un intervenant qui traverse la France." },
+      { title: 'Un suivi facile', text: "Revenir un mois après pour un point d'étape ne demande pas d'organiser un voyage." },
+    ],
+    citation:
+      "Un séminaire se joue avant le jour J : comprendre l'intention, rencontrer les personnes, sentir le contexte. Être à côté change la qualité de cette préparation.",
+  }}
+  etapes={{
+    eyebrow: 'Avant, pendant, après',
+    title: 'Comment se déroule un séminaire à Sophia Antipolis',
+    intro: "Trois temps, quelle que soit la taille du groupe.",
+    items: [
+      {
+        title: 'Avant : cadrer chez vous',
+        text: "Un premier échange, puis une préparation avec le commanditaire : ce qui doit être différent à la fin, qui doit être là, ce qui est déjà décidé. Je conçois ensuite un déroulé sur mesure.",
+      },
+      {
+        title: 'Pendant : faire travailler le groupe',
+        text: "Le cadre est posé dès l'ouverture. Les participants travaillent sur de vraies questions, confrontent leurs points de vue et convergent vers des décisions. Vous restez dans votre rôle.",
+      },
+      {
+        title: 'Après : garder la trace et suivre',
+        text: "Synthèse visuelle, décisions avec responsables et échéances, débrief avec vous, puis un point d'étape quelques semaines plus tard.",
+      },
+    ],
+  }}
+  formats={{
+    eyebrow: 'Ce que je propose sur la technopole',
+    title: 'Quatre façons de travailler ensemble',
+    intro: "Chacune a sa page, avec le détail de ce qu'elle produit.",
+    items: [
+      {
+        title: 'Séminaire kick-off',
+        text: "Lancer un projet, une feuille de route ou une nouvelle année avec des équipes qui savent quoi faire ensuite.",
+        href: '/seminaire-kick-off/',
+        link: 'Voir le séminaire kick-off',
+      },
+      {
+        title: 'Séminaire de direction',
+        text: "Comité de direction, comité de site ou d'entité : trancher les priorités et repartir avec des décisions tenues.",
+        href: '/seminaire-codir/',
+        link: 'Voir le séminaire CODIR',
+      },
+      {
+        title: 'Stratégie et adoption de l’IA',
+        text: "Décider où l'IA crée de la valeur, avec les métiers et la DSI, puis tester sur le travail réel.",
+        href: '/accompagnement-ia-pme/',
+        link: "Voir l'accompagnement IA",
+      },
+      {
+        title: 'Capture graphique en direct',
+        text: "Une fresque réalisée pendant votre événement, qui en garde la mémoire et la fait circuler.",
+        href: '/offres/capture-graphique/',
+        link: 'Voir la capture graphique',
+      },
+    ],
+  }}
+  cas={['cec', 'jci-monaco']}
+  casIntro="Une mission à Sophia Antipolis même, et un séminaire de lancement à Monaco."
+  articles={['organiser-seminaire-equipe', 'cout-seminaire-rate', 'reunion-hybride-distance']}
+  faq={[
+    {
+      q: 'Où organiser un séminaire à Sophia Antipolis ?',
+      a: "Dans vos locaux si le sujet le permet, ou dans un lieu extérieur lorsqu'il faut sortir du quotidien : la technopole et les communes voisines — Valbonne, Biot, Antibes, Mougins — offrent de nombreuses salles. Je ne loue pas de salle, mais je vous aide à choisir un lieu adapté au travail prévu, et je vais le voir avant.",
+    },
+    {
+      q: 'Animez-vous des séminaires en anglais ?',
+      a: "Oui. Les ateliers et séminaires peuvent être animés en français ou en anglais, ce qui est fréquent pour les équipes internationales de Sophia Antipolis.",
+    },
+    {
+      q: 'Intervenez-vous aussi à Antibes, Valbonne, Biot, Mougins ou Villeneuve-Loubet ?',
+      a: "Oui, dans toutes les communes autour de la technopole, et plus largement dans les Alpes-Maritimes : Nice, Cannes, Grasse, Carros, Monaco. Voyez la page <a href=\"/seminaires-alpes-maritimes/\">séminaires dans les Alpes-Maritimes</a>.",
+    },
+    {
+      q: 'Combien de temps faut-il pour préparer un séminaire ?',
+      a: "Comptez quatre à six semaines pour un séminaire d'une journée, deux à trois semaines pour un atelier court dont l'objectif est déjà clair. Si votre date est plus proche, parlons-en quand même.",
+    },
+    {
+      q: 'Combien de participants pouvez-vous accueillir ?',
+      a: "Je facilite seul jusqu'à une quinzaine de personnes. Au-delà, je travaille avec des facilitateurs partenaires, y compris pour des conventions et de grands groupes.",
+    },
+    {
+      q: "Proposez-vous des séminaires sur l'intelligence artificielle à Sophia Antipolis ?",
+      a: "Oui. L'atelier de décision IA réunit le comité de direction pour décider où l'IA crée de la valeur, avant tout choix d'outil. Il peut être suivi d'une cartographie des usages puis d'un passage à l'action avec les équipes.",
+    },
+  ]}
+  cta={{
+    eyebrow: 'Un séminaire à Sophia Antipolis ?',
+    title: 'Parlons-en sur place, autour d’un café.',
+    subtitle: "Trente minutes pour comprendre votre situation et vérifier que mon intervention est la bonne réponse. Sans engagement.",
+  }}
+/>

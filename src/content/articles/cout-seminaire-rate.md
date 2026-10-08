@@ -81,4 +81,4 @@ Si vous organisez votre prochain séminaire dans la région, notamment [entre me
 
 La bonne question n'est donc pas « combien coûte un séminaire », mais « combien coûte un séminaire qui ne produit rien ». Posée ainsi, la question du budget change de nature : quelques milliers d'euros de conception et de facilitation ne sont plus une dépense de confort, mais l'assurance du reste de l'enveloppe.
 
-*Vous préparez un séminaire et vous voulez qu'il produise des résultats visibles dès le lundi suivant ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez [mon approche de la facilitation](/approche/).*
+*Vous préparez un séminaire et vous voulez qu'il produise des résultats visibles dès le lundi suivant ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez [mon approche de la facilitation](/a-propos/).*

@@ -1,0 +1,178 @@
+---
+import PageSeminaire from '../components/PageSeminaire.astro';
+import heroImg from '../assets/offres/hero-coaching-equipe.png';
+
+// Les situations ci-dessous sont des cas de figure fréquents, pas des
+// citations de clients : aucune n'est présentée comme un témoignage.
+---
+
+<PageSeminaire
+  seo={{
+    title: 'Séminaire CODIR : animation de votre séminaire de direction',
+    description:
+      "Séminaire de comité de direction, CODIR ou COMEX : un facilitateur extérieur pour trancher les priorités, traiter les désaccords et repartir avec des décisions tenues. Nice, Sophia Antipolis, Monaco, France.",
+    path: '/seminaire-codir/',
+    fil: 'Séminaire CODIR',
+    serviceType: 'Facilitation de séminaire de comité de direction',
+    serviceName: 'Séminaire CODIR et séminaire de direction',
+  }}
+  zones={['Nice', 'Sophia Antipolis', 'Cannes', 'Monaco', 'Alpes-Maritimes', 'France']}
+  hero={{
+    eyebrow: 'Séminaire CODIR · Comité de direction',
+    title: 'Vous avez un comité de direction.',
+    titleAccent: 'Avez-vous une équipe',
+    titleTail: 'de direction ?',
+    summary:
+      "Un <strong>séminaire de direction</strong> ne sert pas à passer deux jours agréables ensemble. Il sert à trancher ce qui traîne, à dire ce qui ne se dit pas en réunion, et à repartir avec des <strong>décisions que chacun défendra</strong> devant ses équipes.",
+    pills: ['CODIR', 'COMEX', 'Séminaire stratégique', 'Équipe de direction'],
+    image: heroImg,
+    imageAlt: 'Une petite équipe soudée marche en formation resserrée sur une terrasse en hauteur.',
+    flip: true,
+  }}
+  signaux={{
+    eyebrow: 'Ce qui se joue dans un comité',
+    title: 'Six signes qu’un séminaire de direction est devenu utile',
+    intro: "Aucun ne tient à la compétence des personnes. Tous tiennent à la façon dont le comité travaille ensemble.",
+    items: [
+      {
+        title: 'D’accord en réunion, autrement ensuite',
+        text: "Personne ne s'oppose autour de la table. Une semaine plus tard, chaque direction applique sa propre lecture de la décision.",
+      },
+      {
+        title: 'Tout remonte au dirigeant',
+        text: "Les arbitrages entre directions finissent sur le même bureau. Le comité informe, il ne décide pas.",
+      },
+      {
+        title: 'Des sujets que l’on contourne',
+        text: "Une réorganisation, un périmètre, un désaccord entre deux directeurs : tout le monde sait, personne n'ouvre le sujet.",
+      },
+      {
+        title: 'L’urgent mange le temps de la stratégie',
+        text: "Les réunions hebdomadaires traitent le courant. Les questions de fond attendent un moment qui ne vient pas.",
+      },
+      {
+        title: 'Vous animez et vous tranchez',
+        text: "Tenir la discussion, donner votre avis et décider : trois rôles pour une seule personne. L'un des trois en pâtit toujours.",
+      },
+      {
+        title: 'Le dernier séminaire n’a rien changé',
+        text: "Un beau lieu, de bons échanges, un compte rendu. Trois mois après, les réunions ressemblent à celles d'avant.",
+      },
+    ],
+    chute:
+      "<strong>Un comité de direction ne manque presque jamais d'intelligence.</strong><br /><span class=\"accent\">Il lui manque un cadre où un désaccord peut se dire sans coûter cher à celui qui le porte.</span>",
+  }}
+  resultats={{
+    eyebrow: 'À la sortie du séminaire',
+    title: 'Des décisions qui tiennent au-delà de la salle',
+    intro: "Le résultat attendu est fixé avec vous avant la conception. Voici ce qu'un séminaire de direction produit le plus souvent.",
+    items: [
+      { title: 'Des priorités arbitrées', text: "En nombre tenable, avec ce que l'on arrête pour leur faire de la place." },
+      { title: 'Des désaccords traités', text: "Dits dans la salle, travaillés, puis tranchés — plutôt que rejoués dans les couloirs." },
+      { title: 'Des règles de décision', text: "Qui décide quoi, sur quels sujets le comité tranche ensemble, et comment." },
+      { title: 'Un porteur par décision', text: "Chaque décision quitte la salle avec un nom et une échéance." },
+      { title: 'Un dirigeant à sa place', text: "Vous contribuez, vous écoutez, vous tranchez. Vous ne tenez plus le chronomètre." },
+      { title: 'Un point de suivi', text: "Quelques semaines après, on vérifie ce qui a tenu et ce qui a glissé." },
+    ],
+    citation:
+      "On ne peut pas demander de la franchise à un comité si celui qui parle vrai prend plus de risques que celui qui se tait. Mon travail commence là.",
+  }}
+  etapes={{
+    eyebrow: 'Avant, pendant, après',
+    title: 'Deux jours qui se préparent bien avant',
+    intro: "Un séminaire de direction se joue en grande partie avant d'entrer dans la salle.",
+    items: [
+      {
+        title: 'Avant : écouter, puis choisir le vrai sujet',
+        text: "Échanges avec vous et, selon le cas, avec les membres du comité : ce qui bloque, ce qui ne se dit pas, la décision qui doit sortir. On choisit un sujet de fond plutôt que dix, puis je conçois le déroulé.",
+      },
+      {
+        title: 'Pendant : débattre, arbitrer, décider',
+        text: "Un diagnostic partagé avant toute décision. Chacun s'exprime, y compris les avis minoritaires. Je tiens le cadre et le temps, vous restez dirigeant. On ne quitte pas la salle sans décisions écrites.",
+      },
+      {
+        title: 'Après : faire descendre les décisions',
+        text: "Synthèse visuelle, décisions avec porteurs et échéances, débrief avec vous, puis un point d'étape. Si les équipes doivent être embarquées, un séminaire de lancement prend le relais.",
+      },
+    ],
+  }}
+  formats={{
+    eyebrow: 'Les sujets qui reviennent',
+    title: 'Sur quoi réunir son comité de direction ?',
+    intro: "Un séminaire de direction réussit quand il porte un sujet, pas un ordre du jour.",
+    items: [
+      {
+        title: 'Stratégie et feuille de route',
+        text: "Fixer le cap de l'année ou des trois ans, et choisir ce à quoi l'on renonce.",
+        href: '/blog/seminaire-de-direction-deroule-deux-jours/',
+        link: 'Voir un déroulé type sur deux jours',
+      },
+      {
+        title: 'Fonctionnement du comité',
+        text: "Qui décide quoi, à quoi servent les réunions, comment on traite un désaccord entre deux directions.",
+        href: '/blog/decider-en-comite-de-direction-pieges/',
+        link: 'Lire les quatre pièges classiques',
+      },
+      {
+        title: 'Nouveau dirigeant, nouveaux membres',
+        text: "Une équipe de direction qui change doit refaire connaissance et se redonner des règles du jeu.",
+      },
+      {
+        title: 'Décider où l’IA a du sens',
+        text: "Avant tout choix d'outil : où l'IA crée de la valeur chez vous, quel problème traiter en premier, et qui porte quoi face à la DSI.",
+        href: '/accompagnement-ia-pme/',
+        link: "Voir l'atelier de décision IA",
+      },
+      {
+        title: 'Embarquer les équipes ensuite',
+        text: "Un comité aligné doit encore faire passer ses décisions. C'est l'objet d'un séminaire de lancement.",
+        href: '/seminaire-kick-off/',
+        link: 'Voir le séminaire kick-off',
+      },
+      {
+        title: 'Un blocage qui dure',
+        text: "Si les mêmes difficultés reviennent malgré les séminaires, il faut un accompagnement dans la durée.",
+        href: '/offres/coaching-equipe/',
+        link: "Voir le coaching d'équipe",
+      },
+    ],
+  }}
+  cas={['urssaf-acoss', 'jci-monaco']}
+  casIntro="Deux missions où une équipe dirigeante devait se donner une direction commune."
+  articles={['seminaire-de-direction-deroule-deux-jours', 'decider-en-comite-de-direction-pieges', 'decisions-jamais-appliquees']}
+  faq={[
+    {
+      q: 'Pourquoi faire appel à un facilitateur extérieur pour un séminaire CODIR ?',
+      a: "Parce que le dirigeant ne peut pas à la fois animer, donner son avis et trancher. Un facilitateur extérieur tient le cadre et le temps, fait parler ceux qui se taisent, et n'a aucun périmètre à défendre dans la salle.",
+    },
+    {
+      q: 'Combien de temps dure un séminaire de direction ?',
+      a: "Deux jours est le format le plus courant. Il se resserre sur un jour et demi si le comité ne porte qu'un seul sujet lourd, et peut aller jusqu'à trois jours pour une réorganisation majeure. La durée se décide au cadrage.",
+    },
+    {
+      q: 'Quels thèmes aborder en séminaire CODIR ?',
+      a: "Un seul sujet structurant à la fois : la stratégie de l'année, un arbitrage de priorités, une réorganisation, le fonctionnement du comité, la place de l'IA dans l'entreprise. Un séminaire qui veut tout traiter ne tranche rien.",
+    },
+    {
+      q: "Ce qui se dit pendant la préparation reste-t-il confidentiel ?",
+      a: "Oui. Les échanges en amont servent à comprendre la situation et à concevoir le déroulé. Je n'attribue aucun propos à une personne : je restitue des thèmes, pas des noms.",
+    },
+    {
+      q: 'Quelle différence avec un séminaire de cohésion ou un team building de direction ?',
+      a: "Un séminaire de cohésion travaille la relation. Un séminaire de direction travaille des décisions, et la confiance se construit en les prenant ensemble. Les deux peuvent se combiner, mais ce n'est pas le même objet.",
+    },
+    {
+      q: 'Intervenez-vous pour un COMEX ou un comité de site ?',
+      a: "Oui : comité de direction de PME, comité de site ou d'entité d'un groupe, comité exécutif. J'interviens à Nice, Sophia Antipolis, Cannes et Monaco, et partout en France, en français ou en anglais.",
+    },
+    {
+      q: 'Combien coûte un séminaire CODIR animé par un facilitateur ?',
+      a: "Le tarif dépend du temps de préparation, des entretiens en amont, de la durée du séminaire et du suivi souhaité. Le lieu et la logistique restent à votre charge. Un échange de cadrage suffit pour vous donner un chiffre.",
+    },
+  ]}
+  cta={{
+    eyebrow: 'Un séminaire de direction à préparer ?',
+    title: 'Quelle décision attend depuis trop longtemps dans votre comité ?',
+    subtitle: "C'est souvent le meilleur point de départ. Trente minutes d'échange, confidentiel, pour voir si un séminaire est la bonne réponse.",
+  }}
+/>

@@ -54,7 +54,7 @@ Deuxième question : « Racontez la dernière fois que quelqu'un ici s'est tromp
 
 Troisième question : « De quelle information auriez-vous besoin pour décider vous-mêmes ? » Là, les réponses ont fusé : le budget restant, les retours clients bruts, les arbitrages du comité de pilotage.
 
-En quarante minutes, l'équipe et son manager avaient sous les yeux le vrai diagnostic : le programme de responsabilisation n'avait touché aucun des quatre piliers. Le travail a pu commencer — non pas sur les discours, mais sur le périmètre de décision, écrit noir sur blanc, et sur la circulation de l'information. C'est exactement le type de chantier que je mène dans mes [accompagnements d'équipe dans la durée](/offres/dynamique-durable/) : plusieurs séances espacées, parce que l'autonomie s'installe par ajustements successifs, pas en une journée.
+En quarante minutes, l'équipe et son manager avaient sous les yeux le vrai diagnostic : le programme de responsabilisation n'avait touché aucun des quatre piliers. Le travail a pu commencer — non pas sur les discours, mais sur le périmètre de décision, écrit noir sur blanc, et sur la circulation de l'information. C'est exactement le type de chantier que je mène dans mes [accompagnements d'équipe dans la durée](/offres/coaching-equipe/) : plusieurs séances espacées, parce que l'autonomie s'installe par ajustements successifs, pas en une journée.
 
 ## Plus d'autonomie exige plus de cadre, pas moins
 
@@ -89,4 +89,4 @@ Dernier malentendu à lever : l'autonomie de l'équipe ne rend pas le manager in
 
 C'est un rôle exigeant, souvent plus inconfortable que le pilotage classique — car il se voit moins. Les managers qui réussissent cette bascule sont ceux qu'on a accompagnés dans le changement de posture, pas ceux à qui on a simplement demandé de « lâcher prise ». Eux aussi ont droit aux quatre piliers : un cadre clair sur ce qu'on attend d'eux, des compétences nouvelles, de l'information, et le droit de tâtonner.
 
-*Vous voulez faire progresser l'autonomie d'une équipe sans la lâcher dans le vide ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment je structure un [accompagnement dans la durée](/offres/dynamique-durable/), séance après séance, jusqu'à ce que l'équipe décide vraiment par elle-même.*
+*Vous voulez faire progresser l'autonomie d'une équipe sans la lâcher dans le vide ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment je structure un [accompagnement dans la durée](/offres/coaching-equipe/), séance après séance, jusqu'à ce que l'équipe décide vraiment par elle-même.*

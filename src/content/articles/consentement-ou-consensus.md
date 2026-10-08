@@ -83,7 +83,7 @@ Le consentement n'est pas la réponse universelle. Un critère simple pour chois
 - décision fondatrice — valeurs, raison d'être, fusion d'équipes : le consensus retrouve son sens. Sur ces sujets-là, une réserve non traitée ressortira pendant des années ; le temps investi est justifié ;
 - urgence réelle : le chef décide et assume. Le consentement se pratique avant ou après la crise, pas au milieu.
 
-L'erreur la plus fréquente que j'observe n'est pas de mal appliquer le consentement : c'est de ne jamais expliciter le mode de décision. L'équipe croit qu'on cherche un consensus, le dirigeant croit qu'il consulte, et tout le monde sort frustré. Annoncer en début de réunion « aujourd'hui nous déciderons par consentement, voici ce que cela veut dire » résout la moitié du problème. C'est exactement ce que je construis avec les équipes dans le format [Décider ensemble](/offres/decider-ensemble/) : un cadre de décision explicite, entraîné sur vos vrais sujets, que l'équipe sait ensuite rejouer sans moi.
+L'erreur la plus fréquente que j'observe n'est pas de mal appliquer le consentement : c'est de ne jamais expliciter le mode de décision. L'équipe croit qu'on cherche un consensus, le dirigeant croit qu'il consulte, et tout le monde sort frustré. Annoncer en début de réunion « aujourd'hui nous déciderons par consentement, voici ce que cela veut dire » résout la moitié du problème. C'est exactement ce que je construis avec les équipes dans les [séminaires et ateliers de décision](/seminaires-entreprise/) : un cadre de décision explicite, entraîné sur vos vrais sujets, que l'équipe sait ensuite rejouer sans moi.
 
 ## Trois pièges à éviter pour démarrer
 
@@ -95,4 +95,4 @@ Si vous voulez tester le protocole dès votre prochaine réunion, méfiez-vous d
 
 Commencez petit : une décision d'équipe à enjeu moyen, un protocole annoncé, trente minutes chrono. La méthode s'apprend en la pratiquant, et les équipes qui l'adoptent reviennent rarement en arrière.
 
-*Vos réunions de décision s'éternisent ou se terminent par des arbitrages solitaires ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment le format [Décider ensemble](/offres/decider-ensemble/) installe durablement ces protocoles dans votre équipe.*
+*Vos réunions de décision s'éternisent ou se terminent par des arbitrages solitaires ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment un [séminaire ou un atelier de décision](/seminaires-entreprise/) installe durablement ces protocoles dans votre équipe.*

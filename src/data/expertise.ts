@@ -56,7 +56,7 @@ export const expertisePanels: ExpertisePanel[] = [
       },
     ],
     actions: [
-      { label: 'Déléguer la facilitation de votre séminaire ou atelier', href: '/offres/deleguer-animation/' },
+      { label: 'Déléguer la facilitation de votre séminaire ou atelier', href: '/seminaires-entreprise/' },
       { label: 'Se former à la posture de leader facilitateur', href: '/formations/' },
       { label: 'Parler de votre projet', href: '/contact/' },
     ],
@@ -167,8 +167,8 @@ export const expertisePanels: ExpertisePanel[] = [
       },
     ],
     actions: [
-      { label: 'Construire une démarche collective', href: '/offres/deleguer-animation/' },
-      { label: "Déléguer la facilitation d'un temps collectif", href: '/offres/deleguer-animation/' },
+      { label: 'Construire une démarche collective', href: '/seminaires-entreprise/' },
+      { label: "Déléguer la facilitation d'un temps collectif", href: '/seminaires-entreprise/' },
       { label: 'Parler de votre enjeu', href: '/contact/' },
     ],
   },
@@ -242,7 +242,7 @@ export const expertisePanels: ExpertisePanel[] = [
     ],
     actions: [
       { label: 'Faire évoluer la coopération de votre collectif', href: '/offres/coaching-equipe/' },
-      { label: "Organiser un temps de travail d'équipe", href: '/offres/deleguer-animation/' },
+      { label: "Organiser un temps de travail d'équipe", href: '/seminaires-entreprise/' },
       { label: 'Parler de votre situation', href: '/contact/' },
     ],
   },

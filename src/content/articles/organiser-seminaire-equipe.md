@@ -51,7 +51,7 @@ C'est le cœur du séminaire, et c'est là que l'intention initiale sert de bous
 
 La dernière séquence est presque toujours sacrifiée : on est en retard, on compresse, on termine par un « merci à tous » expédié. Erreur. C'est le moment où le groupe formule ce qu'il emporte : décisions, engagements, prochaines étapes, avec des noms et des dates. Sans atterrissage, le séminaire reste un moment agréable. Avec, il devient un point d'appui.
 
-Sur des séminaires d'alignement stratégique, ce travail de conception représente facilement deux à trois fois le temps d'animation. C'est le cœur de ce que je propose dans mon [accompagnement pour aligner une équipe](/offres/aligner-equipe/) : le jour J n'est que la partie visible.
+Sur des séminaires d'alignement stratégique, ce travail de conception représente facilement deux à trois fois le temps d'animation. C'est le cœur de ce que je propose dans mon [accompagnement pour aligner une équipe](/seminaires-entreprise/) : le jour J n'est que la partie visible.
 
 ## Choisir le lieu : trois critères qui comptent vraiment
 
@@ -83,4 +83,4 @@ Mon conseil le plus contre-intuitif : planifiez le point d'étape avant le sémi
 
 Un séminaire réussi, ce n'est donc pas deux jours réussis. C'est une intention claire en amont, un chemin conçu pour la servir, un cadre tenu le jour J, et des suites organisées avant même de commencer. Le reste — le lieu, le traiteur, les photos — n'est que le décor.
 
-*Vous préparez un séminaire pour votre équipe et vous voulez qu'il produise autre chose qu'un bon souvenir ? [Parlons-en](/contact/) ou découvrez mon [approche de la facilitation](/approche/).*
+*Vous préparez un séminaire pour votre équipe et vous voulez qu'il produise autre chose qu'un bon souvenir ? [Parlons-en](/contact/) ou découvrez mon [approche de la facilitation](/a-propos/).*

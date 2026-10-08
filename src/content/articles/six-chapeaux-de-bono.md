@@ -58,6 +58,6 @@ Les six chapeaux rendent le plus grand service sur les sujets où une équipe es
 
 Elle est moins adaptée à l'urgence pure — un incident à traiter dans l'heure — ou à des groupes très nombreux, où la discipline collective devient difficile à tenir au-delà d'une quinzaine de personnes sans sous-grouper. Elle s'articule aussi très bien avec d'autres formats : après une divergence en [world café](/blog/world-cafe-guide/), les six chapeaux offrent un cadre solide pour trier et challenger la matière récoltée avant de trancher.
 
-J'intègre régulièrement cette méthode dans mes accompagnements de comité de direction, notamment lorsqu'il s'agit d'[aligner une équipe](/offres/aligner-equipe/) sur un sujet qui a fini par se figer en clans. C'est aussi l'un des formats que je transmets en [formation](/formations/) aux managers qui souhaitent débloquer eux-mêmes leurs réunions difficiles.
+J'intègre régulièrement cette méthode dans mes accompagnements de comité de direction, notamment lorsqu'il s'agit d'[aligner une équipe](/seminaires-entreprise/) sur un sujet qui a fini par se figer en clans. C'est aussi l'un des formats que je transmets en [formation](/formations/) aux managers qui souhaitent débloquer eux-mêmes leurs réunions difficiles.
 
 *Une discussion tourne en rond dans votre équipe depuis plusieurs réunions ? [Prenez rendez-vous](/contact/) pour voir si les six chapeaux — ou un autre format d'[intelligence collective](/intelligence-collective/) — peuvent débloquer la situation.*

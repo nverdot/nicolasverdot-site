@@ -27,7 +27,7 @@ D'abord, l'information est distribuée. Sur un sujet opérationnel complexe, per
 
 Ensuite, l'adhésion se construit pendant la réflexion, pas après. Une décision imposée, même excellente, doit être « vendue ». Une décision construite collectivement est déjà portée par ceux qui l'appliqueront. Dans mes ateliers, je vois régulièrement des équipes aboutir à une solution proche de celle que le dirigeant avait en tête — mais cette fois, elle est la leur. La mise en œuvre n'a plus rien à voir.
 
-Enfin, chaque décision déléguée est un entraînement. Une équipe qui n'a jamais le droit de réfléchir n'apprend pas à décider. Le jour où le manager est absent, débordé ou parti, elle est démunie. Le leader facilitateur construit, décision après décision, [l'autonomie durable de son équipe](/offres/dynamique-durable/).
+Enfin, chaque décision déléguée est un entraînement. Une équipe qui n'a jamais le droit de réfléchir n'apprend pas à décider. Le jour où le manager est absent, débordé ou parti, elle est démunie. Le leader facilitateur construit, décision après décision, [l'autonomie durable de son équipe](/offres/coaching-equipe/).
 
 ## Quand basculer en mode facilitateur : les situations types
 
@@ -73,4 +73,4 @@ Deux voies se complètent. Le travail sur soi d'abord : un [accompagnement indiv
 
 Le cap reste le vôtre. Le chemin peut être le leur. C'est à cette condition que votre équipe cessera d'attendre vos réponses — et commencera à en produire de meilleures.
 
-*Vous vous reconnaissez dans ce dilemme entre trancher seul et déléguer la réflexion ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez notre [approche de l'accompagnement](/approche/).*
+*Vous vous reconnaissez dans ce dilemme entre trancher seul et déléguer la réflexion ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez notre [approche de l'accompagnement](/a-propos/).*

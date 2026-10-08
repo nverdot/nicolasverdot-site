@@ -64,7 +64,7 @@ Si la réorganisation est arbitrée, si le plan est signé, n'ouvrez pas un espa
 
 ### Quand la question centrale est trop étroite
 
-Le forum ouvert a besoin d'une question ouverte, large, qui concerne réellement les présents : « comment mieux travailler ensemble demain », « quelle offre pour nos clients dans trois ans ». Si votre besoin est de trancher entre deux scénarios, de prioriser un portefeuille de projets ou de converger vers une décision unique, le format n'est pas fait pour cela. Un processus de décision structuré, comme ceux que je propose dans [l'offre Décider ensemble](/offres/decider-ensemble/), sera plus efficace.
+Le forum ouvert a besoin d'une question ouverte, large, qui concerne réellement les présents : « comment mieux travailler ensemble demain », « quelle offre pour nos clients dans trois ans ». Si votre besoin est de trancher entre deux scénarios, de prioriser un portefeuille de projets ou de converger vers une décision unique, le format n'est pas fait pour cela. Un processus de décision structuré, comme ceux que je propose dans [les séminaires et ateliers de décision](/seminaires-entreprise/), sera plus efficace.
 
 ### Quand le groupe est trop petit ou le temps trop court
 
@@ -88,4 +88,4 @@ Sur la récolte, un appui en [facilitation graphique](/facilitation-graphique/) 
 
 Le forum ouvert n'est ni une baguette magique ni un simple format d'animation. C'est un acte de confiance envers un collectif — et cette confiance ne s'improvise pas, elle se prépare.
 
-*Vous envisagez un forum ouvert pour votre organisation et vous hésitez sur le format ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment j'accompagne les collectifs dans la durée avec [l'offre Dynamique durable](/offres/dynamique-durable/).*
+*Vous envisagez un forum ouvert pour votre organisation et vous hésitez sur le format ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment j'accompagne les collectifs dans la durée avec [l'offre Dynamique durable](/offres/coaching-equipe/).*

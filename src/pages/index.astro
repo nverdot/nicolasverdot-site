@@ -33,6 +33,33 @@ const proofItems = [
 
 // Les trois portes de l'accompagnement IA, version courte. Le détail, les
 // durées et les livrables sont sur /accompagnement-ia-pme/ : une seule source.
+// Les séminaires, par situation : c'est par là que le visiteur se reconnaît
+// (« je lance un projet », « mon comité de direction patine »), pas par le
+// mot « facilitation ».
+const seminaires = [
+  {
+    num: 'Vous lancez un projet',
+    titre: 'Séminaire kick-off',
+    texte: "Un projet, une feuille de route, une nouvelle année. Les équipes repartent en sachant pourquoi, qui fait quoi, et par quoi commencer lundi.",
+    lien: 'Le séminaire kick-off',
+    href: '/seminaire-kick-off/',
+  },
+  {
+    num: 'Votre comité de direction',
+    titre: 'Séminaire CODIR',
+    texte: "Deux jours pour trancher les priorités, traiter les désaccords qui traînent et repartir avec des décisions que chacun défendra.",
+    lien: 'Le séminaire de direction',
+    href: '/seminaire-codir/',
+  },
+  {
+    num: 'Près de chez vous',
+    titre: 'Nice, Sophia Antipolis, Monaco',
+    texte: "Basé à Nice, je prépare vos séminaires sur place dans les Alpes-Maritimes, en français ou en anglais, et j'interviens partout en France.",
+    lien: 'Les séminaires dans le 06',
+    href: '/seminaires-alpes-maritimes/',
+  },
+];
+
 const iaPortes = [
   {
     verbe: 'Clarifier',
@@ -117,8 +144,8 @@ const journeyStepsAfterFork = [
 ---
 
 <Layout
-  title="Stratégie IA, facilitation et coaching de dirigeants à Nice — by Nicolas Verdot"
-  description="J'aide les dirigeants de PME de la Côte d'Azur à décider où l'IA crée de la valeur et à passer à l'action avec leurs équipes. Facilitation, coaching, séminaires."
+  title="Facilitateur de séminaires et stratégie IA à Nice — Nicolas Verdot"
+  description="Séminaire de direction, kick-off de projet, stratégie IA : j'aide les dirigeants de la Côte d'Azur à décider, puis à embarquer leurs équipes. Nice, Sophia Antipolis, Cannes, Monaco."
   path="/"
 >
   <Hero />
@@ -128,6 +155,32 @@ const journeyStepsAfterFork = [
       place, sans quitter l'accueil. Voir la prop « modal » du composant. */}
   <CoutInaction modal />
 
+  {/* Première porte : les séminaires, par situation. */}
+  <section class="section alt ia-portes" data-reveal data-section-name="Séminaires : trois situations">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Séminaires d'entreprise</p>
+          <h2>Vous réunissez vos équipes&nbsp;? Faites qu'il en sorte quelque chose.</h2>
+        </div>
+        <p>
+          Je conçois et j'anime votre séminaire de bout en bout&nbsp;: le cadrage, le déroulé, le jour J et les
+          suites. Vous restez dans votre rôle de dirigeant.
+        </p>
+      </div>
+      <div class="cards">
+        {seminaires.map((s) => (
+          <a class="card ia-porte" href={withBase(s.href)}>
+            <span class="num">{s.num}</span>
+            <h3>{s.titre}</h3>
+            <p>{s.texte}</p>
+            <span class="card-link">{s.lien}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
   {/* Les trois portes de l'accompagnement IA, des l'accueil : le hero pose la
       question, cette section dit comment on commence. Le detail vit sur
       /accompagnement-ia-pme/. */}
@@ -136,7 +189,7 @@ const journeyStepsAfterFork = [
       <div class="section-head">
         <div>
           <p class="eyebrow">Stratégie et adoption de l'IA</p>
-          <h2>Par où commencer&nbsp;? Trois portes d'entrée.</h2>
+          <h2>Et l'IA&nbsp;? Trois portes d'entrée pour commencer.</h2>
         </div>
         <p>
           Chacune s'achète séparément. On entre par celle qui correspond à votre situation, pas forcément par

@@ -38,7 +38,7 @@ Une délégation qui se révèle être une corvée déguisée ne coûte pas seul
 
 La personne concernée retient une leçon simple : s'investir dans ce type de dossier n'a pas de sens, puisque le résultat de son travail ne pèse pas vraiment sur l'issue. La fois suivante, elle en fera moins — moins d'options explorées, moins d'argumentation, une recommandation plus prudente, calquée sur ce qu'elle devine être l'avis du chef. C'est exactement l'inverse de ce que la délégation était censée produire : au lieu de faire grandir l'autonomie de décision, elle l'a rétrécie.
 
-Et l'histoire circule. Une délégation ratée, racontée dans les couloirs, rend méfiante toute une équipe face à la suivante — y compris celles qui, elles, seraient authentiques. Un dirigeant qui veut vraiment [déléguer des décisions](/offres/decider-ensemble/) doit soigner particulièrement les premières fois : c'est sur ces précédents que se construit, ou se détruit, la crédibilité de toutes celles qui suivront.
+Et l'histoire circule. Une délégation ratée, racontée dans les couloirs, rend méfiante toute une équipe face à la suivante — y compris celles qui, elles, seraient authentiques. Un dirigeant qui veut vraiment [déléguer des décisions](/seminaires-entreprise/) doit soigner particulièrement les premières fois : c'est sur ces précédents que se construit, ou se détruit, la crédibilité de toutes celles qui suivront.
 
 ## Comment déléguer une décision qui tient
 

@@ -8,6 +8,10 @@ ErrorDocument 404 /404.html
 RewriteEngine On
 RewriteRule ^TESTSITENV/(.*)$ /$1 [R=301,L]
 
+# « Déléguer l'animation » est devenue la page « Séminaires d'entreprise »
+# (2026-10). Vrai 301 côté serveur, pour que le référencement acquis suive.
+RewriteRule ^offres/deleguer-animation/?$ /seminaires-entreprise/ [R=301,L]
+
 # Sans ces règles, aucune des deux couches (ni le HTML, ni les assets) n'a
 # d'en-tête Cache-Control explicite. Les navigateurs appliquent alors un
 # cache heuristique sur le HTML lui-même : après un déploiement, un visiteur

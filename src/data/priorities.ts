@@ -7,7 +7,7 @@ export interface Priority {
 }
 
 export const priorities: Priority[] = [
-  { title: "Déléguer l'animation d'un temps collectif", text: "Je conçois et j'anime votre séminaire ou atelier de bout en bout — cadrage, facilitation graphique, synthèse et prochaines étapes.", href: withBase('/offres/deleguer-animation/') },
+  { title: "Séminaire d'entreprise conçu et animé", text: "Séminaire de direction, kick-off, séminaire d'équipe : je conçois et j'anime de bout en bout — cadrage, déroulé, facilitation graphique, synthèse et suites.", href: withBase('/seminaires-entreprise/') },
   { title: 'Mentoring', text: "Je co-construis avec vous, et je vous prépare à animer vous-même : posture, déroulé, méthodes, répétition des moments sensibles.", href: withBase('/offres/mentoring/') },
   { title: 'Facilitation graphique / Capture graphique', text: "Grâce à la facilitation graphique et à la capture graphique, traduire en direct vos séminaires, ateliers ou conférences en fresques visuelles qui aident à comprendre, se souvenir et embarquer ceux qui n'étaient pas là.", href: withBase('/offres/capture-graphique/') },
   { title: 'Coaching individuel', text: 'Travailler la posture, les interactions et la sécurité intérieure du leader facilitateur, en tête-à-tête.', href: withBase('/offres/coaching-professionnel/') },

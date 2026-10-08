@@ -56,4 +56,4 @@ Le moment où l'écart entre présents et distants se referme le plus efficaceme
 
 Il existe une option qu'on envisage trop rarement : si plus d'un tiers des participants sont à distance, il est souvent préférable que tout le monde se connecte depuis son propre poste, y compris ceux qui pourraient physiquement se réunir. Une réunion entièrement à distance, où chacun est logé à la même enseigne visuelle, produit fréquemment de meilleurs échanges qu'une réunion hybride mal équilibrée où une minorité de présents capte naturellement toute l'attention. Ce n'est pas un aveu d'échec technologique — c'est une décision de conception, au même titre que le choix du format d'un atelier.
 
-*Vos réunions hybrides laissent-elles trop souvent une partie de l'équipe sur le bord de la route ? [Parlons-en](/contact/), ou découvrez comment [installer une dynamique d'équipe durable](/offres/dynamique-durable/) qui tienne, distance ou pas.*
+*Vos réunions hybrides laissent-elles trop souvent une partie de l'équipe sur le bord de la route ? [Parlons-en](/contact/), ou découvrez comment [installer une dynamique d'équipe durable](/offres/coaching-equipe/) qui tienne, distance ou pas.*

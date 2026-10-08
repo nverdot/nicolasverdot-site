@@ -60,4 +60,4 @@ Le troisième : sous-estimer le coût d'un séminaire de direction qui ne débou
 
 Ce déroulé se compresse sur un jour et demi si le comité ne porte qu'un seul sujet lourd, ou s'étire sur trois jours pour une réorganisation majeure. Ce qui ne bouge pas, quelle que soit la durée : un diagnostic partagé avant toute décision, un seul sujet structurant à la fois, et un atterrissage qui transforme chaque décision en action datée avant que le groupe ne se disperse.
 
-*Vous préparez un séminaire de direction et vous voulez un déroulé calibré pour vos vrais enjeux, pas un modèle générique ? [Prenons rendez-vous](/contact/) pour en discuter, ou découvrez comment je structure les [accompagnements d'alignement d'équipe de direction](/offres/aligner-equipe/).*
+*Vous préparez un séminaire de direction et vous voulez un déroulé calibré pour vos vrais enjeux, pas un modèle générique ? [Prenons rendez-vous](/contact/) pour en discuter, ou découvrez comment je structure les [accompagnements d'alignement d'équipe de direction](/seminaire-codir/).*

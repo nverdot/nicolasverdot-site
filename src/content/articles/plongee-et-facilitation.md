@@ -22,7 +22,7 @@ Mon briefing d'ouverture tient en quatre points, toujours les mêmes :
 - les règles du jeu : comment on se parle, comment on décide, ce qu'on fait des désaccords ;
 - la suite : ce que deviendront les résultats une fois l'atelier terminé.
 
-Quinze minutes, rarement plus. Mais ces quinze minutes changent tout le reste. Un groupe qui connaît le cadre cesse de le tester et consacre son énergie au fond. J'ai détaillé cette manière de poser les conditions du travail collectif dans ma page [approche](/approche/), si vous voulez creuser.
+Quinze minutes, rarement plus. Mais ces quinze minutes changent tout le reste. Un groupe qui connaît le cadre cesse de le tester et consacre son énergie au fond. J'ai détaillé cette manière de poser les conditions du travail collectif dans ma page [approche](/a-propos/), si vous voulez creuser.
 
 ## La sécurité n'est pas l'ennemie de l'exploration, elle en est la condition
 
@@ -79,4 +79,4 @@ La plongée m'a appris qu'on n'explore bien que dans un cadre solide, qu'on ne v
 
 La posture du facilitateur ne s'apprend pas dans les livres de méthodes. Elle se construit partout où l'on a appris à faire confiance à un cadre, à un binôme et à un groupe. Pour moi, cela a commencé quelques mètres sous la surface.
 
-*Vous préparez un séminaire, un comité stratégique ou un temps fort d'équipe et vous cherchez ce regard de binôme ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez [ma façon de travailler](/approche/).*
+*Vous préparez un séminaire, un comité stratégique ou un temps fort d'équipe et vous cherchez ce regard de binôme ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez [ma façon de travailler](/a-propos/).*

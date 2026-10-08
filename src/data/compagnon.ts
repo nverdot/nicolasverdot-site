@@ -108,7 +108,7 @@ export const ECRANS: Ecran[] = [
       {
         texte: 'Une décision précise à faire atterrir',
         icone: 'cible',
-        vers: '/offres/deleguer-animation/',
+        vers: '/seminaires-entreprise/',
         note: 'Un atelier conçu et animé pour trancher ce sujet-là',
       },
       {
@@ -152,7 +152,7 @@ export const ECRANS: Ecran[] = [
       {
         texte: 'Concevez et animez-le pour nous',
         icone: 'scene',
-        vers: '/offres/deleguer-animation/',
+        vers: '/seminaires-entreprise/',
         note: 'Cadrage, animation, synthèse, prochaines étapes',
       },
       {

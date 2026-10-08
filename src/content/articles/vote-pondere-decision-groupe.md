@@ -48,10 +48,10 @@ Le dépouillement prend deux minutes. Deux scénarios se détachent nettement, u
 
 ## Ce que le vote pondéré ne décide pas
 
-Le vote pondéré mesure une préférence collective à un instant donné. Il ne mesure pas la pertinence, et il n'engage personne à exécuter ce qui sort en tête. Un classement voté n'est pas encore une décision assumée — c'est une étape qui doit s'insérer dans un [processus de décision](/offres/decider-ensemble/) plus large, avec un porteur, une échéance, et une manière de revenir sur le choix si les faits contredisent le vote.
+Le vote pondéré mesure une préférence collective à un instant donné. Il ne mesure pas la pertinence, et il n'engage personne à exécuter ce qui sort en tête. Un classement voté n'est pas encore une décision assumée — c'est une étape qui doit s'insérer dans un [processus de décision](/seminaires-entreprise/) plus large, avec un porteur, une échéance, et une manière de revenir sur le choix si les faits contredisent le vote.
 
 Il faut aussi se méfier de son biais principal : il récompense la popularité, pas nécessairement la qualité. Une option défendue avec de bons arguments par une seule personne experte peut disparaître sous le nombre, alors qu'elle méritait d'être creusée. Dans les sujets techniques ou à fort enjeu, je recommande de compléter le vote pondéré par un droit de veto argumenté, sur le modèle de l'objection raisonnable utilisée en [décision par consentement](/blog/consentement-ou-consensus/) : le vote classe, l'objection protège contre une erreur que la majorité n'a pas vue.
 
 Utilisé à sa juste place — en fin de discussion, pour converger entre options déjà débattues, jamais comme substitut au débat lui-même — le vote pondéré reste l'un des outils les plus fiables pour faire trancher un grand groupe sans y laisser une réunion entière.
 
-*Vous préparez un atelier où il faudra départager plusieurs options sans frustrer la moitié de la salle ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment l'accompagnement [Décider ensemble](/offres/decider-ensemble/) structure ces moments de convergence.*
+*Vous préparez un atelier où il faudra départager plusieurs options sans frustrer la moitié de la salle ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment un [séminaire ou un atelier de décision](/seminaires-entreprise/) structure ces moments de convergence.*

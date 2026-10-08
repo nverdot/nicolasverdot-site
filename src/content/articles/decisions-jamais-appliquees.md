@@ -21,7 +21,7 @@ Une décision prise en comité de direction doit souvent être appliquée par de
 
 J'ai accompagné un comité de pilotage qui s'étonnait que ses décisions « redescendent mal ». En creusant, nous avons découvert que les managers intermédiaires apprenaient les décisions par un compte rendu de quatre lignes, sans contexte. Ils passaient ensuite leur énergie à deviner l'intention plutôt qu'à exécuter.
 
-Le remède tient en deux pratiques. D'abord, invitez au moment du choix au moins une personne qui devra l'appliquer : elle apportera un test de réalité précieux et deviendra l'ambassadrice de la décision. Ensuite, quand ce n'est pas possible, transmettez la décision avec son raisonnement : les options envisagées, pourquoi celle-ci a été retenue, ce qu'on attend concrètement. Dix minutes d'explication économisent des semaines de friction. C'est un des principes au cœur de mon offre [Décider ensemble](/offres/decider-ensemble/) : associer les bonnes personnes au bon moment du processus de décision.
+Le remède tient en deux pratiques. D'abord, invitez au moment du choix au moins une personne qui devra l'appliquer : elle apportera un test de réalité précieux et deviendra l'ambassadrice de la décision. Ensuite, quand ce n'est pas possible, transmettez la décision avec son raisonnement : les options envisagées, pourquoi celle-ci a été retenue, ce qu'on attend concrètement. Dix minutes d'explication économisent des semaines de friction. C'est un des principes au cœur de mes [séminaires de comité de direction](/seminaire-codir/) : associer les bonnes personnes au bon moment du processus de décision.
 
 ## Cause n°3 : tout le monde est responsable, donc personne
 
@@ -59,4 +59,4 @@ Pas besoin de réformer toute votre gouvernance. Commencez par un diagnostic hon
 
 Chaque « non » vous indique la fuite par laquelle vos décisions s'évaporent. Dans mes accompagnements, je constate que la plupart des équipes cochent une ou deux cases sur cinq — et s'étonnent ensuite que rien n'avance. La bonne nouvelle : chacun de ces remèdes se met en place en une réunion. Pas besoin d'outil, pas besoin de budget. Juste une discipline collective, et quelqu'un pour la tenir dans la durée.
 
-*Vous reconnaissez votre comité dans ces lignes ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment l'offre [Décider ensemble](/offres/decider-ensemble/) aide vos équipes à prendre des décisions claires, portées et suivies.*
+*Vous reconnaissez votre comité dans ces lignes ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment un [séminaire de comité de direction](/seminaire-codir/) aide vos équipes à prendre des décisions claires, portées et suivies.*

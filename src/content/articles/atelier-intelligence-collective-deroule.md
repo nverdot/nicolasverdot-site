@@ -77,4 +77,4 @@ Cinq étapes sur le papier, une vigilance constante en salle. Tenir la divergenc
 
 Un dernier mot sur l'adaptation. Ce déroulé se comprime en quatre-vingt-dix minutes pour un sujet simple, s'étale sur deux jours pour un séminaire stratégique. Les proportions bougent ; l'ordre des étapes, jamais. Un groupe qui s'engage sans avoir convergé, ou qui converge sans avoir divergé, produit des décisions fragiles — et le sait confusément en sortant de la salle.
 
-*Vous préparez un atelier et vous voulez un déroulé taillé pour votre sujet ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment je structure une [décision collective](/offres/decider-ensemble/) de bout en bout.*
+*Vous préparez un atelier et vous voulez un déroulé taillé pour votre sujet ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment je structure une [décision collective](/seminaires-entreprise/) de bout en bout.*

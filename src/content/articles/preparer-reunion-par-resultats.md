@@ -73,7 +73,7 @@ D'abord, chaque séquence a une condition d'arrêt. Quand la décision est prise
 
 Ensuite, la préparation en amont devient obligatoire. On ne peut pas « décider entre trois scénarios » si les scénarios n'existent pas. La formulation par résultats déplace le travail de production avant la réunion, là où il coûte le temps d'une personne, plutôt que pendant, où il coûte le temps de douze.
 
-Enfin, le hors-sujet devient visible instantanément. Quand l'objectif affiché est « décider du maintien du jalon 2 », une digression sur la stratégie commerciale saute aux yeux de tout le monde. Plus besoin d'un animateur autoritaire : le cadre fait le travail. C'est d'ailleurs un des leviers que je mobilise dans les dispositifs de décision collective — quand le résultat attendu est limpide, [faire décider un groupe](/offres/decider-ensemble/) devient une affaire de méthode, plus un bras de fer.
+Enfin, le hors-sujet devient visible instantanément. Quand l'objectif affiché est « décider du maintien du jalon 2 », une digression sur la stratégie commerciale saute aux yeux de tout le monde. Plus besoin d'un animateur autoritaire : le cadre fait le travail. C'est d'ailleurs un des leviers que je mobilise dans les dispositifs de décision collective — quand le résultat attendu est limpide, [faire décider un groupe](/seminaires-entreprise/) devient une affaire de méthode, plus un bras de fer.
 
 Un point d'honnêteté : la première fois, la préparation vous prendra plus de temps qu'avant. Formuler des résultats constatables, préparer les scénarios, trier ce qui relève de la réunion et ce qui n'en relève pas — c'est un vrai travail. Il devient rapide avec la pratique, mais il ne disparaît jamais. C'est le prix d'une réunion qui produit.
 
@@ -89,4 +89,4 @@ Inutile de réformer toutes les réunions de l'organisation. Choisissez-en une s
 
 Après trois itérations, vous saurez si la méthode tient ses promesses chez vous. Dans mon expérience de facilitateur, c'est presque toujours la troisième réunion qui marque la bascule : les participants arrivent préparés, parce qu'ils ont compris que la réunion ne fera plus le travail à leur place. Et si le sujet des réunions qui décident vraiment vous concerne au-delà d'une instance isolée, c'est souvent le signe qu'un travail plus large sur [les pratiques d'intelligence collective](/intelligence-collective/) mérite d'être ouvert.
 
-*Vos réunions ressemblent encore à des tables des matières ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment je structure [les réunions qui doivent aboutir à une décision](/offres/decider-ensemble/).*
+*Vos réunions ressemblent encore à des tables des matières ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment je structure [les réunions qui doivent aboutir à une décision](/seminaires-entreprise/).*

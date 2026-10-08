@@ -44,4 +44,4 @@ Il suppose enfin d'accepter une règle qui déstabilise souvent les organisation
 
 Inutile de refondre toute votre gouvernance pour tester le principe. Choisissez une catégorie de décisions à enjeu moyen — un recrutement, un choix de prestataire, une réorganisation mineure — et donnez-la explicitement à une personne, avec la consigne de consulter deux ou trois personnes précises avant de trancher. Observez ce qui se passe : la vitesse gagnée, la qualité de la décision, et surtout la réaction de ceux qui auraient, dans l'ancien système, validé cette décision en comité. C'est souvent leur soulagement, plus que leur résistance, qui surprend le plus.
 
-*Votre organisation confond consultation systématique et validation en cascade ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment [mon approche](/approche/) aide les équipes à distribuer la décision sans perdre en rapidité.*
+*Votre organisation confond consultation systématique et validation en cascade ? [Prenez rendez-vous](/contact/) pour en parler, ou découvrez comment [mon approche](/a-propos/) aide les équipes à distribuer la décision sans perdre en rapidité.*

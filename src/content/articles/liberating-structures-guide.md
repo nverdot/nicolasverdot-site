@@ -50,7 +50,7 @@ Le répertoire complet des liberating structures est organisé, sur le site offi
 
 L'erreur la plus fréquente consiste à vouloir déployer les trente-trois structures d'un coup, ou à les présenter comme une nouvelle méthodologie à part entière qu'il faudrait adopter en bloc. Cela fonctionne rarement. Les liberating structures se diffusent mieux une par une, glissées dans des réunions existantes sans grand discours : remplacer un tour de table classique par un 1-2-4-All, insérer un TRIZ dans un atelier de lancement de projet, tester Troika Consulting lors d'un point d'équipe informel.
 
-Une fois qu'un collectif a expérimenté deux ou trois structures et en a constaté les effets par lui-même, l'appétit pour en essayer d'autres vient naturellement. C'est une logique que je retrouve souvent dans mes interventions autour de la [dynamique d'équipe dans la durée](/offres/dynamique-durable/) : mieux vaut installer progressivement des réflexes de facilitation partagés qu'imposer un cadre méthodologique complet dès le premier atelier.
+Une fois qu'un collectif a expérimenté deux ou trois structures et en a constaté les effets par lui-même, l'appétit pour en essayer d'autres vient naturellement. C'est une logique que je retrouve souvent dans mes interventions autour de la [dynamique d'équipe dans la durée](/offres/coaching-equipe/) : mieux vaut installer progressivement des réflexes de facilitation partagés qu'imposer un cadre méthodologique complet dès le premier atelier.
 
 ## Les limites à connaître
 

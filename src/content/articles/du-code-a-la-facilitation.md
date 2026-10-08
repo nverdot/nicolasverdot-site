@@ -65,7 +65,7 @@ On pourrait croire qu'une reconversion efface le métier d'avant. C'est l'invers
 - **l'attention aux détails d'exécution** : en facilitation comme en code, ce sont les petites choses mal réglées — une consigne ambiguë, un timing bâclé — qui font échouer l'ensemble ;
 - **l'humilité devant les systèmes complexes** : un groupe humain, comme un système informatique, réagit rarement comme prévu, et c'est en observant qu'on comprend, pas en théorisant.
 
-Cette manière de travailler — structurer fort pour libérer la parole, tester plutôt que supposer — est devenue le cœur de [mon approche](/approche/). Elle doit tout à mes deux métiers.
+Cette manière de travailler — structurer fort pour libérer la parole, tester plutôt que supposer — est devenue le cœur de [mon approche](/a-propos/). Elle doit tout à mes deux métiers.
 
 ## Ce que cette reconversion m'a appris sur le changement
 

@@ -8,8 +8,8 @@ summary: "Conception et facilitation d'un séminaire de prise de présidence pou
 metaTitle: "JCI Monaco — séminaire de prise de présidence"
 metaDescription: "Conception et facilitation du séminaire de prise de présidence de la Jeune Chambre Économique de Monaco, pour construire une vision stratégique partagée."
 challengeText: "Une prise de présidence marque le début d'un nouveau cycle, avec de nouvelles ambitions — mais aussi un enjeu essentiel : permettre aux membres de comprendre la direction proposée et de trouver leur place dans sa construction, sans se contenter d'y adhérer."
-offerHref: "/offres/deleguer-animation/"
-offerLabel: "Voir l'offre déléguer l'animation"
+offerHref: "/seminaires-entreprise/"
+offerLabel: "Voir les séminaires d'entreprise"
 ctaTitle: "Une prise de fonction ou un nouveau cycle à lancer avec votre équipe ?"
 ctaSubtitle: "Je peux concevoir et animer le séminaire qui permettra à votre collectif de mieux se connaître et de construire une direction commune."
 factsheet:

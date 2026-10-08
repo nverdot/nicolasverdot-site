@@ -82,4 +82,4 @@ Pas besoin de transformer toute l'entreprise pour activer l'intelligence collect
 
 Ces gestes paraissent modestes. Ils transforment pourtant la qualité de ce que produit un groupe, séance après séance. Et ils préparent le terrain pour des travaux plus ambitieux : un séminaire de direction, une démarche de transformation, une équipe à réaligner.
 
-*Vous voulez passer de la définition à la pratique ? [Prenez rendez-vous](/contact/) pour parler de votre situation, ou explorez [mon approche de la facilitation](/approche/) pour voir comment ces conditions se traduisent sur le terrain.*
+*Vous voulez passer de la définition à la pratique ? [Prenez rendez-vous](/contact/) pour parler de votre situation, ou explorez [mon approche de la facilitation](/a-propos/) pour voir comment ces conditions se traduisent sur le terrain.*

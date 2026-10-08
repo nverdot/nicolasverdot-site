@@ -63,4 +63,4 @@ Pour une réunion réunissant des participants à distance, le compte rendu pren
 
 Rédiger un bon compte rendu ne demande ni outil sophistiqué ni formation particulière. Cela demande une discipline simple : décider avant de raconter, nommer un responsable avant de clore un sujet, et l'envoyer avant que la mémoire collective ne se disperse.
 
-*Vos comptes rendus finissent-ils systématiquement non lus dans une boîte mail ? [Parlons-en](/contact/), ou découvrez comment je structure les [réunions qui doivent déboucher sur une vraie décision](/offres/decider-ensemble/).*
+*Vos comptes rendus finissent-ils systématiquement non lus dans une boîte mail ? [Parlons-en](/contact/), ou découvrez comment je structure les [réunions qui doivent déboucher sur une vraie décision](/seminaires-entreprise/).*

@@ -58,4 +58,4 @@ Si vous vous apprêtez à solliciter un facilitateur, voici ce qui l'aidera vrai
 
 Prévoyez surtout du temps pour en discuter de vive voix. Un brief qui tient sur une ligne d'agenda ne permet pas à un facilitateur de faire son travail correctement — et cela se voit toujours dans le déroulé qui en résulte. C'est un principe que je retrouve à chaque [séminaire que je conçois](/blog/organiser-seminaire-equipe/) : la qualité de la conception dépend directement de la qualité du cadrage initial, bien avant que la première diapositive ou le premier post-it n'apparaisse.
 
-*Vous préparez un atelier ou un séminaire et vous ne savez pas par où commencer le brief ? [Prenons rendez-vous](/contact/) pour un premier échange de cadrage, ou découvrez [mon approche de la facilitation](/approche/) pour comprendre comment je construis un déroulé à partir de ce type d'information.*
+*Vous préparez un atelier ou un séminaire et vous ne savez pas par où commencer le brief ? [Prenons rendez-vous](/contact/) pour un premier échange de cadrage, ou découvrez [mon approche de la facilitation](/a-propos/) pour comprendre comment je construis un déroulé à partir de ce type d'information.*

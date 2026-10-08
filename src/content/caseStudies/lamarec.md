@@ -8,8 +8,8 @@ summary: "La Mission d'Appui et de Ressources aux ESMS de Corse (LaMAREC) a réu
 metaTitle: "LaMAREC — faire coopérer les acteurs d'un territoire"
 metaDescription: "Comment LaMAREC a réuni les acteurs accompagnant les enfants en situation de handicap en Corse autour de deux ateliers pour construire des parcours plus fluides."
 challengeText: "De nombreux acteurs interviennent auprès des enfants et des familles. Chacun a ses contraintes, ses priorités, ses logiques propres. Pourtant, les parcours restent souvent fragmentés, avec des zones de rupture, des attentes non couvertes et des incompréhensions. Le défi : raisonner à l'échelle du parcours de l'enfant, et non plus à l'échelle de chaque organisation."
-offerHref: "/offres/deleguer-animation/"
-offerLabel: "Voir l'offre déléguer l'animation"
+offerHref: "/seminaires-entreprise/"
+offerLabel: "Voir les séminaires d'entreprise"
 ctaTitle: "Un territoire ou un collectif d'acteurs à faire coopérer ?"
 ctaSubtitle: "Je peux concevoir et animer, avec mon équipe, les ateliers qui permettront à vos acteurs de construire ensemble des réponses concrètes."
 factsheet:
