@@ -645,4 +645,40 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
       padding: var(--space-4);
     }
   }
+
+  /* Le bloc résultat sur fond jaune de la marque (le bleu nuit était jugé trop
+     sombre). Le texte est en bleu nuit fixe, lisible en clair comme en sombre.
+     Ces règles viennent en dernier pour remplacer les couleurs d'origine. */
+  .cs-result {
+    background: var(--color-orange);
+    color: #122033;
+  }
+  .cs-result-label,
+  .cs-total,
+  .cs-lines dt,
+  .cs-lines dd,
+  .cs-heure,
+  .cs-heure strong,
+  .cs-an,
+  .cs-an strong {
+    color: #122033;
+  }
+  .cs-lines dt span,
+  .cs-note {
+    color: rgba(18, 32, 51, 0.78);
+  }
+  .cs-lines > div {
+    border-bottom-color: rgba(18, 32, 51, 0.18);
+  }
+  .cs-heure strong,
+  .cs-an strong {
+    font-weight: 800;
+  }
+  .cs-result :global(.cs-ico) {
+    color: #122033;
+  }
+  .cs-result :global(.btn) {
+    background: #122033;
+    color: #fff;
+  }
 </style>
