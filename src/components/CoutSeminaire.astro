@@ -28,6 +28,26 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
     </div>
 
     <div data-cout-seminaire>
+      {/* Les chiffres d'abord : ils disent pourquoi le calcul qui suit compte.
+          Le pourcentage est fixe (c'est la donnée de l'enquête) ; la ligne du
+          dessous se recalcule avec le séminaire saisi plus bas. */}
+      <div class="cs-stats">
+        <p class="cs-stats-titre">Et si cette journée ressemblait à une réunion ordinaire&nbsp;?</p>
+        <div class="cs-stat">
+          <p class="cs-stat-chiffre">72&nbsp;%</p>
+          <p class="cs-stat-texte"><strong>des réunions sont jugées inefficaces.</strong> Sur votre séminaire&nbsp;: <span data-cs-out="perdu">—</span> de temps collectif sans effet.</p>
+        </div>
+        <div class="cs-stat">
+          <p class="cs-stat-chiffre">76&nbsp;%</p>
+          <p class="cs-stat-texte"><strong>des salariés se disent épuisés les jours chargés en réunions.</strong> Chez vous&nbsp;: <span data-cs-out="vides">—</span> repartiraient vidées.</p>
+        </div>
+        <div class="cs-stat">
+          <p class="cs-stat-chiffre">54&nbsp;%</p>
+          <p class="cs-stat-texte"><strong>quittent souvent une réunion sans prochaine étape claire.</strong> Chez vous&nbsp;: <span data-cs-out="flou">—</span> ne sauraient pas qui fait quoi.</p>
+        </div>
+        <p class="cs-stats-source">Chiffres sur les réunions&nbsp;: <a href={SOURCE} target="_blank" rel="noopener">enquête Atlassian auprès de 5&nbsp;000 salariés</a>, appliqués au séminaire calculé ci-dessous. Un séminaire bien conçu sert précisément à ne pas leur ressembler.</p>
+      </div>
+
     <div class="cs-grid">
       <form class="cs-form" onsubmit="return false">
         <fieldset class="cs-types">
@@ -97,23 +117,6 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
         <slot />
       </div>
     </div>
-
-      <div class="cs-stats">
-        <p class="cs-stats-titre">Et si cette journée ressemblait à une réunion ordinaire&nbsp;?</p>
-        <div class="cs-stat">
-          <p class="cs-stat-chiffre" data-cs-out="perdu">—</p>
-          <p class="cs-stat-texte"><strong>de temps collectif sans effet.</strong> 72&nbsp;% des réunions sont jugées inefficaces.</p>
-        </div>
-        <div class="cs-stat">
-          <p class="cs-stat-chiffre" data-cs-out="vides">—</p>
-          <p class="cs-stat-texte"><strong>repartiraient vidés.</strong> 76&nbsp;% des salariés se disent épuisés les jours chargés en réunions.</p>
-        </div>
-        <div class="cs-stat">
-          <p class="cs-stat-chiffre" data-cs-out="flou">—</p>
-          <p class="cs-stat-texte"><strong>ne sauraient pas qui fait quoi ensuite.</strong> 54&nbsp;% quittent souvent une réunion sans prochaine étape claire.</p>
-        </div>
-        <p class="cs-stats-source">Chiffres sur les réunions&nbsp;: <a href={SOURCE} target="_blank" rel="noopener">enquête Atlassian auprès de 5&nbsp;000 salariés</a>, appliqués ici à votre séminaire. Un séminaire bien conçu sert précisément à ne pas leur ressembler.</p>
-      </div>
     </div>
   </div>
 </section>
@@ -390,7 +393,7 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-4);
-    margin-top: var(--space-12);
+    margin-bottom: var(--space-12);
   }
   .cs-stats-titre {
     grid-column: 1 / -1;
@@ -408,9 +411,9 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
   .cs-stat-chiffre {
     margin: 0 0 var(--space-2);
     color: var(--color-clay-ink);
-    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-size: clamp(2.2rem, 4vw, 3rem);
     font-weight: 800;
-    line-height: 1.15;
+    line-height: 1.05;
   }
   .cs-stat-texte {
     margin: 0;
@@ -418,7 +421,13 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
   }
   .cs-stat-texte strong {
     display: block;
+    margin-bottom: var(--space-2);
     color: var(--color-navy);
+  }
+  .cs-stat-texte span {
+    color: var(--color-clay-ink);
+    font-weight: 700;
+    white-space: nowrap;
   }
   .cs-stats-source {
     grid-column: 1 / -1;
