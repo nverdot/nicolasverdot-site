@@ -12,7 +12,6 @@ npm run dev
 ## À personnaliser avant mise en ligne
 
 - [src/data/site.ts](src/data/site.ts) : email, téléphone, adresse, clé Web3Forms.
-- [src/data/cities.ts](src/data/cities.ts) : contenu des pages locales (Nice, Cannes, Antibes, Monaco).
 - `public/og-image.svg` : à remplacer idéalement par une image 1200x630 (JPG/PNG) pour une meilleure compatibilité avec les réseaux sociaux.
 - `public/favicon.svg` : favicon provisoire.
 
@@ -37,7 +36,34 @@ Dans les paramètres du repo GitHub (**Settings → Secrets and variables → Ac
 
 Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que via ces secrets chiffrés.
 
-## État — 7 octobre 2026
+## État — 8 octobre 2026
+
+- **Branche `seminaires`** (pas en ligne, en attente de validation). Elle part de `positionnement-ia` : la fusionner dans `main` met en ligne les deux chantiers d'un coup.
+  - **Proposition de valeur commune** aux séminaires et à l'IA, sur l'accueil : « Une direction qui tranche. Des équipes qui s'en emparent. Sur un projet, une stratégie ou l'IA. » Deux boutons, deux portes. Une section « séminaires » avant les trois portes IA.
+  - [/seminaires-entreprise/](src/pages/seminaires-entreprise.astro) : page d'entrée. Elle remplace `/offres/deleguer-animation/` (301 dans `public/.htaccess`, filet de secours dans `astro.config.mjs`). Trois situations, questions fréquentes.
+  - [/seminaire-kick-off/](src/pages/seminaire-kick-off.astro), [/seminaire-codir/](src/pages/seminaire-codir.astro), [/seminaire-sophia-antipolis/](src/pages/seminaire-sophia-antipolis.astro) : trois pages bâties sur [src/components/PageSeminaire.astro](src/components/PageSeminaire.astro).
+  - [/seminaires-alpes-maritimes/](src/pages/seminaires-alpes-maritimes.astro) : nouveau titre, un paragraphe par bassin (Nice, Sophia, Antibes et Villeneuve-Loubet, Carros, Cannes, Grasse, Monaco, région). Pas de page par ville, sauf Sophia.
+  - [/blog/](src/pages/blog/index.astro) : vrai sommaire des articles par thème (la page disait « arrive bientôt »). Chaque article renvoie vers la page d'offre de son thème. 52 liens d'articles qui passaient par d'anciennes adresses pointent sur les adresses finales.
+  - Nouvel article : kick-off de projet (n° 36 du plan éditorial).
+  - Menu : « Séminaires » remplace « Accueil » (le logo ramène à l'accueil).
+  - Aperçu local : `npm run dev -- --port 4331` (configuration « seminaires » dans `.claude/launch.json`).
+
+### À confirmer par Nicolas avant fusion (séminaires)
+- La proposition de valeur de l'accueil.
+- Les prix : aucun n'est affiché sur les pages séminaires. Les fourchettes du document ChatGPT (3 200 à 11 000 € HT) sont des hypothèses, non publiées.
+- Phrases qui engagent sa pratique : confidentialité des entretiens avant un CODIR (« je restitue des thèmes, pas des noms »), point d'étape quelques semaines après, format « kick-off commercial et convention ».
+- Preuves : aucun cas client de CODIR en entreprise. La page CODIR montre Urssaf / Acoss et JCI Monaco. Un vrai cas et un témoignage changeraient la page.
+- Les situations décrites sur les pages sont des cas de figure, pas des citations de clients.
+
+### Prochaines étapes SEO séminaires
+- Fiche Google Business Profile (Nice, zone desservie : Alpes-Maritimes) : à créer ou à compléter, avec le lien vers /seminaires-alpes-maritimes/.
+- Après mise en ligne : redemander l'indexation de l'accueil, des cinq pages séminaires et du blog dans la Search Console.
+- Articles à écrire : « Team building ou séminaire de travail » (n° 38), « Choisir un lieu de séminaire » (n° 37, avec de vrais lieux des Alpes-Maritimes), « Séminaire CODIR : quels thèmes ».
+- Une page en anglais pour les équipes internationales de Sophia Antipolis et de Monaco.
+- `www.nicolasverdot.com` et `nicolasverdot.com` répondent tous les deux sans redirection : à unifier chez LWS.
+
+## État — 7 octobre 2026 (branche IA)
+
 
 - **Branche `positionnement-ia`** (pas en ligne, en attente de validation) : l'accompagnement IA passe au premier plan, vu depuis le dirigeant (« il faut qu'on fasse de l'IA, mais par où commencer ? »).
   - [/accompagnement-ia-pme/](src/pages/accompagnement-ia-pme.astro) : trois portes achetables séparément — Atelier de décision IA (nouveau), Cartographie IA utile, Sprint Usage IA puis Cap IA 90. Le Premier pas IA (1 500 € HT) et l'Atelier métier deviennent « deux formats pour les équipes ». Nouvelles sections : signaux, cinq questions, « Vous avez une DSI ? Tant mieux », qui fait quoi. L'adresse et les ancres ne changent pas.
