@@ -52,6 +52,13 @@ const seminaires = [
     href: '/seminaire-codir/',
   },
   {
+    num: 'Vous déployez l’IA',
+    titre: 'Stratégie de déploiement IA',
+    texte: "Décider où l'IA crée de la valeur, dans quel ordre l'introduire, et embarquer les métiers et la DSI. En comité de direction, puis avec les équipes.",
+    lien: 'La stratégie de déploiement IA',
+    href: '/accompagnement-ia-pme/',
+  },
+  {
     num: 'Près de chez vous',
     titre: 'Nice, Sophia Antipolis, Monaco',
     texte: "Basé à Nice, je prépare vos séminaires sur place dans les Alpes-Maritimes, en français ou en anglais, et j'interviens partout en France.",
@@ -168,7 +175,7 @@ const journeyStepsAfterFork = [
           suites. Vous restez dans votre rôle de dirigeant.
         </p>
       </div>
-      <div class="cards">
+      <div class="cards cards-quatre">
         {seminaires.map((s) => (
           <a class="card ia-porte" href={withBase(s.href)}>
             <span class="num">{s.num}</span>
@@ -488,6 +495,18 @@ const journeyStepsAfterFork = [
 
 <style>
   /* --- Les trois portes IA, sous le hero --- */
+  /* Quatre cartes : une ligne sur grand écran, deux par deux en dessous,
+     plutôt que trois cartes et une orpheline. */
+  @media (min-width: 700px) {
+    .cards-quatre {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1180px) {
+    .cards-quatre {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
   .ia-porte {
     display: flex;
     flex-direction: column;
