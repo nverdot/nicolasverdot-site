@@ -1879,3 +1879,8 @@ body.case-modal-lock-scroll {
   white-space: nowrap;
   border: 0;
 }
+
+/* Un clic sur une ancre ne doit pas glisser le titre sous le menu fixe. */
+section[id] {
+  scroll-margin-top: 96px;
+}
