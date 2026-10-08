@@ -137,15 +137,17 @@ const resourceArticles = [
       <div>
         <h2>Un partenaire pour franchir un cap et mettre votre collectif en mouvement</h2>
         <p>Depuis plus de dix ans, j'accompagne les équipes et les organisations dans les moments où le collectif doit franchir une étape. J'observe ce qui se joue dans les interactions, les rôles, les habitudes et les modes de décision, et je fais émerger les points de vue, les attentes, les désaccords et les idées qui ont besoin d'être entendus pour permettre au groupe d'avancer.</p>
-        <p class="partner-question-lead">Je vous aide notamment à répondre à ces questions :</p>
-        <ul class="partner-questions">
-          <li>Comment mettre en place l'agilité dans votre organisation ?</li>
-          <li>Quelle est la place du manager dans une organisation agile ?</li>
-          <li>Comment fluidifier le delivery et livrer plus régulièrement ?</li>
-          <li>Comment faire équipe au sein du CODIR et oser se dire les choses ?</li>
-          <li>Comment aligner tout le monde sur une vision et des priorités claires ?</li>
-          <li>Comment déployer l'IA dans vos équipes sans laisser personne au bord du chemin ?</li>
-        </ul>
+        <div class="partner-questions">
+          <h3>Les questions auxquelles je vous aide à répondre</h3>
+          <ul>
+            <li><span class="partner-q-mark" aria-hidden="true">?</span><span>Comment mettre en place <strong>l'agilité</strong> dans votre organisation&nbsp;?</span></li>
+            <li><span class="partner-q-mark" aria-hidden="true">?</span><span>Quelle est la <strong>place du manager</strong> dans une organisation agile&nbsp;?</span></li>
+            <li><span class="partner-q-mark" aria-hidden="true">?</span><span>Comment <strong>fluidifier le delivery</strong> et livrer plus régulièrement&nbsp;?</span></li>
+            <li><span class="partner-q-mark" aria-hidden="true">?</span><span>Comment <strong>faire équipe au sein du CODIR</strong> et oser se dire les choses&nbsp;?</span></li>
+            <li><span class="partner-q-mark" aria-hidden="true">?</span><span>Comment aligner tout le monde sur <strong>une vision et des priorités claires</strong>&nbsp;?</span></li>
+            <li><span class="partner-q-mark" aria-hidden="true">?</span><span>Comment <strong>déployer l'IA</strong> dans vos équipes sans laisser personne au bord du chemin&nbsp;?</span></li>
+          </ul>
+        </div>
         <p><a class="card-link" href={withBase('/a-propos/')}>Qui je suis et comment je travaille</a></p>
       </div>
     </div>
@@ -434,26 +436,61 @@ const resourceArticles = [
     color: var(--color-orange);
     line-height: 1.2;
   }
-  .partner-intro .partner-question-lead {
-    color: var(--color-muted);
-    font-size: var(--text-base);
-    margin-bottom: var(--space-3);
-  }
   .partner-questions {
+    margin: var(--space-6) 0;
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+  }
+  .partner-questions h3 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-sm);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-clay-ink);
+  }
+  .partner-questions ul {
     list-style: none;
-    margin: 0 0 var(--space-6);
+    margin: 0;
     padding: 0;
-    display: grid;
-    gap: var(--space-3);
   }
   .partner-questions li {
-    padding-left: var(--space-4);
-    border-left: 3px solid var(--color-orange);
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: start;
+    padding: var(--space-3) 0;
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-base);
+    line-height: 1.45;
+    color: var(--color-ink);
+  }
+  .partner-questions li:last-child {
+    padding-bottom: 0;
+  }
+  .partner-questions strong {
     font-weight: 700;
     color: var(--color-navy);
-    line-height: 1.35;
+  }
+  .partner-q-mark {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-orange);
+    color: var(--color-ink-solid);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    line-height: 1;
+  }
+  @media (max-width: 480px) {
+    .partner-questions {
+      padding: var(--space-4);
+    }
   }
         /* --- Faire confiance : frise verticale d'un seul échange qui débouche
      sur deux issues, dans une colonne volontairement plus étroite que les
