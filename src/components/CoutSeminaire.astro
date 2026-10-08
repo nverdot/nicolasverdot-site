@@ -168,13 +168,24 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
         <p class="cs-total" data-cs-out="total">—</p>
         <dl class="cs-lines">
           <div><dt><Fragment set:html={svg('salle')} />Le jour J <span data-cs-out="detail">temps des participants</span></dt><dd data-cs-out="jourj">—</dd></div>
-          <div><dt><Fragment set:html={svg('prepa')} />La préparation <span>temps passé en interne</span></dt><dd data-cs-out="prepa">—</dd></div>
-          <div><dt><Fragment set:html={svg('lieu')} />Le lieu et les repas <span>location, restauration, hébergement</span></dt><dd data-cs-out="lieu">—</dd></div>
+          <div><dt><Fragment set:html={svg('prepa')} />La préparation</dt><dd data-cs-out="prepa">—</dd></div>
+          <div><dt><Fragment set:html={svg('lieu')} />Le lieu et les repas</dt><dd data-cs-out="lieu">—</dd></div>
           <div data-cs-row="trajets"><dt><Fragment set:html={svg('trajets')} />Les déplacements</dt><dd data-cs-out="trajets">—</dd></div>
         </dl>
         <p class="cs-heure">Soit <strong data-cs-out="heure">—</strong> par heure passée ensemble.</p>
         <p class="cs-an" data-cs-row="an">Sur un an&nbsp;: <strong data-cs-out="an">—</strong></p>
-        <p class="cs-note">L'animation n'est pas comptée ici&nbsp;: elle se chiffre lors du cadrage. Elle sert à une chose, que cette somme produise des décisions et des suites.</p>
+        {/* Les quatre chiffres restent sous les yeux pendant que l'on règle le
+            formulaire : le bloc suit le défilement, pas les tuiles du haut. */}
+        <div class="cs-rappel-bloc">
+        <p class="cs-rappel-titre">Si rien ne change</p>
+        <ul class="cs-rappel">
+          <li><Fragment set:html={svg('inefficace')} /><span><strong>72&nbsp;%</strong> des réunions jugées inefficaces&nbsp;: <b data-cs-out="perdu2">—</b> sans effet<span data-cs-out="paran2"></span>.</span></li>
+          <li><Fragment set:html={svg('energie')} /><span><strong>76&nbsp;%</strong> en sortent épuisés&nbsp;: <b data-cs-out="vides2">—</b>.</span></li>
+          <li><Fragment set:html={svg('flou')} /><span><strong>54&nbsp;%</strong> repartent sans prochaine étape&nbsp;: <b data-cs-out="flou2">—</b>.</span></li>
+          <li><Fragment set:html={svg('remonte')} /><span><strong>61&nbsp;%</strong> des managers jugent inefficace la moitié du temps passé à décider.</span></li>
+        </ul>
+        </div>
+        <p class="cs-note">L'animation n'est pas comptée ici&nbsp;: elle se chiffre lors du cadrage.</p>
         <slot />
       </div>
     </div>
@@ -256,6 +267,10 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
       sortie('paran-perdu').textContent = parAn > 1 ? ' par an' : '';
       sortie('vides').textContent = personnes(0.76);
       sortie('flou').textContent = personnes(0.54);
+      sortie('perdu2').textContent = euros.format(annuel * 0.72);
+      sortie('paran2').textContent = parAn > 1 ? ' par an' : '';
+      sortie('vides2').textContent = personnes(0.76);
+      sortie('flou2').textContent = personnes(0.54);
     };
 
     [...nombres, ...couts].forEach((el) => el.addEventListener('input', calculer));
@@ -680,5 +695,96 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
   .cs-result :global(.btn) {
     background: #122033;
     color: #fff;
+  }
+
+  .cs-rappel {
+    display: grid;
+    gap: var(--space-3);
+    margin: var(--space-6) 0 0;
+    padding: var(--space-4) 0 0;
+    border-top: 1px solid rgba(18, 32, 51, 0.18);
+    list-style: none;
+    color: #122033;
+  }
+  .cs-rappel li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+  .cs-rappel strong {
+    font-weight: 800;
+  }
+  .cs-rappel b {
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .cs-rappel :global(.cs-ico) {
+    margin-top: 0.15em;
+  }
+
+  /* Le bloc suit le défilement : il doit tenir dans la hauteur d'un écran
+     d'ordinateur portable, d'où des marges resserrées. */
+  .cs-result {
+    top: var(--space-16);
+    padding: var(--space-6);
+  }
+  .cs-total {
+    margin-bottom: var(--space-4);
+  }
+  .cs-lines {
+    gap: var(--space-2);
+  }
+  .cs-lines > div {
+    padding-bottom: var(--space-2);
+  }
+  .cs-heure,
+  .cs-an {
+    margin-top: var(--space-3);
+    font-size: 1rem;
+  }
+  .cs-rappel {
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+  }
+  .cs-note {
+    margin-top: var(--space-3);
+  }
+  .cs-result :global(.btn) {
+    margin-top: var(--space-4);
+  }
+
+  /* Les chiffres, dans un encart bleu nuit posé sur le jaune : c'est la
+     partie qui doit sauter aux yeux. */
+  .cs-rappel-bloc {
+    margin-top: var(--space-4);
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+    background: #122033;
+    color: #fff;
+  }
+  .cs-rappel-titre {
+    margin: 0 0 var(--space-3);
+    color: var(--color-orange);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .cs-rappel-bloc .cs-rappel {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: #fff;
+  }
+  .cs-rappel-bloc .cs-rappel strong {
+    color: var(--color-orange);
+    font-size: 1.15em;
+  }
+  .cs-rappel-bloc .cs-rappel b {
+    color: #fff;
+  }
+  .cs-result .cs-rappel-bloc :global(.cs-ico) {
+    color: var(--color-orange);
   }
 </style>
