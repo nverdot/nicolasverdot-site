@@ -5,6 +5,7 @@ import CTABlock from '../components/CTABlock.astro';
 import CoutSeminaire from '../components/CoutSeminaire.astro';
 import ClientLogoStrip from '../components/ClientLogoStrip.astro';
 import { withBase } from '../utils/url';
+import action from '../assets/nicolas-action.jpeg';
 
 const relatedCaseStudies = (
   await getCollection('caseStudies', ({ data }) => !data.draft && data.offerHref === '/seminaires-entreprise/')
@@ -361,8 +362,8 @@ const takeCharge = [
         </div>
       </div>
       <figure class="hero-figure">
-        <img src={withBase('/cas-clients/jci-monaco-atelier-collectif-facilitation-graphique.jpg')} alt="Des participants travaillent en petit groupe pendant un séminaire, devant des affiches dessinées au feutre." loading="eager" decoding="async" />
-        <figcaption>Séminaire de prise de présidence, JCI Monaco.</figcaption>
+        <img src={action.src} alt="Nicolas Verdot, feutre en main, dessine une fresque en direct pendant un atelier." loading="eager" decoding="async" />
+        <figcaption>Ce qui se dit et se décide est dessiné en direct, sous les yeux de tous.</figcaption>
       </figure>
     </div>
   </section>
@@ -399,6 +400,9 @@ const takeCharge = [
       </div>
       <div class="versus">
         <div class="versus-col versus-non">
+          {/* Image d'illustration fournie par Nicolas : ce n'est pas une de ses
+              missions, et rien dans la légende ne le laisse croire. */}
+          <img class="versus-photo" src={withBase('/seminaires/journee-a-ecouter.webp')} alt="Une salle en U tournée vers un écran : un intervenant commente une diapositive, des participants regardent leur téléphone ou leur ordinateur." width="1672" height="941" loading="lazy" decoding="async" />
           <p class="versus-label">Le séminaire que tout le monde a déjà vécu</p>
           <h3>Une journée à écouter</h3>
           <ul>
@@ -406,6 +410,7 @@ const takeCharge = [
           </ul>
         </div>
         <div class="versus-col versus-oui">
+          <img class="versus-photo" src={withBase('/cas-clients/jci-monaco-atelier-collectif-facilitation-graphique.jpg')} alt="Des participants assis en cercle travaillent ensemble pendant un séminaire, devant des affiches dessinées au feutre." width="1800" height="1350" loading="lazy" decoding="async" />
           <p class="versus-label">Celui qui vaut le déplacement</p>
           <h3>Une journée à travailler</h3>
           <ul>
@@ -724,6 +729,18 @@ const takeCharge = [
     border-color: var(--color-ink-solid);
     color: #fff;
     box-shadow: var(--shadow-md);
+  }
+  .versus-photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    margin-bottom: var(--space-6);
+    border-radius: var(--radius-sm);
+  }
+  .versus-non .versus-photo {
+    filter: grayscale(0.5);
   }
   .versus-label {
     margin: 0 0 var(--space-2);
