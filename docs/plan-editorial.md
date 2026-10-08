@@ -12,7 +12,7 @@ Règles :
   terrain minimum, 2 à 4 liens internes, CTA final en italique ;
 - les piliers correspondent à l'enum de `src/content/config.ts`.
 
-Statut : ✅ = publié (vague 1 : 25 articles, vague 2 : 25 articles, 50/150 au total).
+Statut : ✅ = publié (vague 1 : 25 articles, vague 2 : 25 articles, 50/150 au total ; n° 36 publié à part en octobre 2026 avec les pages séminaires, 51/150).
 
 ## Cluster 1 — Décision et priorisation (25)
 
@@ -54,7 +54,7 @@ Statut : ✅ = publié (vague 1 : 25 articles, vague 2 : 25 articles, 50/150 au 
 33. ✅ Réunion hybride : faire exister ceux qui sont à distance (réunion hybride)
 34. ✅ Le compte rendu que tout le monde lit (compte rendu de réunion)
 35. ✅ Combien de participants pour quel format ? (taille groupe atelier)
-36. Kick-off de projet : lancer sans s'essouffler (kick-off projet)
+36. ✅ Kick-off de projet : lancer sans s'essouffler (kick-off projet)
 37. Choisir un lieu de séminaire : les critères qui comptent (lieu séminaire)
 38. Team building ou séminaire de travail : arrêter de confondre (team building séminaire)
 39. La réunion debout : mythe et usages réels (réunion debout)
