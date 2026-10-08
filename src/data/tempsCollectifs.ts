@@ -20,7 +20,7 @@ export interface Profil {
 // collaborateur : le calcul se fait donc profil par profil.
 export const profils: Profil[] = [
   { id: 'direction', label: 'Dirigeants et directeurs', singulier: 'dirigeant ou directeur', cout: 1200 },
-  { id: 'managers', label: 'Managers et cadres', singulier: 'manager ou cadre', cout: 700 },
+  { id: 'managers', label: 'Managers', singulier: 'manager', cout: 700 },
   { id: 'equipes', label: 'Collaborateurs', singulier: 'collaborateur', cout: 400 },
 ];
 

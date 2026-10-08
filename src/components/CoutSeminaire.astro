@@ -31,10 +31,18 @@ const ico: Record<string, string> = {
   energie: '<rect x="3" y="8" width="16" height="9" rx="2"/><path d="M21 11v3"/><path d="M6 11v3"/>',
   flou: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7"/><circle cx="12" cy="16.5" r="0.8" fill="currentColor" stroke="none"/>',
 };
+ico.remonte = '<path d="M12 20V6"/><path d="M6 11l6-6 6 6"/><path d="M5 20h14"/>';
 const svg = (nom: string) =>
   `<svg class="cs-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ico[nom]}</svg>`;
 
 const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
+// McKinsey Quarterly, « Three keys to faster, better decisions », mai 2019,
+// enquête auprès de plus de 1 200 managers. Lu dans le texte le 8 octobre 2026 :
+// 61 % jugent inefficace au moins la moitié du temps passé à décider, et
+// l'article cite parmi les causes les rôles flous et le manque de délégation,
+// qui font remonter les décisions plus haut qu'il ne faudrait. Il ne donne PAS
+// de pourcentage propre à la délégation : on n'en invente pas.
+const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/three-keys-to-faster-better-decisions';
 ---
 
 <section class="section alt cout-seminaire" data-reveal data-section-name="Calculatrice : le coût de votre séminaire" id="cout-seminaire">
@@ -67,7 +75,11 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
           <p class="cs-stat-chiffre"><Fragment set:html={svg('flou')} />54&nbsp;%</p>
           <p class="cs-stat-texte"><strong>quittent souvent une réunion sans prochaine étape claire.</strong> Ici&nbsp;: <span data-cs-out="flou">—</span> ne sauraient pas qui fait quoi.</p>
         </div>
-        <p class="cs-stats-source">Chiffres sur les réunions&nbsp;: <a href={SOURCE} target="_blank" rel="noopener">enquête Atlassian auprès de 5&nbsp;000 salariés</a>, appliqués à la situation décrite ci-dessus, que vous pouvez modifier plus bas. Un séminaire bien conçu sert précisément à ne pas leur ressembler.</p>
+        <div class="cs-stat">
+          <p class="cs-stat-chiffre"><Fragment set:html={svg('remonte')} />61&nbsp;%</p>
+          <p class="cs-stat-texte"><strong>des managers jugent inefficace au moins la moitié du temps passé à décider.</strong> En cause, entre autres&nbsp;: des rôles flous et trop peu de délégation. Les décisions remontent alors plus haut qu'il ne faudrait.</p>
+        </div>
+        <p class="cs-stats-source">Sources&nbsp;: <a href={SOURCE} target="_blank" rel="noopener">enquête Atlassian auprès de 5&nbsp;000 salariés</a> pour les trois premiers chiffres, qui portent sur les réunions et sont appliqués à la situation décrite ci-dessus&nbsp;; <a href={SOURCE_DECISION} target="_blank" rel="noopener">enquête McKinsey auprès de 1&nbsp;200 managers</a> pour le quatrième. Un séminaire bien conçu sert précisément à ne pas leur ressembler.</p>
       </div>
 
     <div class="cs-calc-tete">
@@ -280,12 +292,19 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
     display: grid;
     gap: var(--space-3);
   }
+  /* Les lignes sont en retrait sous « Qui sera dans la salle ? », et la case
+     du nombre est étroite : deux ou trois chiffres suffisent. */
   .cs-profils-tete,
   .cs-profil {
     display: grid;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.7fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) 4.5rem 7.5rem;
     gap: var(--space-3);
     align-items: center;
+    padding-left: var(--space-6);
+  }
+  .cs-profil input[data-cs-nb] {
+    text-align: center;
+    padding-inline: var(--space-2);
   }
   .cs-profils-tete {
     color: var(--color-muted);
@@ -454,7 +473,7 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
   }
   .cs-stats {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-4);
     margin-bottom: var(--space-12);
   }
@@ -555,7 +574,12 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
     color: var(--color-muted);
     font-size: var(--text-sm);
   }
-  @media (max-width: 900px) {
+  @media (max-width: 1100px) {
+    .cs-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 620px) {
     .cs-stats {
       grid-template-columns: minmax(0, 1fr);
     }
