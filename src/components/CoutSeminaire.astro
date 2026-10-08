@@ -77,9 +77,9 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
         </div>
         <div class="cs-stat">
           <p class="cs-stat-chiffre"><Fragment set:html={svg('remonte')} />61&nbsp;%</p>
-          <p class="cs-stat-texte"><strong>des managers jugent inefficace au moins la moitié du temps passé à décider.</strong> En cause, entre autres&nbsp;: des rôles flous et trop peu de délégation. Les décisions remontent alors plus haut qu'il ne faudrait.</p>
+          <p class="cs-stat-texte"><strong>des managers jugent inefficace la moitié du temps passé à décider.</strong> Ici&nbsp;: <span data-cs-out="decide">—</span> en diraient autant.</p>
         </div>
-        <p class="cs-stats-source">Sources&nbsp;: <a href={SOURCE} target="_blank" rel="noopener">enquête Atlassian auprès de 5&nbsp;000 salariés</a> pour les trois premiers chiffres, qui portent sur les réunions et sont appliqués à la situation décrite ci-dessus&nbsp;; <a href={SOURCE_DECISION} target="_blank" rel="noopener">enquête McKinsey auprès de 1&nbsp;200 managers</a> pour le quatrième. Un séminaire bien conçu sert précisément à ne pas leur ressembler.</p>
+        <p class="cs-stats-source">Sources&nbsp;: <a href={SOURCE} target="_blank" rel="noopener">enquête Atlassian auprès de 5&nbsp;000 salariés</a> pour les trois premiers chiffres, qui portent sur les réunions et sont appliqués à la situation décrite ci-dessus&nbsp;; <a href={SOURCE_DECISION} target="_blank" rel="noopener">enquête McKinsey auprès de 1&nbsp;200 managers</a> pour le quatrième, qui cite parmi les causes des rôles flous et trop peu de délégation&nbsp;: les décisions remontent alors plus haut qu'il ne faudrait. Un séminaire bien conçu sert précisément à éviter cela.</p>
       </div>
 
     <div class="cs-calc-tete">
@@ -182,13 +182,32 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
           <li><Fragment set:html={svg('inefficace')} /><span><strong>72&nbsp;%</strong> des réunions jugées inefficaces&nbsp;: <b data-cs-out="perdu2">—</b> sans effet<span data-cs-out="paran2"></span>.</span></li>
           <li><Fragment set:html={svg('energie')} /><span><strong>76&nbsp;%</strong> en sortent épuisés&nbsp;: <b data-cs-out="vides2">—</b>.</span></li>
           <li><Fragment set:html={svg('flou')} /><span><strong>54&nbsp;%</strong> repartent sans prochaine étape&nbsp;: <b data-cs-out="flou2">—</b>.</span></li>
-          <li><Fragment set:html={svg('remonte')} /><span><strong>61&nbsp;%</strong> des managers jugent inefficace la moitié du temps passé à décider.</span></li>
+          <li><Fragment set:html={svg('remonte')} /><span><strong>61&nbsp;%</strong> jugent inefficace la moitié du temps passé à décider&nbsp;: <b data-cs-out="decide2">—</b>.</span></li>
         </ul>
         </div>
         <p class="cs-note">L'animation n'est pas comptée ici&nbsp;: elle se chiffre lors du cadrage.</p>
         <slot />
       </div>
     </div>
+
+      {/* Ce que l'on peut récupérer. On ne promet pas de tout regagner : le
+          visiteur choisit lui-même la part du temps perdu qu'il pense pouvoir
+          rendre utile, et le montant en découle. C'est une hypothèse, dite
+          comme telle. */}
+      <div class="cs-recup">
+        <div>
+          <p class="cs-recup-titre">Et si vous en récupériez une partie&nbsp;?</p>
+          <p class="cs-recup-texte">Rendre utile <span data-cs-out="recup-part">un quart</span> de ce temps aujourd'hui sans effet, c'est</p>
+          <p class="cs-recup-montant"><strong data-cs-out="recup">—</strong> <span data-cs-out="recup-periode">par an</span></p>
+        </div>
+        <fieldset class="cs-recup-choix">
+          <legend>Votre hypothèse</legend>
+          <label><input type="radio" name="cs-recup" value="0.1" data-mot="un dixième" /><span>10&nbsp;%</span></label>
+          <label><input type="radio" name="cs-recup" value="0.25" data-mot="un quart" checked /><span>25&nbsp;%</span></label>
+          <label><input type="radio" name="cs-recup" value="0.5" data-mot="la moitié" /><span>50&nbsp;%</span></label>
+        </fieldset>
+        <p class="cs-recup-note">Ce n'est pas une promesse&nbsp;: c'est un ordre de grandeur, calculé sur les 72&nbsp;% de réunions jugées inefficaces et sur vos chiffres.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -271,6 +290,13 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
       sortie('paran2').textContent = parAn > 1 ? ' par an' : '';
       sortie('vides2').textContent = personnes(0.76);
       sortie('flou2').textContent = personnes(0.54);
+      sortie('decide').textContent = personnes(0.61);
+      sortie('decide2').textContent = personnes(0.61);
+      const choix = racine.querySelector<HTMLInputElement>('input[name="cs-recup"]:checked');
+      const part = parseFloat(choix?.value ?? '0.25');
+      sortie('recup').textContent = euros.format(annuel * 0.72 * part);
+      sortie('recup-part').textContent = choix?.dataset.mot ?? 'un quart';
+      sortie('recup-periode').textContent = parAn > 1 ? 'par an' : 'sur ce séminaire';
     };
 
     [...nombres, ...couts].forEach((el) => el.addEventListener('input', calculer));
@@ -279,6 +305,7 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
       el.addEventListener('change', calculer);
     });
     frequence.addEventListener('change', calculer);
+    racine.querySelectorAll<HTMLInputElement>('input[name="cs-recup"]').forEach((el) => el.addEventListener('change', calculer));
     typeSelect.addEventListener('change', () => {
       const choix = typeSelect.selectedOptions[0];
       if (!choix) return;
@@ -786,5 +813,97 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
   }
   .cs-result .cs-rappel-bloc :global(.cs-ico) {
     color: var(--color-orange);
+  }
+
+  /* Le bandeau « récupérer » : toute la largeur, sous le formulaire et le bloc jaune. */
+  .cs-recup {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-4) var(--space-8);
+    align-items: center;
+    margin-top: var(--space-8);
+    padding: var(--space-8);
+    border-radius: var(--radius-md);
+    background: #122033;
+    color: #fff;
+    box-shadow: var(--shadow-md);
+  }
+  .cs-recup-titre {
+    margin: 0 0 var(--space-2);
+    color: var(--color-orange);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .cs-recup-texte {
+    margin: 0;
+    font-size: var(--text-lg);
+  }
+  .cs-recup-montant {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-lg);
+  }
+  .cs-recup-montant strong {
+    color: var(--color-orange);
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+  }
+  .cs-recup-choix {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .cs-recup-choix legend {
+    float: left;
+    width: 100%;
+    margin-bottom: var(--space-2);
+    padding: 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+  .cs-recup-choix label {
+    position: relative;
+    cursor: pointer;
+  }
+  .cs-recup-choix input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .cs-recup-choix span {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+  }
+  .cs-recup-choix input:checked + span {
+    border-color: var(--color-orange);
+    background: var(--color-orange);
+    color: #122033;
+  }
+  .cs-recup-choix input:focus-visible + span {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+  .cs-recup-note {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: var(--text-sm);
+  }
+  @media (max-width: 760px) {
+    .cs-recup {
+      grid-template-columns: minmax(0, 1fr);
+      padding: var(--space-6) var(--space-4);
+    }
   }
 </style>
