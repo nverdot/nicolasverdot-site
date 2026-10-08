@@ -48,9 +48,9 @@ const villes = [
     link: 'Voir le séminaire JCI Monaco',
   },
   {
-    name: 'Séminaire en Provence-Alpes-Côte d’Azur',
-    zone: 'Var · Bouches-du-Rhône · partout en France',
-    text: "Toulon, Aix-en-Provence, Marseille et le reste de la région : j'interviens aussi pour des séminaires résidentiels, et partout en France pour des séminaires et des formations.",
+    name: 'Séminaire en région PACA',
+    zone: 'Var · Bouches-du-Rhône · Vaucluse · Alpes',
+    text: "Toulon, Aix-en-Provence, Marseille, Avignon et toute la région Provence-Alpes-Côte d'Azur (région Sud) : j'y conçois et j'y anime des séminaires de direction, des kick-off et des séminaires résidentiels. Depuis Nice, toute la région PACA est à quelques heures.",
   },
 ];
 
@@ -80,6 +80,10 @@ const missions = [
 ];
 
 const faq = [
+  {
+    q: 'Intervenez-vous dans toute la région PACA ?',
+    a: "Oui. Je suis basé à Nice et j'interviens dans toute la région Provence-Alpes-Côte d'Azur : Alpes-Maritimes, Var, Bouches-du-Rhône, Vaucluse et départements alpins. Toulon, Aix-en-Provence, Marseille ou Avignon se rejoignent dans la journée, ce qui permet de préparer le séminaire sur place.",
+  },
   {
     q: 'Intervenez-vous uniquement dans les Alpes-Maritimes ?',
     a: "Non. Je suis basé à Nice, ce qui rend mes interventions à Nice, Cannes, Sophia Antipolis, Antibes, Villeneuve-Loubet, Carros, Grasse, Mandelieu ou Monaco simples et sans frais de déplacement importants — mais j'interviens partout en Provence-Alpes-Côte d'Azur et en France pour des séminaires et des formations.",
@@ -123,15 +127,15 @@ const faqSchema = {
 
 <Layout
   title="Séminaire d'entreprise à Nice, Cannes, Monaco — facilitateur"
-  description="Séminaire de direction, kick-off ou séminaire d'équipe sur la Côte d'Azur : un facilitateur basé à Nice. Sophia Antipolis, Antibes, Cannes, Carros, Monaco."
+  description="Séminaire de direction, kick-off ou séminaire d'équipe sur la Côte d'Azur et en PACA : un facilitateur basé à Nice. Sophia Antipolis, Antibes, Cannes, Monaco."
   path="/seminaires-alpes-maritimes/"
 >
   <PageHero
-    eyebrow="Côte d'Azur · Alpes-Maritimes · Monaco"
+    eyebrow="Côte d'Azur · Alpes-Maritimes · Monaco · PACA"
     title="Séminaire d'entreprise à Nice et dans les Alpes-Maritimes :"
     titleAccent="un facilitateur"
     titleTail="basé dans le 06."
-    summary="Séminaire de direction, kick-off de projet, séminaire d'équipe : je conçois et j'anime votre séminaire là où vos équipes travaillent — <strong>Nice, Sophia Antipolis, Antibes, Cannes, Carros, Grasse, Monaco</strong> — et partout en France."
+    summary="Séminaire de direction, kick-off de projet, séminaire d'équipe : je conçois et j'anime votre séminaire là où vos équipes travaillent — <strong>Nice, Sophia Antipolis, Antibes, Cannes, Carros, Grasse, Monaco</strong> — dans toute la région PACA et partout en France."
     pills={['Séminaire de direction', 'Kick-off', "Séminaire d'équipe", 'Basé à Nice']}
     photo={{
       src: withBase('/cas-clients/fibois-cedre-atlas-facilitation-graphique-nicolas-verdot.jpg'),
