@@ -50,6 +50,7 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
   - Deux situations ajoutées sur la page séminaires : atelier feuille de route (cas Urssaf / Acoss) et co-préparation avec un animateur interne (PwC).
   - Section « On se réunit pour quoi, au juste ? » sur /seminaires-entreprise/ : la journée de diapositives face à la journée de travail.
   - **SessionLab est connecté** (60 sessions lues). La page CODIR montre un déroulé réel : le séminaire au vert d'un comité de direction de l'Urssaf Caisse nationale, en six séquences, sans aucun nom de personne.
+  - Section « Le type de séminaires et d'ateliers que j'accompagne » sur /seminaires-entreprise/ : sept missions réelles dans les grandes lignes (Urssaf Caisse nationale ×3, association du secteur social sans nom ni photo, Ville de Valbonne, PwC, JCI Monaco). Sources : SessionLab et les mails de 2022 pour Valbonne. La page CODIR ne garde que quatre grandes lignes.
   - Menu : « Séminaires » remplace « Accueil » (le logo ramène à l'accueil).
   - Aperçu local : `npm run dev -- --port 4331` (configuration « seminaires » dans `.claude/launch.json`).
 

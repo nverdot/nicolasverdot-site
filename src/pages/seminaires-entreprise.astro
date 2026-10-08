@@ -133,6 +133,66 @@ const journeeTravail = [
   { verbe: 'S’engager', texte: 'sur une première action, avec une date.' },
 ];
 
+// Missions réelles, racontées dans les grandes lignes : le format, le groupe,
+// ce qui a été travaillé. Aucun nom de personne, aucun détail interne.
+// Pas de nom ni de photo pour l'association (photos interdites de publication).
+const interventions = [
+  {
+    type: 'Séminaire de comité de direction',
+    format: 'Un jour et demi, au vert',
+    client: 'Urssaf Caisse nationale',
+    text: "À quoi sert notre comité, qui décide quoi, ce qui freine notre fonctionnement : trois questions travaillées par le comité lui-même.",
+    href: '/seminaire-codir/',
+    link: 'Voir le séminaire CODIR',
+  },
+  {
+    type: 'Comité de direction élargi',
+    format: 'Une journée, 14 personnes',
+    client: 'Urssaf Caisse nationale',
+    text: "Une matinée pour expérimenter la délégation sur les vraies décisions du comité, puis une rétrospective de son fonctionnement.",
+    href: '/cas-clients/urssaf-acoss/',
+    link: 'Voir le cas Urssaf / Acoss',
+  },
+  {
+    type: 'Séminaire de managers',
+    format: 'Deux jours, à Biot (Sophia Antipolis)',
+    client: 'Urssaf Caisse nationale',
+    text: "Faire vivre l'agilité plutôt que l'expliquer : ateliers pratiques en équipes, forum ouvert, puis un plan d'expérimentations à mener.",
+    href: '/seminaire-sophia-antipolis/',
+    link: 'Séminaires à Sophia Antipolis',
+  },
+  {
+    type: "Séminaire d'encadrement",
+    format: 'Une journée, en co-facilitation',
+    client: 'Association du secteur social',
+    text: "Écrire ensemble la culture managériale : la vision de la direction, un forum ouvert, un atelier de consensus, un plan d'action. Le tout capté en fresques.",
+  },
+  {
+    type: "Ateliers d'intelligence collective",
+    format: 'Ateliers courts, pour les agents de la commune',
+    client: 'Ville de Valbonne Sophia Antipolis',
+    text: "« Zéro plastique au bureau » : pendant la Semaine européenne de la réduction des déchets, les agents cherchent ensemble des alternatives et des éco-gestes, restitués en visuels.",
+    href: '/seminaire-sophia-antipolis/',
+    link: 'Séminaires à Sophia Antipolis',
+  },
+  {
+    type: 'Programme mené par étapes',
+    format: 'Ateliers d’une demi-journée, 25 personnes',
+    client: 'PwC',
+    text: "Je co-prépare chaque atelier avec la personne qui l'anime en interne : démonstrations des équipes, fresque d'avancement, co-construction d'un nouveau rôle.",
+    href: '/offres/mentoring/',
+    link: 'Voir le mentoring',
+  },
+  {
+    type: 'Séminaire de lancement',
+    format: 'Prise de présidence',
+    client: 'JCI Monaco',
+    text: "Faire connaissance, partager une ambition et construire le cap de l'année, avec un agenda et des contributions dessinés en direct.",
+    href: '/cas-clients/jci-monaco/',
+    link: 'Voir le cas JCI Monaco',
+  },
+];
+
 const icons: Record<string, string> = {
   compass: '<path d="M4 17c2.5-6 5 6 8 0s4.5-5 8 0"/><circle cx="4" cy="17" r="1" fill="currentColor" stroke="none"/><circle cx="20" cy="17" r="1" fill="currentColor" stroke="none"/>',
   chat: '<rect x="3" y="5" width="18" height="11" rx="2"/><path d="M8 16l-2 3v-3"/>',
@@ -582,6 +642,29 @@ const takeCharge = [
     </section>
   )}
 
+  <section class="section alt" data-reveal data-section-name="Interventions récentes">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Sur le terrain</p>
+          <h2>Le type de séminaires et d'ateliers que j'accompagne</h2>
+        </div>
+        <p>Quelques missions, dans les grandes lignes&nbsp;: le format, le groupe, et ce qui a été travaillé.</p>
+      </div>
+      <div class="cards">
+        {interventions.map((m) => (
+          <article class="card">
+            <div class="num">{m.client}</div>
+            <h3>{m.type}</h3>
+            <p class="intervention-format">{m.format}</p>
+            <p>{m.text}</p>
+            {m.href && <a class="card-link" href={withBase(m.href)}>{m.link}</a>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <section class="section" data-reveal data-section-name="Questions fréquentes">
     <div class="container">
       <div class="section-head">
@@ -699,6 +782,10 @@ const takeCharge = [
     .versus-col {
       padding: var(--space-6) var(--space-4);
     }
+  }
+  .intervention-format {
+    font-weight: 700;
+    color: var(--color-navy);
   }
   .situation-card {
     text-decoration: none;
