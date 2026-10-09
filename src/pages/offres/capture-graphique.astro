@@ -1,4 +1,5 @@
 ---
+import { SITE } from '../../data/site';
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
@@ -186,7 +187,7 @@ const faqSchema = {
           {['Sur devis', 'En direct', 'Partout en France'].map((pill) => <span>{pill}</span>)}
         </div>
         <div class="hero-cta-row">
-          <a href={withBase('/contact/')} class="btn">Parler de votre événement →</a>
+          <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
           <a href={withBase('/seminaires-entreprise/')} class="btn-outline">Besoin aussi d'animer l'atelier ? Voir les séminaires d'entreprise</a>
         </div>
       </div>
@@ -293,7 +294,7 @@ const faqSchema = {
       <div class="callout-box callout-box-row">
         <span class="callout-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.megaphone} /></span>
         <p>Parlons de votre événement pour construire la fresque qui le fera vivre après le jour J.</p>
-        <a href={withBase('/contact/')} class="btn">Parler de votre événement →</a>
+        <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
       </div>
     </div>
   </section>
@@ -451,7 +452,6 @@ const faqSchema = {
     eyebrow="Votre événement mérite une trace vivante"
     title="Faisons apparaître ce qui compte."
     subtitle="Parlons de votre événement, du public, du programme et de la manière dont vous souhaitez réutiliser la fresque après le jour J."
-    ctaLabel="Parler de votre événement"
     dark
   />
 

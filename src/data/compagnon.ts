@@ -346,12 +346,12 @@ export const ECRANS: Ecran[] = [
       'Pour une question, un message suffit et j’y réponds moi-même. Pour un projet de collectif, une demi-heure au téléphone vaut mieux qu’un échange de mails.',
     actions: [
       {
-        texte: 'Réserver trente minutes',
+        texte: 'Réserver 30 minutes',
         icone: 'calendrier',
         vers: 'https://zcal.co/nicolas-verdot/30minutes',
         note: 'Gratuit, sans engagement — et souvent suffisant',
       },
-      { texte: 'M’écrire', icone: 'bulle', vers: '/contact/', note: 'Réponse dans la journée' },
+      { texte: 'M’écrire', icone: 'bulle', vers: '/contact/', note: 'Réponse sous 48 heures ouvrées' },
       { texte: 'Qui je suis', icone: 'question', vers: '/a-propos/' },
     ],
   },

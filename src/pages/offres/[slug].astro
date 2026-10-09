@@ -1,4 +1,5 @@
 ---
+import { SITE } from '../../data/site';
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import Quiz from '../../components/Quiz.astro';
@@ -92,7 +93,7 @@ const serviceSchema = {
           <p class="eyebrow">Investissement</p>
           <h2>{offer.price}</h2>
           <p class="muted">{offer.investmentText}</p>
-          <a class="btn" href={contactHref}>Demander un cadrage</a>
+          <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
         </article>
       </div>
 

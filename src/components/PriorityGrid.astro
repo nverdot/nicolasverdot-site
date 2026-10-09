@@ -1,4 +1,5 @@
 ---
+import { SITE } from '../data/site';
 import { priorities } from '../data/priorities';
 import { withBase } from '../utils/url';
 import Pli from './Pli.astro';
@@ -49,7 +50,7 @@ const {
     <div class="priorities-closing">
       <p class="priorities-closing-question">Plusieurs sujets à adresser en même temps ?</p>
       <p>C'est fréquent — et ce n'est pas un problème. Parlons-en pour clarifier ensemble ce qui produira le plus de valeur pour votre collectif.</p>
-      <a class="btn" href={withBase('/contact/')}>Parler de votre situation →</a>
+      <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
     </div>
   </div>
 </section>

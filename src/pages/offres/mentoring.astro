@@ -1,4 +1,5 @@
 ---
+import { SITE } from '../../data/site';
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
@@ -161,7 +162,7 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
           {['Séminaires', 'Ateliers stratégiques', "Journées d'équipe", 'Formation-action'].map((pill) => <span>{pill}</span>)}
         </div>
         <div class="hero-cta-row">
-          <a href={withBase('/contact/')} class="btn">Être accompagné pour faciliter →</a>
+          <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
           <a href={withBase('/seminaires-entreprise/')} class="btn-outline">Le sujet est trop sensible ? Déléguez-moi la facilitation</a>
         </div>
       </div>
@@ -243,7 +244,7 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
       <div class="callout-box callout-box-row">
         <span class="callout-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.shield} /></span>
         <p>Parlons de votre prochain séminaire pour construire le processus qui le fera vraiment servir.</p>
-        <a href={withBase('/contact/')} class="btn">Être accompagné pour faciliter →</a>
+        <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
       </div>
     </div>
   </section>
@@ -408,7 +409,6 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
     eyebrow="Un séminaire à concevoir et à animer vous-même ?"
     title="Vous n'avez pas besoin d'être déjà un facilitateur expérimenté."
     subtitle="Pendant ce premier échange, nous clarifierons la situation, le sujet et le niveau de préparation dont vous avez besoin."
-    ctaLabel="Être accompagné pour faciliter"
     dark
   />
 

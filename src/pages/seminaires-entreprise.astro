@@ -1,4 +1,5 @@
 ---
+import { SITE } from '../data/site';
 import Layout from '../layouts/Layout.astro';
 import Pli from '../components/Pli.astro';
 import CTABlock from '../components/CTABlock.astro';
@@ -354,7 +355,7 @@ const takeCharge = [
           {['Séminaire de direction', 'Kick-off de projet', "Séminaire d'équipe", 'Convention'].map((pill) => <span>{pill}</span>)}
         </div>
         <div class="hero-cta-row">
-          <a href={withBase('/contact/')} class="btn">Parler de votre séminaire →</a>
+          <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
           <a href={withBase('/offres/mentoring/')} class="btn-outline">Vous préférez garder l'animation ? Voir le Mentoring</a>
         </div>
       </div>
@@ -400,7 +401,7 @@ const takeCharge = [
   </section>
 
   <CoutSeminaire>
-    <a href={withBase('/contact/')} class="btn">Sécuriser cet investissement →</a>
+    <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
   </CoutSeminaire>
 
   <section data-pli class="section" id="causes" data-reveal data-section-name="Les causes">
@@ -596,7 +597,6 @@ const takeCharge = [
     eyebrow="Un séminaire à préparer ?"
     title="Vous n'avez pas besoin d'avoir déjà défini le programme."
     subtitle="Pendant ce premier échange, nous clarifierons la situation, les participants, l'objectif réel et les contraintes."
-    ctaLabel="Réserver un échange de cadrage"
     dark
   />
 

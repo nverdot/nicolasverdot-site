@@ -11,6 +11,10 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     <a href={withBase('/')} class="logo">
       <span class="logo-script">by</span> <span class="logo-caps">NICOLAS VERDOT</span>
     </a>
+    {/* Le rendez-vous reste visible quand le menu se replie (portables de
+        1280 px, tablettes). Au-dessus de 1330 px, c'est le bouton du menu qui
+        le porte ; sous 720 px, c'est l'onglet « Contact » de la barre du bas. */}
+    <a href={SITE.bookingUrl} class="btn header-cta-rapide" target="_blank" rel="noopener">Réserver 30 minutes</a>
     <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Basculer entre mode clair et mode sombre">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4" />
@@ -48,7 +52,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
         <li><a href={withBase('/a-propos/')} aria-current={currentPath === '/a-propos/' ? 'page' : undefined}>Qui suis-je</a></li>
         <li><a href={withBase('/contact/')} aria-current={currentPath === '/contact/' ? 'page' : undefined}>Contact</a></li>
       </ul>
-      <a href={SITE.bookingUrl} class="btn header-cta" target="_blank" rel="noopener">Prendre rendez-vous</a>
+      <a href={SITE.bookingUrl} class="btn header-cta" target="_blank" rel="noopener">Réserver 30 minutes</a>
     </nav>
   </div>
 </header>
@@ -171,6 +175,20 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
   .header-cta {
     white-space: nowrap;
     padding: 0.7rem 1.2rem;
+  }
+  .header-cta-rapide {
+    display: none;
+  }
+  @media (min-width: 720px) and (max-width: 1330px) {
+    .header-cta-rapide {
+      display: inline-flex;
+      margin-left: auto;
+      padding: 0.6rem 1.1rem;
+      white-space: nowrap;
+    }
+    .header-cta-rapide + .theme-toggle {
+      margin-left: 0;
+    }
   }
 
   .nav-toggle,

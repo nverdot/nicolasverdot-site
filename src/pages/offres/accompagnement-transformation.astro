@@ -1,4 +1,5 @@
 ---
+import { SITE } from '../../data/site';
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
@@ -188,7 +189,7 @@ const faqSchema = {
           {['Sur devis', 'Sur mesure', 'Avec vos équipes, pas à leur place'].map((pill) => <span>{pill}</span>)}
         </div>
         <div class="hero-cta-row">
-          <a href={withBase('/contact/')} class="btn">Échanger sur votre transformation →</a>
+          <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
           <a href={withBase('/seminaires-entreprise/')} class="btn-outline">Un seul temps fort à concevoir ? Voir les séminaires d'entreprise</a>
         </div>
       </div>
@@ -270,7 +271,7 @@ const faqSchema = {
       <div class="callout-box callout-box-row">
         <span class="callout-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.compass} /></span>
         <p>Parlons de votre contexte pour comprendre ce qui bloque, avant que la dynamique ne s'essouffle davantage.</p>
-        <a href={withBase('/contact/')} class="btn">Échanger sur votre transformation →</a>
+        <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
       </div>
     </div>
   </section>
@@ -419,7 +420,6 @@ const faqSchema = {
     eyebrow="Votre transformation n'a pas besoin d'un nouveau slogan"
     title="Elle a besoin d'un espace pour regarder ce qui se joue vraiment."
     subtitle="Prenons un premier temps pour comprendre le contexte, les tensions, les personnes concernées et ce que vous voulez réellement voir changer."
-    ctaLabel="Échanger sur votre transformation"
     dark
   />
 

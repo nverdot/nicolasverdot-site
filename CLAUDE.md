@@ -27,3 +27,5 @@ npm run build
   - vérifie qu'il n'y a aucun débordement horizontal à 375 px.
 - Grilles : utilise `minmax(0, 1fr)` plutôt que `1fr` quand le contenu ne se coupe pas.
 - Articles : suivre le plan éditorial dans `docs/plan-editorial.md`.
+- **Un seul bouton principal sur tout le site** : « Réserver 30 minutes », qui ouvre la prise de rendez-vous (`SITE.bookingUrl`). Le bouton secondaire est « M'écrire », vers `/contact/`. Pas d'autre libellé pour ces deux actions (décision du 9 octobre 2026, voir `docs/audit-site-2026-10-09.md`). Les boutons qui mènent à une autre page du site gardent leur propre libellé.
+- **Téléphone** : sous 720 px, une rubrique marquée `data-pli` se replie derrière une ligne (`Pli.astro`, `src/styles/appli.css`). Toute nouvelle page longue doit être découpée ainsi.

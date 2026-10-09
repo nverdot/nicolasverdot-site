@@ -1,4 +1,5 @@
 ---
+import { SITE } from '../../data/site';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import ClientLogoStrip from '../../components/ClientLogoStrip.astro';
@@ -177,7 +178,7 @@ const faqSchema = {
           {['Sur devis', '100 % individuel', 'En ligne ou en présentiel'].map((pill) => <span>{pill}</span>)}
         </div>
         <div class="hero-cta-row">
-          <a href={withBase('/contact/')} class="btn">Prendre un premier rendez-vous →</a>
+          <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
           <a href={withBase('/offres/mentoring/')} class="btn-outline">Besoin d'accompagner un collaborateur ? Voir Mentoring</a>
         </div>
       </div>
@@ -259,7 +260,7 @@ const faqSchema = {
       <div class="callout-box callout-box-row">
         <span class="callout-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.heart} /></span>
         <p>Parlons de votre situation pour voir si le coaching peut vous aider à en sortir.</p>
-        <a href={withBase('/contact/')} class="btn">Prendre un premier rendez-vous →</a>
+        <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
       </div>
     </div>
   </section>
@@ -396,7 +397,6 @@ const faqSchema = {
     eyebrow="Vous n'avez pas besoin de devenir quelqu'un d'autre"
     title="Vous avez peut-être besoin de retrouver de la marge de manœuvre."
     subtitle="Prenons un premier temps pour regarder ce qui se passe, ce que vous voulez faire évoluer et si je suis la bonne personne pour vous accompagner."
-    ctaLabel="Prendre un premier rendez-vous"
     dark
   />
 

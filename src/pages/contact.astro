@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import ContactForm from '../components/ContactForm.astro';
+import Pli from '../components/Pli.astro';
 import { SITE } from '../data/site';
 
 const reasons = [
@@ -32,11 +33,63 @@ const checks = [
     eyebrow="Contact"
     title="Qu'est-ce que vous cherchez"
     titleAccent="à atteindre ?"
-    summary="Séminaire, transformation, démarche participative, conférence, formation, accompagnement de leaders : décrivez <strong>votre besoin</strong> ou <strong>le défi à relever</strong>. Le premier échange sert à comprendre l'enjeu, les personnes concernées, le niveau de décision et l'échéance."
+    summary="Réservez <strong>30 minutes</strong> ou <strong>écrivez-moi</strong>. Le premier échange sert à comprendre l'enjeu, les personnes concernées et l'échéance."
   />
 
-  <section class="section" data-reveal>
-    <div class="container split">
+  {/* Les deux façons de me joindre d'abord ; l'aide pour préparer l'échange
+      ensuite. Avant octobre 2026, le formulaire arrivait après trois écrans de
+      texte sur téléphone. */}
+  <section class="section joindre" data-reveal data-section-name="Me joindre">
+    <div class="container joindre-grille">
+      <div class="panel rdv-panel">
+        <p class="eyebrow">Le plus rapide</p>
+        <h2>Réserver 30 minutes</h2>
+        <p>Un échange pour cadrer votre besoin, sans engagement. Vous choisissez le créneau.</p>
+        <a class="btn" href={SITE.bookingUrl} target="_blank" rel="noopener">Réserver 30 minutes</a>
+        <ul class="directs">
+          <li>
+            <a href={`tel:${SITE.phone}`}>
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1z" /></svg>
+              {SITE.phoneDisplay}
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${SITE.email}`}>
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v14H3zM3 7l9 6 9-6" /></svg>
+              {SITE.email}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="panel form-panel">
+        <p class="eyebrow">Ou par écrit</p>
+        <h2>M'écrire</h2>
+        <ContactForm />
+        <p class="response-time">Je réponds généralement sous 48 heures ouvrées.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" data-pli data-reveal data-section-name="Réserver un créneau">
+    <Pli titre="Choisir un créneau ici" note="Le calendrier, sans quitter la page" />
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Réserver un créneau</p>
+          <h2>Choisir un créneau sans quitter la page</h2>
+        </div>
+        <p>Un échange de 30 minutes pour cadrer votre besoin, sans engagement.</p>
+      </div>
+      <div class="booking-embed">
+        <iframe src={`${SITE.bookingUrl}?embed=1`} title="Réserver 30 minutes avec Nicolas Verdot" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-pli data-reveal data-section-name="Préparer l'échange">
+    <Pli titre="Préparer notre échange" note="Quatre questions, rien d'obligatoire" />
+    <div class="container split split-haut">
       <div>
         <h2>Quelques éléments suffisent pour commencer</h2>
         <div class="checks">
@@ -44,72 +97,77 @@ const checks = [
             <div class="check"><i>{c.i}</i><div><strong>{c.title}</strong><br /><span class="muted">{c.text}</span></div></div>
           ))}
         </div>
-
-        <div class="panel reasons-panel">
-          <h3>Vous pouvez me contacter pour</h3>
-          <ul>
-            {reasons.map((reason) => <li>{reason}</li>)}
-          </ul>
-          <p class="response-time">Je réponds généralement sous 48 heures ouvrées.</p>
-          <a class="card-link" href={SITE.bookingUrl} target="_blank" rel="noopener">Ou prendre rendez-vous en ligne</a>
-        </div>
+        <p class="prep-note">Pas besoin d'avoir toutes les réponses — c'est justement le point de départ de notre conversation.</p>
       </div>
-
-      <div class="panel form-panel">
-        <p class="eyebrow">Formulaire de contact</p>
-        <h2>Présenter la demande</h2>
-        <ContactForm />
+      <div class="panel reasons-panel">
+        <h3>Vous pouvez me contacter pour</h3>
+        <ul>
+          {reasons.map((reason) => <li>{reason}</li>)}
+        </ul>
       </div>
-    </div>
-  </section>
-
-  <section class="section alt" data-reveal data-section-name="Réserver un créneau">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Réserver un créneau</p>
-          <h2>Ou prenez directement rendez-vous</h2>
-        </div>
-        <p>Un échange de 30 minutes pour cadrer votre besoin, sans engagement.</p>
-      </div>
-      <div class="booking-embed">
-        <iframe src={`${SITE.bookingUrl}?embed=1`} title="Prendre rendez-vous avec Nicolas Verdot" loading="lazy"></iframe>
-      </div>
-    </div>
-  </section>
-
-  <section class="prep" data-reveal>
-    <div class="container prose">
-      <h2>Avant notre échange</h2>
-      <p>Pour préparer la discussion, vous pouvez déjà réfléchir à qui est concerné, au défi à relever, à ce qui bloque ou patine, à ce que vous aimeriez que les participants ressentent à la fin, à la décision ou l'action qui doit émerger, au calendrier et au nombre de personnes concernées.</p>
-      <p>Pas besoin d'avoir toutes les réponses — c'est justement le point de départ de notre conversation.</p>
     </div>
   </section>
 </Layout>
 
 <style>
-  .reasons-panel {
-    margin-top: var(--space-8);
+  .joindre-grille {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+  .rdv-panel h2,
+  .form-panel h2 {
+    font-size: var(--text-2xl);
+    margin: var(--space-2) 0 var(--space-4);
+  }
+  .rdv-panel .btn {
+    margin-top: var(--space-2);
+  }
+  .directs {
+    display: grid;
+    gap: var(--space-1);
+    margin: var(--space-6) 0 0;
+    padding: var(--space-4) 0 0;
+    border-top: 1px solid var(--color-border);
+    list-style: none;
+  }
+  .directs a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 2.75rem;
+    color: var(--color-navy);
+    font-weight: 600;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .directs svg {
+    flex: none;
+    color: var(--color-clay);
+  }
+  .response-time {
+    margin: var(--space-4) 0 0;
+    color: var(--color-faint);
+    font-size: var(--text-sm);
+  }
+  .split-haut {
+    align-items: start;
   }
   .reasons-panel h3 {
     font-size: var(--text-lg);
   }
   .reasons-panel ul {
-    margin: 0 0 var(--space-4);
+    margin: 0;
     padding-left: 1.1rem;
     color: var(--color-muted);
   }
   .reasons-panel li {
     margin-bottom: var(--space-1);
   }
-  .response-time {
-    font-size: var(--text-sm);
-    color: var(--color-faint);
-    margin-bottom: var(--space-3);
-  }
-  .form-panel h2 {
-    font-size: var(--text-2xl);
-    margin: var(--space-2) 0 var(--space-6);
+  .prep-note {
+    margin: var(--space-6) 0 0;
+    color: var(--color-muted);
   }
   .booking-embed {
     border-radius: var(--radius-md);
@@ -123,19 +181,16 @@ const checks = [
     height: 780px;
     border: 0;
   }
-  .prep {
-    background: var(--color-surface);
-  }
 
+  @media (max-width: 800px) {
+    .joindre-grille,
+    .split {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
   @media (max-width: 640px) {
     .booking-embed iframe {
       height: 650px;
-    }
-  }
-
-  @media (max-width: 800px) {
-    .split {
-      grid-template-columns: 1fr;
     }
   }
 </style>
