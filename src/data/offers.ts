@@ -43,7 +43,7 @@ export const offers: Offer[] = [
     titleAccent: 'Une équipe qui avance',
     titleTail: 'sans que tout remonte à vous.',
     description: 'Coaching d’équipe : séminaires, ateliers réguliers et coaching du manager, pour une équipe qui décide et avance sans que tout remonte à vous.',
-    summary: 'Les décisions remontent toujours aux mêmes personnes. Les mêmes blocages reviennent d’une réunion à l’autre. Le coaching d’équipe est un dispositif dans la durée — séminaires, ateliers réguliers et coaching du manager — pour faire <strong>évoluer durablement</strong> la manière de travailler, de décider et de <strong>responsabiliser l’équipe</strong>.',
+    summary: 'Les décisions remontent toujours aux mêmes personnes. Les mêmes blocages reviennent d’une réunion à l’autre. Ce n’est pas une affaire de personnes : l’équipe tient par l’énergie de quelques-uns, pas par des règles du jeu claires. Le coaching d’équipe installe ces règles dans la durée — séminaires, ateliers réguliers et coaching du manager — pour faire <strong>évoluer durablement</strong> la manière de travailler, de décider et de <strong>responsabiliser l’équipe</strong>.',
     price: 'À partir de 12 000 € HT',
     useCaseLead: 'Pour les organisations qui vivent régulièrement les mêmes difficultés malgré les plans d’action, les séminaires ou les réorganisations.',
     problems: [
