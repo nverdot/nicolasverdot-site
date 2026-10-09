@@ -24,7 +24,12 @@ export const ICONES_PORTES: Record<string, string> = {
   personne: 'M12 11.6a2.9 2.9 0 1 0 0-5.8 2.9 2.9 0 0 0 0 5.8zM5.6 19.4c.6-3.1 3.1-4.8 6.4-4.8s5.8 1.7 6.4 4.8',
   boucle: 'M20 12a8 8 0 1 1-2.7-6M20 4v5h-5',
   elan: 'M3 17l6-6 4 4 8-8M15 7h6v6',
-  boussole: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM15.2 8.8l-1.8 4.4-4.4 1.8 1.8-4.4z',
+  calendrier: 'M4.5 6.5h15v13h-15zM8.5 4v4M15.5 4v4M4.5 11h15M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01',
+  mallette: 'M4 8h16v11H4zM9 8V6.2a1.2 1.2 0 0 1 1.2-1.2h3.6A1.2 1.2 0 0 1 15 6.2V8M4 12.5h16',
+  fusee: 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5',
+  echange: 'M4 8.500h13.500M14.500 5.500l3 3-3 3M20 15.500H6.500M9.500 12.500l-3 3 3 3',
+  robot: 'M12 8V4H8M6 8h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2zM2 14h2M20 14h2M15 13v2M9 13v2',
+  micro: 'M12 14a3 3 0 0 0 3-3V7a3 3 0 0 0-6 0v4a3 3 0 0 0 3 3zM6.5 11a5.5 5.5 0 0 0 11 0M12 16.5V20M9 20h6',
 };
 
 export interface Lien {
@@ -50,10 +55,10 @@ export const portes: Porte[] = [
     besoin: 'Un temps fort à réussir',
     titre: 'Séminaires',
     phrase: "Vous réunissez vos équipes une journée ou deux. Je conçois et j'anime, pour qu'il en sorte des décisions.",
-    principal: { titre: "Le séminaire d'entreprise", href: '/seminaires-entreprise/', icone: 'equipe' },
+    principal: { titre: "Le séminaire d'entreprise", href: '/seminaires-entreprise/', icone: 'calendrier' },
     aussi: [
-      { titre: 'Séminaire de direction (CODIR)', href: '/seminaire-codir/', icone: 'decision' },
-      { titre: 'Séminaire kick-off', href: '/seminaire-kick-off/', icone: 'drapeau' },
+      { titre: 'Séminaire de direction (CODIR)', href: '/seminaire-codir/', icone: 'mallette' },
+      { titre: 'Séminaire kick-off', href: '/seminaire-kick-off/', icone: 'fusee' },
       { titre: 'Facilitation graphique en direct', href: '/offres/capture-graphique/', icone: 'crayon' },
       { titre: 'À Nice et dans les Alpes-Maritimes', href: '/seminaires-alpes-maritimes/', icone: 'lieu' },
     ],
@@ -65,7 +70,7 @@ export const portes: Porte[] = [
     phrase: "Tout le monde en parle, rien n'est décidé. On choisit quel problème traiter en premier, puis on teste.",
     principal: { titre: 'La stratégie IA pour PME', href: '/accompagnement-ia-pme/', icone: 'ia' },
     aussi: [
-      { titre: 'L’IA dans vos ateliers', href: '/intelligence-collective-augmentee/', icone: 'tableau' },
+      { titre: 'L’IA dans vos ateliers', href: '/intelligence-collective-augmentee/', icone: 'robot' },
       { titre: 'Formations IA', href: '/formations/', icone: 'diplome' },
     ],
   },
@@ -78,8 +83,8 @@ export const portes: Porte[] = [
     aussi: [
       { titre: 'Coaching de manager ou de dirigeant', href: '/offres/coaching-professionnel/', icone: 'personne' },
       { titre: 'Coaching agile (Scrum, SAFe, Kanban)', href: '/coaching-agile/', icone: 'boucle' },
-      { titre: 'Une transformation qui patine', href: '/offres/accompagnement-transformation/', icone: 'elan' },
-      { titre: 'Animer vous-même (mentoring)', href: '/offres/mentoring/', icone: 'boussole' },
+      { titre: 'Une transformation qui patine', href: '/offres/accompagnement-transformation/', icone: 'echange' },
+      { titre: 'Animer vous-même (mentoring)', href: '/offres/mentoring/', icone: 'micro' },
       { titre: 'Toutes les formations', href: '/formations/', icone: 'diplome' },
     ],
   },

@@ -250,3 +250,23 @@
     transition: none;
   }
 }
+
+/* ── Ordinateur : les cartes d'une même rangée s'alignent ─────────────
+   Surtitre, titre, texte et lien démarrent à la même hauteur d'une carte à
+   l'autre, même quand un titre passe sur deux lignes. Les cartes partagent
+   les rangées de leur grille (« subgrid ») ; un navigateur qui ne connaît pas
+   ce mot-clé garde l'affichage d'avant. */
+@media (min-width: 981px) {
+  @supports (grid-template-rows: subgrid) {
+    .cards > .card {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 4;
+      row-gap: 0;
+      align-content: start;
+    }
+    .cards > .card > .card-link {
+      align-self: end;
+    }
+  }
+}
