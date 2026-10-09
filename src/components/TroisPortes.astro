@@ -3,7 +3,7 @@
  * Les trois portes : toute l'offre, en trois besoins (voir data/portes.ts).
  * Remplace la grille des six accompagnements sur l'accueil et sur /offres/.
  */
-import { portes } from '../data/portes';
+import { portes, ICONES_PORTES } from '../data/portes';
 import { withBase } from '../utils/url';
 import Pli from './Pli.astro';
 
@@ -40,10 +40,18 @@ const {
           <p class="porte-besoin"><span aria-hidden="true">{i + 1}</span>{p.besoin}</p>
           <h3>{p.titre}</h3>
           <p class="porte-phrase">{p.phrase}</p>
-          <a class="porte-principal" href={withBase(p.principal.href)}>{p.principal.titre}</a>
+          <a class="porte-principal" href={withBase(p.principal.href)}>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d={ICONES_PORTES[p.principal.icone]} /></svg>
+            <span>{p.principal.titre}</span>
+          </a>
           <ul>
             {p.aussi.map((a) => (
-              <li><a href={withBase(a.href)}>{a.titre}</a></li>
+              <li>
+                <a href={withBase(a.href)}>
+                  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d={ICONES_PORTES[a.icone]} /></svg>
+                  <span>{a.titre}</span>
+                </a>
+              </li>
             ))}
           </ul>
         </article>
@@ -93,11 +101,31 @@ const {
     margin: 0 0 var(--space-2);
     font-size: var(--text-2xl);
   }
-  /* Trois lignes réservées : les boutons des trois cartes s'alignent. */
   .porte-phrase {
-    min-height: 4.8em;
     margin: 0 0 var(--space-4);
     color: var(--color-muted);
+  }
+  /* Sur ordinateur, les trois cartes partagent les mêmes rangées : le
+     surtitre, le titre, la phrase, le bouton et la liste s'alignent d'une
+     carte à l'autre, même quand un titre passe sur deux lignes. */
+  @media (min-width: 981px) {
+    .portes {
+      grid-template-rows: repeat(5, auto);
+    }
+    .porte {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 5;
+      row-gap: 0;
+      align-content: start;
+    }
+    .porte-besoin,
+    .porte h3 {
+      align-self: end;
+    }
+    .porte ul {
+      align-self: start;
+    }
   }
   /* L'offre principale de la porte : un vrai bouton sombre, pour qu'on ne la
      confonde pas avec le bouton jaune « Réserver 30 minutes ». */
@@ -114,6 +142,19 @@ const {
     font-weight: 700;
     line-height: 1.25;
     text-decoration: none;
+  }
+  .porte-principal svg {
+    flex: none;
+    color: var(--color-orange);
+  }
+  .porte-principal span,
+  .porte li a span {
+    flex: 1;
+    min-width: 0;
+  }
+  .porte li a svg {
+    flex: none;
+    color: var(--color-clay);
   }
   .porte-principal::after {
     content: '→';

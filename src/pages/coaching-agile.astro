@@ -1,0 +1,159 @@
+---
+import PageSeminaire from '../components/PageSeminaire.astro';
+
+// Page d'entrée depuis Google sur « coach agile », « coaching Scrum / SAFe /
+// Kanban ». Elle n'est pas dans le menu : elle est rangée sous la troisième
+// porte (data/portes.ts) et renvoie vers le coaching d'équipe, la
+// transformation et les formations.
+//
+// Tout ce qui est affirmé ici vient de pages déjà publiées : le parcours
+// (a-propos), les missions Air France-KLM et Urssaf / Acoss (cas clients),
+// les trois formations de la catégorie « Agile, produit & amélioration
+// continue ». Aucune certification n'est mentionnée : Nicolas ne m'en a
+// confirmé aucune. Les « signes » sont des cas de figure fréquents, pas des
+// citations de clients.
+---
+
+<PageSeminaire
+  seo={{
+    title: 'Coach agile : Scrum, SAFe, Kanban — Nicolas Verdot',
+    description:
+      "Coach agile à Nice et partout en France : Scrum, SAFe, Kanban. J'aide vos équipes à livrer régulièrement et à se synchroniser, sans plaquer un cadre.",
+    path: '/coaching-agile/',
+    fil: 'Coaching agile',
+    serviceType: 'Coaching agile',
+    serviceName: 'Coaching agile : Scrum, SAFe, Kanban',
+  }}
+  parent={{ name: 'Les offres', path: '/offres/' }}
+  signature="Nicolas Verdot — coach agile et facilitateur, Nice"
+  renvoiSeminaires={false}
+  zones={['Nice', 'Sophia Antipolis', 'Alpes-Maritimes', "Provence-Alpes-Côte d'Azur", 'France']}
+  hero={{
+    eyebrow: 'Coach agile · Scrum · SAFe · Kanban',
+    title: 'Coach agile :',
+    titleAccent: 'des équipes qui livrent,',
+    titleTail: 'pas un cadre de plus.',
+    summary:
+      "Les rituels sont en place, les tableaux sont pleins, et la livraison ne suit toujours pas. J'accompagne vos équipes et leurs rôles clés — Scrum Masters, Product Owners, Release Train Engineers, managers — pour que <strong>Scrum, SAFe ou Kanban</strong> servent vos enjeux métiers, au lieu de s'y ajouter.",
+    pills: ['Scrum', 'SAFe', 'Kanban', 'Coaching des rôles agiles'],
+  }}
+  signaux={{
+    eyebrow: 'Ce qui revient souvent',
+    title: 'Six signes que l’agilité s’est installée sans produire d’effet',
+    intro: "Aucun ne tient à la bonne volonté des équipes. Tous tiennent à ce que l'on a demandé au cadre de régler à leur place.",
+    items: [
+      {
+        title: 'Des rituels, peu de décisions',
+        text: "La mêlée, la revue, la rétrospective ont lieu. On en sort rarement avec quelque chose de changé.",
+      },
+      {
+        title: 'On livre, mais pas ce qui compte',
+        text: "Le backlog avance. Le lien avec les enjeux métiers, lui, s'est perdu en route.",
+      },
+      {
+        title: 'Des équipes qui s’attendent',
+        text: "Chaque équipe tient ses engagements. Ce sont les dépendances entre équipes qui bloquent tout.",
+      },
+      {
+        title: 'Des rôles flous',
+        text: "Product Owner, Scrum Master, manager : chacun a un titre, peu savent qui décide quoi.",
+      },
+      {
+        title: 'Un cadre appliqué à la lettre',
+        text: "Scrum ou SAFe ont été déployés tels quels. Le terrain, lui, n'a pas été consulté.",
+      },
+      {
+        title: 'Des rétrospectives qui tournent en rond',
+        text: "Les mêmes irritants reviennent d'un sprint à l'autre, sans suite.",
+      },
+    ],
+    chute:
+      "<strong>Le problème est rarement le cadre que vous avez choisi.</strong><br /><span class=\"accent\">C'est ce qu'on lui demande de résoudre à la place des personnes.</span>",
+  }}
+  resultats={{
+    eyebrow: 'Ce que l’on vise',
+    title: 'Une organisation qui se synchronise et qui apprend',
+    intro: "Les objectifs sont fixés avec vous au départ. Voici ceux qui reviennent le plus souvent.",
+    items: [
+      { title: 'Des équipes reliées aux enjeux métiers', text: "Un lien direct entre ce que l'entreprise cherche à obtenir et ce que les équipes construisent." },
+      { title: 'Des priorités et des dépendances visibles', text: "Chacun voit ce qui passe en premier, et ce qui dépend de qui." },
+      { title: 'Des rôles clarifiés', text: "Des interactions plus nettes entre Product Owners, Scrum Masters, managers et équipes." },
+      { title: 'Une livraison plus régulière', text: "Un rythme tenable, plutôt que des à-coups suivis de retards." },
+      { title: 'Une amélioration continue réelle', text: "Des boucles régulières d'inspection et d'adaptation, qui débouchent sur des changements." },
+      { title: 'Des équipes plus autonomes', text: "L'accompagnement est réussi quand les équipes n'ont plus besoin de moi." },
+    ],
+    citation:
+      "Le défi n'est pas d'installer Scrum, Kanban ou SAFe. Il est de relier les initiatives aux enjeux métiers, de rendre les priorités et les dépendances visibles, et de développer l'autonomie des collectifs.",
+  }}
+  etapes={{
+    eyebrow: 'Comment je travaille',
+    title: 'Observer, ajuster, transmettre',
+    intro: "Pas de modèle plaqué : on part de la façon dont vos équipes travaillent vraiment.",
+    items: [
+      { title: 'Observer le fonctionnement réel', text: "Les rituels, les décisions, les dépendances : je commence par regarder ce qui se passe, pas ce qui est écrit." },
+      { title: 'Partir de vos situations', text: "Le coaching des rôles se fait sur les cas du moment, pas sur des exemples de manuel." },
+      { title: 'Adapter le cadre au contexte', text: "Scrum, Kanban ou SAFe sont ajustés à votre réalité, pas l'inverse." },
+      { title: 'Former au fil de l’eau', text: "Des formations courtes, avec des mises en situation réelles, pour donner des repères communs." },
+      { title: 'Rendre les équipes autonomes', text: "Les boucles d'amélioration doivent tourner sans coach." },
+    ],
+  }}
+  formats={{
+    eyebrow: 'Les formats',
+    title: 'Du coaching d’une équipe à la transformation à l’échelle',
+    intro: "Quatre façons d'intervenir, qui se combinent souvent.",
+    items: [
+      {
+        title: 'Coaching d’équipe agile',
+        text: "Un dispositif dans la durée — ateliers réguliers et coaching du manager — pour faire évoluer la façon de travailler et de décider.",
+        href: '/offres/coaching-equipe/',
+        link: 'Le coaching d’équipe',
+      },
+      {
+        title: 'Coaching des rôles agiles',
+        text: "Scrum Masters, Product Owners, Product Managers, Release Train Engineers : un accompagnement sur leurs situations réelles.",
+      },
+      {
+        title: 'Transformation agile à l’échelle',
+        text: "Plusieurs équipes, plusieurs périmètres : structurer la transformation sans imposer un cadre rigide.",
+        href: '/offres/accompagnement-transformation/',
+        link: 'L’accompagnement des transformations',
+      },
+      {
+        title: 'Formations',
+        text: "Scrum Master facilitateur, Product Owner orienté valeur, amélioration continue et rétrospectives utiles : une journée chacune.",
+        href: '/formations/',
+        link: 'Le catalogue de formations',
+      },
+    ],
+  }}
+  cas={['air-france-klm', 'urssaf-acoss']}
+  casIntro="Deux organisations accompagnées dans la durée, sur plusieurs équipes et plusieurs niveaux de pilotage."
+  articles={['du-code-a-la-facilitation']}
+  faq={[
+    {
+      q: 'Scrum, SAFe ou Kanban : lequel choisir ?',
+      a: "Aucun n'est meilleur dans l'absolu. Scrum convient à une équipe qui construit un produit par itérations, Kanban à un flux continu de demandes, SAFe à plusieurs équipes qui doivent se synchroniser. On choisit à partir de votre contexte, puis on adapte.",
+    },
+    {
+      q: 'Quelle est votre expérience comme coach agile ?',
+      a: "Plus de dix ans. J'ai été développeur, puis Scrum Master, notamment au lancement de B&YOU chez Bouygues Telecom, avant d'accompagner comme coach agile des organisations comme Axa, Air France-KLM, Amadeus, Schneider Electric ou l'Urssaf.",
+    },
+    {
+      q: 'Combien de temps dure un coaching agile ?',
+      a: "Cela dépend du périmètre. À titre d'exemple, l'accompagnement de l'Urssaf / Acoss s'est étalé sur un an, en plusieurs missions complémentaires.",
+    },
+    {
+      q: 'Formez-vous aussi les équipes ?',
+      a: "Oui. J'anime des formations d'une journée — Scrum Master facilitateur, Product Owner orienté valeur, amélioration continue et rétrospectives utiles — et des formations sur mesure sur l'agilité, SAFe, Scrum et Kanban.",
+    },
+    {
+      q: 'Où intervenez-vous ?',
+      a: "Je suis basé à Nice. J'interviens sur la Côte d'Azur, à Sophia Antipolis, et partout en France.",
+    },
+  ]}
+  cta={{
+    eyebrow: 'Une équipe agile qui patine ?',
+    title: 'Qu’est-ce qui ne se livre pas, chez vous ?',
+    subtitle: "Trente minutes pour regarder ensemble où ça coince, et si un coaching est la bonne réponse.",
+  }}
+/>
