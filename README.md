@@ -36,6 +36,28 @@ Dans les paramètres du repo GitHub (**Settings → Secrets and variables → Ac
 
 Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que via ces secrets chiffrés.
 
+## État — 9 octobre 2026 (branche `design-30`, à valider)
+
+Passe de design sur tout le site, sans changement d'adresse de page. **Pas en ligne** : aperçu local avec `npm run dev -- --port 4351` dans `.claude/worktrees/design-30`.
+
+Fait :
+- Titres : une seule taille de h1 (52 px ordinateur, 32 px mobile) et de h2 (36 / 26 px). Jetons `--text-h1`, `--text-h2`.
+- Accent de titre : surligneur jaune (`.title-accent`) à la place du manuscrit jaune. Caveat ne sert plus qu'au logo et à la bulle de l'avatar.
+- Plancher de 14 px (`--text-xs`), boutons en minuscules 16 px, zones cliquables de 44 px (`--tap`).
+- Une seule largeur de contenu (bandeaux de titre alignés sur `.container`).
+- Trois seuils seulement : 600, 900, 1200 px. Trois rythmes de section : `.section.tight`, normal, `.section.airy` ; 40 px sur mobile.
+- Menu complet dès 1200 px (« Contact » reste dans le menu mobile). Pied de page : Séminaires / Accompagnements / Ressources / Contact.
+- Mobile : boutons de l'accueil sur le premier écran, photo recadrée, grilles de cartes en défilement horizontal (`.stack` pour garder l'empilement), détail des étapes IA replié (`details[data-mobile-closed]`).
+- Images : dimensions réelles sur tous les `<img>` (`src/utils/imageDims.ts`), logos en WebP, photos de cas clients ramenées à 1600 px. Plus de cadre « Photo à venir ».
+- Articles : champs `image` / `imageAlt` facultatifs dans le frontmatter (vignette + tête d'article). Aucun article n'en a encore.
+- Mode sombre : encadré `.article-callout` corrigé (contraste 2,2 → conforme).
+
+Reste :
+- Une vraie image par article (52 articles) : à fournir.
+- Démo d'atelier (`DemoAtelier.astro`) : textes encore sous 14 px sur mobile.
+- Regrouper le menu en 5 ou 6 entrées : à décider.
+- Les couleurs des maquettes (conversation de groupe, feux tricolores) restent locales.
+
 ## État — 8 octobre 2026
 
 - Sur la même branche, le 8 octobre au soir : les limites de largeur qui coupaient les phrases sont retirées sur tout le site (introductions de section, résumés et titres de haut de page) ; la calculatrice compte par profil (dirigeants, managers, collaborateurs, chacun avec son coût journalier) et affiche trois chiffres de l'enquête Atlassian sur les réunions (72 %, 76 %, 54 %), vérifiés à la source et appliqués au conditionnel ; l'ancien « 55 % Microsoft », non vérifié, devient « 54 % Atlassian » ; image de la salle en U dans « On se réunit pour quoi ? ».

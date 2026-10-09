@@ -149,8 +149,10 @@ const icons = {
     min-width: 0;
     transition: color 0.15s ease;
   }
+  /* Une adresse e-mail ne se coupe pas aux espaces : on l'autorise à se
+     couper ailleurs plutôt que de pousser la page hors de l'écran. */
   .footer-col a[href^='mailto:'] {
-    white-space: nowrap;
+    overflow-wrap: anywhere;
   }
   .footer-col a:hover {
     color: var(--color-white);
@@ -184,12 +186,18 @@ const icons = {
     color: var(--color-white);
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1200px) {
     .footer-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
     .footer-brand {
       grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
   }
 
