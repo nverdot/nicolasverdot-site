@@ -202,4 +202,21 @@ const icons = {
       margin-bottom: var(--space-4);
     }
   }
+
+  /* Téléphone : l'essentiel, le reste est dans le menu. Les trois colonnes de
+     liens doublent le menu et la barre d'onglets ; elles restent dans le HTML,
+     où Google continue de les suivre. */
+  @media (max-width: 719px) {
+    .site-footer {
+      margin-top: var(--space-8);
+      padding: var(--space-8) 0 var(--space-4);
+    }
+    .footer-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-4);
+    }
+    .footer-col:not(:last-child) {
+      display: none;
+    }
+  }
 </style>

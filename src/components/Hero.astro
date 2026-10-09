@@ -5,6 +5,21 @@ import { SITE } from '../data/site';
 import action from '../assets/nicolas-action.jpeg';
 
 const photo = await getImage({ src: action, width: 1100, format: 'webp' });
+
+/*
+ * Les tuiles de l'accueil, sur téléphone seulement. Une application s'ouvre
+ * sur ce qu'on peut y faire, pas sur un texte : comprendre une offre, voir ce
+ * que ça donne, simuler, lire. Ce sont de vrais liens vers de vraies pages —
+ * les mêmes que dans le menu, rangées par intention.
+ */
+const tuiles = [
+  { href: '/seminaires-entreprise/', titre: 'Séminaires', note: 'Conçus et animés pour vous', trace: 'M9 10.2a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4zM3.4 19c.4-3 2.6-4.9 5.6-4.9s5.2 1.9 5.6 4.9M16.4 10.4a2.3 2.3 0 1 0 0-4.6M17 14.3c2 .5 3.3 2.1 3.6 4.7' },
+  { href: '/accompagnement-ia-pme/', titre: 'Stratégie IA', note: 'Par où commencer', trace: 'M11 4.5l1.7 4.8 4.8 1.7-4.8 1.7L11 17.5l-1.7-4.8L4.5 11l4.8-1.7zM18 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z' },
+  { href: '/offres/', titre: 'Les offres', note: 'Six façons de travailler ensemble', trace: 'M4.5 5h6v6h-6zM13.5 5h6v6h-6zM4.5 14h6v6h-6zM13.5 14h6v6h-6z' },
+  { href: '/cas-clients/', titre: 'Cas clients', note: 'Ce que ça donne sur le terrain', trace: 'M4 8h16v11H4zM9 8V6.2a1.2 1.2 0 0 1 1.2-1.2h3.6A1.2 1.2 0 0 1 15 6.2V8M4 12.5h16' },
+  { href: '/outils/cout-de-linaction/', titre: 'Simulateur', note: 'Ce que coûte l’inaction', trace: 'M6 3.5h12v17H6zM9 7.5h6M9 11.5h.01M12 11.5h.01M15 11.5h.01M9 15.5h.01M12 15.5h.01M15 15.5h.01' },
+  { href: '/blog/', titre: 'Comprendre', note: 'Articles et méthodes', trace: 'M12 6.5c-2-1.3-4.6-1.6-7.5-1v12c2.9-.6 5.5-.3 7.5 1 2-1.3 4.6-1.6 7.5-1v-12c-2.9-.6-5.5-.3-7.5 1zM12 6.5v12' },
+];
 ---
 
 <section class="hero" aria-labelledby="hero-title" data-section-name="Hero">
@@ -24,16 +39,31 @@ const photo = await getImage({ src: action, width: 1100, format: 'webp' });
 
       <p class="hero-lead">
         J'aide les dirigeants et leurs comités de direction à <strong>décider ce qui compte</strong>, puis à
-        <strong>embarquer les équipes</strong> qui devront le faire vivre. Le temps d'un
+        <strong>embarquer les équipes</strong> qui devront le faire vivre.
+        {/* Sur téléphone, la première phrase suffit : la suite est dans les
+            rubriques, juste en dessous. */}
+        <span class="hero-lead-suite">Le temps d'un
         <strong>séminaire</strong> ou <strong>dans la durée</strong>&nbsp;: lancement de projet, feuille de
         route, transformation, coaching d'équipe, place de l'IA dans l'entreprise. Ma méthode&nbsp;: la
-        <strong>facilitation visuelle</strong>, qui rend les échanges et les décisions lisibles par tous.
+        <strong>facilitation visuelle</strong>, qui rend les échanges et les décisions lisibles par tous.</span>
       </p>
 
       <div class="hero-actions">
         <a href={withBase('/seminaires-entreprise/')} class="btn">Préparer un séminaire →</a>
         <a href={withBase('/offres/')} class="btn-outline">Voir les accompagnements</a>
       </div>
+
+      <nav class="tuiles" aria-label="Par où commencer">
+        {tuiles.map((t) => (
+          <a class="tuile" href={withBase(t.href)}>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d={t.trace} />
+            </svg>
+            <strong>{t.titre}</strong>
+            <span>{t.note}</span>
+          </a>
+        ))}
+      </nav>
     </div>
 
     {/* Une vraie photo, à côté du texte : la facilitation visuelle est ce qui
@@ -102,6 +132,98 @@ const photo = await getImage({ src: action, width: 1100, format: 'webp' });
     display: flex;
     gap: var(--space-4);
     flex-wrap: wrap;
+  }
+
+  /* Les tuiles n'existent que sur téléphone. */
+  .tuiles {
+    display: none;
+  }
+
+  /* --- téléphone : l'écran d'accueil d'une application ---
+     Le titre, une phrase, puis six tuiles à toucher. Les deux boutons
+     s'effacent : les tuiles mènent aux mêmes pages, et à quatre autres. */
+  @media (max-width: 719px) {
+    .hero {
+      padding: var(--space-6) 0;
+    }
+    .hero-inner {
+      gap: var(--space-4);
+      padding-inline: var(--space-4);
+    }
+    .hero-kicker,
+    .hero-lead-suite,
+    .hero-actions {
+      display: none;
+    }
+    .hero-copy h1 {
+      margin-bottom: var(--space-3);
+      font-size: 1.6rem;
+      line-height: 1.15;
+    }
+    .script-accent {
+      font-size: 2.4rem;
+    }
+    .hero-lead {
+      margin-bottom: var(--space-4);
+      font-size: var(--text-base);
+    }
+    .tuiles {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-3);
+    }
+    .tuile {
+      display: grid;
+      align-content: start;
+      gap: 2px;
+      min-height: 6.5rem;
+      padding: var(--space-3);
+      border-radius: 18px;
+      background: var(--color-surface);
+      box-shadow: inset 0 0 0 1.5px var(--color-border);
+      color: var(--color-navy);
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tuile:active {
+      transform: scale(0.98);
+    }
+    .tuile svg {
+      box-sizing: content-box;
+      margin-bottom: var(--space-2);
+      padding: 7px;
+      border-radius: 12px;
+      background: var(--color-orange);
+      color: var(--color-ink-solid);
+    }
+    .tuile strong {
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      line-height: 1.2;
+    }
+    .tuile span {
+      color: var(--color-muted);
+      font-size: var(--text-sm);
+      line-height: 1.3;
+    }
+    /* Les deux premières tuiles sont les deux offres d'entrée. */
+    .tuile:nth-child(-n + 2) {
+      background: var(--color-ink-solid);
+      box-shadow: none;
+      color: var(--color-white);
+    }
+    .tuile:nth-child(-n + 2) span {
+      color: #c6d0df;
+    }
+    .hero-figure img {
+      width: 100%;
+      height: 10rem;
+      border-radius: 18px;
+      object-fit: cover;
+    }
+    .hero-figure figcaption {
+      display: none;
+    }
   }
 
   @media (max-width: 900px) {

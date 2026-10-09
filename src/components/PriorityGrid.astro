@@ -1,6 +1,7 @@
 ---
 import { priorities } from '../data/priorities';
 import { withBase } from '../utils/url';
+import Pli from './Pli.astro';
 
 interface Props {
   sectionName?: string;
@@ -10,6 +11,11 @@ interface Props {
   title?: string;
   lead?: string;
   description?: string;
+  /* Sur téléphone, la rubrique peut se replier derrière ce titre court (voir
+     Pli.astro). Sans lui, elle reste dépliée — c'est le cas sur la page des
+     offres, dont ce bloc est le contenu principal. */
+  pli?: string;
+  pliNote?: string;
 }
 
 const {
@@ -17,10 +23,13 @@ const {
   title = 'Comment travailler ensemble ?',
   lead = "Six façons de vous accompagner, du séminaire clé en main à l'accompagnement individuel.",
   description = "Six manières d'intervenir, à choisir selon votre situation — elles peuvent aussi se combiner : par exemple un séminaire animé pour vous, suivi d'un coaching d'équipe pour ancrer les nouvelles habitudes.",
+  pli,
+  pliNote,
 } = Astro.props;
 ---
 
-<section class="priorities section" data-reveal data-section-name={sectionName}>
+<section class="priorities section" data-pli={pli ? '' : undefined} data-reveal data-section-name={sectionName}>
+  {pli && <Pli titre={pli} note={pliNote} />}
   <div class="container">
     <div class="priorities-intro">
       <h2>{title}</h2>

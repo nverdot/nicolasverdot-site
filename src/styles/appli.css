@@ -1,0 +1,220 @@
+/* ==========================================================================
+   L'habit « application » du téléphone.
+
+   Sous 720 px, le site ne change ni d'adresses ni de contenu : il change
+   d'habit. Une page n'est plus un long ruban, c'est un écran — un titre, une
+   phrase, de grandes zones à toucher, et la liste de ses rubriques repliées.
+
+   Deux étages :
+   - le resserrement (marges, titres, boutons au pouce) ne dépend que de la
+     largeur de l'écran ;
+   - le repli des rubriques dépend de la classe `appli`, posée sur <html> par
+     le script de Layout.astro. Sans JavaScript, tout reste déplié.
+
+   Rien n'est retiré du HTML : ce que ces règles masquent reste dans la page,
+   lu par Google et retrouvé sur ordinateur. Au-dessus de 720 px, rien ne
+   change.
+   ========================================================================== */
+
+/* Le bouton de repli n'existe que sur téléphone. */
+.pli-bouton {
+  display: none;
+}
+
+@media (max-width: 719px) {
+  /* --- rythme : des écrans, pas des pages de magazine --- */
+  section {
+    padding: var(--space-8) 0;
+  }
+  h2 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  .section-head {
+    margin-bottom: var(--space-6);
+  }
+  .section-head .eyebrow {
+    margin-bottom: var(--space-2);
+  }
+
+  /* --- boutons : pleine largeur, à hauteur de pouce --- */
+  main :is(.btn, .btn-outline) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 3rem;
+    border-radius: var(--radius-sm);
+    text-align: center;
+  }
+  main :is(.hero-actions, .hero-cta-row, .banner-actions) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+
+  /* --- cartes : des fiches, pas des encarts --- */
+  .card {
+    padding: var(--space-4);
+    border-radius: 18px;
+  }
+
+  /* --- en-têtes de page : le titre, une phrase, l'action --- */
+  .hero-bg {
+    padding: var(--space-6) 0;
+  }
+  .hero-bg-copy h1 {
+    font-size: 1.7rem;
+    line-height: 1.15;
+  }
+  .hero-bg-copy .script-accent {
+    font-size: 2.5rem;
+  }
+  .hero-bg-copy .page-summary {
+    font-size: var(--text-base);
+  }
+  /* Les pastilles répètent ce que disent les rubriques juste en dessous. */
+  .hero-bg-copy .meta-pills {
+    display: none;
+  }
+  /* La photo passe après les rubriques dans l'ordre d'importance : sur un
+     écran de téléphone, elle repoussait la liste hors de vue. */
+  .hero-bg .hero-figure {
+    display: none;
+  }
+
+  /* --- le bloc d'appel final : une carte, pas un bandeau --- */
+  .banner {
+    padding: var(--space-6) var(--space-4);
+    border-radius: 18px;
+  }
+
+  /* ── Les rubriques repliées ────────────────────────────────────────── */
+
+  html.appli .pli-bouton {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: calc(100% - 2 * var(--space-4));
+    min-height: 3.75rem;
+    margin: 0 var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border: 0;
+    border-radius: 18px;
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1.5px var(--color-border);
+    color: var(--color-navy);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  html.appli .pli-bouton:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  html.appli .pli-num {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-orange);
+    color: var(--color-ink-solid);
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+  html.appli .pli-texte {
+    display: grid;
+    flex: 1;
+    gap: 2px;
+    min-width: 0;
+  }
+  html.appli .pli-titre {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  html.appli .pli-note {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.35;
+  }
+  html.appli .pli-chevron {
+    flex: none;
+    color: var(--color-muted);
+    transition: transform var(--duration-hover) var(--ease-out);
+  }
+
+  /* Repliée : la rubrique n'est plus que sa ligne. Ni fond, ni bordure, ni
+     marge — sinon chaque bande colorée laisserait un liseré entre deux lignes.
+     `!important` : les rubriques ont des styles propres à leur page, limités
+     par Astro à leur composant, qui l'emporteraient sinon. */
+  html.appli [data-pli] {
+    padding: var(--space-1) 0 !important;
+    margin: 0 !important;
+  }
+  html.appli [data-pli]:not([data-ouvert]) {
+    border: 0 !important;
+    background: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  html.appli [data-pli]:not([data-ouvert]) > :not(.pli-bouton) {
+    display: none !important;
+  }
+
+  /* Dépliée : la ligne devient l'en-tête de la rubrique, en encre pleine. */
+  html.appli [data-pli][data-ouvert] {
+    padding-bottom: var(--space-8) !important;
+  }
+  html.appli [data-pli][data-ouvert] > .pli-bouton {
+    margin-bottom: var(--space-6);
+    background: var(--color-ink-solid);
+    box-shadow: none;
+    color: var(--color-white);
+  }
+  html.appli [data-pli][data-ouvert] > .pli-bouton .pli-note,
+  html.appli [data-pli][data-ouvert] > .pli-bouton .pli-chevron {
+    color: #c6d0df;
+  }
+  html.appli [data-pli][data-ouvert] > .pli-bouton .pli-chevron {
+    transform: rotate(180deg);
+  }
+  /* Le surtitre répète la ligne qu'on vient de toucher. */
+  html.appli [data-pli][data-ouvert] .section-head .eyebrow {
+    display: none;
+  }
+
+  /* La première et la dernière ligne d'une série respirent un peu. On ne
+     regarde que les sections voisines : entre deux rubriques peuvent se
+     glisser des éléments invisibles (les fenêtres de détail, par exemple). */
+  html.appli section:not([data-pli]) + [data-pli] {
+    margin-top: var(--space-4) !important;
+  }
+  html.appli [data-pli]:not([data-ouvert]):has(+ section:not([data-pli])),
+  html.appli [data-pli]:not([data-ouvert]):last-child {
+    margin-bottom: var(--space-4) !important;
+  }
+
+  /* Le bandeau de logos, quand il tombe au milieu d'une liste de rubriques,
+     la coupe en deux listes : il s'efface (il reste sur l'accueil, et sur
+     ordinateur). */
+  html.appli [data-pli] + .client-strip:has(+ [data-pli]) {
+    display: none;
+  }
+  html.appli [data-pli]:not([data-ouvert]):has(+ .client-strip + [data-pli]) {
+    margin-bottom: 0 !important;
+  }
+  html.appli [data-pli] + .client-strip + [data-pli] {
+    margin-top: 0 !important;
+  }
+}
+
+@media (max-width: 719px) and (prefers-reduced-motion: reduce) {
+  html.appli .pli-chevron {
+    transition: none;
+  }
+}

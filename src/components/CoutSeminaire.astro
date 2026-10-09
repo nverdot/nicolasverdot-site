@@ -43,9 +43,11 @@ const SOURCE = 'https://www.atlassian.com/blog/workplace-woes-meetings';
 // qui font remonter les décisions plus haut qu'il ne faudrait. Il ne donne PAS
 // de pourcentage propre à la délégation : on n'en invente pas.
 const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/three-keys-to-faster-better-decisions';
+import Pli from './Pli.astro';
 ---
 
-<section class="section alt cout-seminaire" data-reveal data-section-name="Calculatrice : le coût de votre séminaire" id="cout-seminaire">
+<section class="section alt cout-seminaire" data-pli data-reveal data-section-name="Calculatrice : le coût de votre séminaire" id="cout-seminaire">
+  <Pli num="2" titre="Ce que disent les chiffres" note="Simulez le coût de votre séminaire" />
   <div class="container">
     <div class="section-head">
       <div>

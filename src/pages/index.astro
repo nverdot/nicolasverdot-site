@@ -5,6 +5,7 @@ import Hero from '../components/Hero.astro';
 import CTABlock from '../components/CTABlock.astro';
 import PriorityGrid from '../components/PriorityGrid.astro';
 import ClientLogoStrip from '../components/ClientLogoStrip.astro';
+import Pli from '../components/Pli.astro';
 import { withBase } from '../utils/url';
 import { SITE } from '../data/site';
 import portrait from '../assets/nicolas-portrait-2026.jpg';
@@ -77,7 +78,8 @@ const resourceArticles = [
   <Hero />
 
   {/* Première porte : les séminaires, par situation. */}
-  <section class="section alt ia-portes" data-reveal data-section-name="Séminaires : trois situations">
+  <section class="section alt ia-portes" data-pli data-reveal data-section-name="Séminaires : trois situations">
+    <Pli titre="Quatre situations fréquentes" note="Kick-off, comité de direction, IA, près de chez vous" />
     <div class="container">
       <div class="section-head">
         <div>
@@ -104,7 +106,8 @@ const resourceArticles = [
 
   <ClientLogoStrip />
 
-  <section class="proof-band" data-reveal data-section-name="Bénéfices">
+  <section class="proof-band" data-pli data-reveal data-section-name="Bénéfices">
+    <Pli titre="Ce que ça change" note="Priorités, décisions, alignement, actions" />
     <div class="container proof-inner">
       <h2>
         Quand l'essentiel devient visible,
@@ -125,7 +128,8 @@ const resourceArticles = [
     </div>
   </section>
 
-  <section class="partner-intro section" data-reveal data-section-name="Nicolas Verdot, votre partenaire">
+  <section class="partner-intro section" data-pli data-reveal data-section-name="Nicolas Verdot, votre partenaire">
+    <Pli titre="Qui je suis" note="Et les questions auxquelles je vous aide à répondre" />
     <div class="container split split-top">
       <div class="split-photo portrait portrait-overlay-wrap">
         <Image src={portrait} alt="Portrait de Nicolas Verdot" width={800} height={800} />
@@ -153,9 +157,10 @@ const resourceArticles = [
     </div>
   </section>
 
-  <PriorityGrid />
+  <PriorityGrid pli="Six façons de travailler ensemble" pliNote="Du séminaire clé en main au coaching individuel" />
 
-  <section class="resources section alt" data-reveal data-section-name="Les ressources">
+  <section class="resources section alt" data-pli data-reveal data-section-name="Les ressources">
+    <Pli titre="Trois articles pour commencer" note="Des méthodes utilisables sans moi" />
     <div class="container">
       <div class="section-head">
         <h2>Pour commencer à débloquer les choses</h2>

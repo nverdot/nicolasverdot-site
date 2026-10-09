@@ -10,8 +10,9 @@
  * le bouton).
  *
  * Quatre portes, pas huit. Le menu complet reste dans le burger de l'en-tête ;
- * la barre ne garde que les deux offres d'entrée — séminaires, stratégie IA —,
- * la preuve (les cas clients) et la prise de contact.
+ * la barre garde l'accueil (le point de départ de l'application, qui mène aux
+ * explications et aux simulateurs), les offres, la preuve (les cas clients) et
+ * la prise de contact.
  */
 import { withBase } from '../utils/url';
 
@@ -20,18 +21,23 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
 
 const avant = [
   {
-    href: '/seminaires-entreprise/',
-    texte: 'Séminaires',
-    actif: currentPath.startsWith('/seminaire'),
-    trace: 'M9 10.2a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4zM3.4 19c.4-3 2.6-4.9 5.6-4.9s5.2 1.9 5.6 4.9M16.4 10.4a2.3 2.3 0 1 0 0-4.6M17 14.3c2 .5 3.3 2.1 3.6 4.7',
+    href: '/',
+    texte: 'Accueil',
+    actif: currentPath === '/',
+    trace: 'M4.5 11.2L12 5l7.5 6.2V19.5h-5v-5h-5v5h-5z',
   },
   {
-    href: '/accompagnement-ia-pme/',
-    /* Le menu dit « Stratégie IA ». Sous la barre, un onglet n'a qu'une
-       soixantaine de pixels pour se nommer : le mot court suffit. */
-    texte: 'IA',
-    actif: currentPath === '/accompagnement-ia-pme/',
-    trace: 'M11 4.5l1.7 4.8 4.8 1.7-4.8 1.7L11 17.5l-1.7-4.8L4.5 11l4.8-1.7zM18 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z',
+    href: '/offres/',
+    /* Les séminaires et la stratégie IA sont des offres : leurs pages
+       allument cet onglet, pour qu'on sache toujours dans quelle partie
+       de l'application l'on se trouve. */
+    texte: 'Offres',
+    actif:
+      currentPath.startsWith('/offres/') ||
+      currentPath.startsWith('/seminaire') ||
+      currentPath === '/accompagnement-ia-pme/' ||
+      currentPath.startsWith('/formations/'),
+    trace: 'M4.5 5h6v6h-6zM13.5 5h6v6h-6zM4.5 14h6v6h-6zM13.5 14h6v6h-6z',
   },
 ];
 
@@ -139,8 +145,7 @@ const apres = [
       text-overflow: ellipsis;
     }
 
-    /* Sous 360 px, « Cas clients » et « Séminaires » se resserrent plutôt que
-       de se faire couper. */
+    /* Sous 360 px, « Cas clients » se resserre plutôt que de se faire couper. */
     @media (max-width: 359px) {
       .onglets {
         padding-inline: 0;

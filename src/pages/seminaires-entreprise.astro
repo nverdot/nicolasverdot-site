@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Pli from '../components/Pli.astro';
 import CTABlock from '../components/CTABlock.astro';
 import CoutSeminaire from '../components/CoutSeminaire.astro';
 import ClientLogoStrip from '../components/ClientLogoStrip.astro';
@@ -364,7 +365,8 @@ const takeCharge = [
     </div>
   </section>
 
-  <section class="section" id="constat" data-reveal data-section-name="On se réunit pour quoi ?">
+  <section data-pli class="section" id="constat" data-reveal data-section-name="On se réunit pour quoi ?">
+    <Pli num="1" titre="Le constat" note="On se réunit pour quoi, au juste&nbsp;?" />
     <div class="container">
       <div class="section-head">
         <div>
@@ -401,7 +403,8 @@ const takeCharge = [
     <a href={withBase('/contact/')} class="btn">Sécuriser cet investissement →</a>
   </CoutSeminaire>
 
-  <section class="section" id="causes" data-reveal data-section-name="Les causes">
+  <section data-pli class="section" id="causes" data-reveal data-section-name="Les causes">
+    <Pli num="3" titre="Les causes" note="D'où vient tout ce temps perdu&nbsp;?" />
     <div class="container">
       <div class="section-head">
         <div>
@@ -429,7 +432,8 @@ const takeCharge = [
     </div>
   </section>
 
-  <section class="section alt" id="methode" data-reveal data-section-name="Ma façon de faire">
+  <section data-pli class="section alt" id="methode" data-reveal data-section-name="Ma façon de faire">
+    <Pli num="4" titre="Ma façon de faire" note="Ce que je prends en charge, du cadrage aux suites" />
     <div class="container">
       <div class="section-head">
         <div>
@@ -472,7 +476,8 @@ const takeCharge = [
     </div>
   ))}
 
-  <section class="section" id="situation" data-reveal data-section-name="Votre situation">
+  <section data-pli class="section" id="situation" data-reveal data-section-name="Votre situation">
+    <Pli num="5" titre="Votre situation" note="Quel séminaire ou atelier pour quelle situation&nbsp;?" />
     <div class="container">
       <div class="section-head">
         <div>
@@ -497,7 +502,8 @@ const takeCharge = [
 
   <ClientLogoStrip />
 
-  <section class="section alt" id="terrain" data-reveal data-section-name="Interventions récentes">
+  <section data-pli class="section alt" id="terrain" data-reveal data-section-name="Interventions récentes">
+    <Pli num="6" titre="Sur le terrain" note="Le type de séminaires et d'ateliers que j'accompagne" />
     <div class="container">
       <div class="section-head">
         <div>
@@ -521,7 +527,8 @@ const takeCharge = [
     </div>
   </section>
 
-  <section class="section" id="organiser" data-reveal data-section-name="S'organiser">
+  <section data-pli class="section" id="organiser" data-reveal data-section-name="S'organiser">
+    <Pli num="7" titre="S'organiser" note="Délais, taille du groupe, préparation" />
     <div class="container">
       <div class="section-head">
         <div>
@@ -563,7 +570,8 @@ const takeCharge = [
     </div>
   </section>
 
-  <section class="section alt" id="questions" data-reveal data-section-name="Questions fréquentes">
+  <section data-pli class="section alt" id="questions" data-reveal data-section-name="Questions fréquentes">
+    <Pli num="8" titre="Vos questions" note="Ce que l'on me demande avant un séminaire" />
     <div class="container">
       <div class="section-head">
         <div>

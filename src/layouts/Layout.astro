@@ -5,6 +5,7 @@ import Compagnon from '../components/Compagnon.astro';
 import BarreOnglets from '../components/BarreOnglets.astro';
 import SEO from '../components/SEO.astro';
 import '../styles/global.css';
+import '../styles/appli.css';
 import { withBase } from '../utils/url';
 
 interface Props {
@@ -38,6 +39,19 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
           if (stored === 'light' || stored === 'dark') {
             document.documentElement.setAttribute('data-theme', stored);
           }
+        } catch (e) {}
+        // Sur téléphone, le site prend son habit d'application : les
+        // rubriques marquées « data-pli » se replient (voir appli.css et
+        // Pli.astro). Posé ici, avant le premier affichage, pour que la page
+        // ne s'ouvre pas dépliée puis se replie sous les yeux.
+        try {
+          var etroit = window.matchMedia('(max-width: 719px)');
+          var habit = function () {
+            document.documentElement.classList.toggle('appli', etroit.matches);
+          };
+          habit();
+          if (etroit.addEventListener) etroit.addEventListener('change', habit);
+          else etroit.addListener(habit);
         } catch (e) {}
         // Le site lancé depuis son icône se tient en application. Posé avant le
         // premier affichage, sinon la page s'ouvre en site puis clignote.
@@ -92,6 +106,45 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
     <Compagnon />
   </body>
 </html>
+
+<script>
+  // Les rubriques repliées du téléphone (voir Pli.astro). Un seul écouteur
+  // pour toute la page.
+  const basculer = (rubrique: Element, ouvrir?: boolean) => {
+    const bouton = rubrique.querySelector(':scope > [data-pli-bouton]');
+    const ouvert = rubrique.toggleAttribute('data-ouvert', ouvrir);
+    bouton?.setAttribute('aria-expanded', String(ouvert));
+    return bouton;
+  };
+
+  document.addEventListener('click', (e) => {
+    const bouton = (e.target as Element).closest?.('[data-pli-bouton]');
+    const rubrique = bouton?.parentElement;
+    if (!bouton || !rubrique) return;
+    basculer(rubrique);
+    // Refermée depuis le bas d'une longue rubrique, sa ligne se retrouve
+    // au-dessus de l'écran : on la ramène sous l'en-tête.
+    const entete = document.querySelector('.site-header')?.getBoundingClientRect().height ?? 0;
+    if (bouton.getBoundingClientRect().top < entete) {
+      window.scrollTo({ top: window.scrollY + bouton.getBoundingClientRect().top - entete - 8 });
+    }
+  });
+
+  // Un lien vers une ancre (#constat, ou une fiche depuis le Compagnon) doit
+  // ouvrir la rubrique qui la contient, sinon on atterrit sur une ligne fermée.
+  const ouvrirLaCible = () => {
+    let cible: Element | null = null;
+    try {
+      cible = location.hash.length > 1 ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+    } catch (e) {}
+    const rubrique = cible?.closest('[data-pli]');
+    if (!cible || !rubrique || rubrique.hasAttribute('data-ouvert')) return;
+    basculer(rubrique, true);
+    if (document.documentElement.classList.contains('appli')) cible.scrollIntoView();
+  };
+  ouvrirLaCible();
+  window.addEventListener('hashchange', ouvrirLaCible);
+</script>
 
 <script>
   // Diagnostic d'un crash récurrent signalé sur mobile pendant le scroll

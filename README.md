@@ -38,10 +38,14 @@ Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que 
 
 ## État — 9 octobre 2026 (mode application sur téléphone)
 
-- **Branche `mode-appli`** (pas en ligne, en attente du feu vert de Nicolas), partie de `main` : sous 720 px, une barre d'onglets fixe en bas de l'écran (Séminaires, IA, Aide, Cas clients, Contact), comme sur decoincesducrayon.com. Le Compagnon quitte le coin de l'écran pour la case centrale « Aide ». Le site s'ajoute à l'écran d'accueil du téléphone (icône, ouverture en plein écran) : manifeste et icônes dans `public/app/`. Au-dessus de 720 px, rien ne change.
-- Pour voir le mode plein écran sans rien installer : ajouter `?app=1` à l'adresse.
-- Vérifié en local : douze pages à 375 px sans débordement, 320 px, ordinateur, mode clair et mode sombre, ouverture du Compagnon depuis la barre.
-- Reste à décider : le choix des quatre onglets ; une éventuelle deuxième passe pour resserrer les pages elles-mêmes sur téléphone (comme sur le site de Secourisme pour tous).
+**Branche `mode-appli`** (pas en ligne, en attente du feu vert de Nicolas), partie de `main`. Au-dessus de 720 px, rien ne change. Travaillée dans une copie séparée du dossier (`.claude/worktrees/mode-appli`, aperçu `mode-appli` sur le port 4341), parce qu'une autre session utilisait le dossier principal.
+
+- **La coque** : barre d'onglets fixe en bas (Accueil, Offres, Aide, Cas clients, Contact), Compagnon dans la case centrale, icône et ouverture en plein écran (`public/app/`). `?app=1` montre le plein écran sans rien installer.
+- **L'habit « appli »** (`src/styles/appli.css`, `src/components/Pli.astro`, script dans `Layout.astro`) : sur téléphone, une rubrique marquée `data-pli` se réduit à une ligne et se déplie au toucher. Le contenu reste dans le HTML (Google indexe la version mobile). Sans JavaScript, tout reste déplié.
+- **Fait** : l'accueil (titre, une phrase, six tuiles, cinq rubriques repliées : 12 000 px de haut devenus 2 700) et `/seminaires-entreprise/` (huit étapes numérotées repliées : 2 500 px). Pied de page réduit au contact sur téléphone.
+- **Compagnon** : nouvelle entrée « Il faut qu'on fasse de l'IA, mais par où commencer ? », qui mène aux fiches de la page IA.
+- **Reste à faire, après validation de la direction** : appliquer le repli aux autres pages (la page IA fait 29 000 px sur téléphone, le blog 18 000, les formations 13 000, les pages séminaire CODIR et kick-off 12 000, « Qui suis-je » 11 000).
+- **À décider par Nicolas** : la direction (tuiles + rubriques repliées), les quatre onglets, les libellés des tuiles et des rubriques.
 - La branche `accueil-allege` a six commits (page séminaires et simulateur) qui ne sont pas dans `main`.
 
 ## État — 8 octobre 2026
