@@ -207,8 +207,10 @@ const icons = {
      liens doublent le menu et la barre d'onglets ; elles restent dans le HTML,
      où Google continue de les suivre. */
   @media (max-width: 719px) {
+    /* Pas de marge au-dessus : le bloc d'appel final, bord à bord, se pose
+       directement sur le pied de page. */
     .site-footer {
-      margin-top: var(--space-8);
+      margin-top: 0;
       padding: var(--space-8) 0 var(--space-4);
     }
     .footer-grid {

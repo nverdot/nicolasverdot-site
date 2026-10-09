@@ -93,10 +93,32 @@
     display: none;
   }
 
-  /* --- le bloc d'appel final : une carte, pas un bandeau --- */
-  .banner {
-    padding: var(--space-6) var(--space-4);
-    border-radius: 18px;
+  /* --- les grands blocs : bord à bord, sans coins arrondis ---
+     Un encadré arrondi flottant entre deux marges est un geste de page web.
+     Sur téléphone, le bloc d'appel final et les panneaux vont d'un bord à
+     l'autre de l'écran, comme un écran d'application. Les petites cartes que
+     l'on touche (tuiles, rubriques, portes) gardent leurs coins. */
+  section:has(> .banner) {
+    padding: 0;
+  }
+  .container.banner {
+    max-width: none;
+    margin: 0;
+    padding: var(--space-8) var(--space-6);
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .panel {
+    padding: var(--space-6) 0 0;
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .panel:first-child {
+    padding-top: 0;
+    border-top: 0;
   }
 
   /* ── Les rubriques repliées ────────────────────────────────────────── */
