@@ -40,6 +40,7 @@ export const ICONES: Record<string, string> = {
   scene: 'M4 20h16M6.5 20V9.5L12 5l5.5 4.5V20M10 20v-4.5h4V20M12 8.7h.01',
   etoile: 'M12 4l2.5 5.1 5.6.8-4 3.9 1 5.6-5.1-2.7-5.1 2.7 1-5.6-4-3.9 5.6-.8z',
   fleche: 'M5 12h13M13 7l5 5-5 5',
+  ia: 'M11 4.5l1.7 4.8 4.8 1.7-4.8 1.7L11 17.5l-1.7-4.8L4.5 11l4.8-1.7zM18 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z',
 };
 
 /** Les icônes dessinées en aplat plutôt qu'au trait : à 19 px, elles s'effondrent sinon. */
@@ -82,6 +83,7 @@ export const ECRANS: Ecran[] = [
     actions: [
       { texte: 'On discute beaucoup, on ne tranche pas', icone: 'decision', ecran: 'decider' },
       { texte: "J'ai un séminaire ou un atelier à monter", icone: 'calendrier', ecran: 'temps-fort' },
+      { texte: 'Il faut qu’on fasse de l’IA, mais par où commencer ?', icone: 'ia', ecran: 'ia' },
       { texte: 'Une transformation qui reste sur le papier', icone: 'elan', ecran: 'transformation' },
       { texte: 'Je veux apprendre à animer moi-même', icone: 'crayon', ecran: 'animer' },
       { texte: 'Je travaille surtout ma posture de dirigeant', icone: 'boussole', vers: '/offres/coaching-professionnel/', note: 'Coaching professionnel — en individuel' },
@@ -243,6 +245,53 @@ export const ECRANS: Ecran[] = [
         vers: '/materiel/',
         note: 'Feutres, papier, supports — sans mystère',
       },
+    ],
+  },
+
+  /*
+   * L'IA. La phrase d'entrée est celle du dirigeant, pas celle du catalogue :
+   * « il faut qu'on fasse de l'IA ». On sépare ensuite selon l'avancement —
+   * clarifier, choisir, tester, mettre les équipes à niveau — et chaque choix
+   * atterrit sur la fiche correspondante de la page d'accompagnement IA.
+   */
+  {
+    id: 'ia',
+    pose: 'carnet',
+    oeil: 'L’IA, par le bon bout',
+    titre: 'Où en êtes-vous avec l’IA ?',
+    message:
+      'Ni une formation aux outils de plus, ni un chantier technique : on part de ce que votre entreprise veut obtenir, puis on choisit, on teste et on mesure.',
+    actions: [
+      {
+        texte: 'La direction ne sait pas encore ce qu’elle en attend',
+        icone: 'decision',
+        vers: '/accompagnement-ia-pme/#atelier-decision-codir',
+        note: 'Atelier de décision IA — pour clarifier',
+      },
+      {
+        texte: 'On a des idées, il faut choisir',
+        icone: 'liste',
+        vers: '/accompagnement-ia-pme/#cartographie-ia-utile',
+        note: 'Cartographie IA utile — 3 semaines',
+      },
+      {
+        texte: 'On veut tester sur un vrai cas',
+        icone: 'cible',
+        vers: '/accompagnement-ia-pme/#sprint-usage-ia',
+        note: 'Sprint Usage IA — 6 semaines',
+      },
+      {
+        texte: 'Mettre les équipes à niveau',
+        icone: 'equipe',
+        vers: '/accompagnement-ia-pme/#premier-pas-ia',
+        note: 'Premier pas IA — 2 heures',
+      },
+      {
+        texte: 'L’IA dans un atelier ou un séminaire',
+        icone: 'ia',
+        vers: '/intelligence-collective-augmentee/',
+      },
+      { texte: 'Voir toute la démarche', icone: 'fleche', vers: '/accompagnement-ia-pme/' },
     ],
   },
 
