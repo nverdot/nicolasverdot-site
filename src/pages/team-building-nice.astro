@@ -1,0 +1,190 @@
+---
+import PageSeminaire from '../components/PageSeminaire.astro';
+
+// Page d'entrée pour les recherches « team building nice / sophia antipolis /
+// cannes / antibes / alpes-maritimes ». Une seule page pour tout le
+// département : des pages par ville quasi identiques se concurrenceraient.
+// Les situations ci-dessous sont des cas de figure fréquents, pas des
+// citations de clients : aucune n'est présentée comme un témoignage.
+---
+
+<PageSeminaire
+  seo={{
+    title: 'Team building à Nice et Sophia Antipolis : le séminaire utile',
+    description:
+      "Séminaire team building à Nice, Sophia Antipolis, Cannes et Antibes : une journée animée par un facilitateur, où l'équipe se soude en travaillant sur un vrai sujet.",
+    path: '/team-building-nice/',
+    fil: 'Team building à Nice',
+    serviceType: 'Conception et animation de séminaire team building',
+    serviceName: "Séminaire team building et cohésion d'équipe à Nice et dans les Alpes-Maritimes",
+  }}
+  zones={['Nice', 'Sophia Antipolis', 'Antibes', 'Cannes', 'Monaco', 'Alpes-Maritimes', "Côte d'Azur"]}
+  hero={{
+    eyebrow: 'Team building · Nice · Sophia Antipolis · Alpes-Maritimes',
+    title: 'Séminaire team building à Nice :',
+    titleAccent: 'une équipe plus soudée,',
+    titleTail: 'et quelque chose à en garder.',
+    summary:
+      "Un bon moment ensemble fait du bien. Il ne règle pas ce qui coince le lundi. Je conçois et j'anime des <strong>séminaires team building</strong> où l'équipe se soude en travaillant sur un vrai sujet : la façon de se parler, de décider, de se passer le relais. À <strong>Nice, Sophia Antipolis, Antibes, Cannes, Monaco</strong> et dans toutes les Alpes-Maritimes.",
+    pills: ['Team building', "Cohésion d'équipe", "Séminaire d'équipe", 'Basé à Nice'],
+    photo: {
+      src: '/cas-clients/jci-monaco-fresque-facteurs-motivations-equipe.jpg',
+      alt: "Fresque graphique « Facteurs de motivations » d'une équipe, avec les contributions de chaque membre.",
+      legende: "Ce qui motive chacun, dessiné pendant la journée et gardé par l'équipe. JCI Monaco.",
+    },
+  }}
+  signaux={{
+    eyebrow: 'Avant de réserver une activité',
+    title: 'Vous cherchez une idée de team building. Que doit-elle changer ?',
+    intro:
+      "La question n'est pas « quelle activité ? » mais « qu'est-ce qui doit être différent dans l'équipe le lundi suivant ? ». Voici les situations qui amènent le plus souvent à me contacter.",
+    items: [
+      {
+        title: 'Une équipe qui vient de se former',
+        text: "Des arrivées, un nouveau manager, deux équipes réunies. Les gens se croisent, ils ne se connaissent pas encore assez pour travailler vraiment ensemble.",
+      },
+      {
+        title: 'Le dernier team building est déjà oublié',
+        text: "La journée était agréable. Trois semaines plus tard, les mêmes irritants étaient de retour. Vous voulez autre chose cette année.",
+      },
+      {
+        title: 'Des tensions dont on ne parle pas',
+        text: "Rien de grave, mais des non-dits, des habitudes qui agacent, des sujets que l'on contourne en réunion. Une activité ludique ne les fera pas sortir.",
+      },
+      {
+        title: 'Des gens qui travaillent côte à côte',
+        text: "Télétravail, sites différents, métiers différents : chacun avance dans son couloir. L'équipe existe sur l'organigramme, moins dans les faits.",
+      },
+      {
+        title: 'Un budget à justifier',
+        text: "Sortir toute une équipe une journée coûte cher. Vous devez pouvoir dire à votre direction ce que cette journée a produit.",
+      },
+      {
+        title: 'Tout le monde n’aime pas les jeux',
+        text: "Les défis sportifs et les épreuves en équipe ravissent les uns et mettent les autres mal à l'aise. Vous cherchez un format où chacun trouve sa place.",
+      },
+    ],
+    chute:
+      "<strong>La cohésion ne vient pas d'une activité.</strong><br /><span class=\"accent\">Elle vient de ce qu'une équipe réussit à se dire, puis à décider ensemble.</span>",
+  }}
+  resultats={{
+    eyebrow: 'À la sortie de la journée',
+    title: 'Ce que l’équipe garde d’un team building qui a du sens',
+    intro:
+      "Le résultat attendu est fixé avec vous avant la conception. Voici ce qu'un séminaire team building produit le plus souvent.",
+    items: [
+      { title: 'Des personnes qui se connaissent mieux', text: "Ce qui motive chacun, ce qu'il apporte, ce dont il a besoin pour bien travailler." },
+      { title: 'Des choses enfin dites', text: "Les irritants et les malentendus sortent dans un cadre posé, sans règlement de comptes." },
+      { title: 'Des règles de fonctionnement', text: "Comment l'équipe se parle, décide et se passe le relais. Écrites par elle, pas pour elle." },
+      { title: 'Deux ou trois décisions', text: "Peu nombreuses, concrètes, avec un responsable et une date." },
+      { title: 'Une trace visuelle', text: "Une fresque ou une synthèse dessinée de la journée, à afficher dans vos locaux." },
+      { title: 'Un bon souvenir', text: "On rit aussi en travaillant. Le plaisir d'être ensemble fait partie du résultat." },
+    ],
+    citation:
+      "Une équipe se soude rarement en parlant de cohésion. Elle se soude en réussissant quelque chose ensemble, sur un sujet qui compte pour elle.",
+  }}
+  etapes={{
+    eyebrow: 'Avant, pendant, après',
+    title: 'Une journée d’équipe se prépare, se vit, puis se prolonge',
+    intro: "Ce qui fait la différence avec une activité clé en main : la journée est conçue pour votre équipe, à partir de sa situation.",
+    items: [
+      {
+        title: 'Avant : comprendre l’équipe',
+        text: "Un échange avec vous, et si besoin avec quelques membres de l'équipe : ce qui va bien, ce qui frotte, ce que vous attendez de la journée. Puis un déroulé sur mesure, adapté au lieu et au temps disponible.",
+      },
+      {
+        title: 'Pendant : se découvrir, se parler, décider',
+        text: "Des temps en petits groupes, des supports visuels, du mouvement. La journée alterne moments légers et vrais sujets. Vous participez comme membre de l'équipe : l'animation, c'est mon rôle.",
+      },
+      {
+        title: 'Après : garder la trace et suivre',
+        text: "La synthèse visuelle, les règles et les décisions vous sont remises. Un point quelques semaines plus tard permet de voir ce qui a tenu.",
+      },
+    ],
+  }}
+  formats={{
+    eyebrow: 'Idées de team building',
+    title: 'Six formats de team building à Nice et sur la Côte d’Azur',
+    intro: "Des idées de départ. Le format final dépend de votre équipe, de sa taille et de ce que la journée doit produire.",
+    items: [
+      {
+        title: 'Mieux se connaître pour mieux travailler',
+        text: "Motivations, forces, façon de travailler de chacun. Pour une équipe récente ou qui a beaucoup changé.",
+        href: '/cas-clients/jci-monaco/',
+        link: 'Voir le cas JCI Monaco',
+      },
+      {
+        title: 'Les règles du jeu de l’équipe',
+        text: "Comment on se parle, comment on décide, qui fait quoi. Pour une équipe où les mêmes frottements reviennent.",
+      },
+      {
+        title: 'Bilan d’année et nouveau cap',
+        text: "Ce que l'on garde, ce que l'on arrête, ce que l'on vise. Pour un séminaire de rentrée ou de fin d'année.",
+        href: '/seminaire-kick-off/',
+        link: 'Voir le séminaire kick-off',
+      },
+      {
+        title: 'La fresque d’équipe',
+        text: "L'histoire, les valeurs ou le projet de l'équipe prennent forme sur une grande fresque dessinée pendant la journée.",
+        href: '/offres/capture-graphique/',
+        link: 'Voir la capture graphique',
+      },
+      {
+        title: 'Atelier le matin, activité l’après-midi',
+        text: "Vous tenez à votre sortie en mer ou à votre défi d'équipe ? Je conçois la matinée de travail qui lui donne du sens. L'activité reste organisée par vous ou par votre prestataire.",
+      },
+      {
+        title: 'Team building de direction',
+        text: "Un comité de direction qui a besoin de se retrouver avant de trancher ses priorités.",
+        href: '/seminaire-codir/',
+        link: 'Voir le séminaire CODIR',
+      },
+    ],
+  }}
+  cas={['jci-monaco', 'louis-vuitton']}
+  casIntro="Deux missions où l'enjeu était de faire équipe : un collectif à souder autour d'une nouvelle présidence à Monaco, et des équipes qui protégeaient chacune leur périmètre."
+  articles={['organiser-seminaire-equipe', 'icebreakers-sans-lever-les-yeux', 'securite-psychologique']}
+  faq={[
+    {
+      q: 'Êtes-vous une agence de team building à Nice ?',
+      a: "Non. Je suis facilitateur indépendant, basé à Nice. Je ne vends pas d'activités clé en main : je conçois et j'anime la journée de travail de votre équipe. Si vous passez par une agence ou un lieu pour l'activité et la logistique, je m'occupe de la partie atelier.",
+    },
+    {
+      q: 'Quelle différence entre un team building et un séminaire team building ?',
+      a: "Un team building classique crée un bon moment partagé autour d'une activité. Un séminaire team building fait travailler l'équipe sur elle-même : ce qui fonctionne, ce qui coince, ce qu'elle décide de changer. La cohésion vient de ce travail, et il en reste des règles et des décisions.",
+    },
+    {
+      q: 'Proposez-vous des activités comme un escape game, des olympiades ou une sortie en mer ?',
+      a: "Non, ce n'est pas mon métier. En revanche, les deux se combinent très bien : un atelier le matin, votre activité l'après-midi. Je conçois alors la matinée pour que l'activité prolonge ce qui s'est dit.",
+    },
+    {
+      q: 'Combien de temps dure un séminaire team building ?',
+      a: "Une demi-journée ou une journée, le plus souvent. La durée se décide au cadrage, selon la taille de l'équipe et ce que la journée doit produire.",
+    },
+    {
+      q: 'Combien de participants peut-on réunir ?',
+      a: "Je facilite seul jusqu'à une quinzaine de personnes, pour que chacun soit vraiment entendu. Au-delà, je m'appuie sur mon réseau de facilitateurs partenaires.",
+    },
+    {
+      q: 'Intervenez-vous à Sophia Antipolis, Antibes, Cannes ou Monaco ?',
+      a: "Oui. Je suis basé à Nice et j'interviens dans toutes les Alpes-Maritimes : Sophia Antipolis, Antibes, Cannes, Mandelieu, Grasse, Carros, Monaco. Dans vos locaux ou dans le lieu que vous avez choisi. J'interviens aussi ailleurs en région PACA et en France.",
+    },
+    {
+      q: 'Combien coûte un team building animé par un facilitateur ?',
+      a: "Le tarif dépend du nombre de participants, de la durée, du temps de préparation et de la restitution attendue. Le lieu, les repas et l'activité éventuelle restent à votre charge. Un échange de cadrage suffit pour vous donner un chiffre.",
+    },
+    {
+      q: 'Peut-on faire un team building en anglais ?',
+      a: "Oui, en français ou en anglais, ce qui est fréquent pour les équipes internationales de Sophia Antipolis et de Monaco.",
+    },
+    {
+      q: "Combien de temps à l'avance faut-il s'y prendre ?",
+      a: "Comptez quatre à six semaines pour une journée. Si votre date est plus proche, parlons-en quand même : selon ce qui est déjà préparé, on peut parfois aller plus vite.",
+    },
+  ]}
+  cta={{
+    eyebrow: 'Un team building en préparation ?',
+    title: "Qu'est-ce qui doit être différent dans l'équipe le lundi suivant ?",
+    subtitle: "C'est la première question que je vous poserai. Trente minutes pour comprendre votre équipe, vos contraintes et la date — le programme vient après.",
+  }}
+/>

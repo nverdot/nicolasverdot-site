@@ -1,0 +1,191 @@
+---
+import PageSeminaire from '../components/PageSeminaire.astro';
+
+// Page d'entrée pour les recherches « formation ia nice / sophia antipolis /
+// cannes / monaco / alpes-maritimes », « sensibilisation ia en entreprise »,
+// « atelier ia entreprise ». Elle ne crée aucune offre : elle rassemble les
+// formats déjà décrits dans /accompagnement-ia-pme/ et dans le catalogue
+// (src/data/formations.ts). Durées, tailles de groupe et prix viennent de là.
+// Les situations ci-dessous sont des cas de figure fréquents, pas des
+// citations de clients.
+---
+
+<PageSeminaire
+  seo={{
+    title: 'Formation IA à Nice et Sophia Antipolis pour les entreprises',
+    description:
+      "Formation IA en entreprise à Nice, Sophia Antipolis, Cannes et Monaco : sensibilisation en 2 heures, atelier métier d'une journée, formation des managers. Chez vous, sur votre travail réel.",
+    path: '/formation-ia-nice/',
+    fil: 'Formation IA à Nice',
+    serviceType: "Formation à l'intelligence artificielle générative en entreprise",
+    serviceName: 'Formation IA en entreprise à Nice, Sophia Antipolis et dans les Alpes-Maritimes',
+  }}
+  zones={['Nice', 'Sophia Antipolis', 'Antibes', 'Cannes', 'Grasse', 'Monaco', 'Alpes-Maritimes']}
+  parent={{ name: 'Formations', path: '/formations/' }}
+  signature="Nicolas Verdot — formateur et facilitateur, Nice"
+  suite={{
+    text: "Après la formation, il reste à choisir les bons cas d'usage, à les tester et à mesurer ce qu'ils rapportent. C'est l'objet de la page",
+    href: '/accompagnement-ia-pme/',
+    link: 'accompagnement IA pour PME',
+  }}
+  hero={{
+    eyebrow: 'Formation IA · Nice · Sophia Antipolis · Alpes-Maritimes',
+    title: 'Formation IA à Nice et Sophia Antipolis :',
+    titleAccent: 'sur votre vrai travail,',
+    titleTail: 'pas sur des exemples d’école.',
+    summary:
+      "Vos équipes utilisent déjà l'IA, chacune à sa façon. Je les forme <strong>dans votre entreprise</strong>, sur leurs propres tâches et avec l'outil que vous autorisez : de la <strong>sensibilisation en deux heures</strong> à l'<strong>atelier métier d'une journée</strong>. À Nice, Sophia Antipolis, Antibes, Cannes, Grasse et Monaco.",
+    pills: ['Sensibilisation IA', 'Atelier IA en entreprise', 'Formation managers', 'Basé à Nice'],
+  }}
+  signaux={{
+    eyebrow: 'Avant de choisir une formation',
+    title: 'Six situations qui appellent une formation IA',
+    intro:
+      "Le besoin ne se dit presque jamais « nous voulons une formation ». Il se dit plutôt comme ceci.",
+    items: [
+      {
+        title: 'Chacun bricole dans son coin',
+        text: "Certains utilisent ChatGPT tous les jours, d'autres jamais. Personne ne sait vraiment ce que font les collègues, ni ce qui est permis.",
+      },
+      {
+        title: '« Il faut qu’on fasse de l’IA »',
+        text: "La direction le dit, sans que l'on sache encore pour quoi faire. Il manque un langage commun avant de décider quoi que ce soit.",
+      },
+      {
+        title: 'Des données qui sortent de l’entreprise',
+        text: "Un contrat, un fichier client, un compte rendu collés dans un outil grand public. Aucune règle n'a été posée.",
+      },
+      {
+        title: 'Une conférence, puis rien',
+        text: "L'équipe a assisté à une présentation enthousiasmante. Le lendemain, chacun a repris son travail comme avant.",
+      },
+      {
+        title: 'Des niveaux très différents',
+        text: "Les curieux s'ennuient dans une initiation, les autres décrochent dès que cela devient technique. Un seul format ne convient pas à tous.",
+      },
+      {
+        title: 'Un outil payé, peu utilisé',
+        text: "Les licences sont là, Copilot ou un autre. Les usages ne suivent pas, faute d'avoir été travaillés sur de vraies tâches.",
+      },
+    ],
+    chute:
+      "<strong>Une formation IA ne se juge pas le jour même.</strong><br /><span class=\"accent\">Elle se juge quinze jours plus tard, à ce qui est réellement réutilisé.</span>",
+  }}
+  resultats={{
+    eyebrow: 'À la sortie de la formation',
+    title: 'Ce que vos équipes savent faire ensuite',
+    intro:
+      "Le résultat dépend du format choisi. Voici ce que les formations produisent, de la sensibilisation à l'atelier métier.",
+    items: [
+      { title: 'Comprendre sans jargon', text: "Ce que l'IA générative sait faire, ne sait pas faire, et pourquoi elle se trompe." },
+      { title: 'Des règles pour les données', text: "Vert, orange, rouge : ce que l'on peut confier à un outil, et ce qui doit toujours être validé par un humain." },
+      { title: 'Une tâche à tester', text: "Chacun repart avec au moins une tâche de son travail à essayer dans les quinze jours." },
+      { title: 'Des façons de travailler testées', text: "En atelier métier : trois tâches réelles transformées en modes opératoires réutilisables." },
+      { title: 'Une grille de vérification', text: "Comment contrôler la qualité d'une réponse avant de s'en servir." },
+      { title: 'Un point à quinze jours', text: "On regarde ce qui a été réutilisé, puis on abandonne, on améliore ou on élargit." },
+    ],
+    citation:
+      "Le succès, ce n'est pas le nombre de prompts écrits pendant la journée. C'est un usage qui se répète quinze jours plus tard.",
+  }}
+  etapes={{
+    eyebrow: 'Avant, pendant, après',
+    title: 'Une formation préparée sur votre activité',
+    intro: "Aucun exercice générique : les exemples et les démonstrations sont préparés à partir de votre métier.",
+    items: [
+      {
+        title: 'Avant : cadrer chez vous',
+        text: "Un entretien avec vous et quelques questions aux participants : outils déjà utilisés, tâches répétitives, irritants, craintes, idées. Si besoin, un échange avec l'informatique ou le délégué à la protection des données.",
+      },
+      {
+        title: 'Pendant : voir, essayer, décider',
+        text: "Des démonstrations sur des tâches proches de votre quotidien, avec des données fictives ou anonymisées. Puis la pratique, les règles communes et un engagement par personne ou par équipe.",
+      },
+      {
+        title: 'Après : vérifier ce qui reste',
+        text: "Une synthèse visuelle, les fiches de travail, et un point à quinze jours pour décider de la suite.",
+      },
+    ],
+  }}
+  formats={{
+    eyebrow: 'Selon votre besoin',
+    title: 'Six formats de formation IA, de deux heures à une journée',
+    intro: "De la sensibilisation de toute une équipe à la formation d'un comité de direction. Tous se déroulent dans vos locaux.",
+    items: [
+      {
+        title: 'Sensibilisation IA en 2 heures',
+        text: "Le « Premier pas IA » : jusqu'à 30 personnes, trois démonstrations sur votre activité, les règles pour les données. À partir de 1 500 € HT, préparation et point à quinze jours compris.",
+        href: '/accompagnement-ia-pme/#premier-pas-ia',
+        link: 'Voir le Premier pas IA',
+      },
+      {
+        title: 'Conférence ou atelier de découverte',
+        text: "« Découvrir l'IA générative sans bullshit » : de 1 h 30 à une journée, pour comprendre les usages utiles et les limites.",
+        href: '/formations/',
+        link: 'Voir le catalogue',
+      },
+      {
+        title: 'Atelier métier d’une journée',
+        text: "L'« Atelier métier augmenté » : 6 à 12 personnes d'un même métier, trois tâches réelles, avec Microsoft 365 Copilot, ChatGPT, Claude, Le Chat de Mistral ou Gemini.",
+        href: '/accompagnement-ia-pme/#atelier-metier-augmente',
+        link: "Voir l'atelier métier",
+      },
+      {
+        title: 'Trouver les bons cas d’usage',
+        text: "Un atelier d'une demi-journée à une journée pour repérer où l'IA apporte vraiment quelque chose dans le travail de l'équipe.",
+        href: '/formations/',
+        link: 'Voir le catalogue',
+      },
+      {
+        title: 'Formation IA pour managers',
+        text: "Une journée pour préparer ses réunions, clarifier, synthétiser et décider avec l'IA, sans perdre la dimension humaine du rôle.",
+        href: '/formations/',
+        link: 'Voir le catalogue',
+      },
+      {
+        title: 'Formation IA pour dirigeants',
+        text: "Le « Codir augmenté » : une journée en équipe de direction, sur vos propres sujets.",
+        href: '/formations/codir-augmente/',
+        link: 'Voir le Codir augmenté',
+      },
+    ],
+  }}
+  faq={[
+    {
+      q: 'Où se déroulent les formations IA ?',
+      a: "Dans vos locaux, à Nice, Sophia Antipolis, Antibes, Cannes, Grasse, Carros ou Monaco. Je suis basé à Nice. Je peux aussi intervenir ailleurs en France, avec des frais de déplacement en plus.",
+    },
+    {
+      q: 'Combien coûte une formation IA en entreprise ?',
+      a: "La sensibilisation de deux heures, le Premier pas IA, commence à 1 500 € HT. Ce prix comprend l'entretien de préparation, le questionnaire aux participants, trois démonstrations préparées sur votre activité, la synthèse visuelle et le point à quinze jours. Les autres formats sont sur devis, selon la durée et le nombre de personnes.",
+    },
+    {
+      q: "La formation est-elle finançable par l'OPCO ?",
+      a: "Elle peut l'être. Je ne suis pas moi-même certifié Qualiopi : le financement passe alors par un organisme de formation partenaire certifié, dont les frais de gestion s'ajoutent au tarif. On regarde ensemble au premier échange ce qui est possible pour votre entreprise.",
+    },
+    {
+      q: 'Faut-il des connaissances techniques ?',
+      a: "Non. La sensibilisation ne demande aucun prérequis, ni même un ordinateur par personne : les démonstrations se font sur un écran commun. L'atelier métier demande seulement de venir avec de vrais dossiers.",
+    },
+    {
+      q: 'Sur quels outils formez-vous ?',
+      a: "Sur celui que votre entreprise autorise : Microsoft 365 Copilot, ChatGPT, Claude, Le Chat de Mistral ou Gemini. Si rien n'est encore décidé, la formation aide justement à poser les règles.",
+    },
+    {
+      q: 'Combien de personnes peut-on former ?',
+      a: "Jusqu'à 30 personnes pour la sensibilisation de deux heures. De 6 à 12 personnes pour l'atelier métier d'une journée, afin que chacun pratique sur ses propres tâches.",
+    },
+    {
+      q: 'Proposez-vous des formations IA ouvertes à tous, avec des dates fixes ?',
+      a: "Non. Je forme une équipe à la fois, dans son entreprise, sur son travail réel. C'est ce qui permet de préparer les exemples à partir de votre activité.",
+    },
+    {
+      q: 'Quelle différence avec votre accompagnement IA ?',
+      a: "La formation met une équipe à niveau. L'accompagnement aide la direction à décider où agir, dans quel ordre, puis à tester et à mesurer. Les deux se complètent : le détail est sur la page <a href=\"/accompagnement-ia-pme/\">accompagnement IA pour PME</a>.",
+    },
+  ]}
+  cta={{
+    eyebrow: 'Une équipe à former ?',
+    title: 'Où en sont vos équipes avec l’IA ?',
+    subtitle: "Dites-moi qui vous voulez former, ce qui a déjà été essayé et ce que vous attendez. Trente minutes pour choisir le bon format — ou vous dire qu'il vaut mieux attendre.",
+  }}
+/>

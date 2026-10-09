@@ -42,9 +42,19 @@ interface Props {
   articles?: string[];
   faq: { q: string; a: string }[];
   cta: { eyebrow: string; title: string; subtitle: string };
+  /** Page parente dans le fil d'Ariane. Par défaut : les séminaires d'entreprise. */
+  parent?: { name: string; path: string };
+  /** Signature sous la citation. */
+  signature?: string;
+  /** Lien de renvoi sous les étapes. Par défaut : la page séminaires d'entreprise. */
+  suite?: { text: string; href: string; link: string };
 }
 
-const { seo, zones = ['France'], hero, signaux, resultats, etapes, exemple, formats, cas = [], casIntro, articles = [], faq, cta } = Astro.props;
+const { seo, zones = ['France'], hero, signaux, resultats, etapes, exemple, formats, cas = [], casIntro, articles = [], faq, cta,
+  parent = { name: "Séminaires d'entreprise", path: '/seminaires-entreprise/' },
+  signature = 'Nicolas Verdot — facilitateur de séminaires, Nice',
+  suite = { text: 'Le détail de la méthode, les délais de préparation et la taille des groupes sont sur la page', href: '/seminaires-entreprise/', link: "séminaires d'entreprise" },
+} = Astro.props;
 
 const casClients = (await getCollection('caseStudies', ({ data }) => !data.draft))
   .filter((c) => cas.includes(c.slug))
@@ -82,7 +92,7 @@ const faqSchema = {
   path={seo.path}
   breadcrumbs={[
     { name: 'Accueil', path: '/' },
-    { name: "Séminaires d'entreprise", path: '/seminaires-entreprise/' },
+    parent,
     { name: seo.fil, path: seo.path },
   ]}
 >
@@ -133,7 +143,7 @@ const faqSchema = {
       </div>
       <div class="quote">
         <blockquote>{resultats.citation}</blockquote>
-        <cite>Nicolas Verdot — facilitateur de séminaires, Nice</cite>
+        <cite>{signature}</cite>
       </div>
     </div>
   </section>
@@ -158,7 +168,7 @@ const faqSchema = {
           </article>
         ))}
       </div>
-      <p class="page-seminaire-more">Le détail de la méthode, les délais de préparation et la taille des groupes sont sur la page <a href={withBase('/seminaires-entreprise/')}>séminaires d'entreprise</a>.</p>
+      <p class="page-seminaire-more">{suite.text} <a href={withBase(suite.href)}>{suite.link}</a>.</p>
     </div>
   </section>
 
