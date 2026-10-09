@@ -73,6 +73,16 @@
   .hero-bg-copy .page-summary {
     font-size: var(--text-base);
   }
+  /* Le surtitre et le titre se lisent centrés, comme sur l'accueil. Le
+     paragraphe reste aligné à gauche : au-delà de trois lignes, un texte
+     centré se lit mal. */
+  :is(.hero-bg-copy, .page-hero-copy) > :is(.eyebrow, h1) {
+    text-align: center;
+    text-wrap: balance;
+  }
+  :is(.hero-bg-copy, .page-hero-copy) .meta-pills {
+    justify-content: center;
+  }
   /* Les pastilles répètent ce que disent les rubriques juste en dessous. */
   .hero-bg-copy .meta-pills {
     display: none;

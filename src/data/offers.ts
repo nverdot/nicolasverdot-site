@@ -18,6 +18,9 @@ export interface Offer {
   titleAccent?: string;
   titleTail?: string;
   summary: string;
+  /** La description affichée par Google (155 caractères au plus, sans balise).
+      Le chapo, lui, peut être plus long : il est écrit pour le lecteur. */
+  description: string;
   price: string;
   useCaseLead: string;
   problems: { title: string; text: string }[];
@@ -39,6 +42,7 @@ export const offers: Offer[] = [
     title: 'Coaching d’équipe',
     titleAccent: 'Une équipe qui avance',
     titleTail: 'sans que tout remonte à vous.',
+    description: 'Coaching d’équipe : séminaires, ateliers réguliers et coaching du manager, pour une équipe qui décide et avance sans que tout remonte à vous.',
     summary: 'Les décisions remontent toujours aux mêmes personnes. Les mêmes blocages reviennent d’une réunion à l’autre. Le coaching d’équipe est un dispositif dans la durée — séminaires, ateliers réguliers et coaching du manager — pour faire <strong>évoluer durablement</strong> la manière de travailler, de décider et de <strong>responsabiliser l’équipe</strong>.',
     price: 'À partir de 12 000 € HT',
     useCaseLead: 'Pour les organisations qui vivent régulièrement les mêmes difficultés malgré les plans d’action, les séminaires ou les réorganisations.',

@@ -22,7 +22,7 @@ const serviceSchema = {
   '@type': 'Service',
   serviceType: offer.title,
   name: offer.title,
-  description: offer.summary,
+  description: offer.description,
   provider: {
     '@type': 'Person',
     name: 'Nicolas Verdot',
@@ -38,7 +38,7 @@ const serviceSchema = {
 
 <Layout
   title={`${offer.title} — by Nicolas Verdot`}
-  description={offer.summary}
+  description={offer.description}
   path={`/offres/${offer.slug}/`}
   breadcrumbs={[
     { name: 'Accueil', path: '/' },
