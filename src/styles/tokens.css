@@ -29,6 +29,7 @@
   /* Bleu nuit constant (ne bascule pas en mode sombre) et textes secondaires
      posés sur une surface toujours sombre (pied de page, bandeaux). */
   --color-navy-solid: #122033;
+  --color-blue-solid: #173b73;
   /* Coup de surligneur sous un mot de titre. */
   --color-marker: rgba(255, 203, 0, 0.7);
   --color-on-dark: #d8e1ef;

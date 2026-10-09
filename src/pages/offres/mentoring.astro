@@ -1,4 +1,5 @@
 ---
+import { dims } from '../../utils/imageDims';
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
@@ -387,7 +388,7 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
           {relatedCaseStudies.map((cs) => (
             <article class="card case-vignette">
               {cs.data.clientLogo ? (
-                <img src={withBase(cs.data.clientLogo)} alt={cs.data.client} class="case-card-logo" />
+                <img src={withBase(cs.data.clientLogo)} width={dims(cs.data.clientLogo).width} height={dims(cs.data.clientLogo).height} alt={cs.data.client} class="case-card-logo" />
               ) : (
                 <div class="num">{cs.data.client}</div>
               )}
@@ -439,7 +440,7 @@ const methods = ['Les méthodes ToP', 'Le World Café', "L'Open Space", 'Le Fish
     left: 0;
     color: var(--color-orange-ink);
   }
-  @media (max-width: 560px) {
+  @media (max-width: 600px) {
     .methods-list {
       grid-template-columns: 1fr;
     }

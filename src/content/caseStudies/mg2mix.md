@@ -1,6 +1,6 @@
 ---
 client: "MG2MIX"
-clientLogo: "/logos/mg2mix.png"
+clientLogo: "/logos/mg2mix.webp"
 title: "Faire progresser une équipe commerciale grâce à l'intelligence collective"
 subtitle: "Conception d'un parcours d'ateliers commerciaux réplicables"
 question: "Comment aider une communauté de commerciaux à améliorer ses pratiques, augmenter ses conversions et développer son chiffre d'affaires, sans lui imposer une méthode descendante ?"

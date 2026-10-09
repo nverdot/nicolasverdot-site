@@ -49,6 +49,11 @@ const { e } = Astro.props;
     <p class="etape-pourqui"><strong>Pour qui.</strong> {e.pourQui}</p>
     <p class="etape-promesse">{e.promesse}</p>
 
+    {/* Le détail de la fiche : ouvert sur ordinateur, replié sur téléphone
+        (voir le script data-mobile-closed dans Layout.astro). Le contenu
+        reste dans la page dans les deux cas. */}
+    <details class="etape-detail" open data-mobile-closed>
+    <summary>Voir le détail de cette étape</summary>
     <div class="etape-cols">
       <div>
         <p class="etape-label">Ce qu'on y fait</p>
@@ -87,6 +92,7 @@ const { e } = Astro.props;
         ))}
       </dl>
     </details>
+    </details>
   </article>
 </li>
 
@@ -119,7 +125,7 @@ const { e } = Astro.props;
     height: 46px;
     border-radius: 50%;
     background: var(--color-orange);
-    color: #122033;
+    color: var(--color-navy-solid);
     font-family: var(--font-display);
     font-size: var(--text-lg);
     font-weight: 800;
@@ -247,6 +253,16 @@ const { e } = Astro.props;
   .etape-preuve strong {
     color: var(--color-navy);
   }
+  .etape-detail > summary {
+    cursor: pointer;
+    color: var(--color-blue);
+    font-weight: 700;
+  }
+  @media (min-width: 601px) {
+    .etape-detail > summary {
+      display: none;
+    }
+  }
   .etape-deroule summary {
     cursor: pointer;
     color: var(--color-blue);
@@ -268,7 +284,7 @@ const { e } = Astro.props;
   }
 
 
-  @media (max-width: 640px) {
+  @media (max-width: 600px) {
     .etape {
       grid-template-columns: minmax(0, 1fr);
       gap: var(--space-3);

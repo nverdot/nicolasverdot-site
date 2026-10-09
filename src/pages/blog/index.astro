@@ -1,4 +1,5 @@
 ---
+import { dims } from '../../utils/imageDims';
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
@@ -71,6 +72,7 @@ const blogSchema = {
         <div class="cards">
           {p.articles.map((a) => (
             <article class="card">
+              {a.data.image && <img class="card-cover" src={withBase(a.data.image)} width={dims(a.data.image).width} height={dims(a.data.image).height} alt="" loading="lazy" decoding="async" />}
               <div class="num">{dateFormatter.format(a.data.publishDate)}</div>
               <h3><a href={withBase(`/blog/${a.slug}/`)}>{a.data.title}</a></h3>
               <p>{a.data.description}</p>

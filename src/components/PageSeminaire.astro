@@ -1,4 +1,5 @@
 ---
+import { dims } from '../utils/imageDims';
 // Gabarit commun aux pages « une situation, un séminaire » : kick-off, CODIR,
 // Sophia Antipolis. Même ossature que /seminaires-alpes-maritimes/ (classes
 // de global.css), pour que ces pages se ressemblent sans dupliquer le balisage.
@@ -26,7 +27,7 @@ interface Props {
     summary: string;
     pills: string[];
     /** Vraie photo de mission (chemin dans public/). Absente s'il n'y en a pas : jamais d'image générée. */
-    photo?: { src: string; alt: string; legende?: string; portrait?: boolean };
+    photo?: { src: string; alt: string; legende?: string; portrait?: boolean; width?: number; height?: number };
   };
   signaux: { eyebrow: string; title: string; intro: string; items: Bloc[]; chute: string };
   resultats: { eyebrow: string; title: string; intro: string; items: Bloc[]; citation: string };
@@ -223,7 +224,7 @@ const faqSchema = {
           {casClients.map((c) => (
             <article class="card">
               {c.data.clientLogo ? (
-                <img src={withBase(c.data.clientLogo)} alt={c.data.client} class="page-seminaire-logo" />
+                <img src={withBase(c.data.clientLogo)} width={dims(c.data.clientLogo).width} height={dims(c.data.clientLogo).height} alt={c.data.client} class="page-seminaire-logo" />
               ) : (
                 <div class="num">{c.data.client}</div>
               )}

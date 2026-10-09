@@ -1,4 +1,5 @@
 ---
+import { dims } from '../../utils/imageDims';
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
@@ -31,7 +32,7 @@ const caseStudies = (await getCollection('caseStudies', ({ data }) => !data.draf
         {caseStudies.map((cs) => (
           <article class="card">
             {cs.data.clientLogo ? (
-              <img src={withBase(cs.data.clientLogo)} alt={cs.data.client} class="case-card-logo" />
+              <img src={withBase(cs.data.clientLogo)} width={dims(cs.data.clientLogo).width} height={dims(cs.data.clientLogo).height} alt={cs.data.client} class="case-card-logo" />
             ) : (
               <div class="num">{cs.data.client}</div>
             )}

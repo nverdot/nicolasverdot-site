@@ -15,6 +15,9 @@ const articles = defineCollection({
       'Parcours personnel',
     ]),
     draft: z.boolean().optional().default(false),
+    /** Vraie image d'illustration (chemin dans public/, ex. /blog/mon-article.webp). Affichée en tête d'article et en vignette. Absente : aucun visuel de remplacement n'est affiché. */
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
   }),
 });
 

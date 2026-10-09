@@ -358,7 +358,7 @@ const takeCharge = [
         </div>
       </div>
       <figure class="hero-figure">
-        <img src={action.src} alt="Nicolas Verdot, feutre en main, dessine une fresque en direct pendant un atelier." loading="eager" decoding="async" />
+        <img src={action.src} width={action.width} height={action.height} alt="Nicolas Verdot, feutre en main, dessine une fresque en direct pendant un atelier." loading="eager" decoding="async" />
         <figcaption>Ce qui se dit et se décide est dessiné en direct, sous les yeux de tous.</figcaption>
       </figure>
     </div>
@@ -621,7 +621,7 @@ const takeCharge = [
   .versus-oui {
     background: var(--color-orange);
     border-color: var(--color-orange);
-    color: #122033;
+    color: var(--color-navy-solid);
     box-shadow: var(--shadow-md);
   }
   .versus-photo {
@@ -645,13 +645,13 @@ const takeCharge = [
     color: var(--color-muted);
   }
   .versus-oui .versus-label {
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .versus-col h3 {
     margin: 0 0 var(--space-4);
   }
   .versus-oui h3 {
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .versus-col ul {
     display: grid;
@@ -677,16 +677,16 @@ const takeCharge = [
   }
   .versus-oui li::before {
     content: '→';
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .versus-oui li strong {
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .versus-chute {
     margin: var(--space-8) 0 0;
     font-size: var(--text-lg);
   }
-  @media (max-width: 760px) {
+  @media (max-width: 900px) {
     .versus {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -716,7 +716,7 @@ const takeCharge = [
   }
   .cause-travail {
     background: var(--color-orange);
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cause-label {
     margin: 0 0 var(--space-2);
@@ -727,7 +727,7 @@ const takeCharge = [
     color: var(--color-clay-ink);
   }
   .cause-travail .cause-label {
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cause h3 {
     margin: 0 0 var(--space-2);
@@ -741,7 +741,7 @@ const takeCharge = [
   .cause-travail p:last-child {
     font-weight: 600;
   }
-  @media (max-width: 760px) {
+  @media (max-width: 900px) {
     .cause {
       grid-template-columns: minmax(0, 1fr);
     }

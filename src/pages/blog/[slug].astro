@@ -1,4 +1,5 @@
 ---
+import { dims } from '../../utils/imageDims';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import { withBase } from '../../utils/url';
@@ -109,6 +110,9 @@ const articleSchema = {
       <p class="eyebrow">{article.data.pillar}</p>
       <h1>{article.data.title}</h1>
       <p class="post-meta">Publié le {dateFormatter.format(article.data.publishDate)} — Nicolas Verdot</p>
+      {article.data.image && (
+        <img class="post-cover" src={withBase(article.data.image)} width={dims(article.data.image).width} height={dims(article.data.image).height} alt={article.data.imageAlt ?? ''} loading="eager" decoding="async" />
+      )}
       <div class="post-content" data-post-content>
         <Content />
       </div>
@@ -248,7 +252,7 @@ const articleSchema = {
     font-size: var(--text-sm);
     line-height: 1.5;
   }
-  @media (min-width: 900px) {
+  @media (min-width: 901px) {
     .post-content :global(.figure-pleine) {
       width: calc(100% + 8rem);
       margin-left: -4rem;

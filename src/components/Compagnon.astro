@@ -1,4 +1,5 @@
 ---
+import { dims } from '../utils/imageDims';
 /**
  * Le Compagnon : un personnage qui demande ce qui se joue, et y conduit.
  *
@@ -103,6 +104,7 @@ const estExterne = (href: string) => /^https?:/.test(href);
       <img
         id="compagnon-perso"
         src={`${dossier}${poseDe(accueil.pose)}.webp`}
+        width={dims(`${personnage.dossier}${poseDe(accueil.pose)}.webp`).width} height={dims(`${personnage.dossier}${poseDe(accueil.pose)}.webp`).height}
         alt=""
         loading="lazy"
         decoding="async"
@@ -347,6 +349,11 @@ const estExterne = (href: string) => /^https?:/.test(href);
     function proposer() {
       /* Rien pendant que le panneau est ouvert : la question est déjà posée. */
       if (bulles >= BULLES || !boite.hidden) return;
+      /* En bas de page, la bulle masquerait les liens légaux : on repasse plus tard. */
+      if (window.innerHeight + window.scrollY > document.documentElement.scrollHeight - 320) {
+        setTimeout(proposer, 26000);
+        return;
+      }
       bulles += 1;
       racine.dataset.bulle = '1';
       setTimeout(() => {
@@ -355,7 +362,18 @@ const estExterne = (href: string) => /^https?:/.test(href);
       }, 5200);
     }
 
-    setTimeout(proposer, 1600);
+    /* Sur téléphone, la bulle recouvrait le texte d'accroche du premier écran :
+       elle attend que le visiteur ait fait défiler une hauteur d'écran. */
+    if (matchMedia('(max-width: 600px)').matches) {
+      const auDefilement = () => {
+        if (window.scrollY < window.innerHeight * 0.9) return;
+        window.removeEventListener('scroll', auDefilement);
+        proposer();
+      };
+      window.addEventListener('scroll', auDefilement, { passive: true });
+    } else {
+      setTimeout(proposer, 1600);
+    }
 
     /* Ouvert au reste du site : une page peut envoyer le visiteur sur un écran
        précis, par exemple depuis un bouton « on en parle ? ». */
@@ -418,7 +436,7 @@ const estExterne = (href: string) => /^https?:/.test(href);
     border-radius: 50%;
     /* Le dessin est au trait noir sur fond transparent : il lui faut toujours
        un fond clair sous lui, y compris en mode sombre. */
-    background: #fffdfa;
+    background: var(--color-white);
     object-fit: cover;
   }
 
@@ -745,7 +763,7 @@ const estExterne = (href: string) => /^https?:/.test(href);
      explicite en bas. Mêmes écrans, mêmes choix, même script : seul l'habit
      change. */
 
-  @media (max-width: 719px) {
+  @media (max-width: 900px) {
     .compagnon:not([data-ouvert]) {
       /* Un peu plus haut que sur ordinateur : sur téléphone, le bas de l'écran
          appartient à la barre du navigateur, qui se rétracte et revient. */

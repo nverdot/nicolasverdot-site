@@ -372,7 +372,7 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
     height: 2rem;
     border-radius: 50%;
     background: var(--color-orange);
-    color: #122033;
+    color: var(--color-navy-solid);
     font-style: normal;
     font-weight: 800;
   }
@@ -495,7 +495,7 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
     padding: var(--space-8) var(--space-6);
     border-radius: var(--radius-md);
     background: var(--color-ink-solid);
-    color: #fff;
+    color: var(--color-white);
     box-shadow: var(--shadow-md);
   }
   .cs-result-label {
@@ -511,7 +511,7 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
     font-size: clamp(2.4rem, 5vw, 3.4rem);
     font-weight: 800;
     line-height: 1.05;
-    color: #fff;
+    color: var(--color-white);
   }
   .cs-lines {
     display: grid;
@@ -658,12 +658,12 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
     color: var(--color-muted);
     font-size: var(--text-sm);
   }
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     .cs-stats {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-  @media (max-width: 620px) {
+  @media (max-width: 600px) {
     .cs-stats {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -679,7 +679,7 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
       position: static;
     }
   }
-  @media (max-width: 560px) {
+  @media (max-width: 600px) {
     .cs-fields {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -693,7 +693,7 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
      Ces règles viennent en dernier pour remplacer les couleurs d'origine. */
   .cs-result {
     background: var(--color-orange);
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cs-result-label,
   .cs-total,
@@ -703,7 +703,7 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
   .cs-heure strong,
   .cs-an,
   .cs-an strong {
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cs-lines dt span,
   .cs-note {
@@ -717,11 +717,11 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
     font-weight: 800;
   }
   .cs-result :global(.cs-ico) {
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cs-result :global(.btn) {
-    background: #122033;
-    color: #fff;
+    background: var(--color-navy-solid);
+    color: var(--color-white);
   }
 
   .cs-rappel {
@@ -731,7 +731,7 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
     padding: var(--space-4) 0 0;
     border-top: 1px solid rgba(18, 32, 51, 0.18);
     list-style: none;
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cs-rappel li {
     display: flex;
@@ -787,8 +787,8 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
     margin-top: var(--space-4);
     padding: var(--space-4);
     border-radius: var(--radius-sm);
-    background: #122033;
-    color: #fff;
+    background: var(--color-navy-solid);
+    color: var(--color-white);
   }
   .cs-rappel-titre {
     margin: 0 0 var(--space-3);
@@ -802,14 +802,14 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
     margin: 0;
     padding: 0;
     border: 0;
-    color: #fff;
+    color: var(--color-white);
   }
   .cs-rappel-bloc .cs-rappel strong {
     color: var(--color-orange);
     font-size: 1.15em;
   }
   .cs-rappel-bloc .cs-rappel b {
-    color: #fff;
+    color: var(--color-white);
   }
   .cs-result .cs-rappel-bloc :global(.cs-ico) {
     color: var(--color-orange);
@@ -824,8 +824,8 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
     margin-top: var(--space-8);
     padding: var(--space-8);
     border-radius: var(--radius-md);
-    background: #122033;
-    color: #fff;
+    background: var(--color-navy-solid);
+    color: var(--color-white);
     box-shadow: var(--shadow-md);
   }
   .cs-recup-titre {
@@ -888,10 +888,10 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
   .cs-recup-choix input:checked + span {
     border-color: var(--color-orange);
     background: var(--color-orange);
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cs-recup-choix input:focus-visible + span {
-    outline: 2px solid #fff;
+    outline: 2px solid var(--color-white);
     outline-offset: 2px;
   }
   .cs-recup-note {
@@ -900,7 +900,7 @@ const SOURCE_DECISION = 'https://www.mckinsey.com/capabilities/people-and-organi
     color: rgba(255, 255, 255, 0.72);
     font-size: var(--text-sm);
   }
-  @media (max-width: 760px) {
+  @media (max-width: 900px) {
     .cs-recup {
       grid-template-columns: minmax(0, 1fr);
       padding: var(--space-6) var(--space-4);

@@ -1,6 +1,6 @@
 ---
 client: "Air France-KLM"
-clientLogo: "/logos/air-france-klm.png"
+clientLogo: "/logos/air-france-klm.webp"
 title: "Accompagner une transformation agile à l'échelle dans un environnement international"
 subtitle: "Air France-KLM — Transformation, coaching et développement des compétences agiles"
 question: "Comment accompagner plusieurs directions dans leur transformation tout en tenant compte de leurs réalités métiers, de leurs niveaux de maturité et d'un environnement international complexe ?"
