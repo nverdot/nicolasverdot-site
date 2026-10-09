@@ -26,6 +26,14 @@
   /* Constantes : ne changent JAMAIS entre les thèmes (utilisées sur des
      surfaces volontairement toujours sombres, ex. le bloc CTA). */
   --color-white: #fffdfa;
+  /* Bleu nuit constant (ne bascule pas en mode sombre) et textes secondaires
+     posés sur une surface toujours sombre (pied de page, bandeaux). */
+  --color-navy-solid: #122033;
+  /* Coup de surligneur sous un mot de titre. */
+  --color-marker: rgba(255, 203, 0, 0.7);
+  --color-on-dark: #d8e1ef;
+  --color-on-dark-muted: #c6d0df;
+  --color-on-dark-faint: #95a4bb;
   --color-ink-solid: #0b1627;
   /*
    * L'anneau de focus. Constante, et surtout PAS `--color-orange` : le jaune
@@ -46,7 +54,8 @@
   --font-display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
   --font-script: 'Caveat', cursive;
 
-  --text-xs: 0.8125rem;
+  /* Plancher de lisibilité : aucun texte du site sous 14 px. */
+  --text-xs: 0.875rem;
   --text-sm: 0.9375rem;
   --text-base: 1rem;
   --text-lg: 1.125rem;
@@ -54,6 +63,10 @@
   --text-2xl: 1.75rem;
   --text-3xl: 2.25rem;
   --text-4xl: clamp(2.25rem, 4vw + 1rem, 3.25rem);
+  /* Titres : une seule taille de h1 et de h2 pour tout le site. Le h2 reste
+     toujours sous le h1, y compris sur mobile (32 px / 26 px à 375 px). */
+  --text-h1: clamp(2rem, 3.2vw + 1.1rem, 3.25rem);
+  --text-h2: clamp(1.625rem, 1.6vw + 1.25rem, 2.25rem);
 
   --tracking-tight: -0.025em;
 
@@ -63,12 +76,24 @@
   --space-4: 1rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
+  --space-10: 2.5rem;
   --space-12: 3rem;
   --space-16: 4rem;
   --space-24: 6rem;
 
   --container-max: 1180px;
   --prose-max: 720px;
+  /* Longueur de ligne confortable pour un paragraphe courant. */
+  --measure: 70ch;
+
+  /* Rythme vertical des sections : serré, normal, aéré. Les trois valeurs
+     se resserrent sur mobile (voir global.css). */
+  --section-tight: var(--space-8);
+  --section-y: var(--space-16);
+  --section-airy: var(--space-24);
+
+  /* Hauteur minimale d'une zone cliquable (doigt). */
+  --tap: 44px;
 
   --radius-sm: 14px;
   --radius-md: 26px;
@@ -107,6 +132,7 @@
     --color-blue-soft: #27364b;
     --color-clay: #e08350;
     --color-clay-ink: #f0b28c;
+    --color-marker: rgba(255, 203, 0, 0.34);
     --shadow-sm: 0 12px 30px rgba(0, 0, 0, 0.35);
     --shadow-md: 0 26px 80px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 40px 90px rgba(0, 0, 0, 0.5);
@@ -128,6 +154,7 @@
   --color-blue-soft: #27364b;
   --color-clay: #e08350;
   --color-clay-ink: #f0b28c;
+  --color-marker: rgba(255, 203, 0, 0.34);
   --color-panel: rgba(29, 32, 39, 0.86);
   --color-panel-border: rgba(59, 65, 75, 0.9);
   --shadow-sm: 0 12px 30px rgba(0, 0, 0, 0.35);

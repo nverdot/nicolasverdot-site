@@ -5,7 +5,7 @@
 interface Props {
   eyebrow: string;
   title: string;
-  /** Mot ou groupe de mots accentué en script orange, comme sur le hero de l'accueil. */
+  /** Mot ou groupe de mots surligné au feutre jaune, comme sur le hero de l'accueil. */
   titleAccent?: string;
   /** Fin de phrase après l'accent (optionnel, requiert titleAccent). */
   titleTail?: string;
@@ -26,7 +26,7 @@ const { eyebrow, title, titleAccent, titleTail, summary, pills = [], photo } = A
       {titleAccent ? (
         <h1>
           {title}
-          <span class="script-accent">{titleAccent}</span>
+          <span class="title-accent">{titleAccent}</span>
           {titleTail && <span class="hero-tail">{titleTail}</span>}
         </h1>
       ) : (
@@ -55,9 +55,9 @@ const { eyebrow, title, titleAccent, titleTail, summary, pills = [], photo } = A
   }
   .page-hero-inner {
     width: 100%;
-    max-width: 1400px;
+    max-width: var(--container-max);
     margin-inline: auto;
-    padding-inline: clamp(1.5rem, 4vw, 4rem);
+    padding-inline: var(--space-6);
   }
   .page-hero.has-photo .page-hero-inner {
     display: flex;
@@ -67,22 +67,6 @@ const { eyebrow, title, titleAccent, titleTail, summary, pills = [], photo } = A
   .page-hero.has-photo .page-hero-copy {
     flex: 1 1 0;
     min-width: 0;
-  }
-  .script-accent {
-    display: block;
-    font-family: var(--font-script);
-    font-weight: 700;
-    color: var(--color-orange-ink);
-    font-size: clamp(3.2rem, 6vw, 5rem);
-    line-height: 1;
-    margin: 0.15em 0;
-  }
-  .hero-tail {
-    display: block;
-  }
-  .page-hero h1 {
-    font-size: clamp(2.2rem, 4.2vw, 3.6rem);
-    color: var(--color-navy);
   }
   .page-summary {
     margin: var(--space-4) 0 0;
