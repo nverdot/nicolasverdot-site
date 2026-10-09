@@ -45,12 +45,12 @@ export const portes: Porte[] = [
   },
   {
     id: 'duree',
-    besoin: 'Une équipe ou un dirigeant à faire grandir',
+    besoin: 'Une équipe, un manager ou un dirigeant à faire grandir',
     titre: 'Coaching et formations',
-    phrase: 'Quand un séminaire ne suffit pas : un travail dans la durée, avec l’équipe, son manager ou vous.',
+    phrase: 'Quand un séminaire ne suffit pas : un travail dans la durée, avec l’équipe, avec son manager ou avec vous.',
     principal: { titre: 'Le coaching d’équipe', href: '/offres/coaching-equipe/' },
     aussi: [
-      { titre: 'Coaching de dirigeant', href: '/offres/coaching-professionnel/' },
+      { titre: 'Coaching de manager ou de dirigeant', href: '/offres/coaching-professionnel/' },
       { titre: 'Une transformation qui patine', href: '/offres/accompagnement-transformation/' },
       { titre: 'Animer vous-même (mentoring)', href: '/offres/mentoring/' },
       { titre: 'Toutes les formations', href: '/formations/' },
