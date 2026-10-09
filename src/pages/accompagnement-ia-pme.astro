@@ -449,6 +449,10 @@ const faqs = [
     a: "Non. On ne code pas et on ne construit pas d'automatisations : on apprend à formuler une demande claire, à vérifier un résultat et à organiser le travail autour. Si vous savez expliquer une tâche à un collègue, vous avez le niveau requis.",
   },
   {
+    q: "Les outils d'IA changent sans cesse. Faudra-t-il reformer les équipes tous les six mois ?",
+    a: "Non, si l'on s'y prend bien. Le but n'est pas d'apprendre un outil par cœur, mais d'installer des habitudes : tester un usage sur une vraie tâche, mesurer ce qu'il change, partager ce qui fonctionne. Avec des référents internes, l'équipe continue d'apprendre seule quand les outils évoluent.",
+  },
+  {
     q: 'Faut-il acheter un nouvel outil ?',
     a: "Non, on part des outils que vous avez déjà ou que vous autorisez : Microsoft 365 Copilot, ChatGPT, Claude, Le Chat de Mistral, Gemini. Le choix d'un outil vient après celui des usages, jamais avant. Si un usage demande une automatisation, une connexion à vos logiciels ou un développement, je vous le dis, je qualifie le besoin, et vous orientez le chantier vers un spécialiste. Les licences et les développements ne sont pas compris dans l'accompagnement.",
   },
@@ -821,6 +825,13 @@ const faqSchema = {
       <ul class="capacites">
         {capacites.map((c) => <li>{c}</li>)}
       </ul>
+
+      <p class="fil-rouge">
+        <strong>Une équipe qui apprend, pas une équipe formée une fois.</strong> Les outils d'IA changent plus
+        vite qu'un plan de formation. Ce qui dure, c'est l'habitude de tester un usage, de mesurer ce qu'il
+        change et de partager ce qui fonctionne. C'est le principe de
+        <a href={withBase('/blog/entreprise-apprenante/')}>l'entreprise apprenante</a>.
+      </p>
     </div>
   </section>
 

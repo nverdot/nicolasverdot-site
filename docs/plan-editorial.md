@@ -169,6 +169,9 @@ Statut : ✅ = publié (vague 1 : 25 articles, vague 2 : 25 articles, 50/150 au 
 139. Coaching professionnel : à quoi s'attendre vraiment (coaching professionnel déroulement)
 140. Quand faire appel à un coach plutôt qu'à un consultant (coach ou consultant)
 
+Hors numérotation (ajouté en octobre 2026, en appui des offres transformation et IA) :
+- ✅ Entreprise apprenante : définition concrète et par où commencer (entreprise apprenante)
+
 ## Cluster 6 — Parcours personnel (10)
 
 141. ✅ Du code à la facilitation : pourquoi j'ai changé de métier (reconversion facilitateur)

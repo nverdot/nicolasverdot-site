@@ -132,6 +132,12 @@ const takeCharge = [
   },
 ];
 
+const learningHabits = [
+  { icon: 'loop', title: "Des retours d'expérience réguliers", text: "Après chaque temps fort, l'équipe revient sur ce qui a été tenté et décide de ce qu'elle change. Sans chercher de coupable." },
+  { icon: 'people', title: "Des pairs qui s'entraident", text: "Managers et chefs de projet travaillent ensemble sur leurs situations réelles, en codéveloppement ou en communauté de pratique." },
+  { icon: 'network', title: 'Des apprentissages qui circulent', text: "Ce qu'une équipe a compris profite aux autres, au lieu de rester dans un service ou dans la tête de quelques personnes." },
+];
+
 const basics = [
   { icon: 'clock', title: 'Un rythme qui s\'adapte', text: "De quelques journées ciblées sur un blocage précis à un accompagnement de plusieurs mois, selon la profondeur du changement attendu." },
   { icon: 'network', title: 'Présentiel, distanciel ou hybride', text: "Le format s'ajuste à la réalité de vos équipes, en particulier lorsqu'elles sont réparties sur plusieurs sites." },
@@ -150,6 +156,7 @@ const faqs = [
   { q: 'Est-ce une mission de conseil classique ?', a: "Pas uniquement. J'apporte une lecture et un cadre, mais une grande partie du travail consiste à mettre les acteurs concernés au travail pour produire des décisions qu'ils pourront réellement porter." },
   { q: "Pouvez-vous accompagner une transformation liée à l'IA ?", a: "Oui. L'enjeu n'est pas seulement technologique : usages, métiers, peurs, responsabilités, gouvernance et nouvelles manières de collaborer." },
   { q: "Remplacez-vous l'équipe de transformation interne ?", a: "Non. Je travaille avec elle, je l'aide à prendre de la hauteur, à lire les blocages et à renforcer son impact." },
+  { q: "Que reste-t-il une fois l'accompagnement terminé ?", a: "Des habitudes qui continuent sans moi : des retours d'expérience réguliers, des pairs qui s'entraident, des essais à petite échelle. C'est ce que l'on appelle une entreprise apprenante, et c'est la base d'une organisation agile." },
   { q: 'Combien de temps dure l\'accompagnement ?', a: 'De quelques journées ciblées à plusieurs mois, selon le périmètre, la maturité du projet et la profondeur des changements attendus.' },
 ];
 
@@ -318,7 +325,32 @@ const faqSchema = {
     </div>
   ))}
 
-  <section class="section alt" data-reveal>
+  <section class="section alt" data-reveal data-section-name="Après l'accompagnement">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Après l'accompagnement</p>
+          <h2>Une organisation qui continue d'apprendre sans moi</h2>
+        </div>
+        <p>Une transformation tient quand l'organisation sait tirer des leçons de ce qu'elle vit et ajuster sa manière de travailler. C'est ce que l'on appelle une entreprise apprenante, et c'est la base de toute organisation agile.</p>
+      </div>
+      <div class="cards icon-cards">
+        {learningHabits.map((h) => (
+          <article class="card">
+            <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[h.icon]} /></span>
+            <h3>{h.title}</h3>
+            <p>{h.text}</p>
+          </article>
+        ))}
+      </div>
+      <div class="callout-box">
+        <span class="callout-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.loop} /></span>
+        <p><strong>Chez Air France-KLM, une communauté de coachs faisait circuler les apprentissages d'un périmètre à l'autre.</strong><br /><a href={withBase('/cas-clients/air-france-klm/')}>Voir le cas client</a> · <a href={withBase('/blog/entreprise-apprenante/')}>Lire : l'entreprise apprenante, par où commencer</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
     <div class="container">
       <div class="section-head">
         <div>
@@ -338,7 +370,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="section" data-reveal data-section-name="Combien de temps">
+  <section class="section alt" data-reveal data-section-name="Combien de temps">
     <div class="container">
       <div class="section-head">
         <div>
@@ -370,7 +402,7 @@ const faqSchema = {
   </section>
 
   {relatedCaseStudies.length > 0 && (
-    <section class="section alt" data-reveal data-section-name="Cas clients">
+    <section class="section" data-reveal data-section-name="Cas clients">
       <div class="container">
         <div class="section-head">
           <div>
@@ -400,7 +432,7 @@ const faqSchema = {
     </section>
   )}
 
-  <section class="section" data-reveal>
+  <section class="section alt" data-reveal>
     <div class="container prose">
       <p class="eyebrow">FAQ</p>
       <h2>Questions fréquentes</h2>
