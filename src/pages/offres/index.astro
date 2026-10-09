@@ -2,46 +2,24 @@
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
-import PriorityGrid from '../../components/PriorityGrid.astro';
-import OfferFinder from '../../components/OfferFinder.astro';
-import { withBase } from '../../utils/url';
+import TroisPortes from '../../components/TroisPortes.astro';
 ---
 
 <Layout
   title="Les offres — by Nicolas Verdot"
-  description="Six façons de remettre un collectif en mouvement, du séminaire clé en main au coaching individuel. Dites ce que vous venez chercher, la page vous oriente."
+  description="Séminaires d'entreprise, stratégie IA, coaching et formations : trois façons de travailler ensemble, selon ce que vous venez chercher."
   path="/offres/"
 >
   <PageHero
     eyebrow="Accompagnements"
     title="Vous savez ce qui doit changer."
     titleAccent="Voyons comment."
-    summary="Un séminaire à réussir, une équipe qui tourne en rond, une transformation qui patine, une posture à travailler : repérez ci-dessous ce qui ressemble à <strong>votre situation</strong>, ou parlons-en directement. Pas de catalogue figé : chaque accompagnement part de <strong>votre contexte</strong>."
+    summary="Un séminaire à réussir, l'IA à mettre en route, une équipe ou un dirigeant à faire grandir : choisissez la porte qui ressemble à <strong>votre situation</strong>, ou parlons-en directement."
   />
 
-  {/* Aider a choisir AVANT de lister. Six cartes equivalentes ne departagent
-      rien : on part donc de la situation, comme le fait le Compagnon, et la
-      grille complete vient ensuite pour ceux qui preferent tout voir. */}
-  <OfferFinder />
-
-  <PriorityGrid
-    sectionName="Les six accompagnements"
-    title="Les six accompagnements, en clair"
-    lead=""
-    description="Ils se combinent souvent : un séminaire animé pour vous, puis un coaching d'équipe pour ancrer ce qui s'y est décidé. Si vous hésitez entre deux, c'est en général que les deux sont utiles — dans un ordre."
-  />
-
-  {/* L'offre IA a son propre parcours en trois portes, hors des six
-      accompagnements : on la signale ici plutot que de l'ajouter a la grille,
-      ou elle casserait le « six façons » repris dans toute la page. */}
-  <section class="section" data-reveal data-section-name="Stratégie et adoption de l'IA">
-    <div class="container">
-      <div class="callout-box callout-box-row">
-        <p><strong>«&nbsp;Il faut qu'on fasse de l'IA&nbsp;», mais par où commencer&nbsp;?</strong><br /><span class="accent">J'aide les directions de PME à décider où agir, dans quel ordre, avec les métiers et la DSI — puis à tester et à faire adopter. Trois portes d'entrée, achetables séparément.</span></p>
-        <a href={withBase('/accompagnement-ia-pme/')} class="btn">Voir l'accompagnement IA →</a>
-      </div>
-    </div>
-  </section>
+  {/* Trois besoins au lieu de six accompagnements au même niveau, plus l'IA,
+      plus les formations (voir data/portes.ts). */}
+  <TroisPortes eyebrow="Les offres" title="Trois besoins, trois portes" lead="Chaque porte a une offre principale. Les formats voisins sont listés en dessous, pour ceux qui savent déjà ce qu'ils cherchent." />
 
   <CTABlock
     eyebrow="Vous hésitez sur le bon point d'entrée ?"

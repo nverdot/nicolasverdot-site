@@ -148,6 +148,10 @@ const icones: Record<string, string> = {
     </div>
   </section>
 
+  {/* Sur téléphone, toutes les catégories se replient, la première comprise :
+      la page devient un sommaire (voir le script de Layout.astro). */}
+  <span data-pli-tout hidden></span>
+
   <CTABlock
     dark
     title="Une formation à caler ?"

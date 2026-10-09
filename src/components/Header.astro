@@ -42,15 +42,16 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
       <span></span>
     </label>
     <nav class="main-nav" id="main-nav">
+      {/* Les trois portes de l'offre (data/portes.ts), puis la preuve, les
+          articles et la personne. « Formations » est dans la troisième porte,
+          « Contact » dans le bouton et dans le pied de page. */}
       <ul>
         <li><a href={withBase('/seminaires-entreprise/')} aria-current={currentPath.startsWith('/seminaire') ? 'page' : undefined}>Séminaires</a></li>
         <li><a href={withBase('/accompagnement-ia-pme/')} aria-current={currentPath === '/accompagnement-ia-pme/' ? 'page' : undefined}>Stratégie IA</a></li>
-        <li><a href={withBase('/offres/')} aria-current={currentPath.startsWith('/offres/') ? 'page' : undefined}>Accompagnements</a></li>
+        <li><a href={withBase('/offres/')} aria-current={currentPath.startsWith('/offres/') || currentPath.startsWith('/formations/') ? 'page' : undefined}>Coaching et formations</a></li>
         <li><a href={withBase('/cas-clients/')} aria-current={currentPath.startsWith('/cas-clients/') ? 'page' : undefined}>Cas clients</a></li>
-        <li><a href={withBase('/formations/')} aria-current={currentPath.startsWith('/formations/') ? 'page' : undefined}>Formations</a></li>
         <li><a href={withBase('/blog/')} aria-current={currentPath.startsWith('/blog/') ? 'page' : undefined}>Blog</a></li>
         <li><a href={withBase('/a-propos/')} aria-current={currentPath === '/a-propos/' ? 'page' : undefined}>Qui suis-je</a></li>
-        <li><a href={withBase('/contact/')} aria-current={currentPath === '/contact/' ? 'page' : undefined}>Contact</a></li>
       </ul>
       <a href={SITE.bookingUrl} class="btn header-cta" target="_blank" rel="noopener">Réserver 30 minutes</a>
     </nav>

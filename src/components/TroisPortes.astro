@@ -1,0 +1,169 @@
+---
+/**
+ * Les trois portes : toute l'offre, en trois besoins (voir data/portes.ts).
+ * Remplace la grille des six accompagnements sur l'accueil et sur /offres/.
+ */
+import { portes } from '../data/portes';
+import { withBase } from '../utils/url';
+import Pli from './Pli.astro';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  /** Sur téléphone, la rubrique se replie derrière ce titre (voir Pli.astro). */
+  pli?: string;
+  pliNote?: string;
+}
+const {
+  eyebrow = 'Trois façons de travailler ensemble',
+  title = 'De quoi avez-vous besoin ?',
+  lead = 'Trois besoins, une réponse pour chacun. Les formats voisins sont juste en dessous.',
+  pli,
+  pliNote,
+} = Astro.props;
+---
+
+<section class="section alt trois-portes" id="offres" data-pli={pli ? '' : undefined} data-pli-non={pli ? undefined : ''} data-reveal data-section-name="Les trois portes">
+  {pli && <Pli titre={pli} note={pliNote} />}
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">{eyebrow}</p>
+        <h2>{title}</h2>
+      </div>
+      {lead && <p>{lead}</p>}
+    </div>
+    <div class="portes">
+      {portes.map((p, i) => (
+        <article class="porte" id={p.id}>
+          <p class="porte-besoin"><span aria-hidden="true">{i + 1}</span>{p.besoin}</p>
+          <h3>{p.titre}</h3>
+          <p class="porte-phrase">{p.phrase}</p>
+          <a class="porte-principal" href={withBase(p.principal.href)}>{p.principal.titre}</a>
+          <ul>
+            {p.aussi.map((a) => (
+              <li><a href={withBase(a.href)}>{a.titre}</a></li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .portes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .porte {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: inset 0 0 0 1.5px var(--color-border), var(--shadow-sm);
+    scroll-margin-top: var(--space-24);
+  }
+  .porte-besoin {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 0 0 var(--space-3);
+    color: var(--color-clay-ink);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .porte-besoin span {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-orange);
+    color: var(--color-ink-solid);
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+  .porte h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-2xl);
+  }
+  /* Trois lignes réservées : les boutons des trois cartes s'alignent. */
+  .porte-phrase {
+    min-height: 4.8em;
+    margin: 0 0 var(--space-4);
+    color: var(--color-muted);
+  }
+  /* L'offre principale de la porte : un vrai bouton sombre, pour qu'on ne la
+     confonde pas avec le bouton jaune « Réserver 30 minutes ». */
+  .porte-principal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 3rem;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-ink-solid);
+    color: var(--color-white);
+    font-weight: 700;
+    line-height: 1.25;
+    text-decoration: none;
+  }
+  .porte-principal::after {
+    content: '→';
+    flex: none;
+    color: var(--color-orange);
+  }
+  .porte ul {
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .porte li + li {
+    border-top: 1px solid var(--color-border);
+  }
+  .porte li a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 2.75rem;
+    padding: var(--space-2) 0;
+    color: var(--color-navy);
+    font-weight: 600;
+    line-height: 1.3;
+    text-decoration: none;
+  }
+  .porte li a::after {
+    content: '›';
+    flex: none;
+    color: var(--color-muted);
+    font-size: 1.25rem;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .porte li a:hover {
+      color: var(--color-blue);
+    }
+    .porte-principal:hover {
+      background: var(--color-blue-strong);
+    }
+  }
+  @media (max-width: 980px) {
+    .portes {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-4);
+    }
+  }
+  @media (max-width: 719px) {
+    .porte {
+      padding: var(--space-4);
+      border-radius: 18px;
+    }
+  }
+</style>

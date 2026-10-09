@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import CTABlock from '../components/CTABlock.astro';
-import PriorityGrid from '../components/PriorityGrid.astro';
+import TroisPortes from '../components/TroisPortes.astro';
 import ClientLogoStrip from '../components/ClientLogoStrip.astro';
 import Pli from '../components/Pli.astro';
 import { withBase } from '../utils/url';
@@ -28,40 +28,6 @@ const proofItems = [
   { icon: 'trending', title: 'Des actions concrètes', text: 'Pour transformer les décisions en résultats visibles.' },
 ];
 
-// Les séminaires, par situation : c'est par là que le visiteur se reconnaît
-// (« je lance un projet », « mon comité de direction patine »), pas par le
-// mot « facilitation ».
-const seminaires = [
-  {
-    num: 'Vous lancez un projet',
-    titre: 'Séminaire kick-off',
-    texte: "Un projet, une feuille de route, une nouvelle année. Les équipes repartent en sachant pourquoi, qui fait quoi, et par quoi commencer lundi.",
-    lien: 'Le séminaire kick-off',
-    href: '/seminaire-kick-off/',
-  },
-  {
-    num: 'Votre comité de direction',
-    titre: 'Séminaire CODIR',
-    texte: "Deux jours pour trancher les priorités, traiter les désaccords qui traînent et repartir avec des décisions que chacun défendra.",
-    lien: 'Le séminaire de direction',
-    href: '/seminaire-codir/',
-  },
-  {
-    num: 'Vous déployez l’IA',
-    titre: 'Stratégie de déploiement IA',
-    texte: "Décider où l'IA crée de la valeur, dans quel ordre l'introduire, et embarquer les métiers et la DSI. En comité de direction, puis avec les équipes.",
-    lien: 'La stratégie de déploiement IA',
-    href: '/accompagnement-ia-pme/',
-  },
-  {
-    num: 'Près de chez vous',
-    titre: 'Nice, Sophia Antipolis, Monaco',
-    texte: "Basé à Nice, je prépare vos séminaires sur place dans les Alpes-Maritimes, en français ou en anglais, et j'interviens partout en France.",
-    lien: 'Les séminaires dans le 06',
-    href: '/seminaires-alpes-maritimes/',
-  },
-];
-
 const resourceArticles = [
   { slug: 'reunionite-sept-signes', title: 'Réunionite : sept signes que vos réunions tournent à vide', description: 'Sept signes concrets que vos réunions tournent à vide, et un remède actionnable pour chacun.', visual: 'orange' },
   { slug: 'organiser-seminaire-equipe', title: 'Organiser un séminaire d\'équipe qui change vraiment quelque chose', description: "Intention, déroulé, lieu, facilitation, suites : la méthode pour un séminaire qui produit des effets durables.", visual: 'orange' },
@@ -77,32 +43,9 @@ const resourceArticles = [
 >
   <Hero />
 
-  {/* Première porte : les séminaires, par situation. */}
-  <section class="section alt ia-portes" data-pli data-reveal data-section-name="Séminaires : trois situations">
-    <Pli titre="Quatre situations fréquentes" note="Kick-off, comité de direction, IA, près de chez vous" />
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Séminaires d'entreprise · Déploiement de l'IA</p>
-          <h2>Vous réunissez vos équipes&nbsp;? Faites qu'il en sorte quelque chose.</h2>
-        </div>
-        <p>
-          Je conçois et j'anime votre séminaire de bout en bout&nbsp;: le cadrage, le déroulé, le jour J et les
-          suites. Vous restez dans votre rôle de dirigeant.
-        </p>
-      </div>
-      <div class="cards cards-quatre">
-        {seminaires.map((s) => (
-          <a class="card ia-porte" href={withBase(s.href)}>
-            <span class="num">{s.num}</span>
-            <h3>{s.titre}</h3>
-            <p>{s.texte}</p>
-            <span class="card-link">{s.lien}</span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+  {/* Toute l'offre, une seule fois, en trois besoins (voir data/portes.ts).
+      Avant : quatre cartes « situations » ici, puis six accompagnements plus bas. */}
+  <TroisPortes pli="Les trois offres en détail" pliNote="Séminaires, stratégie IA, coaching et formations" />
 
   <ClientLogoStrip />
 
@@ -157,7 +100,6 @@ const resourceArticles = [
     </div>
   </section>
 
-  <PriorityGrid pli="Six façons de travailler ensemble" pliNote="Du séminaire clé en main au coaching individuel" />
 
   <section class="resources section alt" data-pli data-reveal data-section-name="Les ressources">
     <Pli titre="Trois articles pour commencer" note="Des méthodes utilisables sans moi" />

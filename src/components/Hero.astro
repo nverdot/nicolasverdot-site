@@ -15,7 +15,7 @@ const photo = await getImage({ src: action, width: 1100, format: 'webp' });
 const tuiles = [
   { href: '/seminaires-entreprise/', titre: 'Séminaires', note: 'Conçus et animés pour vous', trace: 'M9 10.2a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4zM3.4 19c.4-3 2.6-4.9 5.6-4.9s5.2 1.9 5.6 4.9M16.4 10.4a2.3 2.3 0 1 0 0-4.6M17 14.3c2 .5 3.3 2.1 3.6 4.7' },
   { href: '/accompagnement-ia-pme/', titre: 'Stratégie IA', note: 'Par où commencer', trace: 'M11 4.5l1.7 4.8 4.8 1.7-4.8 1.7L11 17.5l-1.7-4.8L4.5 11l4.8-1.7zM18 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z' },
-  { href: '/offres/', titre: 'Les offres', note: 'Six façons de travailler ensemble', trace: 'M4.5 5h6v6h-6zM13.5 5h6v6h-6zM4.5 14h6v6h-6zM13.5 14h6v6h-6z' },
+  { href: '/offres/#duree', titre: 'Coaching et formations', note: 'Équipe, dirigeant, dans la durée', trace: 'M4.5 5h6v6h-6zM13.5 5h6v6h-6zM4.5 14h6v6h-6zM13.5 14h6v6h-6z' },
   { href: '/cas-clients/', titre: 'Cas clients', note: 'Ce que ça donne sur le terrain', trace: 'M4 8h16v11H4zM9 8V6.2a1.2 1.2 0 0 1 1.2-1.2h3.6A1.2 1.2 0 0 1 15 6.2V8M4 12.5h16' },
   { href: '/outils/cout-de-linaction/', titre: 'Simulateur', note: 'Ce que coûte l’inaction', trace: 'M6 3.5h12v17H6zM9 7.5h6M9 11.5h.01M12 11.5h.01M15 11.5h.01M9 15.5h.01M12 15.5h.01M15 15.5h.01' },
   { href: '/blog/', titre: 'Comprendre', note: 'Articles et méthodes', trace: 'M12 6.5c-2-1.3-4.6-1.6-7.5-1v12c2.9-.6 5.5-.3 7.5 1 2-1.3 4.6-1.6 7.5-1v-12c-2.9-.6-5.5-.3-7.5 1zM12 6.5v12' },
@@ -235,13 +235,19 @@ const tuiles = [
       font-size: var(--text-sm);
       line-height: 1.3;
     }
-    /* Les deux premières tuiles sont les deux offres d'entrée. */
-    .tuile:nth-child(-n + 2) {
+    /* Les trois premières tuiles sont les trois portes de l'offre (voir
+       data/portes.ts) ; la troisième prend toute la largeur. */
+    .tuile:nth-child(3),
+    .tuile:last-child {
+      grid-column: 1 / -1;
+      min-height: 0;
+    }
+    .tuile:nth-child(-n + 3) {
       background: var(--color-ink-solid);
       box-shadow: none;
       color: var(--color-white);
     }
-    .tuile:nth-child(-n + 2) span {
+    .tuile:nth-child(-n + 3) span {
       color: #c6d0df;
     }
     .hero-figure img {

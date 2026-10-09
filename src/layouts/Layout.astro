@@ -94,6 +94,65 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
     <main>
       <slot />
     </main>
+    {/* Sur téléphone, les pages qui n'ont pas été découpées à la main le sont
+        ici : chaque rubrique (une section avec un titre) se replie derrière une
+        ligne, comme avec Pli.astro. La première rubrique après le haut de page
+        reste ouverte : c'est l'essentiel de la page. Placé juste après le
+        contenu, avant le pied de page, pour s'exécuter avant qu'on ne voie le
+        bas de l'écran. Pour qu'une rubrique ne se replie jamais : data-pli-non.
+        Pour tout replier, première rubrique comprise : data-pli-tout sur <main>
+        ou sur un élément de la page. */}
+    <script is:inline>
+      (function () {
+        var racine = document.documentElement;
+        var main = document.querySelector('main');
+        if (!main || main.querySelector('[data-pli]')) return;
+        var fait = false;
+        function replier() {
+          if (fait || !racine.classList.contains('appli')) return;
+          fait = true;
+          var tout = !!document.querySelector('[data-pli-tout]');
+          var vues = 0;
+          var sections = main.querySelectorAll(':scope > section');
+          for (var i = 1; i < sections.length; i++) {
+            var s = sections[i];
+            var h2 = s.querySelector('h2');
+            if (!h2 || s.hasAttribute('data-pli-non') || s.getAttribute('data-section-name') === 'CTA final') continue;
+            vues++;
+            if (vues === 1 && !tout) continue;
+            var sur = s.querySelector('.eyebrow');
+            var propre = function (e) { return e.textContent.replace(/\s+/g, ' ').trim(); };
+            var titre = propre(sur || h2);
+            var note = sur ? propre(h2) : '';
+            var num = titre.match(/^(\d+)\s*·\s*(.+)$/);
+            // « 11 articles », « 8 formations » : le surtitre est un décompte,
+            // c'est le titre qui nomme la rubrique. On les inverse.
+            if (sur && !num && /^\d+\s+\D/.test(titre)) { note = titre; titre = propre(h2); }
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'pli-bouton';
+            b.setAttribute('aria-expanded', 'false');
+            b.setAttribute('data-pli-bouton', '');
+            var html = '';
+            if (num) html += '<span class="pli-num" aria-hidden="true"></span>';
+            html += '<span class="pli-texte"><span class="pli-titre"></span>' + (sur ? '<span class="pli-note"></span>' : '') + '</span>';
+            html += '<svg class="pli-chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+            b.innerHTML = html;
+            if (num) b.querySelector('.pli-num').textContent = num[1];
+            b.querySelector('.pli-titre').textContent = num ? num[2] : titre;
+            if (sur) b.querySelector('.pli-note').textContent = note;
+            s.setAttribute('data-pli', '');
+            s.insertBefore(b, s.firstChild);
+          }
+        }
+        replier();
+        // Si la fenêtre devient étroite après coup (rotation, redimensionnement).
+        try {
+          var mq = window.matchMedia('(max-width: 719px)');
+          if (mq.addEventListener) mq.addEventListener('change', replier);
+        } catch (e) {}
+      })();
+    </script>
     <Footer />
     {/* La coque du téléphone : la barre d'onglets n'apparaît qu'en dessous de
         720 px ; le Compagnon partout — en bas à droite sur ordinateur, au
