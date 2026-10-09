@@ -29,7 +29,10 @@ const tuiles = [
           s'agisse d'un séminaire ou de l'IA, le dirigeant achète la même
           chose : une décision prise à plusieurs, puis portée par ceux qui
           doivent la faire vivre. Les deux boutons sont les deux portes. */}
-      <p class="hero-kicker">Séminaires de direction · Kick-off · Stratégie IA — Nice · Sophia Antipolis · Monaco · PACA</p>
+      {/* Qui, quoi : la ligne qui dit ce qu'est BY Nicolas Verdot avant la
+          promesse. Sur téléphone, les villes s'effacent (elles sont plus bas
+          dans la page) pour que la ligne tienne en deux rangs. */}
+      <p class="hero-kicker">Facilitateur · Séminaires de direction · Kick-off · Stratégie IA<span class="hero-kicker-lieux"> — Nice · Sophia Antipolis · Monaco · PACA</span></p>
 
       <h1 id="hero-title">
         Une direction qui tranche.
@@ -40,6 +43,9 @@ const tuiles = [
       <p class="hero-lead">
         J'aide les dirigeants et leurs comités de direction à <strong>décider ce qui compte</strong>, puis à
         <strong>embarquer les équipes</strong> qui devront le faire vivre.
+        {/* Ce que le dirigeant y gagne, dit en une ligne : visible sur
+            téléphone, où le reste du paragraphe est replié. */}
+        <span class="hero-lead-gain">Vous repartez avec des <strong>décisions prises</strong>, des <strong>responsables nommés</strong> et une <strong>suite déjà calée</strong>.</span>
         {/* Sur téléphone, la première phrase suffit : la suite est dans les
             rubriques, juste en dessous. */}
         <span class="hero-lead-suite">Le temps d'un
@@ -134,8 +140,10 @@ const tuiles = [
     flex-wrap: wrap;
   }
 
-  /* Les tuiles n'existent que sur téléphone. */
-  .tuiles {
+  /* Les tuiles et la ligne « ce que vous y gagnez » n'existent que sur
+     téléphone : sur ordinateur, le paragraphe complet le dit déjà. */
+  .tuiles,
+  .hero-lead-gain {
     display: none;
   }
 
@@ -150,10 +158,18 @@ const tuiles = [
       gap: var(--space-4);
       padding-inline: var(--space-4);
     }
-    .hero-kicker,
+    .hero-kicker-lieux,
     .hero-lead-suite,
     .hero-actions {
       display: none;
+    }
+    .hero-kicker {
+      margin-bottom: var(--space-3);
+      letter-spacing: 0.12em;
+    }
+    .hero-lead-gain {
+      display: block;
+      margin-top: var(--space-2);
     }
     .hero-copy h1 {
       margin-bottom: var(--space-3);
