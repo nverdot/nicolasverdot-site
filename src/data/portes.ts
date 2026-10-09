@@ -46,7 +46,7 @@ export const portes: Porte[] = [
   {
     id: 'duree',
     besoin: 'Une équipe, un manager ou un dirigeant à faire grandir',
-    titre: 'Coaching et formations',
+    titre: 'Coaching, mentoring et formation',
     phrase: 'Quand un séminaire ne suffit pas : un travail dans la durée, avec l’équipe, avec son manager ou avec vous.',
     principal: { titre: 'Le coaching d’équipe', href: '/offres/coaching-equipe/' },
     aussi: [
