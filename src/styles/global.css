@@ -1884,3 +1884,15 @@ body.case-modal-lock-scroll {
 section[id] {
   scroll-margin-top: 96px;
 }
+
+/* ── Le site lancé depuis son icône ───────────────────────────────────
+   Ajouté à l'écran d'accueil, il s'ouvre en application, sans la barre du
+   navigateur : l'en-tête se glisse sous l'encoche, et tout ce qui porte
+   `.hors-app` (les accroches de navigateur) disparaît. La barre d'onglets,
+   elle, est dans BarreOnglets.astro : elle sert aussi dans le navigateur. */
+:root[data-app] .hors-app {
+  display: none;
+}
+:root[data-app] .site-header {
+  padding-top: env(safe-area-inset-top);
+}

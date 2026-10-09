@@ -36,6 +36,14 @@ Dans les paramètres du repo GitHub (**Settings → Secrets and variables → Ac
 
 Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que via ces secrets chiffrés.
 
+## État — 9 octobre 2026 (mode application sur téléphone)
+
+- **Branche `mode-appli`** (pas en ligne, en attente du feu vert de Nicolas), partie de `main` : sous 720 px, une barre d'onglets fixe en bas de l'écran (Séminaires, IA, Aide, Cas clients, Contact), comme sur decoincesducrayon.com. Le Compagnon quitte le coin de l'écran pour la case centrale « Aide ». Le site s'ajoute à l'écran d'accueil du téléphone (icône, ouverture en plein écran) : manifeste et icônes dans `public/app/`. Au-dessus de 720 px, rien ne change.
+- Pour voir le mode plein écran sans rien installer : ajouter `?app=1` à l'adresse.
+- Vérifié en local : douze pages à 375 px sans débordement, 320 px, ordinateur, mode clair et mode sombre, ouverture du Compagnon depuis la barre.
+- Reste à décider : le choix des quatre onglets ; une éventuelle deuxième passe pour resserrer les pages elles-mêmes sur téléphone (comme sur le site de Secourisme pour tous).
+- La branche `accueil-allege` a six commits (page séminaires et simulateur) qui ne sont pas dans `main`.
+
 ## État — 8 octobre 2026
 
 - Sur la même branche, le 8 octobre au soir : les limites de largeur qui coupaient les phrases sont retirées sur tout le site (introductions de section, résumés et titres de haut de page) ; la calculatrice compte par profil (dirigeants, managers, collaborateurs, chacun avec son coût journalier) et affiche trois chiffres de l'enquête Atlassian sur les réunions (72 %, 76 %, 54 %), vérifiés à la source et appliqués au conditionnel ; l'ancien « 55 % Microsoft », non vérifié, devient « 54 % Atlassian » ; image de la salle en U dans « On se réunit pour quoi ? ».

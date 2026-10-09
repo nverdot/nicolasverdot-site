@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Compagnon from '../components/Compagnon.astro';
+import BarreOnglets from '../components/BarreOnglets.astro';
 import SEO from '../components/SEO.astro';
 import '../styles/global.css';
 import { withBase } from '../utils/url';
@@ -23,7 +24,10 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {/* `viewport-fit=cover` : la page va jusqu'aux bords de l'écran, et les
+        `env(safe-area-inset-*)` valent enfin autre chose que zéro — sans quoi
+        la barre d'onglets se glisse sous la barre d'accueil de l'iPhone. */}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <script is:inline>
       // Applique le thème mémorisé avant le premier rendu, pour éviter un flash
       // de la mauvaise couleur. Sans préférence enregistrée, le CSS suit
@@ -35,9 +39,33 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
             document.documentElement.setAttribute('data-theme', stored);
           }
         } catch (e) {}
+        // Le site lancé depuis son icône se tient en application. Posé avant le
+        // premier affichage, sinon la page s'ouvre en site puis clignote.
+        // « ?app=1 » permet de voir ce mode sans rien installer.
+        try {
+          if (
+            window.matchMedia('(display-mode: standalone)').matches ||
+            window.navigator.standalone === true ||
+            new URLSearchParams(location.search).has('app')
+          ) {
+            document.documentElement.setAttribute('data-app', '');
+          }
+        } catch (e) {}
       })();
     </script>
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    {/* Mode application : le site s'ajoute à l'écran d'accueil du téléphone et
+        s'ouvre en plein écran. Sur iPhone, c'est la personne qui l'ajoute
+        (Partager → Sur l'écran d'accueil) ; Android le propose tout seul. */}
+    <link rel="manifest" href={withBase('/app/site.webmanifest')} />
+    <link rel="apple-touch-icon" href={withBase('/app/icone-180.png')} />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Nicolas Verdot" />
+    {/* La couleur de la barre du téléphone suit l'en-tête, dans les deux thèmes. */}
+    <meta name="theme-color" content="#fffdfa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1d2027" media="(prefers-color-scheme: dark)" />
     <meta name="robots" content={isTestDeployment ? 'noindex, nofollow' : 'index, follow'} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -53,6 +81,10 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
       <slot />
     </main>
     <Footer />
+    {/* La coque du téléphone : la barre d'onglets n'apparaît qu'en dessous de
+        720 px ; le Compagnon partout — en bas à droite sur ordinateur, au
+        milieu de la barre sur téléphone. */}
+    <BarreOnglets />
     {/* Après le pied de page : le Compagnon est en position fixe, sa place dans
         le flux n'a donc pas d'importance visuelle — mais elle en a pour le
         clavier et les lecteurs d'écran, qui le rencontrent en dernier, une fois
