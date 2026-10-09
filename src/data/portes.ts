@@ -28,7 +28,7 @@ export const portes: Porte[] = [
     aussi: [
       { titre: 'Séminaire de direction (CODIR)', href: '/seminaire-codir/' },
       { titre: 'Séminaire kick-off', href: '/seminaire-kick-off/' },
-      { titre: 'Fresque dessinée en direct', href: '/offres/capture-graphique/' },
+      { titre: 'Facilitation graphique en direct', href: '/offres/capture-graphique/' },
       { titre: 'À Nice et dans les Alpes-Maritimes', href: '/seminaires-alpes-maritimes/' },
     ],
   },
