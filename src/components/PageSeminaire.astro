@@ -8,10 +8,13 @@ import PageHero from './PageHero.astro';
 import CTABlock from './CTABlock.astro';
 import ClientLogoStrip from './ClientLogoStrip.astro';
 import { withBase } from '../utils/url';
+import { ICONES_PORTES } from '../data/portes';
 
 interface Bloc {
   title: string;
   text: string;
+  /** Clé du jeu d'icônes de data/portes.ts (facultatif). */
+  icone?: string;
 }
 
 interface Props {
@@ -116,9 +119,14 @@ const faqSchema = {
         </div>
         <p>{signaux.intro}</p>
       </div>
-      <div class="cards">
+      <div class="cards icon-cards">
         {signaux.items.map((s) => (
           <article class="card">
+            {s.icone && ICONES_PORTES[s.icone] && (
+              <span class="card-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d={ICONES_PORTES[s.icone]} /></svg>
+              </span>
+            )}
             <h3>{s.title}</h3>
             <p>{s.text}</p>
           </article>
