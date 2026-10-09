@@ -12,11 +12,6 @@ const photo = await getImage({ src: action, width: 1100, format: 'webp' });
  * que ça donne, simuler, lire. Ce sont de vrais liens vers de vraies pages —
  * les mêmes que dans le menu, rangées par intention.
  */
-/* Ce que le dirigeant y gagne : les quatre bénéfices du bandeau « Ce que ça
-   change », en quatre mots, montés tout en haut sur téléphone. Les mêmes
-   intitulés que dans index.astro : si l'un change, l'autre aussi. */
-const gains = ['Des priorités claires', 'Des décisions assumées', 'Des équipes alignées', 'Des actions concrètes'];
-
 const tuiles = [
   { href: '/seminaires-entreprise/', titre: 'Séminaires', note: 'Conçus et animés pour vous', trace: 'M9 10.2a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4zM3.4 19c.4-3 2.6-4.9 5.6-4.9s5.2 1.9 5.6 4.9M16.4 10.4a2.3 2.3 0 1 0 0-4.6M17 14.3c2 .5 3.3 2.1 3.6 4.7' },
   { href: '/accompagnement-ia-pme/', titre: 'Stratégie IA', note: 'Par où commencer', trace: 'M11 4.5l1.7 4.8 4.8 1.7-4.8 1.7L11 17.5l-1.7-4.8L4.5 11l4.8-1.7zM18 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z' },
@@ -34,45 +29,32 @@ const tuiles = [
           s'agisse d'un séminaire ou de l'IA, le dirigeant achète la même
           chose : une décision prise à plusieurs, puis portée par ceux qui
           doivent la faire vivre. Les deux boutons sont les deux portes. */}
-      {/* Qui : la ligne qui dit ce qu'est BY Nicolas Verdot. Sur téléphone,
-          les villes s'effacent (elles sont plus bas dans la page). */}
-      <p class="hero-kicker">Nicolas Verdot · Facilitateur et coach<span class="hero-kicker-lieux"> — Nice · Sophia Antipolis · Monaco · PACA</span></p>
+      {/* Quoi et qui, en une ligne : les mots que l'on cherche (séminaire,
+          IA), puis le nom. Sur téléphone, les villes s'effacent. */}
+      <p class="hero-kicker">Séminaires de direction · Stratégie IA · Nicolas Verdot, facilitateur<span class="hero-kicker-lieux"> — Nice · Sophia Antipolis · Monaco · PACA</span></p>
 
-      {/* Quoi, puis pour quoi : le titre nomme les deux offres avant la
-          promesse. L'ancien titre (« Une direction qui tranche ») promettait
-          sans dire ce qui était proposé. */}
+      {/* Le titre dit ce que le dirigeant veut, avec ses mots : « il n'en est
+          rien resté » est ce qu'il raconte du séminaire précédent. La phrase
+          suivante décrit ce qu'il vit, la troisième ce que je fais. */}
       <h1 id="hero-title">
-        Séminaires de direction et stratégie IA.
-        <span class="script-accent">Décidez ensemble.</span>
-        <span class="hero-tail">Et ça se fait.</span>
+        Un séminaire dont il reste quelque chose
+        <span class="script-accent">le lundi matin.</span>
       </h1>
 
       <p class="hero-lead">
-        On n'applique vraiment que ce qu'on a <strong>aidé à décider</strong>. Je conçois et j'anime les
-        séminaires où dirigeants et équipes <strong>décident ensemble</strong>.
-        {/* Sur téléphone, la première phrase suffit : la suite est dans les
-            rubriques, juste en dessous. */}
-        <span class="hero-lead-suite">Le temps d'un
-        <strong>séminaire</strong> ou <strong>dans la durée</strong>&nbsp;: lancement de projet, feuille de
-        route, transformation, coaching d'équipe, place de l'IA dans l'entreprise. Ma méthode&nbsp;: la
-        <strong>facilitation visuelle</strong>, qui rend les échanges et les décisions lisibles par tous.</span>
+        On se réunit, on discute, on tombe d'accord. Puis chacun retourne à ses urgences.
+        <span class="hero-lead-moi">Je conçois et j'anime vos séminaires pour que vous en repartiez avec des
+        <strong>décisions prises</strong>, des <strong>responsables nommés</strong> et une
+        <strong>suite déjà calée</strong>.</span>
+        {/* Sur téléphone, on s'arrête là : la suite est dans les rubriques. */}
+        <span class="hero-lead-suite">Même exigence quand le sujet est l'IA&nbsp;: décider par où commencer, avec
+        ceux qui devront s'en servir. Ma méthode&nbsp;: la <strong>facilitation visuelle</strong>, qui rend
+        les échanges et les décisions lisibles par tous.</span>
       </p>
 
       <div class="hero-actions">
         <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
         <a href={withBase('/seminaires-entreprise/')} class="btn-outline">Découvrir les séminaires</a>
-      </div>
-
-      <div class="gains">
-        <p class="hero-etiquette">Ce que vous y gagnez</p>
-        <ul>
-          {gains.map((g) => (
-            <li>
-              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
-              {g}
-            </li>
-          ))}
-        </ul>
       </div>
 
       <p class="hero-etiquette hero-etiquette--tuiles">Par où commencer</p>
@@ -150,6 +132,13 @@ const tuiles = [
   .hero-lead strong {
     color: var(--color-navy);
   }
+  /* « Ce que je fais » passe à la ligne : d'abord ce que vit le dirigeant,
+     puis la réponse. */
+  .hero-lead-moi {
+    display: block;
+    margin-top: var(--space-2);
+    color: var(--color-ink);
+  }
 
   .hero-actions {
     display: flex;
@@ -160,7 +149,6 @@ const tuiles = [
   /* Les tuiles et la ligne « ce que vous y gagnez » n'existent que sur
      téléphone : sur ordinateur, le paragraphe complet le dit déjà. */
   .tuiles,
-  .gains,
   .hero-etiquette {
     display: none;
   }
@@ -207,49 +195,6 @@ const tuiles = [
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-    }
-    .gains {
-      display: block;
-      margin-bottom: var(--space-6);
-      padding: var(--space-4);
-      border-radius: 18px;
-      background: var(--color-surface);
-      box-shadow: inset 0 0 0 1.5px var(--color-border);
-    }
-    .gains ul {
-      display: grid;
-      gap: var(--space-2);
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .gains li {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      color: var(--color-navy);
-      font-weight: 600;
-      line-height: 1.3;
-    }
-    .gains svg {
-      box-sizing: content-box;
-      flex: none;
-      padding: 4px;
-      border-radius: var(--radius-pill);
-      background: var(--color-orange);
-      color: var(--color-ink-solid);
-    }
-    .hero-copy h1 {
-      margin-bottom: var(--space-3);
-      font-size: 1.6rem;
-      line-height: 1.15;
-    }
-    .script-accent {
-      font-size: 2.4rem;
-    }
-    .hero-lead {
-      margin-bottom: var(--space-4);
-      font-size: var(--text-base);
     }
     .tuiles {
       display: grid;
