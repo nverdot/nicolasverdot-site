@@ -92,19 +92,20 @@ const { eyebrow, title, titleAccent, titleTail, summary, pills = [], photo } = A
   .page-summary :global(strong) {
     color: var(--color-navy);
   }
+  /* Une ligne de repères, pas des pastilles : voir la note dans global.css. */
   .meta-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2);
+    gap: 0 var(--space-2);
     margin-top: var(--space-4);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    font-weight: 600;
   }
-  .meta-pills span {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    padding: var(--space-2) var(--space-3);
-    border-radius: var(--radius-pill);
-    font-size: var(--text-xs);
-    font-weight: 700;
+  .meta-pills span + span::before {
+    content: '·';
+    margin-right: var(--space-2);
+    color: var(--color-clay);
   }
   /* Téléphone : le titre, le paragraphe, et la suite tout de suite. La photo
      repoussait la liste des rubriques hors de l'écran. */

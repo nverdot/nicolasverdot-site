@@ -52,6 +52,17 @@
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-3);
   }
+  /* Le second choix du haut de page reste un lien de texte, centré sous le
+     bouton, avec assez de hauteur pour le pouce. */
+  main :is(.hero-actions, .hero-cta-row) .btn-outline {
+    display: block;
+    width: auto;
+    min-height: 0;
+    padding-block: var(--space-2);
+    justify-self: center;
+    border-radius: 0;
+    text-align: center;
+  }
 
   /* --- cartes : des fiches, pas des encarts --- */
   .card {
@@ -264,6 +275,27 @@
       grid-row: span 4;
       row-gap: 0;
       align-content: start;
+    }
+    /* Une carte occupe autant de rangées qu'elle a d'éléments. Toutes les
+       cartes d'une grille prennent le nombre de la plus fournie : avec moins
+       de rangées que d'éléments, les derniers se chevauchaient. */
+    .cards:has(> .card > :nth-child(5)) > .card {
+      grid-row: span 5;
+    }
+    .cards:has(> .card > :nth-child(6)) > .card {
+      grid-row: span 6;
+    }
+    .cards:has(> .card > :nth-child(7)) > .card {
+      grid-row: span 7;
+    }
+    .cards:has(> .card > :nth-child(8)) > .card {
+      grid-row: span 8;
+    }
+    /* Au-delà de huit éléments, on renonce à l'alignement plutôt que de
+       risquer un chevauchement. */
+    .cards:has(> .card > :nth-child(9)) > .card {
+      display: block;
+      grid-row: auto;
     }
     .cards > .card > .card-link {
       align-self: end;

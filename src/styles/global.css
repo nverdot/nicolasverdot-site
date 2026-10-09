@@ -1247,19 +1247,22 @@ section {
 .hero-bg-copy .page-summary strong {
   color: var(--color-navy);
 }
+/* Les repères du haut de page (« Séminaire de direction · Kick-off… ») sont
+   une ligne de texte, pas des pastilles : encadrés et arrondis, ils se
+   confondaient avec des boutons et noyaient le seul vrai appel à l'action. */
 .hero-bg-copy .meta-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: 0 var(--space-2);
   margin-top: var(--space-4);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
 }
-.hero-bg-copy .meta-pills span {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-pill);
-  font-size: var(--text-xs);
-  font-weight: 700;
+.hero-bg-copy .meta-pills span + span::before {
+  content: '·';
+  margin-right: var(--space-2);
+  color: var(--color-clay);
 }
 @media (max-width: 900px) {
   .hero-bg-copy {
@@ -1279,10 +1282,40 @@ section {
 
 .hero-cta-row {
   display: flex;
-  gap: var(--space-4);
+  align-items: center;
+  gap: var(--space-3) var(--space-6);
   flex-wrap: wrap;
-  margin-top: var(--space-2);
+  margin-top: var(--space-6);
   margin-bottom: 0;
+}
+/* Un seul bouton dans le haut de page : « Réserver 30 minutes ». Le second
+   choix est un lien de texte, pour qu'on sache d'un coup d'œil où cliquer. */
+.hero-cta-row .btn-outline,
+.hero-actions .btn-outline {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--color-blue);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  text-transform: none;
+}
+.hero-cta-row .btn-outline::after,
+.hero-actions .btn-outline::after {
+  content: ' →';
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero-cta-row .btn-outline:hover,
+  .hero-actions .btn-outline:hover {
+    background: none;
+    color: var(--color-navy);
+    transform: none;
+  }
 }
 /* Un libellé long (« Le sujet est trop sensible ? Déléguez-moi… ») doit passer
    à la ligne dans son bouton plutôt que de pousser la page hors de l'écran. */
