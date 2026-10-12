@@ -15,7 +15,6 @@ const icons = {
   doc: '<path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M9 13h6M9 17h6"/>',
   compass: '<circle cx="12" cy="12" r="9"/><path d="M15 9l-2 6-6 2 2-6z"/>',
   info: '<circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/>',
-  palette: '<path d="M12 2a9 9 0 1 0 0 18c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1.1.9-2 2-2h1.5c1.9 0 3.5-1.6 3.5-3.5C20 5.3 16.4 2 12 2z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/><circle cx="17" cy="11.5" r="1"/>',
   calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
   mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
   phone: '<path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1z"/>',
@@ -37,35 +36,34 @@ const icons = {
     </div>
 
     <div class="footer-col">
-      <h2>Accompagnements</h2>
-      <a href={withBase('/offres/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.grid} /> Toutes les offres</a>
+      <h2>Séminaires</h2>
       <a href={withBase('/seminaires-entreprise/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.compass} /> Séminaires d'entreprise</a>
       <a href={withBase('/seminaire-kick-off/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.compass} /> Séminaire kick-off</a>
       <a href={withBase('/seminaire-codir/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.compass} /> Séminaire CODIR</a>
-      <a href={withBase('/offres/mentoring/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.check} /> Mentoring</a>
-      <a href={withBase('/offres/coaching-equipe/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.refresh} /> Coaching d'équipe</a>
-      <a href={withBase('/cas-clients/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.briefcase} /> Cas clients</a>
-    </div>
-
-    <div class="footer-col">
-      <h2>Services</h2>
-      <a href={withBase('/offres/accompagnement-transformation/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.trending} /> Transformation</a>
-      <a href={withBase('/offres/coaching-professionnel/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.user} /> Coaching professionnel</a>
-      <a href={withBase('/offres/capture-graphique/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.pencil} /> Facilitation graphique</a>
-      <a href={withBase('/formations/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.cap} /> Formations</a>
-      <a href={withBase('/intelligence-collective/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.people} /> Intelligence collective</a>
       <a href={withBase('/seminaires-alpes-maritimes/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.compass} /> Séminaires à Nice et dans le 06</a>
       <a href={withBase('/seminaire-sophia-antipolis/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.compass} /> Séminaires à Sophia Antipolis</a>
     </div>
 
     <div class="footer-col">
+      <h2>Accompagnements</h2>
+      <a href={withBase('/offres/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.grid} /> Toutes les offres</a>
+      <a href={withBase('/offres/accompagnement-transformation/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.trending} /> Transformation</a>
+      <a href={withBase('/offres/coaching-equipe/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.refresh} /> Coaching d'équipe</a>
+      <a href={withBase('/offres/coaching-professionnel/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.user} /> Coaching professionnel</a>
+      <a href={withBase('/offres/mentoring/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.check} /> Mentoring</a>
+      <a href={withBase('/offres/capture-graphique/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.pencil} /> Facilitation graphique</a>
+      <a href={withBase('/formations/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.cap} /> Formations</a>
+    </div>
+
+    <div class="footer-col">
       <h2>Ressources</h2>
+      <a href={withBase('/cas-clients/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.briefcase} /> Cas clients</a>
       <a href={withBase('/blog/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.doc} /> Blog</a>
       <a href={withBase('/outils/cout-de-linaction/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.calculator} /> Le coût de l'inaction</a>
-      <a href={withBase('/a-propos/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.info} /> Qui suis-je</a>
-      <a href={withBase('/charte-graphique/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.palette} /> Charte graphique</a>
-      <a href={withBase('/facilitation-graphique/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.image} /> Qu'est-ce qu'un facilitateur graphique ?</a>
+      <a href={withBase('/intelligence-collective/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.people} /> Intelligence collective</a>
+      <a href={withBase('/facilitation-graphique/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.image} /> Qu'est-ce qu'un facilitateur graphique&nbsp;?</a>
       <a href={withBase('/materiel/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.toolbox} /> Matériel</a>
+      <a href={withBase('/a-propos/')}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.info} /> Qui suis-je</a>
     </div>
 
     <div class="footer-col">
@@ -88,12 +86,14 @@ const icons = {
   .site-footer {
     background: var(--color-ink-solid);
     color: var(--color-white);
-    margin-top: var(--space-24);
-    padding: var(--space-12) 0 var(--space-6);
+    /* Le dernier bloc de la page porte déjà sa marge basse : pas de vide en plus. */
+    margin-top: 0;
+    /* Bande libre en bas : l'avatar flottant s'y pose sans masquer les liens légaux. */
+    padding: var(--space-12) 0 calc(var(--space-6) + 72px);
   }
   .footer-grid {
     display: grid;
-    grid-template-columns: 1.3fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1.3fr repeat(4, minmax(0, 1fr));
     gap: var(--space-8) var(--space-6);
   }
   .logo {
@@ -121,7 +121,7 @@ const icons = {
   }
   .footer-mission {
     margin: 0;
-    color: #c6d0df;
+    color: var(--color-on-dark-muted);
     font-size: var(--text-sm);
     max-width: 32ch;
   }
@@ -139,17 +139,19 @@ const icons = {
   }
   .footer-col a {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-2);
-    color: #c6d0df;
+    color: var(--color-on-dark-muted);
     text-decoration: none;
     font-size: var(--text-sm);
     padding: var(--space-1) 0;
     min-width: 0;
     transition: color 0.15s ease;
   }
+  /* Une adresse e-mail ne se coupe pas aux espaces : on l'autorise à se
+     couper ailleurs plutôt que de pousser la page hors de l'écran. */
   .footer-col a[href^='mailto:'] {
-    white-space: nowrap;
+    overflow-wrap: anywhere;
   }
   .footer-col a:hover {
     color: var(--color-white);
@@ -158,6 +160,8 @@ const icons = {
     flex-shrink: 0;
     width: 16px;
     height: 16px;
+    /* Calée sur la première ligne du libellé, même quand il passe à la ligne. */
+    margin-top: 0.3em;
     opacity: 0.75;
   }
   .footer-bottom {
@@ -169,10 +173,10 @@ const icons = {
     padding-top: var(--space-6);
     border-top: 1px solid rgba(255, 255, 255, 0.12);
     font-size: var(--text-xs);
-    color: #95a4bb;
+    color: var(--color-on-dark-faint);
   }
   .footer-legal a {
-    color: #95a4bb;
+    color: var(--color-on-dark-faint);
     text-decoration: underline;
     text-underline-offset: 2px;
     transition: color 0.15s ease;
@@ -181,24 +185,35 @@ const icons = {
     color: var(--color-white);
   }
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1200px) {
     .footer-grid {
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
     .footer-brand {
       grid-column: 1 / -1;
-      margin-bottom: var(--space-4);
     }
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .footer-grid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
-    .footer-brand,
-    .footer-col:last-child {
-      grid-column: 1 / -1;
-      margin-bottom: var(--space-4);
+  }
+
+  @media (max-width: 600px) {
+    .footer-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .footer-col a {
+      min-height: var(--tap);
+      align-items: center;
+    }
+    .footer-icon {
+      margin-top: 0;
+    }
+    .footer-legal a {
+      display: inline-block;
+      padding: var(--space-3) 0;
     }
   }
 

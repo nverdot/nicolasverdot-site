@@ -78,9 +78,6 @@
     font-size: 1.7rem;
     line-height: 1.15;
   }
-  .hero-bg-copy .script-accent {
-    font-size: 2.5rem;
-  }
   .hero-bg-copy .page-summary {
     font-size: var(--text-base);
   }

@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../../data/site';
+import { dims } from '../../utils/imageDims';
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
@@ -179,7 +180,7 @@ const faqSchema = {
         <p class="eyebrow">Facilitation graphique · Capture graphique · Événementiel</p>
         <h1>
           Facilitation graphique : votre événement
-          <span class="script-accent">dessiné en direct,</span>
+          <span class="title-accent">dessiné en direct,</span>
           <span class="hero-tail">et dont on se souvient.</span>
         </h1>
         <p class="page-summary">Un mois après, qui se souvient de ce qui s'est dit ? Pendant votre séminaire, conférence ou réunion stratégique, je traduis en dessin, en temps réel, les idées, les décisions et les échanges. La fresque aide les participants à suivre, puis elle reste : <strong>une mémoire collective</strong> que vous pourrez conserver, partager et réutiliser.</p>
@@ -192,7 +193,7 @@ const faqSchema = {
         </div>
       </div>
       <figure class="hero-figure">
-        <img src={withBase('/cas-clients/fibois-cedre-atlas-facilitation-graphique-nicolas-verdot.jpg')} alt="Une grande fresque se dessine en direct pendant qu'un intervenant présente, lors du colloque FIBOIS." loading="eager" decoding="async" />
+        <img src={withBase('/cas-clients/fibois-cedre-atlas-facilitation-graphique-nicolas-verdot.jpg')} width={dims('/cas-clients/fibois-cedre-atlas-facilitation-graphique-nicolas-verdot.jpg').width} height={dims('/cas-clients/fibois-cedre-atlas-facilitation-graphique-nicolas-verdot.jpg').height} alt="Une grande fresque se dessine en direct pendant qu'un intervenant présente, lors du colloque FIBOIS." loading="eager" decoding="async" />
         <figcaption>Capture graphique en direct, colloque FIBOIS.</figcaption>
       </figure>
     </div>
@@ -416,7 +417,7 @@ const faqSchema = {
           {relatedCaseStudies.map((cs) => (
             <article class="card case-vignette">
               {cs.data.clientLogo ? (
-                <img src={withBase(cs.data.clientLogo)} alt={cs.data.client} class="case-card-logo" />
+                <img src={withBase(cs.data.clientLogo)} width={dims(cs.data.clientLogo).width} height={dims(cs.data.clientLogo).height} alt={cs.data.client} class="case-card-logo" />
               ) : (
                 <div class="num">{cs.data.client}</div>
               )}

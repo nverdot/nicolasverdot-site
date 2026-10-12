@@ -1,6 +1,6 @@
 ---
 client: "CEC"
-clientLogo: "/logos/cec.png"
+clientLogo: "/logos/cec.webp"
 title: "Donner à voir les idées clés pour mieux les ancrer et les mettre en action"
 subtitle: "Capture graphique du dernier rendez-vous d'une cohorte de dirigeants"
 question: "Comment aider des dirigeantes et des dirigeants à retenir l'essentiel de deux journées particulièrement riches, à relier les différentes interventions et à transformer l'inspiration en action ?"

@@ -1,6 +1,6 @@
 ---
 client: "JCI Monaco"
-clientLogo: "/logos/jci-monaco.png"
+clientLogo: "/logos/jci-monaco.webp"
 title: "Faire équipe autour d'une vision commune"
 subtitle: "Séminaire de prise de présidence"
 question: "Comment permettre à une nouvelle présidence et à son collectif de mieux se connaître, de partager leurs ambitions et de construire ensemble une direction commune pour l'année à venir ?"

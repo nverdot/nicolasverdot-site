@@ -1,6 +1,6 @@
 ---
 client: "Ressources"
-clientLogo: "/logos/ressources.png"
+clientLogo: "/logos/ressources.webp"
 title: "Développer les compétences et faire évoluer les pratiques"
 subtitle: "Trois accompagnements complémentaires : formation des formateurs, posture de leader IT, organisation du temps"
 question: "Comment accompagner plusieurs équipes et responsables, chacun avec un enjeu différent, vers un même objectif : développer leurs compétences et faire évoluer concrètement leurs pratiques professionnelles ?"

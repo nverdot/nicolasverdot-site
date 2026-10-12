@@ -109,8 +109,7 @@ const resourceArticles = [
       </div>
       <div class="resources-grid">
         {resourceArticles.map((a) => (
-          <a class="resource-card" href={withBase(`/blog/${a.slug}/`)}>
-            <div class={`article-visual resource-visual ${a.visual}`}></div>
+          <a class="card resource-card" href={withBase(`/blog/${a.slug}/`)}>
             <div class="resource-body">
               <h3>{a.title}</h3>
               <p>{a.description}</p>
@@ -221,12 +220,12 @@ const resourceArticles = [
   /* --- Les portes d'entrée, sous le hero --- */
   /* Quatre cartes : une ligne sur grand écran, deux par deux en dessous,
      plutôt que trois cartes et une orpheline. */
-  @media (min-width: 700px) {
+  @media (min-width: 601px) {
     .cards-quatre {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-  @media (min-width: 1180px) {
+  @media (min-width: 1201px) {
     .cards-quatre {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
@@ -313,7 +312,7 @@ const resourceArticles = [
     font-family: var(--font-display);
     font-size: var(--text-base);
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .proof-grid {
       grid-template-columns: 1fr 1fr;
       gap: var(--space-8) var(--space-4);
@@ -343,7 +342,7 @@ const resourceArticles = [
   /* --- Nicolas Verdot, votre partenaire --- */
   .partner-intro h2 {
     margin: 0 0 var(--space-6);
-    font-size: var(--text-3xl);
+    font-size: var(--text-h2);
   }
   .partner-intro p {
     font-size: var(--text-lg);
@@ -431,7 +430,7 @@ const resourceArticles = [
     font-weight: 700;
     line-height: 1;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 600px) {
     .partner-questions {
       padding: var(--space-4);
     }
@@ -448,30 +447,18 @@ const resourceArticles = [
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-4);
   }
+  /* Même carte que partout ailleurs sur le site (.card) : plus d'aplat de
+     couleur à la place d'une image qui n'existe pas. */
   .resource-card {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    background: var(--color-surface);
     text-decoration: none;
-    transition: transform var(--duration-hover) var(--ease-out), box-shadow var(--duration-hover) ease;
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .resource-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-sm);
-    }
-  }
-  .resource-visual {
-    height: 120px;
   }
   .resource-body {
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    padding: var(--space-6);
+    flex: 1;
     flex: 1;
   }
   .resource-card h3 {
@@ -532,7 +519,7 @@ const resourceArticles = [
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
-  @media (max-width: 560px) {
+  @media (max-width: 600px) {
     .traits-grid {
       grid-template-columns: 1fr 1fr;
     }

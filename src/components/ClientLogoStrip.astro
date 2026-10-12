@@ -1,4 +1,5 @@
 ---
+import { dims } from '../utils/imageDims';
 import { withBase } from '../utils/url';
 import { clients } from '../data/clients';
 import CaseStudyModal from './CaseStudyModal.astro';
@@ -11,7 +12,7 @@ import CaseStudyModal from './CaseStudyModal.astro';
         /* alt vide dans un lien : c'est l'aria-label du lien qui nomme.
            Hors lien, le logo porte le nom du client comme d'habitude. */
         const inner = c.logo ? (
-          <img src={withBase(c.logo)} alt={c.href ? '' : c.name} loading="lazy" />
+          <img src={withBase(c.logo)} width={dims(c.logo).width} height={dims(c.logo).height} alt={c.href ? '' : c.name} loading="lazy" />
         ) : (
           <span class="client-text">{c.name}</span>
         );

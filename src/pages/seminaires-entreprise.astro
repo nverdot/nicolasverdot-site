@@ -347,7 +347,7 @@ const takeCharge = [
         <p class="eyebrow">Séminaire d'entreprise · Conception et animation</p>
         <h1>
           Votre séminaire d'entreprise,
-          <span class="script-accent">conçu et animé</span>
+          <span class="title-accent">conçu et animé</span>
           <span class="hero-tail">pour qu'il en sorte des décisions.</span>
         </h1>
         <p class="page-summary">Une salle réservée, deux jours bloqués, tous les agendas alignés. Et une question que personne ne pose tout haut&nbsp;: il en sortira quoi&nbsp;? Un séminaire se joue avant le jour J, quand on décide ce qui doit en sortir. C'est par là que je commence&nbsp;: je conçois le déroulé à partir du résultat attendu, puis j'anime de bout en bout, pour que vous repartiez avec des <strong>décisions prises</strong>, des <strong>responsables nommés</strong> et une suite déjà calée. Vous, vous restez dans votre rôle de dirigeant.</p>
@@ -360,7 +360,7 @@ const takeCharge = [
         </div>
       </div>
       <figure class="hero-figure">
-        <img src={action.src} alt="Nicolas Verdot, feutre en main, dessine une fresque en direct pendant un atelier." loading="eager" decoding="async" />
+        <img src={action.src} width={action.width} height={action.height} alt="Nicolas Verdot, feutre en main, dessine une fresque en direct pendant un atelier." loading="eager" decoding="async" />
         <figcaption>Ce qui se dit et se décide est dessiné en direct, sous les yeux de tous.</figcaption>
       </figure>
     </div>
@@ -629,7 +629,7 @@ const takeCharge = [
   .versus-oui {
     background: var(--color-orange);
     border-color: var(--color-orange);
-    color: #122033;
+    color: var(--color-navy-solid);
     box-shadow: var(--shadow-md);
   }
   .versus-photo {
@@ -653,13 +653,13 @@ const takeCharge = [
     color: var(--color-muted);
   }
   .versus-oui .versus-label {
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .versus-col h3 {
     margin: 0 0 var(--space-4);
   }
   .versus-oui h3 {
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .versus-col ul {
     display: grid;
@@ -685,16 +685,16 @@ const takeCharge = [
   }
   .versus-oui li::before {
     content: '→';
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .versus-oui li strong {
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .versus-chute {
     margin: var(--space-8) 0 0;
     font-size: var(--text-lg);
   }
-  @media (max-width: 760px) {
+  @media (max-width: 900px) {
     .versus {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -724,7 +724,7 @@ const takeCharge = [
   }
   .cause-travail {
     background: var(--color-orange);
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cause-label {
     margin: 0 0 var(--space-2);
@@ -735,7 +735,7 @@ const takeCharge = [
     color: var(--color-clay-ink);
   }
   .cause-travail .cause-label {
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cause h3 {
     margin: 0 0 var(--space-2);
@@ -749,7 +749,7 @@ const takeCharge = [
   .cause-travail p:last-child {
     font-weight: 600;
   }
-  @media (max-width: 760px) {
+  @media (max-width: 900px) {
     .cause {
       grid-template-columns: minmax(0, 1fr);
     }

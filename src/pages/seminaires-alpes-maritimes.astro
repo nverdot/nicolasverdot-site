@@ -1,4 +1,5 @@
 ---
+import { dims } from '../utils/imageDims';
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import CTABlock from '../components/CTABlock.astro';
@@ -65,14 +66,14 @@ const formats = [
 const missions = [
   {
     client: 'CEC',
-    logo: '/logos/cec.png',
+    logo: '/logos/cec.webp',
     title: "Donner à voir les idées clés pour mieux les ancrer et les mettre en action",
     text: "Capture graphique en direct, à Sophia Antipolis, du dernier rendez-vous d'une cohorte de dirigeants CEC — deux journées d'ateliers et de conférences.",
     slug: 'cec',
   },
   {
     client: 'JCI Monaco',
-    logo: '/logos/jci-monaco.png',
+    logo: '/logos/jci-monaco.webp',
     title: "Faire équipe autour d'une vision commune",
     text: "Conception et facilitation du séminaire de prise de présidence de la Jeune Chambre Économique de Monaco.",
     slug: 'jci-monaco',
@@ -193,7 +194,7 @@ const faqSchema = {
       <div class="cards">
         {missions.map((m) => (
           <article class="card">
-            <img src={withBase(m.logo)} alt={m.client} class="mission-card-logo" />
+            <img src={withBase(m.logo)} width={dims(m.logo).width} height={dims(m.logo).height} alt={m.client} class="mission-card-logo" />
             <h3>{m.title}</h3>
             <p>{m.text}</p>
             <a class="card-link" href={withBase(`/cas-clients/${m.slug}/`)}>Découvrir le cas client</a>

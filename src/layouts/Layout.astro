@@ -163,6 +163,16 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
         clavier et les lecteurs d'écran, qui le rencontrent en dernier, une fois
         le contenu de la page parcouru. */}
     <Compagnon />
+    {/* Volets repliés sur téléphone seulement : le HTML les sert ouverts
+        (lisibles sans script et par les moteurs), ce script en ligne les
+        referme avant le premier affichage sur petit écran. */}
+    <script is:inline>
+      if (matchMedia('(max-width: 600px)').matches) {
+        document.querySelectorAll('details[data-mobile-closed]').forEach(function (d) {
+          d.open = false;
+        });
+      }
+    </script>
   </body>
 </html>
 

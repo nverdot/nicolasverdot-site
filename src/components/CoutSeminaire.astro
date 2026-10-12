@@ -374,7 +374,7 @@ import Pli from './Pli.astro';
     height: 2rem;
     border-radius: 50%;
     background: var(--color-orange);
-    color: #122033;
+    color: var(--color-navy-solid);
     font-style: normal;
     font-weight: 800;
   }
@@ -497,7 +497,7 @@ import Pli from './Pli.astro';
     padding: var(--space-8) var(--space-6);
     border-radius: var(--radius-md);
     background: var(--color-ink-solid);
-    color: #fff;
+    color: var(--color-white);
     box-shadow: var(--shadow-md);
   }
   .cs-result-label {
@@ -513,7 +513,7 @@ import Pli from './Pli.astro';
     font-size: clamp(2.4rem, 5vw, 3.4rem);
     font-weight: 800;
     line-height: 1.05;
-    color: #fff;
+    color: var(--color-white);
   }
   .cs-lines {
     display: grid;
@@ -660,12 +660,12 @@ import Pli from './Pli.astro';
     color: var(--color-muted);
     font-size: var(--text-sm);
   }
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     .cs-stats {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-  @media (max-width: 620px) {
+  @media (max-width: 600px) {
     .cs-stats {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -681,7 +681,7 @@ import Pli from './Pli.astro';
       position: static;
     }
   }
-  @media (max-width: 560px) {
+  @media (max-width: 600px) {
     .cs-fields {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -695,7 +695,7 @@ import Pli from './Pli.astro';
      Ces règles viennent en dernier pour remplacer les couleurs d'origine. */
   .cs-result {
     background: var(--color-orange);
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cs-result-label,
   .cs-total,
@@ -705,7 +705,7 @@ import Pli from './Pli.astro';
   .cs-heure strong,
   .cs-an,
   .cs-an strong {
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cs-lines dt span,
   .cs-note {
@@ -719,11 +719,11 @@ import Pli from './Pli.astro';
     font-weight: 800;
   }
   .cs-result :global(.cs-ico) {
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cs-result :global(.btn) {
-    background: #122033;
-    color: #fff;
+    background: var(--color-navy-solid);
+    color: var(--color-white);
   }
 
   .cs-rappel {
@@ -733,7 +733,7 @@ import Pli from './Pli.astro';
     padding: var(--space-4) 0 0;
     border-top: 1px solid rgba(18, 32, 51, 0.18);
     list-style: none;
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cs-rappel li {
     display: flex;
@@ -789,8 +789,8 @@ import Pli from './Pli.astro';
     margin-top: var(--space-4);
     padding: var(--space-4);
     border-radius: var(--radius-sm);
-    background: #122033;
-    color: #fff;
+    background: var(--color-navy-solid);
+    color: var(--color-white);
   }
   .cs-rappel-titre {
     margin: 0 0 var(--space-3);
@@ -804,14 +804,14 @@ import Pli from './Pli.astro';
     margin: 0;
     padding: 0;
     border: 0;
-    color: #fff;
+    color: var(--color-white);
   }
   .cs-rappel-bloc .cs-rappel strong {
     color: var(--color-orange);
     font-size: 1.15em;
   }
   .cs-rappel-bloc .cs-rappel b {
-    color: #fff;
+    color: var(--color-white);
   }
   .cs-result .cs-rappel-bloc :global(.cs-ico) {
     color: var(--color-orange);
@@ -826,8 +826,8 @@ import Pli from './Pli.astro';
     margin-top: var(--space-8);
     padding: var(--space-8);
     border-radius: var(--radius-md);
-    background: #122033;
-    color: #fff;
+    background: var(--color-navy-solid);
+    color: var(--color-white);
     box-shadow: var(--shadow-md);
   }
   .cs-recup-titre {
@@ -890,10 +890,10 @@ import Pli from './Pli.astro';
   .cs-recup-choix input:checked + span {
     border-color: var(--color-orange);
     background: var(--color-orange);
-    color: #122033;
+    color: var(--color-navy-solid);
   }
   .cs-recup-choix input:focus-visible + span {
-    outline: 2px solid #fff;
+    outline: 2px solid var(--color-white);
     outline-offset: 2px;
   }
   .cs-recup-note {
@@ -902,7 +902,7 @@ import Pli from './Pli.astro';
     color: rgba(255, 255, 255, 0.72);
     font-size: var(--text-sm);
   }
-  @media (max-width: 760px) {
+  @media (max-width: 900px) {
     .cs-recup {
       grid-template-columns: minmax(0, 1fr);
       padding: var(--space-6) var(--space-4);
