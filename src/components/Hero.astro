@@ -2,9 +2,9 @@
 import { getImage } from 'astro:assets';
 import { withBase } from '../utils/url';
 import { SITE } from '../data/site';
-import action from '../assets/nicolas-action.jpeg';
+import groupe from '../assets/seminaire-groupe-au-travail.jpg';
 
-const photo = await getImage({ src: action, width: 1100, format: 'webp' });
+const photo = await getImage({ src: groupe, width: 1100, format: 'webp' });
 
 /*
  * Les tuiles de l'accueil, sur téléphone seulement. Une application s'ouvre
@@ -69,11 +69,12 @@ const tuiles = [
       </nav>
     </div>
 
-    {/* Une vraie photo, à côté du texte : la facilitation visuelle est ce qui
-        distingue ces séminaires, autant la montrer telle qu'elle est. */}
+    {/* Une vraie photo de séminaire : un groupe au travail, les affiches
+        dessinées derrière lui. La photo précédente (Nicolas seul au feutre)
+        vendait la facilitation graphique, pas le séminaire. */}
     <figure class="hero-figure">
-      <img src={photo.src} alt="Nicolas Verdot, feutre en main, dessine une fresque en direct pendant un atelier." width={photo.attributes.width} height={photo.attributes.height} loading="eager" decoding="async" />
-      <figcaption>Ce qui se dit et se décide est dessiné en direct, sous les yeux de tous.</figcaption>
+      <img src={photo.src} alt="Une dizaine de participants travaillent en deux petits groupes, assis en cercle, devant des affiches dessinées à la main pendant le séminaire." width={photo.attributes.width} height={photo.attributes.height} loading="eager" decoding="async" />
+      <figcaption>Un séminaire, c'est un groupe qui travaille. Ce qu'il produit reste affiché au mur. JCI Monaco.</figcaption>
     </figure>
   </div>
 </section>
