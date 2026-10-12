@@ -51,6 +51,22 @@ Recentrage du site sur le collectif : séminaires et kick-off, animation de réu
 - Deux pages à créer : « Réunions et ateliers » et « Leaders et managers » (aujourd'hui l'accueil renvoie vers le coaching d'équipe).
 - Offre « Entreprise apprenante » : à cadrer avec Nicolas (pour qui, format, durée) avant d'écrire la page.
 - Après mise en ligne : redemander l'indexation de l'accueil dans la Search Console.
+## État — 9 octobre 2026 (mode application sur téléphone)
+
+**Branche `mode-appli`** (pas en ligne, en attente du feu vert de Nicolas), partie de `main`. Au-dessus de 720 px, rien ne change. Travaillée dans une copie séparée du dossier (`.claude/worktrees/mode-appli`, aperçu `mode-appli` sur le port 4341), parce qu'une autre session utilisait le dossier principal.
+
+- **La coque** : barre d'onglets fixe en bas (Accueil, Offres, Aide, Cas clients, Contact), Compagnon dans la case centrale, icône et ouverture en plein écran (`public/app/`). `?app=1` montre le plein écran sans rien installer.
+- **L'habit « appli »** (`src/styles/appli.css`, `src/components/Pli.astro`, script dans `Layout.astro`) : sur téléphone, une rubrique marquée `data-pli` se réduit à une ligne et se déplie au toucher. Le contenu reste dans le HTML (Google indexe la version mobile). Sans JavaScript, tout reste déplié.
+- **Fait** : l'accueil (titre, une phrase, six tuiles, cinq rubriques repliées : 12 000 px de haut devenus 2 700) et `/seminaires-entreprise/` (huit étapes numérotées repliées : 2 500 px). Pied de page réduit au contact sur téléphone.
+- **Compagnon** : nouvelle entrée « Il faut qu'on fasse de l'IA, mais par où commencer ? », qui mène aux fiches de la page IA.
+- **Audit du site en ligne** (`docs/audit-site-2026-10-09.md`) : note 5/10, 30 points, 20 modifications. Les quatre premières sont faites sur cette branche : titre de l'accueil (qui, quoi, résultat), un seul bouton principal « Réserver 30 minutes » sur tout le site, ce bouton visible dans l'en-tête dès que le menu se replie, page contact refaite (rendez-vous, téléphone et formulaire en premier). La cinquième attend Nicolas : les témoignages (`docs/demande-temoignage.md`).
+- **Les offres rangées en trois portes** (`src/data/portes.ts`, `TroisPortes.astro`) : Séminaires, Stratégie IA, Coaching, mentoring et formation. Elles remplacent les six accompagnements sur l'accueil et sur `/offres/`. Le menu passe de huit entrées à six (« Formations » est dans la troisième porte, « Contact » dans le bouton et le pied de page).
+- **Nouvelle page `/coaching-agile/`** (Coach agile : Scrum, SAFe, Kanban), pour le référencement. Hors menu, rangée sous la troisième porte. Écrite uniquement à partir de faits déjà publiés (parcours, cas Air France-KLM et Urssaf, trois formations) ; aucune certification citée. À relire par Nicolas avant mise en ligne.
+- **Toutes les pages en habit « appli »** : un script dans `Layout.astro` replie automatiquement les rubriques des pages qui n'ont pas été découpées à la main (la première rubrique reste ouverte). La page IA passe de 36 écrans à 5 sur téléphone, le blog de 23 à 3.
+- **Hauts de page réécrits** avec les mots du client sur l'accueil et dix pages d'offre.
+- **Reste à faire** : la page Cas clients (6,5 écrans) et les fiches d'offre courtes (5 à 6 écrans) pourraient être resserrées ; mode sombre et vrai téléphone non testés ; modifications 6 à 20 de l'audit.
+- **À décider par Nicolas** : la direction (tuiles + rubriques repliées), les quatre onglets, les libellés des tuiles et des rubriques.
+- La branche `accueil-allege` a six commits (page séminaires et simulateur) qui ne sont pas dans `main`.
 
 ## État — 8 octobre 2026
 

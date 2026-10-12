@@ -21,6 +21,20 @@
         "4331"
       ],
       "port": 4331
+    },
+    {
+      "name": "mode-appli",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        ".claude/worktrees/mode-appli",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "4341"
+      ],
+      "port": 4341
     }
   ]
 }

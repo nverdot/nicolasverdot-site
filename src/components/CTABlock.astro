@@ -18,9 +18,9 @@ const {
   title,
   subtitle,
   dark = false,
-  ctaLabel = 'Prendre rendez-vous',
+  ctaLabel = 'Réserver 30 minutes',
   ctaHref = SITE.bookingUrl,
-  secondaryLabel = 'Envoyer un message',
+  secondaryLabel = "M'écrire",
   secondaryHref = withBase('/contact/'),
 } = Astro.props;
 const ctaExternal = ctaHref === SITE.bookingUrl;
@@ -45,6 +45,12 @@ const ctaExternal = ctaHref === SITE.bookingUrl;
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
+  }
+  /* Sur le bandeau jaune, le bouton jaune du site disparaissait : même
+     couleur que le fond. Il passe en encre pleine. */
+  .banner:not(.dark) .btn {
+    background: var(--color-ink-solid);
+    color: var(--color-white);
   }
   .banner .btn-outline {
     color: var(--color-ink-solid);

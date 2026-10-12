@@ -70,7 +70,7 @@ const icons = {
 
     <div class="footer-col">
       <h2>Contact</h2>
-      <a href={SITE.bookingUrl} target="_blank" rel="noopener"><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.calendar} /> Prendre rendez-vous</a>
+      <a href={SITE.bookingUrl} target="_blank" rel="noopener"><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.calendar} /> Réserver 30 minutes</a>
       <a href={`mailto:${SITE.email}`}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.mail} /> {SITE.email}</a>
       <a href={`tel:${SITE.phone}`}><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.phone} /> {SITE.phoneDisplay}</a>
     </div>
@@ -199,6 +199,25 @@ const icons = {
     .footer-col:last-child {
       grid-column: 1 / -1;
       margin-bottom: var(--space-4);
+    }
+  }
+
+  /* Téléphone : l'essentiel, le reste est dans le menu. Les trois colonnes de
+     liens doublent le menu et la barre d'onglets ; elles restent dans le HTML,
+     où Google continue de les suivre. */
+  @media (max-width: 719px) {
+    /* Pas de marge au-dessus : le bloc d'appel final, bord à bord, se pose
+       directement sur le pied de page. */
+    .site-footer {
+      margin-top: 0;
+      padding: var(--space-8) 0 var(--space-4);
+    }
+    .footer-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-4);
+    }
+    .footer-col:not(:last-child) {
+      display: none;
     }
   }
 </style>

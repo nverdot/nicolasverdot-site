@@ -1,4 +1,5 @@
 ---
+import { SITE } from '../../data/site';
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
@@ -177,16 +178,16 @@ const faqSchema = {
       <div class="hero-bg-copy">
         <p class="eyebrow">Facilitation graphique · Capture graphique · Événementiel</p>
         <h1>
-          Vos idées méritent
-          <span class="script-accent">d'être vues</span>
-          <span class="hero-tail">et mémorisées.</span>
+          Facilitation graphique : votre événement
+          <span class="script-accent">dessiné en direct,</span>
+          <span class="hero-tail">et dont on se souvient.</span>
         </h1>
-        <p class="page-summary">Pendant votre séminaire, conférence ou réunion stratégique, je traduis visuellement en temps réel les idées, décisions et échanges. Une fresque prend forme, aide les participants à suivre, et crée <strong>une mémoire collective</strong> que vous pourrez conserver, partager et réutiliser.</p>
+        <p class="page-summary">Un mois après, qui se souvient de ce qui s'est dit ? Pendant votre séminaire, conférence ou réunion stratégique, je traduis en dessin, en temps réel, les idées, les décisions et les échanges. La fresque aide les participants à suivre, puis elle reste : <strong>une mémoire collective</strong> que vous pourrez conserver, partager et réutiliser.</p>
         <div class="meta-pills">
           {['Sur devis', 'En direct', 'Partout en France'].map((pill) => <span>{pill}</span>)}
         </div>
         <div class="hero-cta-row">
-          <a href={withBase('/contact/')} class="btn">Parler de votre événement →</a>
+          <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
           <a href={withBase('/seminaires-entreprise/')} class="btn-outline">Besoin aussi d'animer l'atelier ? Voir les séminaires d'entreprise</a>
         </div>
       </div>
@@ -293,7 +294,7 @@ const faqSchema = {
       <div class="callout-box callout-box-row">
         <span class="callout-box-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons.megaphone} /></span>
         <p>Parlons de votre événement pour construire la fresque qui le fera vivre après le jour J.</p>
-        <a href={withBase('/contact/')} class="btn">Parler de votre événement →</a>
+        <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
       </div>
     </div>
   </section>
@@ -451,7 +452,6 @@ const faqSchema = {
     eyebrow="Votre événement mérite une trace vivante"
     title="Faisons apparaître ce qui compte."
     subtitle="Parlons de votre événement, du public, du programme et de la manière dont vous souhaitez réutiliser la fresque après le jour J."
-    ctaLabel="Parler de votre événement"
     dark
   />
 

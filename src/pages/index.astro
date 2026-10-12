@@ -3,8 +3,9 @@ import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import CTABlock from '../components/CTABlock.astro';
-import PriorityGrid from '../components/PriorityGrid.astro';
+import TroisPortes from '../components/TroisPortes.astro';
 import ClientLogoStrip from '../components/ClientLogoStrip.astro';
+import Pli from '../components/Pli.astro';
 import { withBase } from '../utils/url';
 import { SITE } from '../data/site';
 import portrait from '../assets/nicolas-portrait-2026.jpg';
@@ -27,40 +28,6 @@ const proofItems = [
   { icon: 'trending', title: 'Des actions concrètes', text: 'Pour transformer les décisions en résultats visibles.' },
 ];
 
-// Les séminaires, par situation : c'est par là que le visiteur se reconnaît
-// (« je lance un projet », « mon comité de direction patine »), pas par le
-// mot « facilitation ».
-const seminaires = [
-  {
-    num: 'Vous lancez un projet',
-    titre: 'Séminaire kick-off',
-    texte: "Un projet, une feuille de route, une nouvelle année. Les équipes repartent en sachant pourquoi, qui fait quoi, et par quoi commencer lundi.",
-    lien: 'Le séminaire kick-off',
-    href: '/seminaire-kick-off/',
-  },
-  {
-    num: 'Votre comité de direction',
-    titre: 'Séminaire CODIR',
-    texte: "Deux jours pour trancher les priorités, traiter les désaccords qui traînent et repartir avec des décisions que chacun défendra.",
-    lien: 'Le séminaire de direction',
-    href: '/seminaire-codir/',
-  },
-  {
-    num: 'Vos managers',
-    titre: 'Posture du leader et du manager',
-    texte: "Passer de celui qui décide de tout à celui qui fait décider. Coaching d'équipe pour ancrer de nouvelles façons de travailler, dans la durée.",
-    lien: "Le coaching d'équipe",
-    href: '/offres/coaching-equipe/',
-  },
-  {
-    num: 'Près de chez vous',
-    titre: 'Nice, Sophia Antipolis, Monaco',
-    texte: "Basé à Nice, je prépare vos séminaires sur place dans les Alpes-Maritimes, en français ou en anglais, et j'interviens partout en France.",
-    lien: 'Les séminaires dans le 06',
-    href: '/seminaires-alpes-maritimes/',
-  },
-];
-
 const resourceArticles = [
   { slug: 'reunionite-sept-signes', title: 'Réunionite : sept signes que vos réunions tournent à vide', description: 'Sept signes concrets que vos réunions tournent à vide, et un remède actionnable pour chacun.', visual: 'orange' },
   { slug: 'organiser-seminaire-equipe', title: 'Organiser un séminaire d\'équipe qui change vraiment quelque chose', description: "Intention, déroulé, lieu, facilitation, suites : la méthode pour un séminaire qui produit des effets durables.", visual: 'orange' },
@@ -71,40 +38,19 @@ const resourceArticles = [
 
 <Layout
   title="Facilitateur de séminaires et de collectifs à Nice — Nicolas Verdot"
-  description="Séminaire de direction, kick-off, animation de réunions, posture du manager : j'aide les dirigeants de la Côte d'Azur à décider, puis à embarquer leurs équipes. Nice, Sophia Antipolis, PACA."
+  description="Séminaire de direction, kick-off, animation de réunions, posture du manager : j'aide dirigeants et équipes de la Côte d'Azur à décider ensemble. Nice, Sophia Antipolis, PACA."
   path="/"
 >
   <Hero />
 
-  {/* Première porte : les séminaires, par situation. */}
-  <section class="section alt ia-portes" data-reveal data-section-name="Séminaires : trois situations">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Séminaires d'entreprise · Managers et équipes</p>
-          <h2>Vous réunissez vos équipes&nbsp;? Faites qu'il en sorte quelque chose.</h2>
-        </div>
-        <p>
-          Je conçois et j'anime votre séminaire de bout en bout&nbsp;: le cadrage, le déroulé, le jour J et les
-          suites. Vous restez dans votre rôle de dirigeant.
-        </p>
-      </div>
-      <div class="cards cards-quatre">
-        {seminaires.map((s) => (
-          <a class="card ia-porte" href={withBase(s.href)}>
-            <span class="num">{s.num}</span>
-            <h3>{s.titre}</h3>
-            <p>{s.texte}</p>
-            <span class="card-link">{s.lien}</span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+  {/* Toute l'offre, une seule fois, en trois besoins (voir data/portes.ts).
+      Avant : quatre cartes « situations » ici, puis six accompagnements plus bas. */}
+  <TroisPortes pli="Les trois offres en détail" pliNote="Séminaires, réunions et ateliers, leaders et managers" />
 
   <ClientLogoStrip />
 
-  <section class="proof-band" data-reveal data-section-name="Bénéfices">
+  <section class="proof-band" data-pli data-reveal data-section-name="Bénéfices">
+    <Pli titre="Ce que ça change" note="Priorités, décisions, alignement, actions" />
     <div class="container proof-inner">
       <h2>
         Quand l'essentiel devient visible,
@@ -125,7 +71,8 @@ const resourceArticles = [
     </div>
   </section>
 
-  <section class="partner-intro section" data-reveal data-section-name="Nicolas Verdot, votre partenaire">
+  <section class="partner-intro section" data-pli data-reveal data-section-name="Nicolas Verdot, votre partenaire">
+    <Pli titre="Qui je suis" note="Et les questions auxquelles je vous aide à répondre" />
     <div class="container split split-top">
       <div class="split-photo portrait portrait-overlay-wrap">
         <Image src={portrait} alt="Portrait de Nicolas Verdot" width={800} height={800} />
@@ -153,9 +100,9 @@ const resourceArticles = [
     </div>
   </section>
 
-  <PriorityGrid />
 
-  <section class="resources section alt" data-reveal data-section-name="Les ressources">
+  <section class="resources section alt" data-pli data-reveal data-section-name="Les ressources">
+    <Pli titre="Trois articles pour commencer" note="Des méthodes utilisables sans moi" />
     <div class="container">
       <div class="section-head">
         <h2>Pour commencer à débloquer les choses</h2>
@@ -180,9 +127,6 @@ const resourceArticles = [
     dark
     title="Un collectif qui patine, ça se débloque."
     subtitle="Racontez-moi la situation, ce qui bloque, et ce que vous voulez vraiment voir changer — le reste, on le construit ensemble."
-    ctaLabel="Parler de mon projet"
-    secondaryLabel="Découvrir les accompagnements"
-    secondaryHref={withBase('/offres/')}
   />
 </Layout>
 

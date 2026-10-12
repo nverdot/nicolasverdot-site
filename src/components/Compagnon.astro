@@ -746,10 +746,22 @@ const estExterne = (href: string) => /^https?:/.test(href);
      change. */
 
   @media (max-width: 719px) {
+    /* Le lanceur quitte le coin de l'écran pour la case centrale de la barre
+       d'onglets, qu'il déborde vers le haut. 29 px, c'est la moitié du rond :
+       il tombe pile au milieu. Posé plus bas, il mangerait le mot « Aide ». */
     .compagnon:not([data-ouvert]) {
-      /* Un peu plus haut que sur ordinateur : sur téléphone, le bas de l'écran
-         appartient à la barre du navigateur, qui se rétracte et revient. */
-      bottom: calc(1rem + env(safe-area-inset-bottom));
+      right: calc(50% - 29px);
+      bottom: calc(2.35rem + env(safe-area-inset-bottom));
+    }
+
+    .compagnon[data-bulle] .compagnon__bulle {
+      right: auto;
+      left: 50%;
+      translate: -50% 0;
+    }
+    .compagnon[data-bulle] .compagnon__bulle::after {
+      right: auto;
+      left: calc(50% - 6px);
     }
 
     .compagnon__lanceur {

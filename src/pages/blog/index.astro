@@ -84,6 +84,10 @@ const blogSchema = {
 
   <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
 
+  {/* Sur téléphone, toutes les catégories se replient, la première comprise :
+      la page devient un sommaire (voir le script de Layout.astro). */}
+  <span data-pli-tout hidden></span>
+
   <CTABlock
     title="Une question, un sujet à traiter maintenant ?"
     subtitle="Pas besoin d'attendre un article : on peut en parler directement."

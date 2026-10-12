@@ -1,4 +1,5 @@
 ---
+import { SITE } from '../../data/site';
 import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import Lightbox from '../../components/Lightbox.astro';
@@ -97,7 +98,7 @@ const caseStudySchema = {
           <p class="case-subtitle">{cs.data.subtitle}</p>
           <p class="case-lead">{cs.data.summary}</p>
           <div class="case-hero-actions">
-            <a href={withBase('/contact/')} class="btn">Parler de votre besoin</a>
+            <a href={SITE.bookingUrl} class="btn" target="_blank" rel="noopener">Réserver 30 minutes</a>
             {relatedPriority && (
               <a class="case-hero-offer-link" href={withBase(cs.data.offerHref!)}>
                 Découvrir l'offre : {relatedPriority.title} →

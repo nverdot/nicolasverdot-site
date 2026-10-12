@@ -1,0 +1,38 @@
+---
+/**
+ * La ligne qui replie une rubrique, sur téléphone.
+ *
+ * Sous 720 px, une page n'est plus un long ruban à faire défiler : c'est un
+ * écran, avec la liste de ses rubriques. Chaque rubrique marquée `data-pli`
+ * se réduit à cette ligne, et se déplie au toucher.
+ *
+ * Trois choses à savoir :
+ * 1. Ce bouton est le premier enfant direct de la rubrique (`<section data-pli>`).
+ * 2. Rien n'est retiré de la page : le contenu replié reste dans le HTML, lu
+ *    par Google (qui indexe la version mobile) et affiché tel quel sur
+ *    ordinateur, où ce bouton n'existe pas.
+ * 3. Sans JavaScript, rien ne se replie : la classe `appli` est posée par le
+ *    script de Layout.astro, et tout le mécanisme en dépend.
+ *
+ * Les styles sont dans `src/styles/appli.css`.
+ */
+interface Props {
+  titre: string;
+  /** Numéro d'étape, quand la page est un parcours. */
+  num?: string | number;
+  /** La précision sous le titre : en général la question que pose la rubrique. */
+  note?: string;
+}
+const { titre, num, note } = Astro.props;
+---
+
+<button type="button" class="pli-bouton" aria-expanded="false" data-pli-bouton>
+  {num !== undefined && <span class="pli-num" aria-hidden="true">{num}</span>}
+  <span class="pli-texte">
+    <span class="pli-titre">{titre}</span>
+    {note && <span class="pli-note" set:html={note} />}
+  </span>
+  <svg class="pli-chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 9l6 6 6-6" />
+  </svg>
+</button>

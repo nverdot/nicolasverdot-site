@@ -1,0 +1,18 @@
+{
+  "id": "/",
+  "name": "BY Nicolas Verdot",
+  "short_name": "Nicolas Verdot",
+  "description": "Séminaires d'entreprise, facilitation, coaching et stratégie IA : préparer un temps collectif, voir des cas clients, prendre rendez-vous.",
+  "lang": "fr",
+  "start_url": "/?app=1",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fcf8ef",
+  "theme_color": "#fffdfa",
+  "icons": [
+    { "src": "/app/icone-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/app/icone-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/app/icone-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

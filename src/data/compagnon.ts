@@ -40,6 +40,7 @@ export const ICONES: Record<string, string> = {
   scene: 'M4 20h16M6.5 20V9.5L12 5l5.5 4.5V20M10 20v-4.5h4V20M12 8.7h.01',
   etoile: 'M12 4l2.5 5.1 5.6.8-4 3.9 1 5.6-5.1-2.7-5.1 2.7 1-5.6-4-3.9 5.6-.8z',
   fleche: 'M5 12h13M13 7l5 5-5 5',
+  ia: 'M11 4.5l1.7 4.8 4.8 1.7-4.8 1.7L11 17.5l-1.7-4.8L4.5 11l4.8-1.7zM18 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z',
 };
 
 /** Les icônes dessinées en aplat plutôt qu'au trait : à 19 px, elles s'effondrent sinon. */
@@ -297,12 +298,12 @@ export const ECRANS: Ecran[] = [
       'Pour une question, un message suffit et j’y réponds moi-même. Pour un projet de collectif, une demi-heure au téléphone vaut mieux qu’un échange de mails.',
     actions: [
       {
-        texte: 'Réserver trente minutes',
+        texte: 'Réserver 30 minutes',
         icone: 'calendrier',
         vers: 'https://zcal.co/nicolas-verdot/30minutes',
         note: 'Gratuit, sans engagement — et souvent suffisant',
       },
-      { texte: 'M’écrire', icone: 'bulle', vers: '/contact/', note: 'Réponse dans la journée' },
+      { texte: 'M’écrire', icone: 'bulle', vers: '/contact/', note: 'Réponse sous 48 heures ouvrées' },
       { texte: 'Qui je suis', icone: 'question', vers: '/a-propos/' },
     ],
   },
