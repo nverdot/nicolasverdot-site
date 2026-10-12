@@ -6,6 +6,7 @@ import Layout from '../../layouts/Layout.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import ClientLogoStrip from '../../components/ClientLogoStrip.astro';
 import { withBase } from '../../utils/url';
+import action from '../../assets/nicolas-action.jpeg';
 
 const relatedCaseStudies = (
   await getCollection('caseStudies', ({ data }) => !data.draft && data.offerHref === '/offres/capture-graphique/')
@@ -193,8 +194,8 @@ const faqSchema = {
         </div>
       </div>
       <figure class="hero-figure">
-        <img src={withBase('/cas-clients/fibois-cedre-atlas-facilitation-graphique-nicolas-verdot.jpg')} width={dims('/cas-clients/fibois-cedre-atlas-facilitation-graphique-nicolas-verdot.jpg').width} height={dims('/cas-clients/fibois-cedre-atlas-facilitation-graphique-nicolas-verdot.jpg').height} alt="Une grande fresque se dessine en direct pendant qu'un intervenant présente, lors du colloque FIBOIS." loading="eager" decoding="async" />
-        <figcaption>Capture graphique en direct, colloque FIBOIS.</figcaption>
+        <img src={action.src} width={action.width} height={action.height} alt="Nicolas Verdot, feutre en main, dessine une fresque en direct." loading="eager" decoding="async" />
+        <figcaption>Capture graphique en direct.</figcaption>
       </figure>
     </div>
   </section>
