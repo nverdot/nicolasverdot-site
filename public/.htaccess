@@ -12,6 +12,15 @@ RewriteRule ^TESTSITENV/(.*)$ /$1 [R=301,L]
 # (2026-10). Vrai 301 côté serveur, pour que le référencement acquis suive.
 RewriteRule ^offres/deleguer-animation/?$ /seminaires-entreprise/ [R=301,L]
 
+# Recentrage sur le collectif (2026-10) : les pages d'accompagnement IA et
+# les trois formations « augmentées » sont retirées. Seule l'acculturation
+# à l'IA reste, dans le catalogue de formations.
+RewriteRule ^accompagnement-ia-pme/?$ /formations/ [R=301,L]
+RewriteRule ^intelligence-collective-augmentee/?$ /intelligence-collective/ [R=301,L]
+RewriteRule ^formations/ia-dans-processus-intelligence-collective/?$ /formations/ [R=301,L]
+RewriteRule ^formations/chef-de-projet-augmente/?$ /formations/ [R=301,L]
+RewriteRule ^formations/codir-augmente/?$ /seminaire-codir/ [R=301,L]
+
 # Sans ces règles, aucune des deux couches (ni le HTML, ni les assets) n'a
 # d'en-tête Cache-Control explicite. Les navigateurs appliquent alors un
 # cache heuristique sur le HTML lui-même : après un déploiement, un visiteur

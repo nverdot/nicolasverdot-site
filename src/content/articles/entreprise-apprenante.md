@@ -106,6 +106,6 @@ Ces pratiques ne tiennent que si la direction les protège. Concrètement, trois
 
 L'intelligence artificielle remet la question au premier plan. Les outils évoluent plus vite qu'un plan de formation ne se construit. Une entreprise qui forme ses équipes une fois sera dépassée quelques mois plus tard. Celle qui sait tester un usage, mesurer ce qu'il change et partager ce qui fonctionne suivra le rythme, quels que soient les outils du moment.
 
-Autrement dit, la capacité à apprendre devient plus précieuse que n'importe quelle compétence précise. C'est tout l'esprit d'un [accompagnement IA](/accompagnement-ia-pme/) bien mené : vous ne repartez pas seulement avec des usages, mais avec une équipe qui sait continuer sans vous.
+Autrement dit, la capacité à apprendre devient plus précieuse que n'importe quelle compétence précise.
 
 *Votre organisation refait les mêmes erreurs, ou une transformation tarde à produire des effets durables ? Découvrez mon [accompagnement de transformation](/offres/accompagnement-transformation/), ou [prenez rendez-vous](/contact/) pour en parler.*

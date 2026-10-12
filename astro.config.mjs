@@ -60,5 +60,12 @@ export default defineConfig({
     // coût d'une réunion et le coût de l'inaction. Ils se cannibalisaient ;
     // le second absorbe le premier, qui avait été publié quelques heures.
     '/cout-des-reunions': '/outils/cout-de-linaction/',
+    // Recentrage sur le collectif (2026-10) : retrait des pages IA. Les vrais
+    // 301 sont dans public/.htaccess ; ceci est le filet de secours.
+    '/accompagnement-ia-pme': '/formations/',
+    '/intelligence-collective-augmentee': '/intelligence-collective/',
+    '/formations/ia-dans-processus-intelligence-collective': '/formations/',
+    '/formations/chef-de-projet-augmente': '/formations/',
+    '/formations/codir-augmente': '/seminaire-codir/',
   },
 });

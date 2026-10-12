@@ -4,7 +4,6 @@ import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
 import PriorityGrid from '../../components/PriorityGrid.astro';
 import OfferFinder from '../../components/OfferFinder.astro';
-import { withBase } from '../../utils/url';
 ---
 
 <Layout
@@ -31,18 +30,6 @@ import { withBase } from '../../utils/url';
     lead=""
     description="Ils se combinent souvent : un séminaire animé pour vous, puis un coaching d'équipe pour ancrer ce qui s'y est décidé. Si vous hésitez entre deux, c'est en général que les deux sont utiles — dans un ordre."
   />
-
-  {/* L'offre IA a son propre parcours en trois portes, hors des six
-      accompagnements : on la signale ici plutot que de l'ajouter a la grille,
-      ou elle casserait le « six façons » repris dans toute la page. */}
-  <section class="section" data-reveal data-section-name="Stratégie et adoption de l'IA">
-    <div class="container">
-      <div class="callout-box callout-box-row">
-        <p><strong>«&nbsp;Il faut qu'on fasse de l'IA&nbsp;», mais par où commencer&nbsp;?</strong><br /><span class="accent">J'aide les directions de PME à décider où agir, dans quel ordre, avec les métiers et la DSI — puis à tester et à faire adopter. Trois portes d'entrée, achetables séparément.</span></p>
-        <a href={withBase('/accompagnement-ia-pme/')} class="btn">Voir l'accompagnement IA →</a>
-      </div>
-    </div>
-  </section>
 
   <CTABlock
     eyebrow="Vous hésitez sur le bon point d'entrée ?"

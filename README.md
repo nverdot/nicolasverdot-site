@@ -36,6 +36,22 @@ Dans les paramètres du repo GitHub (**Settings → Secrets and variables → Ac
 
 Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que via ces secrets chiffrés.
 
+## État — 12 octobre 2026 (branche `recentrage-collectif`, pas en ligne)
+
+Recentrage du site sur le collectif : séminaires et kick-off, animation de réunions, posture du leader et du manager. L'accompagnement IA sort du site (Nicolas ne le propose pas encore).
+
+- **Retiré** : `/accompagnement-ia-pme/`, `/intelligence-collective-augmentee/`, les trois fiches formation « augmentées » et leurs composants. Les fichiers restent dans l'historique git (branche `main` avant fusion) pour y revenir plus tard.
+- **Redirections 301** dans `public/.htaccess` (filet de secours dans `astro.config.mjs`) : les pages IA vers `/formations/` ou `/intelligence-collective/`, « Codir augmenté » vers `/seminaire-codir/`.
+- **Formations** : 29 fiches → 18, choisies par Nicolas. L'IA ne garde que quatre fiches d'acculturation, en dernier univers. Leadership passe en premier.
+- **Menu** : « Stratégie IA » retiré (7 entrées). Accueil, bandeau, pied de page, schema.org et pages séminaires nettoyés de toute mention d'IA.
+- Cette branche part de `entreprise-apprenante` : elle embarque l'article pilier « entreprise apprenante ».
+
+### Reste à faire
+- Feu vert de Nicolas sur l'aperçu, puis fusion dans `main`.
+- Deux pages à créer : « Réunions et ateliers » et « Leaders et managers » (aujourd'hui l'accueil renvoie vers le coaching d'équipe).
+- Offre « Entreprise apprenante » : à cadrer avec Nicolas (pour qui, format, durée) avant d'écrire la page.
+- Après mise en ligne : redemander l'indexation de l'accueil dans la Search Console.
+
 ## État — 8 octobre 2026
 
 - Sur la même branche, le 8 octobre au soir : les limites de largeur qui coupaient les phrases sont retirées sur tout le site (introductions de section, résumés et titres de haut de page) ; la calculatrice compte par profil (dirigeants, managers, collaborateurs, chacun avec son coût journalier) et affiche trois chiffres de l'enquête Atlassian sur les réunions (72 %, 76 %, 54 %), vérifiés à la source et appliqués au conditionnel ; l'ancien « 55 % Microsoft », non vérifié, devient « 54 % Atlassian » ; image de la salle en U dans « On se réunit pour quoi ? ».

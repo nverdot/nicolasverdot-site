@@ -34,7 +34,7 @@ const localBusinessSchema = isHome
       '@type': 'ProfessionalService',
       name: SITE.name,
       description:
-        "Conception et animation de séminaires d'entreprise (séminaire de direction, kick-off), stratégie et adoption de l'IA, coaching de dirigeants et formations : Nicolas Verdot aide les dirigeants à décider, puis à embarquer leurs équipes. Basé à Nice.",
+        "Conception et animation de séminaires d'entreprise (séminaire de direction, kick-off), animation de réunions et d'ateliers, coaching de dirigeants et d'équipes, formations : Nicolas Verdot aide les dirigeants à décider, puis à embarquer leurs équipes. Basé à Nice.",
       url: SITE.url,
       email: SITE.email,
       telephone: SITE.phone,
@@ -44,7 +44,7 @@ const localBusinessSchema = isHome
         addressCountry: SITE.address.country,
       },
       // Le marché local d'abord (Nice, Sophia, Monaco), la France ensuite :
-      // c'est ce qui permet de ressortir sur « accompagnement IA Nice ».
+      // c'est ce qui permet de ressortir sur « séminaire d'entreprise Nice ».
       areaServed: [
         { '@type': 'AdministrativeArea', name: 'Alpes-Maritimes' },
         { '@type': 'City', name: 'Nice' },
@@ -66,7 +66,8 @@ const localBusinessSchema = isHome
         'Séminaire kick-off',
         'Facilitation graphique',
         'Coaching de dirigeants',
-        "Accompagnement à l'adoption de l'IA en PME",
+        "Coaching d'équipe",
+        'Posture du leader facilitateur',
       ],
       sameAs: [SITE.social.linkedin].filter(Boolean),
     }
