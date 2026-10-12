@@ -36,21 +36,23 @@ Dans les paramètres du repo GitHub (**Settings → Secrets and variables → Ac
 
 Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que via ces secrets chiffrés.
 
-## État — 12 octobre 2026 (branche `recentrage-collectif`, pas en ligne)
+## État — 12 octobre 2026 (en ligne)
 
-Recentrage du site sur le collectif : séminaires et kick-off, animation de réunions, posture du leader et du manager. L'accompagnement IA sort du site (Nicolas ne le propose pas encore).
+Recentrage du site sur le collectif : séminaires et kick-off, réunions et ateliers, leaders et managers. L'accompagnement IA sort du site (Nicolas ne le propose pas encore). Quatre branches rassemblées et publiées ensemble : `recentrage-collectif`, `mode-appli`, `design-30`, `accueil-allege` (plus l'article de `entreprise-apprenante`).
 
-- **Retiré** : `/accompagnement-ia-pme/`, `/intelligence-collective-augmentee/`, les trois fiches formation « augmentées » et leurs composants. Les fichiers restent dans l'historique git (branche `main` avant fusion) pour y revenir plus tard.
+- **Trois portes** (`src/data/portes.ts`) : Séminaires · Réunions et ateliers · Leaders et managers. La porte « Stratégie IA » a disparu.
+- **Retiré** : `/accompagnement-ia-pme/`, `/intelligence-collective-augmentee/`, les trois fiches formation « augmentées », l'écran IA du Compagnon. Tout reste dans l'historique git (avant le 12 octobre) pour y revenir plus tard.
 - **Redirections 301** dans `public/.htaccess` (filet de secours dans `astro.config.mjs`) : les pages IA vers `/formations/` ou `/intelligence-collective/`, « Codir augmenté » vers `/seminaire-codir/`.
 - **Formations** : 29 fiches → 18, choisies par Nicolas. L'IA ne garde que quatre fiches d'acculturation, en dernier univers. Leadership passe en premier.
-- **Menu** : « Stratégie IA » retiré (7 entrées). Accueil, bandeau, pied de page, schema.org et pages séminaires nettoyés de toute mention d'IA.
-- Cette branche part de `entreprise-apprenante` : elle embarque l'article pilier « entreprise apprenante ».
+- **Menu** : 5 entrées sur ordinateur (Séminaires, Coaching mentoring et formation, Cas clients, Blog, Qui suis-je) et le bouton de rendez-vous.
+- **Accueil** : « Un séminaire dont il reste quelque chose le lundi matin », tuiles sur téléphone, barre d'onglets mobile.
 
 ### Reste à faire
-- Feu vert de Nicolas sur l'aperçu, puis fusion dans `main`.
-- Deux pages à créer : « Réunions et ateliers » et « Leaders et managers » (aujourd'hui l'accueil renvoie vers le coaching d'équipe).
+- Deux pages à créer : « Réunions et ateliers » (la porte renvoie pour l'instant vers `/intelligence-collective/`) et « Leaders et managers » (renvoie vers le coaching d'équipe).
 - Offre « Entreprise apprenante » : à cadrer avec Nicolas (pour qui, format, durée) avant d'écrire la page.
-- Après mise en ligne : redemander l'indexation de l'accueil dans la Search Console.
+- « Réunions qui engagent » n'a pas été cochée par Nicolas et a été retirée : à confirmer.
+- Redemander l'indexation de l'accueil dans la Search Console.
+
 ## État — 9 octobre 2026 (mode application sur téléphone)
 
 **Branche `mode-appli`** (pas en ligne, en attente du feu vert de Nicolas), partie de `main`. Au-dessus de 720 px, rien ne change. Travaillée dans une copie séparée du dossier (`.claude/worktrees/mode-appli`, aperçu `mode-appli` sur le port 4341), parce qu'une autre session utilisait le dossier principal.

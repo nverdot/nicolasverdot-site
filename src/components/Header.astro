@@ -11,8 +11,8 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
     <a href={withBase('/')} class="logo">
       <span class="logo-script">by</span> <span class="logo-caps">NICOLAS VERDOT</span>
     </a>
-    {/* Le rendez-vous reste visible quand le menu se replie (portables de
-        1280 px, tablettes). Au-dessus de 1330 px, c'est le bouton du menu qui
+    {/* Le rendez-vous reste visible quand le menu se replie (petits
+        portables, tablettes). Au-dessus de 1200 px, c'est le bouton du menu qui
         le porte ; sous 720 px, c'est l'onglet « Contact » de la barre du bas. */}
     <a href={SITE.bookingUrl} class="btn header-cta-rapide" target="_blank" rel="noopener">Réserver 30 minutes</a>
     <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Basculer entre mode clair et mode sombre">
@@ -187,7 +187,7 @@ const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
   .header-cta-rapide {
     display: none;
   }
-  @media (min-width: 720px) and (max-width: 1330px) {
+  @media (min-width: 720px) and (max-width: 1200px) {
     .header-cta-rapide {
       display: inline-flex;
       margin-left: auto;
