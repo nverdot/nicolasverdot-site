@@ -53,6 +53,14 @@ Recentrage du site sur le collectif : séminaires et kick-off, réunions et atel
 - « Réunions qui engagent » n'a pas été cochée par Nicolas et a été retirée : à confirmer.
 - Redemander l'indexation de l'accueil dans la Search Console.
 
+## État — 21 octobre 2026 (calculatrice sur téléphone, branche `calculatrice-mobile`, à valider)
+
+**Branche `calculatrice-mobile`** (partie de `main`, pas en ligne). La calculatrice de `/seminaires-entreprise/` (`CoutSeminaire.astro`) en mode appli sous 720 px ; l'ordinateur ne change pas.
+- Le total (par séance et sur un an) reste collé en bas de l'écran pendant toute la saisie, avec un lien vers le détail.
+- Participants : boutons − / + autour du nombre (plus besoin du clavier) ; le nom du profil sur sa ligne, nombre et coût côte à côte (avant, les noms passaient sous les cases).
+- Les quatre chiffres-clés défilent au doigt sur une rangée, au lieu de quatre tuiles empilées. Cadres allégés : 5 540 px de haut devenus 4 670.
+- **À décider par Nicolas** : valider l'aperçu sur son téléphone avant la fusion dans `main`.
+
 ## État — 9 octobre 2026 (mode application sur téléphone)
 
 **Branche `mode-appli`** (pas en ligne, en attente du feu vert de Nicolas), partie de `main`. Au-dessus de 720 px, rien ne change. Travaillée dans une copie séparée du dossier (`.claude/worktrees/mode-appli`, aperçu `mode-appli` sur le port 4341), parce qu'une autre session utilisait le dossier principal.
