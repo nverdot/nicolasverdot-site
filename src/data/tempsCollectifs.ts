@@ -46,16 +46,16 @@ export interface TempsCollectif {
 // Les fréquences proposées. 46 semaines et 11 mois : une année de travail,
 // congés déduits. C'est une hypothèse affichée au visiteur.
 export const frequences = [
-  { parAn: 46, label: 'Chaque semaine', phrase: 'chaque semaine' },
-  { parAn: 11, label: 'Chaque mois', phrase: 'chaque mois' },
-  { parAn: 4, label: 'Chaque trimestre', phrase: 'une fois par trimestre' },
-  { parAn: 1, label: 'Une fois par an', phrase: 'une fois par an' },
+  { parAn: 46, label: 'Par semaine', phrase: 'chaque semaine' },
+  { parAn: 11, label: 'Par mois', phrase: 'chaque mois' },
+  { parAn: 4, label: 'Par trimestre', phrase: 'une fois par trimestre' },
+  { parAn: 1, label: 'Par an', phrase: 'une fois par an' },
 ];
 
 // Les durées proposées, en jours (une journée = 7 heures de travail).
 export const durees = [
   { jours: 0.25, label: '1 h 30 à 2 h', phrase: 'deux heures' },
-  { jours: 0.5, label: 'Une demi-journée', phrase: 'une demi-journée' },
+  { jours: 0.5, label: 'Demi-journée', phrase: 'une demi-journée' },
   { jours: 1, label: '1 jour', phrase: 'une journée' },
   { jours: 1.5, label: '1,5 jour', phrase: 'un jour et demi' },
   { jours: 2, label: '2 jours', phrase: 'deux jours' },
