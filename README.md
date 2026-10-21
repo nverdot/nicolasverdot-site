@@ -53,13 +53,13 @@ Recentrage du site sur le collectif : séminaires et kick-off, réunions et atel
 - « Réunions qui engagent » n'a pas été cochée par Nicolas et a été retirée : à confirmer.
 - Redemander l'indexation de l'accueil dans la Search Console.
 
-## État — 21 octobre 2026 (calculatrice sur téléphone, branche `calculatrice-mobile`, à valider)
+## État — 21 octobre 2026 (calculatrice sur téléphone, en ligne)
 
-**Branche `calculatrice-mobile`** (partie de `main`, pas en ligne). La calculatrice de `/seminaires-entreprise/` (`CoutSeminaire.astro`) en mode appli sous 720 px ; l'ordinateur ne change pas.
+**En ligne le 21 octobre 2026** (branche `calculatrice-mobile` fusionnée dans `main`, à la demande de Nicolas). La calculatrice de `/seminaires-entreprise/` (`CoutSeminaire.astro`) en mode appli sous 720 px ; l'ordinateur ne change pas.
 - Le total (par séance et sur un an) reste collé en bas de l'écran pendant toute la saisie, avec un lien vers le détail.
 - Participants : boutons − / + autour du nombre (plus besoin du clavier) ; le nom du profil sur sa ligne, nombre et coût côte à côte (avant, les noms passaient sous les cases).
 - Les quatre chiffres-clés défilent au doigt sur une rangée, au lieu de quatre tuiles empilées. Cadres allégés : 5 540 px de haut devenus 4 670.
-- **À décider par Nicolas** : valider l'aperçu sur son téléphone avant la fusion dans `main`.
+- **À faire par Nicolas** : la regarder sur son téléphone et dire ce qui ne va pas.
 
 ## État — 9 octobre 2026 (mode application sur téléphone)
 
