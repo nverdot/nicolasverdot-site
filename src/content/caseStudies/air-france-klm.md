@@ -82,6 +82,15 @@ chapters:
         text: "Des obstacles récurrents mieux compris."
       - title: "Communauté apprenante"
         text: "Un espace d'amélioration continue pour les coachs."
+gallery:
+  title: "Apprendre en faisant"
+  text: "Les formations et les ateliers passent par l'expérience : on construit, on dessine, puis on en tire ce qui servira dans les équipes."
+  process: []
+  images:
+    - src: "/cas-clients/missions/airfrance-atelier-lego.jpg"
+      alt: "Un atelier avec des Lego"
+    - src: "/cas-clients/missions/airfrance-tableau-dessin.jpg"
+      alt: "Une participante dessine au tableau"
 impact:
   - title: "Une transformation à l'échelle, pas un cadre imposé"
     text: "Des pratiques adaptées à chaque périmètre plutôt qu'un modèle unique."

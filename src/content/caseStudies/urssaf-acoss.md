@@ -95,6 +95,18 @@ chapters:
         text: "Un premier plan d'action construit collectivement."
       - title: "Dynamique lancée"
         text: "Une dynamique collective autour de la nouvelle organisation."
+gallery:
+  title: "Faire vivre l'agilité plutôt que l'expliquer"
+  text: "Séminaire de managers à Biot, en juin 2025 : deux jours d'expériences et de débriefs pour une quarantaine de managers, co-animés avec l'équipe de transformation. Chacun est reparti avec une expérimentation, chaque département avec ses actions collectives."
+  process: []
+  images:
+    - src: "/cas-clients/missions/urssaf-biot-fresque-debrief-jour-1.jpg"
+      alt: "Fresque « Débrief jour 1 » du séminaire de managers"
+      wide: true
+    - src: "/cas-clients/missions/urssaf-biot-canevas-zoom.jpg"
+      alt: "Un manager remplit le canevas du forum ouvert"
+    - src: "/cas-clients/missions/urssaf-biot-affiche-4-valeurs.jpg"
+      alt: "Le personnage et ses ballons : les quatre valeurs du Manifeste agile"
 impact:
   - title: "Conseiller"
     text: "Structurer la transformation et l'agilité à l'échelle."
