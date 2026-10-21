@@ -36,13 +36,12 @@ Dans les paramètres du repo GitHub (**Settings → Secrets and variables → Ac
 
 Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que via ces secrets chiffrés.
 
-## État — 21 octobre 2026 (branche `cas-clients-plaquette`, à valider)
+## État — 21 octobre 2026 (missions en bref, en ligne)
 
 - `/cas-clients/` : en plus des 9 cas détaillés, **31 missions en bref** reprises de la plaquette séminaires (`~/Documents/Claude/Book séminaires BNV`), en quatre rubriques : séminaires et ateliers, capture graphique, mentoring, engagement solidaire. Chaque fiche : ce que le client voulait, ce que j'ai fait, ce qui en est sorti, photos (agrandissables) et lien vers le cas complet quand il existe. Données dans `src/data/missions.ts`, photos dans `public/cas-clients/missions/`.
 - **Sauvegarde 13 exclue** (aucune photo, aucune fiche). Secourisme pour tous et les pages réseau de la plaquette ne sont pas reprises.
 - Photos ajoutées aux cas détaillés Urssaf (séminaire de Biot), LaMAREC, Ressources et Air France-KLM.
 - À trancher : Ressources, « atelier de deux jours, décembre 2024 » (plaquette) contre « formation de trois jours » (cas détaillé).
-- Pas encore fusionné dans `main` : attend l'OK de Nicolas.
 
 ## État — 12 octobre 2026 (en ligne)
 
