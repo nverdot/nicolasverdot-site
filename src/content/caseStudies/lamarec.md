@@ -85,7 +85,14 @@ gallery:
   title: "Rendre visible pour permettre au collectif de penser ensemble"
   text: "Les échanges ont été captés en direct sous forme de fresques visuelles. Elles ont aidé à comprendre, à relier, à confronter et à décider, et sont devenues un support commun de mémoire et d'action."
   process: ["Comprendre", "Relier", "Décider", "Mémoriser"]
-  images: []
+  images:
+    - src: "/cas-clients/missions/lamarec-parcours-fresque.jpg"
+      alt: "La fresque du parcours de soins, dessinée en direct pendant l'atelier"
+      wide: true
+    - src: "/cas-clients/missions/lamarec-petite-enfance-tables.jpg"
+      alt: "Les participants travaillent sur les cartes du territoire"
+    - src: "/cas-clients/missions/lamarec-parcours-post-it.jpg"
+      alt: "Le mur de post-it de l'atelier"
 impact:
   - title: "Passer du « chez nous » au territoire"
     text: "Une vision élargie des enjeux et des interdépendances."

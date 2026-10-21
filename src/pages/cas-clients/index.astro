@@ -3,16 +3,19 @@ import { dims } from '../../utils/imageDims';
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CTABlock from '../../components/CTABlock.astro';
+import Pli from '../../components/Pli.astro';
+import Lightbox from '../../components/Lightbox.astro';
 import { withBase } from '../../utils/url';
 import { getCollection } from 'astro:content';
+import { familles, nombreMissions } from '../../data/missions';
 
 const caseStudies = (await getCollection('caseStudies', ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 ---
 
 <Layout
-  title="Cas clients — by Nicolas Verdot"
-  description="Ce que donnent concrètement les accompagnements : contexte, défi, dispositif conçu et résultats, situation par situation."
+  title="Cas clients : séminaires, ateliers, capture graphique — by Nicolas Verdot"
+  description="Séminaires, ateliers, capture graphique, mentoring : le contexte, ce que j'ai fait et ce qui en est sorti, mission par mission, avec les photos."
   path="/cas-clients/"
   breadcrumbs={[
     { name: 'Accueil', path: '/' },
@@ -23,11 +26,25 @@ const caseStudies = (await getCollection('caseStudies', ({ data }) => !data.draf
     eyebrow="Cas clients"
     title="Ce que ça donne"
     titleAccent="concrètement."
-    summary="Le <strong>contexte</strong>, le <strong>défi</strong>, le dispositif conçu et les résultats — situation par situation, sans chiffres ni témoignages inventés."
+    summary={`Ce que le client voulait, ce que j'ai fait, ce qui en est sorti. <strong>${caseStudies.length} cas détaillés</strong> et <strong>${nombreMissions} missions en bref</strong>, avec leurs photos, sans chiffres ni témoignages inventés.`}
   />
 
-  <section class="section" data-reveal>
+  <nav class="missions-sommaire" aria-label="Rubriques de la page">
     <div class="container">
+      <a href="#cas-detailles">Cas détaillés</a>
+      {familles.map((f) => <a href={`#${f.id}`}>{f.titre}</a>)}
+    </div>
+  </nav>
+
+  <section data-pli class="section" id="cas-detailles" data-reveal data-section-name="Cas détaillés">
+    <Pli titre="Cas détaillés" note="Le contexte, la démarche, les résultats" />
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Cas détaillés</p>
+          <h2>Les accompagnements, racontés en entier</h2>
+        </div>
+      </div>
       <div class="cards">
         {caseStudies.map((cs) => (
           <article class="card">
@@ -45,11 +62,62 @@ const caseStudies = (await getCollection('caseStudies', ({ data }) => !data.draf
     </div>
   </section>
 
+  {familles.map((f, i) => (
+    <section data-pli class={`section${i % 2 === 0 ? ' alt' : ''}`} id={f.id} data-reveal data-section-name={f.titre}>
+      <Pli titre={f.titre} note={f.note} />
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Missions en bref</p>
+            <h2>{f.titre}</h2>
+          </div>
+          <p>{f.note}</p>
+        </div>
+        <div class="missions">
+          {f.missions.map((m) => (
+            <article class="mission">
+              <header class="mission-tete">
+                {m.logo && (
+                  <img src={withBase(m.logo)} {...dims(m.logo)} alt="" class="mission-logo" loading="lazy" decoding="async" />
+                )}
+                <div>
+                  <p class="mission-client">{m.client}</p>
+                  <h3>{m.titre}</h3>
+                </div>
+              </header>
+              <p class="mission-format">{m.format}</p>
+              <dl class="mission-rubriques">
+                <dt>Ce que le client voulait</dt>
+                <dd>{m.voulu}</dd>
+                <dt>Ce que j'ai fait</dt>
+                <dd>{m.fait}</dd>
+                <dt>Ce qui en est sorti</dt>
+                <dd>{m.sorti}</dd>
+              </dl>
+              {m.photos.length > 0 && (
+                <div class={`mission-photos n${m.photos.length}`} data-lightbox-scope>
+                  {m.photos.map((ph) => (
+                    <img src={withBase(ph.src)} {...dims(ph.src)} alt={ph.alt} loading="lazy" decoding="async" />
+                  ))}
+                </div>
+              )}
+              {m.cas && (
+                <a class="card-link mission-lien" href={withBase(`/cas-clients/${m.cas}/`)}>Lire le cas complet</a>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
   <CTABlock
     eyebrow="Une situation similaire ?"
     title="Parlons de votre contexte et de ce qui doit avancer."
     subtitle="Chaque accompagnement part d'une situation précise, jamais d'une méthode plaquée à l'avance."
   />
+
+  <Lightbox />
 </Layout>
 
 <style>
@@ -61,5 +129,109 @@ const caseStudies = (await getCollection('caseStudies', ({ data }) => !data.draf
     object-fit: contain;
     object-position: left center;
     margin-bottom: var(--space-4);
+  }
+
+  .missions-sommaire .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding-block: var(--space-4);
+  }
+  .missions-sommaire a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-ink);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .missions-sommaire a:hover { border-color: var(--color-ink); }
+
+  .missions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: var(--space-6);
+    align-items: start;
+  }
+  .mission {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+  .mission-tete {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+  }
+  .mission-logo {
+    flex: none;
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 10px;
+    padding: 4px;
+  }
+  .mission-client {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+  .mission h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+  .mission-format {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--color-muted);
+  }
+  .mission-rubriques {
+    margin: 0;
+  }
+  .mission-rubriques dt {
+    margin-top: var(--space-3);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-clay);
+  }
+  .mission-rubriques dd {
+    margin: var(--space-1) 0 0;
+    line-height: 1.55;
+  }
+  .mission-photos {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+  }
+  .mission-photos.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mission-photos.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mission-photos img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: zoom-in;
+  }
+  .mission-photos.n1 img { aspect-ratio: 16 / 9; }
+  .mission-lien { margin-top: var(--space-2); }
+
+  @media (max-width: 720px) {
+    .mission { padding: var(--space-4); }
+    .mission-logo { width: 44px; height: 44px; }
   }
 </style>

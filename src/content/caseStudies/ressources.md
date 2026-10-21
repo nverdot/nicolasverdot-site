@@ -27,6 +27,8 @@ chapters:
   - number: "01"
     title: "Transformer des formations descendantes en expériences participatives"
     subtitle: "Formation des formateurs aux nouvelles techniques d'animation"
+    image: "/cas-clients/missions/ressources-cartes-bikablo.jpg"
+    imageAlt: "Les formateurs choisissent leurs cartes bikablo pour reconstruire leurs formations"
     context: "Les formations portaient souvent sur des sujets techniques, réglementaires ou liés aux processus, avec un format reposant principalement sur des présentations PowerPoint et une transmission descendante."
     challenge: "Il ne s'agissait pas d'ajouter quelques activités ludiques à une présentation existante, mais d'aider les formateurs à repenser l'expérience d'apprentissage pour que les participants en deviennent acteurs."
     approach: "Une formation de trois jours a permis aux formateurs de découvrir, expérimenter puis mettre en pratique de nouvelles techniques : conversation structurée, gamification, déroulé pédagogique interactif et facilitation visuelle."
