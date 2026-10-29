@@ -1,0 +1,1221 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Pli from '../components/Pli.astro';
+import { SITE } from '../data/site';
+import { withBase } from '../utils/url';
+import { Image } from 'astro:assets';
+import portraitNicolas from '../assets/nicolas-portrait-2026.jpg';
+import portraitRomain from '../assets/bootcamp/romain-gal.jpg';
+
+// Page d'inscription du bootcamp IA, co-animé avec Romain Gal.
+// Construite comme une page d'événement : pas de menu, pas de pied de page du
+// site, une seule action (réserver sa place), le formulaire dès le premier
+// écran.
+// NON RÉFÉRENCÉE pour l'instant : noindex, hors sitemap (astro.config.mjs),
+// liée depuis aucune page. Analyse et décisions : docs/bootcamp-ia.md.
+//
+// Tout ce qui est marqué « à confirmer » attend une décision de Nicolas :
+// on ne remplit jamais un trou par une date, un lieu ou un prix inventé.
+const EVENT = {
+  date: 'Mercredi 9 décembre 2026',
+  dateCourte: 'Mer. 9 déc.',
+  horaires: '13h30 – 18h15',
+  lieu: 'Nice · lieu à confirmer',
+  places: 16,
+  placesLancement: 8,
+  prixLancement: 129,
+  prix: 169,
+  // Lien de la billetterie (Billetweb ou autre) une fois l'événement créé :
+  // après l'envoi du formulaire, la personne y est envoyée pour payer.
+  billetterie: '',
+};
+
+const promesses = [
+  'Vous choisissez <strong>une tâche réelle</strong> de votre activité.',
+  'Vous la construisez <strong>en équipe, accompagné</strong>, pendant deux sprints d’une heure.',
+  'Vous repartez avec <strong>un outil qui sert dès lundi</strong>, et la méthode pour en faire d’autres.',
+];
+
+// Dites comme les entrepreneurs les disent, à la première personne.
+const douleurs = [
+  'J’ai ouvert ChatGPT deux ou trois fois, et puis plus rien.',
+  'Mes devis et mes relances me prennent mes soirées.',
+  'Je sais qu’il faudrait publier sur LinkedIn, je n’ai jamais le temps.',
+  'Tout le monde en parle, moi je ne sais pas par où commencer.',
+];
+
+const pistes = [
+  {
+    num: '1',
+    titre: 'Vendre',
+    accroche: 'sans y passer vos soirées',
+    exemples: [
+      'Vos notes d’appel deviennent une proposition commerciale, à votre ton.',
+      'Un modèle de relance qui s’adapte à chaque client.',
+      'Une réponse type aux demandes de devis.',
+    ],
+  },
+  {
+    num: '2',
+    titre: 'Communiquer',
+    accroche: 'sans page blanche',
+    exemples: [
+      'Un assistant qui écrit vos posts à partir de vos idées dictées.',
+      'Un mois de publications préparé en une heure.',
+      'Votre newsletter tirée de ce que vous avez déjà écrit.',
+    ],
+  },
+  {
+    num: '3',
+    titre: 'S’organiser',
+    accroche: 'sans tout garder en tête',
+    exemples: [
+      'Un rendez-vous enregistré devient un compte rendu et une liste d’actions.',
+      'Un assistant qui répond aux questions fréquentes de vos clients.',
+      'Un tableau de suivi qui se remplit à partir de vos mails.',
+    ],
+  },
+];
+
+const programme = [
+  { heure: '13h30', titre: 'Accueil café', duree: '30 min' },
+  { heure: '14h00', titre: 'Introduction et objectifs', duree: '15 min' },
+  { heure: '14h15', titre: 'Exemples de cas d’usage, en direct', duree: '30 min' },
+  { heure: '14h45', titre: 'Choix de votre problème, équipes par piste', duree: '30 min' },
+  { heure: '15h15', titre: 'Briefing : la méthode et les outils', duree: '15 min' },
+  { heure: '15h30', titre: 'Construction accompagnée : 1er sprint', duree: '60 min', fort: true },
+  { heure: '16h30', titre: 'Pause networking', duree: '15 min' },
+  { heure: '16h45', titre: 'Construction accompagnée : 2e sprint', duree: '60 min', fort: true },
+  { heure: '17h45', titre: 'Démo des réalisations', duree: '30 min' },
+];
+
+const repartez = [
+  { titre: 'Un outil qui fonctionne', texte: 'Construit sur votre activité, testé sur un vrai cas.' },
+  { titre: 'La méthode', texte: 'Choisir, décrire, tester, corriger. Pour faire le suivant seul.' },
+  { titre: 'Vos prochaines tâches', texte: 'La liste de ce qu’il vaut la peine de confier à l’IA, dans l’ordre.' },
+  { titre: 'Un réseau', texte: 'Des entrepreneurs de la région qui avancent sur les mêmes sujets.' },
+];
+
+const pourVous = [
+  'Vous êtes indépendant ou dirigez une entreprise de moins de 10 personnes.',
+  'Vous vendez un service, et vous faites presque tout vous-même.',
+  'Vous débutez avec l’IA, ou vous ne vous en servez pas régulièrement.',
+];
+const pasPourVous = [
+  'Vous cherchez une formation technique (code, API).',
+  'Vous utilisez déjà l’IA tous les jours, avec des outils rodés.',
+  'Vous voulez former une équipe entière : parlons-en en 30 minutes.',
+];
+
+const faq = [
+  {
+    q: 'Je n’y connais rien en IA. Est-ce pour moi ?',
+    a: 'Oui. Le bootcamp est conçu pour celles et ceux qui ne savent pas par où commencer. Il faut savoir utiliser un ordinateur et écrire un e-mail. Rien d’autre.',
+  },
+  {
+    q: 'Quel outil allons-nous utiliser ?',
+    a: 'Un assistant IA grand public (ChatGPT, Claude ou Gemini), dans sa version gratuite. Aucun abonnement n’est nécessaire pour participer.',
+  },
+  {
+    q: 'Et mes données clients ?',
+    a: 'Pendant le bootcamp, vous travaillez sur des exemples anonymisés. Nous vous montrons ce qu’il ne faut jamais coller dans un assistant IA, et comment régler les options de confidentialité.',
+  },
+  {
+    q: 'Mon problème ne rentre dans aucune des trois pistes.',
+    a: 'Décrivez-le dans le formulaire. Si nous pouvons l’accompagner dans le temps du bootcamp, nous l’intégrons. Sinon, nous vous le disons avant que vous ne payiez.',
+  },
+  {
+    q: 'Que faut-il apporter ?',
+    a: 'Votre ordinateur portable chargé, un compte gratuit sur ChatGPT, Claude ou Gemini (nous vous aidons à l’ouvrir si besoin), et une tâche qui vous agace dans votre semaine.',
+  },
+  {
+    q: 'Peut-on venir à deux de la même entreprise ?',
+    a: 'Oui, et c’est souvent une bonne idée : vous repartez à deux avec la même méthode. Chacun réserve sa place.',
+  },
+  {
+    q: 'Recevrai-je une facture ?',
+    a: 'Oui, une facture à votre nom ou à celui de votre entreprise.',
+  },
+];
+---
+
+<Layout
+  title="Bootcamp IA à Nice pour entrepreneurs : une après-midi pour construire votre premier outil"
+  description="Une après-midi à Nice pour entrepreneurs et dirigeants de petites entreprises : choisissez une tâche de votre activité, construisez votre outil IA en équipe, accompagné, et repartez avec."
+  path="/bootcamp-ia/"
+  noindex
+  landing
+>
+  {/* Toute la page vit dans .lp : un habillage sombre et « futuriste »
+      (grille, halos, libellés en police machine), indépendant du thème du
+      site, pour que l'événement ait sa propre identité. */}
+  <div class="lp">
+    <div class="lp-barre">
+      <div class="container lp-barre-inner">
+        <span class="lp-marque"><span class="logo-script">by</span> NICOLAS VERDOT <span class="lp-x">×</span> ROMAIN GAL</span>
+        <span class="lp-barre-date">{EVENT.dateCourte} · Nice</span>
+        <a href="#inscription" class="btn lp-barre-btn">Réserver ma place</a>
+      </div>
+    </div>
+
+    <section class="lp-hero" data-pli-non>
+      <div class="lp-halo" aria-hidden="true"></div>
+      <div class="container lp-hero-inner">
+        <div class="lp-hero-texte">
+          <p class="lp-note">Bootcamp IA · {EVENT.dateCourte} · Nice · {EVENT.places} places</p>
+          <h1>
+            Une après-midi pour que l’IA <span class="lp-neon">travaille enfin pour vous.</span>
+          </h1>
+          <p class="lp-chapo">
+            Pour les entrepreneurs qui ne savent pas par où commencer. Vous venez avec une tâche qui vous pèse, vous repartez avec l’outil qui la fait avec vous.
+          </p>
+          <ul class="lp-promesses">
+            {promesses.map((p) => <li set:html={p} />)}
+          </ul>
+          <dl class="lp-billet">
+            <div><dt>Quand</dt><dd>{EVENT.date}</dd></div>
+            <div><dt>Horaires</dt><dd>{EVENT.horaires}</dd></div>
+            <div><dt>Où</dt><dd>{EVENT.lieu}</dd></div>
+          </dl>
+          <div class="lp-duo" aria-label="Les deux animateurs">
+            <Image src={portraitNicolas} alt="" width={96} height={96} class="lp-duo-photo" />
+            <Image src={portraitRomain} alt="" width={96} height={96} class="lp-duo-photo" />
+            <span>Animé par <strong>Nicolas Verdot</strong> et <strong>Romain Gal</strong></span>
+          </div>
+        </div>
+
+        <div class="lp-carte" id="inscription">
+          <div class="lp-carte-prix">
+            <p class="lp-note">Tarif de lancement</p>
+            <p class="lp-prix"><span class="lp-prix-montant">{EVENT.prixLancement} €</span> HT</p>
+            <p class="lp-prix-note">Pour les {EVENT.placesLancement} premières places, puis {EVENT.prix} € HT</p>
+          </div>
+          <form id="bootcamp-form" class="lp-form">
+            <input type="hidden" name="access_key" value={SITE.web3formsAccessKey} />
+            <input type="hidden" name="subject" value="Bootcamp IA : nouvelle inscription" />
+            <input type="hidden" name="from_name" value="Page bootcamp IA" />
+            <input type="checkbox" name="botcheck" class="lp-pot" tabindex="-1" autocomplete="off" />
+
+            <div class="lp-champs-2">
+              <div class="lp-champ">
+                <label for="bc-prenom">Prénom</label>
+                <input type="text" id="bc-prenom" name="prenom" autocomplete="given-name" required />
+              </div>
+              <div class="lp-champ">
+                <label for="bc-nom">Nom</label>
+                <input type="text" id="bc-nom" name="nom" autocomplete="family-name" required />
+              </div>
+            </div>
+            <div class="lp-champ">
+              <label for="bc-email">E-mail</label>
+              <input type="email" id="bc-email" name="email" autocomplete="email" required />
+            </div>
+            <div class="lp-champ">
+              <label for="bc-activite">Votre activité</label>
+              <input type="text" id="bc-activite" name="activite" placeholder="Ex. coach, agence immobilière…" required />
+            </div>
+            <div class="lp-champ">
+              <label for="bc-tache">La tâche qui vous prend le plus de temps <span class="lp-facultatif">(facultatif)</span></label>
+              <textarea id="bc-tache" name="tache" rows="2"></textarea>
+            </div>
+
+            <button type="submit" class="btn lp-envoyer">Réserver ma place</button>
+            <p class="lp-rassure">
+              Aucun paiement à cette étape. Vos informations servent uniquement à organiser le bootcamp. <a href={withBase('/politique-de-confidentialite/')}>Confidentialité</a>
+            </p>
+            <p id="bootcamp-statut" class="lp-statut" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section">
+      <div class="container">
+        <p class="lp-note">Le constat</p>
+        <h2>Ce que l’on entend le plus souvent</h2>
+        <ul class="lp-douleurs">
+          {douleurs.map((d) => <li>« {d} »</li>)}
+        </ul>
+        <p class="lp-bascule">
+          Dans la plupart des cas, il manque deux choses : savoir quoi confier à l’IA, et quelqu’un à côté de vous la première fois. <strong>Le 9 décembre, vous avez les deux.</strong>
+        </p>
+      </div>
+    </section>
+
+    <section class="lp-section lp-panneau">
+      <div class="container">
+        <p class="lp-note">Ce que vous construisez</p>
+        <h2>Les trois chantiers de l’après-midi</h2>
+        <p class="lp-intro">
+          Pas besoin de choisir à l’avance : le jour même, chacun choisit sa tâche et les équipes se forment par piste. Vous construisez pour votre activité, à côté de personnes qui ont le même problème que vous.
+        </p>
+        <div class="lp-pistes-grille">
+          {pistes.map((p) => (
+            <article class="lp-verre lp-piste">
+              <span class="lp-piste-num">{p.num}</span>
+              <h3>{p.titre} <span>{p.accroche}</span></h3>
+              <ul>
+                {p.exemples.map((e) => <li>{e}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section">
+      <div class="container lp-deux-col">
+        <div>
+          <p class="lp-note">Le programme</p>
+          <h2>Deux heures sur votre propre outil</h2>
+          <p class="lp-intro">Le cœur de l’après-midi, ce sont les deux sprints. Deux animateurs passent d’équipe en équipe : personne ne reste bloqué seul devant son écran.</p>
+          <a href="#inscription" class="btn">Réserver ma place</a>
+        </div>
+        <ol class="lp-deroule lp-verre">
+          {programme.map((e) => (
+            <li class:list={{ 'lp-fort': e.fort }}>
+              <span class="lp-heure">{e.heure}</span>
+              <span class="lp-etape">{e.titre}</span>
+              <span class="lp-duree">{e.duree}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="lp-section lp-panneau">
+      <div class="container">
+        <p class="lp-note">À 18h15</p>
+        <h2>Vous repartez avec</h2>
+        <div class="lp-repartez">
+          {repartez.map((r, i) => (
+            <article class="lp-verre">
+              <span class="lp-repartez-num">{i + 1}</span>
+              <h3>{r.titre}</h3>
+              <p>{r.texte}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section">
+      <div class="container">
+        <p class="lp-note">Qui vous accompagne</p>
+        <h2>Deux animateurs, deux regards</h2>
+        <p class="lp-intro">L’un connaît l’entreprise de l’intérieur et sait ce qui tient dans la durée. L’autre ne se pose aucune limite et vous ouvre le champ des possibles. Pendant les sprints, ils passent d’équipe en équipe : personne ne reste bloqué seul devant son écran.</p>
+        <div class="lp-animateurs">
+          <article class="lp-verre">
+            <Image src={portraitNicolas} alt="Portrait de Nicolas Verdot" width={240} height={240} class="lp-portrait" />
+            <div>
+              <h3>Nicolas Verdot</h3>
+              <p class="lp-role">Le terrain de l’entreprise</p>
+              <p>Facilitateur et formateur à Nice depuis 2020, il intervient auprès de PME comme de grands groupes. Entrepreneur lui-même, il s’appuie sur l’IA pour développer sa propre activité. Il sait ce qui tient dans la vraie vie d’une entreprise, et ce qui reste un gadget.</p>
+              <p>Pendant le bootcamp, il tient le cadre : le bon problème, les équipes, le rythme des sprints.</p>
+            </div>
+          </article>
+          <article class="lp-verre">
+            <Image src={portraitRomain} alt="Portrait de Romain Gal" width={240} height={240} class="lp-portrait" />
+            <div>
+              <h3>Romain Gal</h3>
+              <p class="lp-role">Le champ des possibles</p>
+              <p>Consultant en stratégie digitale et marketing, freelance depuis plus de 7 ans, il aide les entrepreneurs à transformer leurs idées en projets rentables : contenus, publicité, tunnels de vente, automatisation. Il aborde l’IA sans a priori ni blocage, et voit vite ce qu’elle peut faire pour une activité.</p>
+              <p>Pendant le bootcamp, il vous montre ce que l’IA sait déjà faire, sur des cas comme le vôtre.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section lp-panneau">
+      <div class="container">
+        <p class="lp-note">Pour qui</p>
+        <h2>Une salle homogène, pour avancer vite</h2>
+        <div class="lp-pour-qui">
+          <div class="lp-verre">
+            <h3>C’est pour vous si…</h3>
+            <ul class="lp-oui">{pourVous.map((t) => <li>{t}</li>)}</ul>
+          </div>
+          <div class="lp-verre">
+            <h3>Ce n’est pas pour vous si…</h3>
+            <ul class="lp-non">{pasPourVous.map((t) => <li>{t}</li>)}</ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section" data-pli>
+      <Pli titre="Vos questions" note="Outils, données, niveau, facture" />
+      <div class="container">
+        <p class="lp-note">Vos questions</p>
+        <h2>Avant de vous inscrire</h2>
+        <div class="lp-faq">
+          {faq.map((f) => (
+            <details class="lp-verre">
+              <summary>{f.q}</summary>
+              <p set:html={f.a} />
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-final" data-pli-non>
+      <div class="lp-halo" aria-hidden="true"></div>
+      <div class="container">
+        <p class="lp-note">{EVENT.date} · {EVENT.horaires} · {EVENT.lieu}</p>
+        <h2>Le 9 décembre, repartez avec <span class="lp-neon">votre premier outil IA.</span></h2>
+        <p>{EVENT.prixLancement} € HT pour les {EVENT.placesLancement} premières places, puis {EVENT.prix} € HT.</p>
+        <a href="#inscription" class="btn">Réserver ma place</a>
+        <p class="lp-final-autre">
+          Une question avant de vous inscrire ? <a href={withBase('/contact/')}>M’écrire</a>
+        </p>
+      </div>
+    </section>
+
+    <footer class="lp-pied">
+      <div class="container">
+        <a href={withBase('/')}>nicolasverdot.com</a>
+        <a href={withBase('/mentions-legales/')}>Mentions légales</a>
+        <a href={withBase('/politique-de-confidentialite/')}>Confidentialité</a>
+      </div>
+    </footer>
+
+    {/* Téléphone : le bouton reste sous le pouce, sauf quand le formulaire est à l'écran. */}
+    <div class="lp-collant" id="lp-collant">
+      <span><strong>{EVENT.prixLancement} € HT</strong> · {EVENT.places} places</span>
+      <a href="#inscription" class="btn">Réserver ma place</a>
+    </div>
+  </div>
+</Layout>
+
+<script define:vars={{ billetterie: EVENT.billetterie }}>
+  const form = document.getElementById('bootcamp-form');
+  const statut = document.getElementById('bootcamp-statut');
+  const collant = document.getElementById('lp-collant');
+
+  // Le bouton collant se cache quand le formulaire ou le bas de page est visible.
+  const cibles = [document.getElementById('inscription'), document.querySelector('.lp-final')];
+  const visibles = new Set();
+  const obs = new IntersectionObserver((entrees) => {
+    entrees.forEach((e) => (e.isIntersecting ? visibles.add(e.target) : visibles.delete(e.target)));
+    collant.classList.toggle('lp-cache', visibles.size > 0);
+  });
+  cibles.forEach((c) => c && obs.observe(c));
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const bouton = form.querySelector('button[type="submit"]');
+    const libelle = bouton.textContent;
+    bouton.disabled = true;
+    bouton.textContent = 'Envoi…';
+    statut.dataset.state = '';
+    statut.textContent = '';
+    try {
+      const reponse = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      const resultat = await reponse.json();
+      if (!resultat.success) throw new Error(resultat.message);
+      form.reset();
+      statut.dataset.state = 'ok';
+      if (billetterie) {
+        statut.textContent = 'C’est noté ! Dernière étape : le paiement, sur la billetterie qui s’ouvre.';
+        setTimeout(() => (window.location.href = billetterie), 1500);
+      } else {
+        statut.textContent = 'C’est noté ! Votre place est pré-réservée. Vous recevez la confirmation et le lien de paiement par e-mail.';
+      }
+    } catch (e) {
+      statut.dataset.state = 'erreur';
+      statut.textContent = 'L’envoi n’a pas fonctionné. Réessayez, ou écrivez-nous à contact@nicolasverdot.com.';
+    } finally {
+      bouton.disabled = false;
+      bouton.textContent = libelle;
+    }
+  });
+</script>
+
+<style>
+  /* ==========================================================================
+     Habillage « futuriste » de la page événement. Couleurs constantes : la
+     page reste sombre quel que soit le thème choisi sur le site. Le jaune de
+     la marque devient la couleur d'action, un cyan électrique l'accompagne.
+     ========================================================================== */
+  :global(body.landing) {
+    background: #05070d;
+  }
+  .lp {
+    --lp-fond: #05070d;
+    --lp-fond-2: #0a1020;
+    --lp-texte: #e9eef8;
+    --lp-doux: #a8b3c7;
+    --lp-ligne: rgba(140, 175, 255, 0.16);
+    --lp-ligne-forte: rgba(92, 225, 255, 0.45);
+    --lp-jaune: #ffcb00;
+    --lp-cyan: #5ce1ff;
+    --lp-violet: #8b7bff;
+    --lp-verre: rgba(255, 255, 255, 0.045);
+    background: var(--lp-fond);
+    color: var(--lp-texte);
+    overflow-x: clip;
+  }
+  .lp :is(h1, h2, h3) {
+    color: #fff;
+  }
+  .lp a:not(.btn) {
+    color: var(--lp-cyan);
+  }
+  .lp .btn {
+    background: var(--lp-jaune);
+    color: #0b1627;
+    box-shadow: 0 0 0 1px rgba(255, 203, 0, 0.6), 0 0 28px rgba(255, 203, 0, 0.35);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .lp .btn:hover {
+      background: #ffd633;
+      box-shadow: 0 0 0 1px rgba(255, 214, 51, 0.8), 0 0 40px rgba(255, 203, 0, 0.55);
+    }
+  }
+
+  /* Annotations manuscrites, comme sur un paperboard : la signature de
+     Nicolas, facilitateur graphique, plutôt qu'un gabarit de page « tech ». */
+  .lp-note {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-script);
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--lp-jaune);
+  }
+  .lp-neon {
+    background: linear-gradient(90deg, var(--lp-jaune), #ffe680 40%, var(--lp-cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Carte en verre : fond translucide, filet lumineux. */
+  .lp-verre {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(160deg, #111830, #0b1022) padding-box,
+      linear-gradient(160deg, rgba(139, 123, 255, 0.55), rgba(92, 225, 255, 0.12) 50%, rgba(255, 203, 0, 0.35)) border-box;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Halos de lumière : le décor des deux temps forts. */
+  .lp-halo {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(640px 420px at 12% 8%, rgba(139, 123, 255, 0.36), transparent 70%),
+      radial-gradient(560px 420px at 82% 30%, rgba(92, 225, 255, 0.24), transparent 70%),
+      radial-gradient(480px 320px at 70% 85%, rgba(255, 203, 0, 0.16), transparent 70%),
+      radial-gradient(520px 300px at 30% 100%, rgba(255, 120, 200, 0.1), transparent 70%);
+    filter: saturate(1.2);
+  }
+
+  /* ---------- Bandeau du haut ---------- */
+  .lp-barre {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(5, 7, 13, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--lp-ligne);
+    padding-top: env(safe-area-inset-top);
+  }
+  .lp-barre-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: 64px;
+  }
+  .lp-marque {
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    font-size: var(--text-sm);
+    color: #fff;
+  }
+  .lp-marque .logo-script {
+    font-family: var(--font-script);
+    color: var(--lp-jaune);
+    font-size: 1.4em;
+    letter-spacing: 0;
+  }
+  .lp-x {
+    color: var(--lp-cyan);
+    margin-inline: 0.15em;
+  }
+  .lp-barre-date {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--lp-doux);
+  }
+  .lp-barre-btn {
+    padding: 0.6rem 1.25rem;
+  }
+
+  /* ---------- Premier écran ---------- */
+  .lp-hero {
+    position: relative;
+    padding: var(--space-16) 0;
+  }
+  .lp-hero-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .lp-hero h1 {
+    font-size: clamp(2.25rem, 3.6vw + 1.1rem, 3.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+  .lp-chapo {
+    margin: var(--space-6) 0 0;
+    font-size: var(--text-xl);
+    line-height: 1.45;
+    color: var(--lp-doux);
+    max-width: 38rem;
+  }
+  .lp-promesses {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-8) 0 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .lp-promesses li {
+    position: relative;
+    padding-left: var(--space-8);
+    font-size: var(--text-lg);
+    color: var(--lp-doux);
+  }
+  .lp-promesses li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: var(--lp-cyan);
+    box-shadow: 0 0 12px var(--lp-cyan);
+  }
+  .lp-promesses :global(strong) {
+    color: #fff;
+  }
+  .lp-billet {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: var(--space-10) 0 0;
+    border: 1px solid var(--lp-ligne-forte);
+    border-radius: 14px;
+    background: rgba(92, 225, 255, 0.05);
+    box-shadow: inset 0 0 30px rgba(92, 225, 255, 0.06);
+  }
+  .lp-billet > div {
+    padding: var(--space-4);
+  }
+  .lp-billet > div + div {
+    border-left: 1px solid var(--lp-ligne);
+  }
+  .lp-billet dt {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lp-cyan);
+  }
+  .lp-billet dd {
+    margin: var(--space-1) 0 0;
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: #fff;
+  }
+  .lp-duo {
+    display: flex;
+    align-items: center;
+    margin-top: var(--space-6);
+    color: var(--lp-doux);
+  }
+  .lp-duo :global(.lp-duo-photo) {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--lp-fond);
+    box-shadow: 0 0 0 1px var(--lp-ligne-forte);
+  }
+  .lp-duo :global(.lp-duo-photo + .lp-duo-photo) {
+    margin-left: -14px;
+  }
+  .lp-duo span {
+    margin-left: var(--space-3);
+  }
+  .lp-duo strong {
+    color: #fff;
+  }
+
+  /* ---------- Carte d'inscription ---------- */
+  .lp-carte {
+    position: relative;
+    border-radius: 24px;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(180deg, #10182e, #080c18) padding-box,
+      linear-gradient(140deg, var(--lp-jaune), var(--lp-violet) 45%, var(--lp-cyan)) border-box;
+    box-shadow: 0 0 0 1px rgba(92, 225, 255, 0.08), 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 60px rgba(92, 225, 255, 0.12);
+    overflow: hidden;
+    scroll-margin-top: 80px;
+  }
+  .lp-carte-prix {
+    padding: var(--space-6);
+    border-bottom: 1px solid var(--lp-ligne);
+    background: radial-gradient(300px 160px at 0% 0%, rgba(255, 203, 0, 0.18), transparent 70%);
+  }
+  .lp-carte-prix .lp-note {
+    margin-bottom: var(--space-1);
+  }
+  .lp-prix {
+    margin: 0;
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: var(--lp-doux);
+  }
+  .lp-prix-montant {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--lp-jaune);
+    text-shadow: 0 0 24px rgba(255, 203, 0, 0.45);
+  }
+  .lp-prix-note {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-base);
+    color: var(--lp-doux);
+  }
+  .lp-form {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-6);
+  }
+  .lp-champs-2 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+  .lp-champ {
+    display: grid;
+    gap: var(--space-1);
+    min-width: 0;
+  }
+  .lp-champ label {
+    font-weight: 700;
+    font-size: var(--text-sm);
+    color: var(--lp-texte);
+    padding: 0;
+    margin-bottom: var(--space-1);
+  }
+  .lp-facultatif {
+    font-weight: 500;
+    color: var(--lp-doux);
+  }
+  .lp-champ input,
+  .lp-champ textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: var(--tap);
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--lp-ligne);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+    font: inherit;
+    transition: border-color var(--duration-hover) ease, box-shadow var(--duration-hover) ease;
+  }
+  .lp-champ input::placeholder {
+    color: #7d889c;
+  }
+  .lp-champ input:focus,
+  .lp-champ textarea:focus {
+    outline: none;
+    border-color: var(--lp-cyan);
+    box-shadow: 0 0 0 3px rgba(92, 225, 255, 0.2);
+  }
+  .lp-envoyer {
+    width: 100%;
+    font-size: var(--text-lg);
+    padding-block: 1rem;
+  }
+  .lp-rassure {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--lp-doux);
+  }
+  .lp-statut {
+    margin: 0;
+    font-weight: 700;
+  }
+  .lp-statut:empty {
+    display: none;
+  }
+  .lp-statut[data-state='ok'] {
+    color: #3dff9a;
+  }
+  .lp-statut[data-state='erreur'] {
+    color: #ff8a7a;
+  }
+  .lp-pot {
+    display: none;
+  }
+
+  /* ---------- Sections ---------- */
+  .lp-section {
+    position: relative;
+    padding: var(--space-16) 0;
+  }
+  .lp-section::before,
+  .lp-final::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(139, 123, 255, 0.5), rgba(92, 225, 255, 0.5), transparent);
+  }
+  /* Les sections alternées baignent dans une aurore douce. */
+  .lp-panneau {
+    background:
+      radial-gradient(700px 360px at 85% 0%, rgba(139, 123, 255, 0.18), transparent 70%),
+      radial-gradient(600px 320px at 0% 100%, rgba(92, 225, 255, 0.12), transparent 70%),
+      var(--lp-fond-2);
+  }
+  .lp-section h2,
+  .lp-final h2 {
+    margin-top: 0;
+    letter-spacing: -0.02em;
+  }
+  .lp-intro {
+    color: var(--lp-doux);
+    font-size: var(--text-lg);
+    max-width: var(--measure);
+  }
+
+  .lp-douleurs {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-6) 0 0;
+    display: grid;
+    gap: var(--space-4);
+    max-width: 46rem;
+  }
+  .lp-douleurs li {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    line-height: 1.25;
+    color: #fff;
+  }
+  .lp-douleurs li:nth-child(even) {
+    padding-left: var(--space-12);
+    color: var(--lp-doux);
+  }
+  .lp-bascule {
+    margin: var(--space-8) 0 0;
+    font-size: var(--text-xl);
+    line-height: 1.45;
+    max-width: 46rem;
+    color: var(--lp-doux);
+  }
+  .lp-bascule strong {
+    color: var(--lp-jaune);
+  }
+
+  .lp-pistes-grille {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+  .lp-piste {
+    padding: var(--space-6);
+    transition: border-color var(--duration-hover) ease, transform var(--duration-hover) var(--ease-out), box-shadow var(--duration-hover) ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .lp-piste:hover {
+      border-color: var(--lp-ligne-forte);
+      transform: translateY(-4px);
+      box-shadow: 0 0 40px rgba(92, 225, 255, 0.12);
+    }
+  }
+  .lp-piste-num,
+  .lp-repartez-num {
+    font-family: var(--font-script);
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--lp-jaune);
+  }
+  .lp-piste h3 {
+    margin: var(--space-4) 0 0;
+    font-size: var(--text-2xl);
+  }
+  .lp-piste h3 span {
+    display: block;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--lp-doux);
+  }
+  .lp-piste ul {
+    margin: var(--space-4) 0 0;
+    padding-left: var(--space-4);
+    display: grid;
+    gap: var(--space-2);
+    color: var(--lp-texte);
+  }
+  .lp-piste li::marker {
+    color: var(--lp-jaune);
+  }
+
+  .lp-deux-col {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .lp-deroule {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+  .lp-deroule li {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+    gap: var(--space-3);
+    align-items: baseline;
+    padding: var(--space-3) var(--space-4);
+  }
+  .lp-deroule li + li {
+    border-top: 1px solid var(--lp-ligne);
+  }
+  .lp-heure {
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--lp-cyan);
+  }
+  .lp-etape {
+    font-weight: 600;
+  }
+  .lp-duree {
+    font-size: var(--text-sm);
+    color: var(--lp-doux);
+    white-space: nowrap;
+  }
+  .lp-fort {
+    background: linear-gradient(90deg, rgba(255, 203, 0, 0.16), rgba(255, 203, 0, 0.04));
+    box-shadow: inset 3px 0 0 var(--lp-jaune);
+  }
+  .lp-fort .lp-heure {
+    color: var(--lp-jaune);
+  }
+  .lp-fort .lp-etape {
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .lp-repartez {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+  .lp-repartez article {
+    padding: var(--space-6);
+  }
+  .lp-repartez h3 {
+    margin: var(--space-3) 0 var(--space-2);
+  }
+  .lp-repartez p {
+    margin: 0;
+    color: var(--lp-doux);
+  }
+
+  .lp-animateurs,
+  .lp-pour-qui {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+  .lp-animateurs article {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: var(--space-6);
+    align-items: start;
+    padding: var(--space-6);
+  }
+  .lp-animateurs :global(.lp-portrait) {
+    width: 120px;
+    height: 120px;
+    border-radius: 18px;
+    object-fit: cover;
+    border: 1px solid var(--lp-ligne-forte);
+    box-shadow: 0 0 30px rgba(92, 225, 255, 0.18);
+  }
+  .lp-animateurs h3,
+  .lp-pour-qui h3 {
+    margin: 0;
+  }
+  .lp-animateurs p:not(.lp-role) {
+    color: var(--lp-doux);
+    margin: 0 0 var(--space-3);
+  }
+  .lp-animateurs p:last-child {
+    margin-bottom: 0;
+  }
+  .lp-role {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-script);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--lp-jaune);
+  }
+  .lp-pour-qui > div {
+    padding: var(--space-6);
+  }
+  .lp-oui,
+  .lp-non {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-4) 0 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .lp-oui li,
+  .lp-non li {
+    position: relative;
+    padding-left: var(--space-8);
+  }
+  .lp-oui li::before,
+  .lp-non li::before {
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+  }
+  .lp-oui li::before {
+    content: '✓';
+    color: #3dff9a;
+  }
+  .lp-non li::before {
+    content: '✕';
+    color: #ff8a7a;
+  }
+  .lp-non li {
+    color: var(--lp-doux);
+  }
+
+  .lp-faq {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .lp-faq details {
+    padding: var(--space-4) var(--space-6);
+    border-radius: 14px;
+  }
+  .lp-faq summary {
+    cursor: pointer;
+    font-weight: 700;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    color: #fff;
+  }
+  .lp-faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .lp-faq summary::after {
+    content: '+';
+    color: var(--lp-cyan);
+    transition: transform var(--duration-hover) var(--ease-out);
+  }
+  .lp-faq details[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .lp-faq details p {
+    margin: var(--space-3) 0 0;
+    color: var(--lp-doux);
+  }
+
+  .lp-final {
+    position: relative;
+    text-align: center;
+    padding: var(--space-24) 0;
+  }
+  .lp-final .container {
+    position: relative;
+  }
+  .lp-final h2 {
+    font-size: clamp(2rem, 3vw + 1rem, 3rem);
+    max-width: 44rem;
+    margin-inline: auto;
+  }
+  .lp-final p {
+    color: var(--lp-doux);
+    font-size: var(--text-lg);
+    margin-inline: auto;
+  }
+  .lp-final .btn {
+    font-size: var(--text-lg);
+    padding: 1rem 2.25rem;
+    margin-top: var(--space-4);
+  }
+  .lp-final-autre {
+    margin-top: var(--space-6);
+    font-size: var(--text-base) !important;
+  }
+
+  .lp-pied {
+    padding: var(--space-6) 0;
+    border-top: 1px solid var(--lp-ligne);
+  }
+  .lp-pied .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    justify-content: center;
+  }
+  .lp-pied a {
+    color: #8592a8 !important;
+    font-size: var(--text-sm);
+  }
+
+  /* Repli du téléphone (Pli.astro) sur fond sombre. */
+  .lp :global(.pli-bouton) {
+    background: var(--lp-verre);
+    color: #fff;
+    box-shadow: inset 0 0 0 1px var(--lp-ligne);
+  }
+  .lp :global(.pli-note) {
+    color: var(--lp-doux);
+  }
+
+  .lp-collant {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .lp-hero-inner,
+    .lp-deux-col {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-10);
+    }
+    .lp-pistes-grille,
+    .lp-animateurs {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .lp-repartez {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 719px) {
+    .lp-barre-date,
+    .lp-barre-btn {
+      display: none;
+    }
+    .lp-hero {
+      padding: var(--space-8) 0 var(--space-10);
+    }
+    .lp-chapo {
+      font-size: var(--text-lg);
+    }
+    .lp-billet {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .lp-billet > div + div {
+      border-left: 0;
+      border-top: 1px solid var(--lp-ligne);
+    }
+    .lp-section {
+      padding: var(--space-10) 0;
+    }
+    .lp-douleurs li {
+      font-size: var(--text-lg);
+    }
+    .lp-douleurs li:nth-child(even) {
+      padding-left: var(--space-6);
+    }
+    .lp-pour-qui,
+    .lp-repartez {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .lp-animateurs article {
+      grid-template-columns: 88px minmax(0, 1fr);
+      gap: var(--space-4);
+      padding: var(--space-4);
+    }
+    .lp-animateurs :global(.lp-portrait) {
+      width: 88px;
+      height: 88px;
+    }
+    .lp-deroule li {
+      grid-template-columns: 3.75rem minmax(0, 1fr);
+    }
+    .lp-duree {
+      grid-column: 2;
+    }
+    .lp-final {
+      padding: var(--space-16) 0;
+    }
+    .lp-pied {
+      padding-bottom: calc(var(--space-16) + var(--space-8) + env(safe-area-inset-bottom));
+    }
+    .lp-collant {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom));
+      background: rgba(5, 7, 13, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid var(--lp-ligne-forte);
+      color: var(--lp-doux);
+      transition: transform var(--duration-standard) var(--ease-out);
+    }
+    .lp-collant strong {
+      color: var(--lp-jaune);
+    }
+    .lp-collant.lp-cache {
+      transform: translateY(110%);
+    }
+    .lp-collant .btn {
+      padding: 0.75rem 1.25rem;
+    }
+  }
+</style>

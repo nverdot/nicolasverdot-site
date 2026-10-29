@@ -13,9 +13,13 @@ interface Props {
   description: string;
   path: string;
   breadcrumbs?: { name: string; path: string }[];
+  /** Page en ligne mais hors des moteurs (ex. page de vente pas encore lancée). Pensez aussi au filtre du sitemap dans astro.config.mjs. */
+  noindex?: boolean;
+  /** Page d'inscription (événement) : ni menu, ni pied de page, ni barre d'onglets, ni Compagnon. Une seule action possible, la page fournit son propre bandeau et son pied. */
+  landing?: boolean;
 }
 
-const { title, description, path, breadcrumbs } = Astro.props;
+const { title, description, path, breadcrumbs, noindex = false, landing = false } = Astro.props;
 // Le site tourne pour l'instant dans un sous-dossier de test (/TESTSITENV/) :
 // on empêche son indexation tant que base !== '/'.
 const isTestDeployment = import.meta.env.BASE_URL !== '/';
@@ -80,7 +84,7 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
     {/* La couleur de la barre du téléphone suit l'en-tête, dans les deux thèmes. */}
     <meta name="theme-color" content="#fffdfa" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1d2027" media="(prefers-color-scheme: dark)" />
-    <meta name="robots" content={isTestDeployment ? 'noindex, nofollow' : 'index, follow'} />
+    <meta name="robots" content={isTestDeployment || noindex ? 'noindex, nofollow' : 'index, follow'} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -89,8 +93,8 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
     />
     <SEO title={title} description={description} path={path} breadcrumbs={breadcrumbs} />
   </head>
-  <body>
-    <Header />
+  <body class:list={{ landing }}>
+    {!landing && <Header />}
     <main>
       <slot />
     </main>
@@ -153,16 +157,16 @@ const isTestDeployment = import.meta.env.BASE_URL !== '/';
         } catch (e) {}
       })();
     </script>
-    <Footer />
+    {!landing && <Footer />}
     {/* La coque du téléphone : la barre d'onglets n'apparaît qu'en dessous de
         720 px ; le Compagnon partout — en bas à droite sur ordinateur, au
         milieu de la barre sur téléphone. */}
-    <BarreOnglets />
+    {!landing && <BarreOnglets />}
     {/* Après le pied de page : le Compagnon est en position fixe, sa place dans
         le flux n'a donc pas d'importance visuelle — mais elle en a pour le
         clavier et les lecteurs d'écran, qui le rencontrent en dernier, une fois
         le contenu de la page parcouru. */}
-    <Compagnon />
+    {!landing && <Compagnon />}
     {/* Volets repliés sur téléphone seulement : le HTML les sert ouverts
         (lisibles sans script et par les moteurs), ce script en ligne les
         referme avant le premier affichage sur petit écran. */}
