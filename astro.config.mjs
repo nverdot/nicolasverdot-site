@@ -32,7 +32,8 @@ function rehypeBaseLinks() {
 export default defineConfig({
   site: 'https://nicolasverdot.com',
   base: BASE,
-  integrations: [sitemap()],
+  // Pages non référencées (noindex) : hors du sitemap aussi.
+  integrations: [sitemap({ filter: (page) => !page.includes('/bootcamp-ia/') })],
   markdown: {
     rehypePlugins: [rehypeBaseLinks],
   },
