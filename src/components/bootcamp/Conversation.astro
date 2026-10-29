@@ -55,11 +55,16 @@ const { contact, couleur, animateur, photo, messages } = Astro.props;
   li {
     text-wrap: pretty;
   }
+  /* Le fond de conversation façon WhatsApp : beige et petits dessins au trait. */
   .cv {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     margin: 0;
     border-radius: 22px;
     overflow: hidden;
-    background: #efe7dc;
+    background: #efeae2 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23cbbfa9' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' opacity='.35'%3E%3Cpath d='M14 20c0-5 4-8 8-8s8 3 8 8-4 7-8 12c-4-5-8-7-8-12z'/%3E%3Ccircle cx='86' cy='22' r='9'/%3E%3Cpath d='M82 22h8M86 18v8'/%3E%3Crect x='50' y='50' width='20' height='14' rx='3'/%3E%3Cpath d='M50 52l10 7 10-7'/%3E%3Cpath d='M18 84l6-10 6 10M20 80h8'/%3E%3Cpath d='M84 76l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z'/%3E%3Cpath d='M52 100c4-6 12-6 16 0'/%3E%3Ccircle cx='56' cy='94' r='1'/%3E%3Ccircle cx='64' cy='94' r='1'/%3E%3Cpath d='M104 50l6 6-6 6M8 52l-4 4 4 4'/%3E%3C/g%3E%3C/svg%3E") repeat;
+    background-size: 160px;
     border: 1px solid #d9cdbb;
     box-shadow: 0 18px 40px rgba(18, 32, 51, 0.1);
   }
@@ -90,6 +95,7 @@ const { contact, couleur, animateur, photo, messages } = Astro.props;
     color: #fffdfa;
   }
   .cv-fil {
+    flex: 1;
     display: grid;
     align-content: start;
     gap: 0.5rem;
@@ -97,13 +103,17 @@ const { contact, couleur, animateur, photo, messages } = Astro.props;
   }
   .cv-ligne {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 0.5rem;
     max-width: 88%;
   }
   .cv-moi {
     justify-self: end;
     flex-direction: row-reverse;
+    gap: 0.75rem;
+  }
+  .cv-ligne:not(.cv-moi) {
+    padding-left: 8px;
   }
   .cv :global(.cv-avatar) {
     flex: none;
@@ -112,19 +122,36 @@ const { contact, couleur, animateur, photo, messages } = Astro.props;
     border-radius: 50%;
     object-fit: cover;
   }
+  /* La bulle et sa petite pointe en haut, comme dans WhatsApp. */
   .cv-bulle {
+    position: relative;
     margin: 0;
     padding: 0.5rem 0.75rem 0.35rem;
-    border-radius: 14px 14px 14px 4px;
+    border-radius: 0 12px 12px 12px;
     background: #fffdfa;
     color: #122033;
     font-size: 1rem;
     line-height: 1.4;
     box-shadow: 0 1px 1px rgba(18, 32, 51, 0.08);
   }
+  .cv-bulle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -8px;
+    width: 8px;
+    height: 13px;
+    background: inherit;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
   .cv-moi .cv-bulle {
-    border-radius: 14px 14px 4px 14px;
+    border-radius: 12px 0 12px 12px;
     background: #d9fdd3;
+  }
+  .cv-moi .cv-bulle::before {
+    left: auto;
+    right: -8px;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
   }
   .cv-bulle time {
     display: block;

@@ -60,7 +60,7 @@ const conversations = [
   },
   {
     contact: 'Thomas',
-    couleur: '#173b73',
+    couleur: '#2f8f6a',
     animateur: 'Romain',
     photo: portraitRomain,
     messages: [
@@ -188,8 +188,9 @@ const faq = [
 
 <Layout
   title="Bootcamp IA à Nice pour entrepreneurs : une après-midi pour construire votre premier outil"
-  description="Une après-midi à Nice pour entrepreneurs et dirigeants de petites entreprises : choisissez une tâche de votre activité, construisez votre outil IA en équipe, accompagné, et repartez avec."
+  description="Mercredi 9 décembre à Nice, 13h30-18h15 : une après-midi pour entrepreneurs. Choisissez une tâche de votre activité, construisez votre outil IA en équipe, accompagné, et repartez avec. 16 places."
   path="/bootcamp-ia/"
+  image="/bootcamp-ia/og-bootcamp-ia.png"
   noindex
   landing
 >
@@ -291,7 +292,11 @@ const faq = [
       <div class="container">
         <p class="lp-note">Le constat</p>
         <h2>Ce que l’on nous écrit le plus souvent</h2>
-        <p class="lp-intro">Le sentiment d’être dépassé. De ne rien maîtriser. La peur de se lancer et de ne pas y arriver. Et toujours la même question : par où commencer ? Si vous vous reconnaissez, vous n’êtes pas seul.</p>
+        <p class="lp-intro lp-ressenti">
+          Le sentiment d’être dépassé, de ne rien maîtriser, la peur de se lancer et de ne pas y arriver…<br />
+          Et toujours la même question : <strong>par où commencer ?</strong>
+        </p>
+        <p class="lp-intro">Si vous vous reconnaissez, vous n’êtes pas seul.</p>
         <div class="lp-conversations">
           {conversations.map((c) => <Conversation {...c} />)}
         </div>
@@ -403,7 +408,7 @@ const faq = [
             <div>
               <h3>Romain Gal</h3>
               <p class="lp-role">Le champ des possibles</p>
-              <p>Consultant en stratégie digitale et marketing, freelance depuis plus de 7 ans, il aide les entrepreneurs à transformer leurs idées en projets rentables : contenus, publicité, tunnels de vente, automatisation. Il aborde l’IA sans a priori ni blocage, et voit vite ce qu’elle peut faire pour une activité.</p>
+              <p>Consultant en stratégie digitale et marketing, freelance depuis plus de 7 ans, il aide les entrepreneurs à transformer leurs idées en projets rentables : contenus, publicité, tunnels de vente, automatisation. Il a travaillé pour Mike Horn, Nice-Matin, Cimalp ou Yomi Denzel. Il aborde l’IA sans a priori ni blocage, et voit vite ce qu’elle peut faire pour une activité.</p>
               <p>Pendant le bootcamp, il vous montre ce que l’IA sait déjà faire, sur des cas comme le vôtre.</p>
             </div>
           </article>
@@ -1032,7 +1037,14 @@ const faq = [
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6);
     margin-top: var(--space-8);
-    align-items: start;
+    align-items: stretch;
+  }
+  .lp-ressenti {
+    margin-bottom: 0;
+    text-wrap: balance;
+  }
+  .lp-ressenti strong {
+    color: var(--lp-titre);
   }
   .lp-precision {
     margin: var(--space-4) 0 0;

@@ -1,69 +1,117 @@
 ---
 /**
- * Avant / après, animé. À gauche, la boîte de réception qui se remplit à
- * 19h, les devis qui attendent. À droite, la même boîte avec un assistant IA :
- * chaque message est trié, la réponse ou le devis est préparé, et un compteur
- * montre le temps gagné.
+ * Avant / après, animé : la même boîte mail, sans puis avec un agent IA.
  *
- * Exemple de démonstration : messages fictifs, durées indicatives données
- * pour une semaine type (la page le précise). Sans JavaScript ou avec
- * « réduire les animations » : l'état final est affiché.
+ * - Avant : les mails arrivent toute la journée, rien n'est traité, à 19h
+ *   les devis attendent encore.
+ * - Au centre : l'agent IA (un petit robot), qui se déclenche tout seul à
+ *   trois moments de la journée. Il lit, trie, prépare ; vous validez.
+ * - Après : chaque mail est classé, avec sa réponse ou son devis prêt, et un
+ *   compteur montre le temps gagné.
+ *
+ * Exemple de démonstration : mails fictifs, durées indicatives (la page le
+ * précise). Sans JavaScript ou avec « réduire les animations » : l'état
+ * final est affiché.
  */
-const messages = [
-  { de: 'Mme Durand', objet: 'Demande de devis salle de bain', type: 'Devis', action: 'Devis préparé', minutes: 45 },
-  { de: 'Comptable', objet: 'Il manque 3 factures', type: 'Admin', action: 'Factures retrouvées et jointes', minutes: 20 },
-  { de: 'M. Petit', objet: 'Relance : vous avez reçu mon message ?', type: 'Client', action: 'Réponse prête', minutes: 10 },
-  { de: 'Société Martin', objet: 'Compte rendu de notre rendez-vous ?', type: 'Client', action: 'Compte rendu rédigé', minutes: 30 },
-  { de: 'Mme Leroy', objet: 'Demande de devis cuisine', type: 'Devis', action: 'Devis préparé', minutes: 45 },
-  { de: 'Fournisseur', objet: 'Nouveaux tarifs 2027', type: 'Admin', action: 'Résumé en 3 lignes', minutes: 15 },
-  { de: 'Site web', objet: 'Question : vous intervenez à Antibes ?', type: 'Client', action: 'Réponse prête', minutes: 5 },
+const passages = ['8h00', '12h30', '17h00'];
+
+const mails = [
+  { de: 'Mme Durand', objet: 'Demande de devis salle de bain', apercu: 'Bonjour, suite à notre appel, pourriez-vous…', heure: '07:52', type: 'Devis', action: 'Devis préparé, à valider', minutes: 45, passage: 0 },
+  { de: 'Cabinet Roux', objet: 'Il manque 3 factures', apercu: 'Pour clôturer le mois, il nous manque…', heure: '08:10', type: 'Admin', action: 'Factures retrouvées et jointes', minutes: 20, passage: 0 },
+  { de: 'M. Petit', objet: 'Relance : avez-vous reçu mon message ?', apercu: 'Je me permets de vous relancer…', heure: '09:34', type: 'Client', action: 'Réponse rédigée', minutes: 10, passage: 1 },
+  { de: 'Société Martin', objet: 'Compte rendu de notre rendez-vous ?', apercu: 'Merci pour ce matin. Pouvez-vous nous…', heure: '11:58', type: 'Client', action: 'Compte rendu rédigé', minutes: 30, passage: 1 },
+  { de: 'Mme Leroy', objet: 'Demande de devis cuisine', apercu: 'Nous aimerions refaire notre cuisine…', heure: '15:41', type: 'Devis', action: 'Devis préparé, à valider', minutes: 45, passage: 2 },
+  { de: 'Fournisseur Bati+', objet: 'Nouveaux tarifs 2027', apercu: 'Veuillez trouver ci-joint notre grille…', heure: '16:20', type: 'Admin', action: 'Résumé en 3 lignes', minutes: 15, passage: 2 },
+  { de: 'Formulaire du site', objet: 'Vous intervenez à Antibes ?', apercu: 'Bonjour, je cherche quelqu’un pour…', heure: '16:55', type: 'Client', action: 'Réponse rédigée', minutes: 5, passage: 2 },
 ];
-const totalMinutes = messages.reduce((t, m) => t + m.minutes, 0);
-const enHeures = (min: number) => `${Math.floor(min / 60)} h ${String(min % 60).padStart(2, '0')}`;
+const totalMinutes = mails.reduce((t, m) => t + m.minutes, 0);
+const enHeures = (min: number) => `${Math.floor(min / 60)} h ${String(min % 60).padStart(2, '0')}`;
+const initiale = (de: string) => de.replace(/^(Mme|M\.) /, '').charAt(0);
+
+const etapes = ['Il lit chaque nouveau mail', 'Il le classe : devis, client, administratif', 'Il prépare la réponse, le devis ou le résumé', 'Vous relisez et vous envoyez'];
+
+const enveloppe =
+  '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
 ---
 
-<div class="aa" data-aa data-total={totalMinutes}>
-  <div class="aa-cote aa-avant">
-    <div class="aa-tete">
-      <span class="aa-etiquette">Avant</span>
-      <span class="aa-heure">🕖 19:12</span>
+<div class="aa" data-aa>
+  {/* ---------- Avant ---------- */}
+  <div class="aa-col">
+    <p class="aa-etiquette aa-etiquette-avant">Avant</p>
+    <div class="aa-boite">
+      <div class="aa-boite-barre">
+        <Fragment set:html={enveloppe} />
+        <strong>Boîte de réception</strong>
+        <span class="aa-pastille aa-pastille-avant"><span data-compte>{mails.length}</span>&nbsp;non lus</span>
+      </div>
+      <ul class="aa-mails">
+        {mails.map((m) => (
+          <li class="aa-mail aa-non-lu" data-avant>
+            <span class="aa-avatar" aria-hidden="true">{initiale(m.de)}</span>
+            <span class="aa-de">{m.de}</span>
+            <time class="aa-quand">{m.heure}</time>
+            <span class="aa-objet">{m.objet}</span>
+            <span class="aa-apercu">{m.apercu}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="aa-pied aa-pied-avant" data-pied>🕖 19h12 : 2&nbsp;devis pas envoyés, encore 2&nbsp;h de mails ce soir.</p>
     </div>
-    <p class="aa-titre">Boîte de réception <span class="aa-compte" data-compte>{messages.length}</span></p>
-    <ul class="aa-liste">
-      {messages.map((m) => (
-        <li data-msg-avant>
-          <span class="aa-point" aria-hidden="true"></span>
-          <span class="aa-de">{m.de}</span>
-          <span class="aa-objet">{m.objet}</span>
-        </li>
-      ))}
-    </ul>
-    <p class="aa-pied aa-pied-avant">⚠ 2 devis pas envoyés · encore 2 h de mails ce soir</p>
   </div>
 
-  <div class="aa-fleche" aria-hidden="true">
-    <span>Votre assistant IA</span>
-    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+  {/* ---------- L'agent ---------- */}
+  <div class="aa-agent" data-agent>
+    <svg class="aa-robot" viewBox="0 0 120 120" aria-hidden="true">
+      <line x1="60" y1="14" x2="60" y2="28" stroke="#122033" stroke-width="4" stroke-linecap="round" />
+      <circle class="aa-antenne" cx="60" cy="12" r="7" fill="#ffcb00" stroke="#122033" stroke-width="3" />
+      <rect x="22" y="28" width="76" height="62" rx="20" fill="#fffdfa" stroke="#122033" stroke-width="4" />
+      <rect x="32" y="40" width="56" height="30" rx="12" fill="#173b73" />
+      <g class="aa-yeux">
+        <circle cx="48" cy="55" r="5.5" fill="#ffcb00" />
+        <circle cx="72" cy="55" r="5.5" fill="#ffcb00" />
+      </g>
+      <path d="M50 78 q10 7 20 0" fill="none" stroke="#122033" stroke-width="4" stroke-linecap="round" />
+      <rect x="10" y="50" width="12" height="22" rx="6" fill="#ffcb00" stroke="#122033" stroke-width="3" />
+      <rect x="98" y="50" width="12" height="22" rx="6" fill="#ffcb00" stroke="#122033" stroke-width="3" />
+      <rect x="40" y="90" width="40" height="14" rx="6" fill="#173b73" />
+    </svg>
+    <p class="aa-agent-nom">Votre agent IA</p>
+    <p class="aa-agent-etat" data-etat>Journée traitée</p>
+
+    <p class="aa-agent-sous">Il se déclenche tout seul</p>
+    <ol class="aa-passages">
+      {passages.map((p, i) => <li data-moment={i}>{p}</li>)}
+    </ol>
+
+    <ol class="aa-etapes">
+      {etapes.map((e) => <li>{e}</li>)}
+    </ol>
   </div>
 
-  <div class="aa-cote aa-apres">
-    <div class="aa-tete">
-      <span class="aa-etiquette">Après</span>
-      <span class="aa-heure">🕔 17:30</span>
-    </div>
-    <p class="aa-titre">Trié et préparé par votre assistant</p>
-    <ul class="aa-liste">
-      {messages.map((m) => (
-        <li data-msg-apres data-minutes={m.minutes} class="aa-fait">
-          <span class={`aa-type aa-type-${m.type.toLowerCase()}`}>{m.type}</span>
-          <span class="aa-de">{m.de}</span>
-          <span class="aa-action">✓ {m.action}</span>
-        </li>
-      ))}
-    </ul>
-    <div class="aa-gain">
-      <span>Temps gagné sur ces {messages.length} messages</span>
-      <strong data-gain>{enHeures(totalMinutes)}</strong>
+  {/* ---------- Après ---------- */}
+  <div class="aa-col">
+    <p class="aa-etiquette aa-etiquette-apres">Après</p>
+    <div class="aa-boite">
+      <div class="aa-boite-barre">
+        <Fragment set:html={enveloppe} />
+        <strong>Boîte de réception</strong>
+        <span class="aa-pastille aa-pastille-apres"><span data-prets>{mails.length}</span>&nbsp;prêts</span>
+      </div>
+      <ul class="aa-mails">
+        {mails.map((m) => (
+          <li class="aa-mail" data-apres data-minutes={m.minutes} data-passage={m.passage}>
+            <span class={`aa-tag aa-tag-${m.type.toLowerCase()}`}>{m.type}</span>
+            <span class="aa-de">{m.de}</span>
+            <time class="aa-quand">{m.heure}</time>
+            <span class="aa-objet">{m.objet}</span>
+            <span class="aa-action">✓ {m.action}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="aa-pied aa-pied-apres">
+        <span>Temps gagné sur ces {mails.length}&nbsp;mails</span>
+        <strong data-gain>{enHeures(totalMinutes)}</strong>
+      </p>
     </div>
   </div>
 </div>
@@ -75,208 +123,339 @@ const enHeures = (min: number) => `${Math.floor(min / 60)} h ${String(min % 60).
   }
   .aa {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    gap: 1.25rem;
-    align-items: stretch;
+    grid-template-columns: minmax(0, 1fr) 15rem minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
   }
-  .aa-cote {
-    display: flex;
-    flex-direction: column;
-    border-radius: 20px;
-    padding: 1.25rem;
-    border: 1px solid #d9cdbb;
-    box-shadow: 0 18px 40px rgba(18, 32, 51, 0.1);
-  }
-  .aa-avant {
-    background: #fbeee8;
-  }
-  .aa-apres {
-    background: #fffdfa;
-  }
-  .aa-tete {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .aa-col {
+    display: grid;
+    gap: 0.75rem;
   }
   .aa-etiquette {
-    padding: 0.2rem 0.75rem;
+    justify-self: start;
+    margin: 0;
+    padding: 0.25rem 0.85rem;
     border-radius: 999px;
     font-weight: 800;
     font-size: 0.9375rem;
-    text-transform: uppercase;
     letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
-  .aa-avant .aa-etiquette {
+  .aa-etiquette-avant {
     background: #8f241e;
     color: #fffdfa;
   }
-  .aa-apres .aa-etiquette {
+  .aa-etiquette-apres {
     background: #ffcb00;
     color: #0b1627;
   }
-  .aa-heure {
-    font-weight: 700;
-    color: #122033;
+
+  /* ---------- La boîte mail ---------- */
+  .aa-boite {
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fffdfa;
+    border: 1px solid #d9cdbb;
+    box-shadow: 0 18px 40px rgba(18, 32, 51, 0.1);
   }
-  .aa-titre {
-    margin: 1rem 0 0.75rem;
-    font-weight: 800;
-    color: #122033;
-  }
-  .aa-compte {
-    display: inline-grid;
-    place-items: center;
-    min-width: 1.75rem;
-    height: 1.75rem;
-    padding: 0 0.4rem;
-    margin-left: 0.4rem;
-    border-radius: 999px;
-    background: #c1440e;
+  .aa-boite-barre {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #173b73;
     color: #fffdfa;
-    font-size: 0.9375rem;
   }
-  .aa-liste {
+  .aa-boite-barre strong {
+    font-size: 1rem;
+  }
+  .aa-pastille {
+    margin-left: auto;
+    padding: 0.1rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .aa-pastille-avant {
+    background: #c1440e;
+  }
+  .aa-pastille-apres {
+    background: #ffcb00;
+    color: #0b1627;
+  }
+  .aa-mails {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: grid;
-    gap: 0.4rem;
   }
-  .aa-liste li {
+  /* Chaque ligne a la même hauteur des deux côtés : les boîtes restent alignées. */
+  .aa-mail {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    column-gap: 0.6rem;
+    grid-template-columns: 4.25rem minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto;
+    align-content: center;
+    column-gap: 0.65rem;
     align-items: center;
-    padding: 0.5rem 0.75rem;
-    border-radius: 10px;
-    background: #fffdfa;
-    border: 1px solid #eadfcf;
+    height: 5rem;
+    padding: 0 1rem;
+    line-height: 1.35;
+    border-bottom: 1px solid #eee5d8;
     font-size: 0.9375rem;
     color: #122033;
   }
-  .aa-apres .aa-liste li {
-    background: #f6f1e7;
+  .aa-avatar,
+  .aa-tag {
+    grid-row: 1 / 4;
+    justify-self: start;
   }
-  .aa-point {
-    grid-row: span 2;
-    width: 9px;
-    height: 9px;
+  .aa-avatar {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    background: #c1440e;
+    background: #e7e2d8;
+    font-weight: 800;
+    font-size: 0.875rem;
   }
   .aa-de {
-    font-weight: 700;
-  }
-  .aa-objet,
-  .aa-action {
-    grid-column: 2;
-    color: #4c5158;
+    font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .aa-non-lu .aa-de,
+  .aa-non-lu .aa-objet {
+    font-weight: 800;
+  }
+  .aa-quand {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  .aa-objet,
+  .aa-action {
+    grid-column: 2 / -1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .aa-apercu {
+    color: #6b7280;
+  }
   .aa-action {
     color: #2f6b2a;
-    font-weight: 600;
+    font-weight: 700;
   }
-  .aa-type {
-    grid-row: span 2;
-    align-self: center;
+  .aa-tag {
     padding: 0.15rem 0.5rem;
     border-radius: 6px;
     font-size: 0.875rem;
     font-weight: 700;
   }
-  .aa-type-devis {
+  .aa-tag-devis {
     background: #ffe7a3;
     color: #5c4300;
   }
-  .aa-type-client {
+  .aa-tag-client {
     background: #dfe9ff;
     color: #102a52;
   }
-  .aa-type-admin {
+  .aa-tag-admin {
     background: #e7e2d8;
     color: #3d3929;
   }
   .aa-pied {
-    margin: auto 0 0;
-    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    min-height: 4rem;
+    margin: 0;
+    padding: 0.5rem 1rem;
     font-weight: 700;
   }
   .aa-pied-avant {
+    background: #fbeee8;
     color: #8f241e;
   }
-  .aa-gain {
-    margin-top: auto;
-    padding-top: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
-    font-weight: 700;
+  .aa-pied-apres {
+    background: #fff4cc;
     color: #122033;
   }
-  .aa-gain strong {
+  .aa-pied-apres strong {
     font-family: var(--font-display);
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 800;
     color: #173b73;
     white-space: nowrap;
   }
-  .aa-fleche {
+
+  /* ---------- L'agent ---------- */
+  .aa-agent {
     display: grid;
     justify-items: center;
-    align-content: center;
-    gap: 0.5rem;
-    color: #173b73;
-    font-weight: 800;
     text-align: center;
-    max-width: 7rem;
+    padding: 1.25rem 1rem;
+    margin-top: 2.5rem;
+    border-radius: 20px;
+    background: #fffdfa;
+    border: 2px dashed #173b73;
   }
-  .aa-fleche svg {
-    padding: 10px;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+  .aa-robot {
+    width: 96px;
+    height: 96px;
+  }
+  .aa-agent-nom {
+    margin: 0.5rem 0 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: #122033;
+  }
+  .aa-agent-etat {
+    margin: 0.25rem 0 0;
+    padding: 0.15rem 0.7rem;
+    border-radius: 999px;
+    background: #e7e2d8;
+    color: #3d3929;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .aa-agent.aa-travaille .aa-agent-etat {
     background: #ffcb00;
     color: #0b1627;
   }
+  .aa-agent-sous {
+    margin: 1rem 0 0.4rem;
+    font-weight: 700;
+    color: #122033;
+  }
+  .aa-passages {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.35rem;
+  }
+  .aa-passages li {
+    padding: 0.2rem 0.55rem;
+    border-radius: 8px;
+    border: 1px solid #cfc3b1;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #122033;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .aa-passages li.aa-actif {
+    background: #173b73;
+    border-color: #173b73;
+    color: #fffdfa;
+  }
+  .aa-etapes {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: etape;
+    display: grid;
+    gap: 0.4rem;
+    text-align: left;
+    font-size: 0.9375rem;
+    color: #4c5158;
+  }
+  .aa-etapes li {
+    counter-increment: etape;
+    display: grid;
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    gap: 0.4rem;
+  }
+  .aa-etapes li::before {
+    content: counter(etape);
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: #ffcb00;
+    color: #0b1627;
+    font-weight: 800;
+    font-size: 0.875rem;
+  }
 
-  /* États animés (posés par le script seulement). */
-  :global(.aa-anime) [data-msg-avant] {
-    opacity: 0;
-    transform: translateY(-8px);
+  /* Le robot s'anime quand il travaille. */
+  .aa-agent.aa-travaille .aa-robot {
+    animation: aa-sautille 0.6s ease-in-out infinite alternate;
   }
-  :global(.aa-anime) [data-msg-avant].aa-arrive {
-    opacity: 1;
-    transform: none;
-    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  .aa-agent.aa-travaille .aa-antenne {
+    animation: aa-clignote 0.5s steps(1) infinite;
   }
-  :global(.aa-anime) [data-msg-apres]:not(.aa-fait) .aa-action {
+  @keyframes aa-sautille {
+    to {
+      transform: translateY(-4px) rotate(-2deg);
+    }
+  }
+  @keyframes aa-clignote {
+    50% {
+      fill: #c1440e;
+    }
+  }
+  .aa-yeux {
+    transform-origin: 60px 55px;
+    animation: aa-cligne 4s infinite;
+  }
+  @keyframes aa-cligne {
+    0%, 94%, 100% {
+      transform: scaleY(1);
+    }
+    97% {
+      transform: scaleY(0.1);
+    }
+  }
+
+  /* ---------- États animés (posés par le script seulement) ----------
+     Les lignes restent en place (visibility) : rien ne bouge ni ne
+     décale l'autre boîte pendant l'animation. */
+  :global(.aa-anime) [data-avant] {
     visibility: hidden;
   }
-  :global(.aa-anime) [data-msg-apres]:not(.aa-fait) {
-    opacity: 0.45;
+  :global(.aa-anime) [data-avant].aa-arrive {
+    visibility: visible;
+    animation: aa-entree 0.35s cubic-bezier(0.23, 1, 0.32, 1);
   }
-  :global(.aa-anime) [data-msg-apres].aa-fait {
-    transition: opacity 0.3s ease, background 0.3s ease;
+  :global(.aa-anime) [data-apres]:not(.aa-fait) {
+    opacity: 0.35;
   }
-  :global(.aa-anime) [data-msg-apres].aa-en-cours {
+  :global(.aa-anime) [data-apres]:not(.aa-fait) .aa-action {
+    visibility: hidden;
+  }
+  :global(.aa-anime) [data-apres].aa-en-cours {
     opacity: 1;
     background: #fff4cc;
   }
+  :global(.aa-anime) [data-pied] {
+    visibility: hidden;
+  }
+  :global(.aa-anime) [data-pied].aa-montre {
+    visibility: visible;
+  }
+  @keyframes aa-entree {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .aa-yeux {
+      animation: none;
+    }
+  }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     .aa {
       grid-template-columns: minmax(0, 1fr);
     }
-    .aa-fleche {
-      max-width: none;
-      grid-auto-flow: column;
-    }
-    .aa-fleche svg {
-      transform: rotate(90deg);
+    .aa-agent {
+      margin-top: 0;
     }
   }
 </style>
@@ -285,24 +464,36 @@ const enHeures = (min: number) => `${Math.floor(min / 60)} h ${String(min % 60).
   const racine = document.querySelector<HTMLElement>('[data-aa]');
   const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (racine && !reduit && 'IntersectionObserver' in window) {
-    const avant = [...racine.querySelectorAll<HTMLElement>('[data-msg-avant]')];
-    const apres = [...racine.querySelectorAll<HTMLElement>('[data-msg-apres]')];
+    const avant = [...racine.querySelectorAll<HTMLElement>('[data-avant]')];
+    const apres = [...racine.querySelectorAll<HTMLElement>('[data-apres]')];
+    const moments = [...racine.querySelectorAll<HTMLElement>('[data-moment]')];
+    const agent = racine.querySelector<HTMLElement>('[data-agent]')!;
+    const etat = racine.querySelector<HTMLElement>('[data-etat]')!;
+    const pied = racine.querySelector<HTMLElement>('[data-pied]')!;
     const compte = racine.querySelector<HTMLElement>('[data-compte]')!;
+    const prets = racine.querySelector<HTMLElement>('[data-prets]')!;
     const gain = racine.querySelector<HTMLElement>('[data-gain]')!;
     const attendre = (ms: number) => new Promise((r) => setTimeout(r, ms));
-    const enHeures = (min: number) => `${Math.floor(min / 60)} h ${String(min % 60).padStart(2, '0')}`;
+    const enHeures = (min: number) => `${Math.floor(min / 60)} h ${String(min % 60).padStart(2, '0')}`;
+
+    let visible = false;
+    let enCours = false;
 
     function remettre() {
       avant.forEach((m) => m.classList.remove('aa-arrive'));
       apres.forEach((m) => m.classList.remove('aa-fait', 'aa-en-cours'));
+      moments.forEach((p) => p.classList.remove('aa-actif'));
+      agent.classList.remove('aa-travaille');
+      pied.classList.remove('aa-montre');
+      etat.textContent = 'En veille';
       compte.textContent = '0';
+      prets.textContent = '0';
       gain.textContent = enHeures(0);
     }
 
     async function compter(de: number, a: number) {
-      const pas = 12;
-      for (let k = 1; k <= pas; k++) {
-        gain.textContent = enHeures(Math.round(de + ((a - de) * k) / pas));
+      for (let k = 1; k <= 10; k++) {
+        gain.textContent = enHeures(Math.round(de + ((a - de) * k) / 10));
         await attendre(30);
       }
     }
@@ -310,32 +501,43 @@ const enHeures = (min: number) => `${Math.floor(min / 60)} h ${String(min % 60).
     async function jouer() {
       remettre();
       await attendre(400);
-      // Avant : les messages tombent les uns après les autres.
-      for (let i = 0; i < avant.length; i++) {
-        avant[i].classList.add('aa-arrive');
-        compte.textContent = String(i + 1);
-        await attendre(380);
-      }
-      await attendre(500);
-      // Après : l'assistant traite chaque message, le compteur monte.
       let total = 0;
-      for (const m of apres) {
-        m.classList.add('aa-en-cours');
-        await attendre(550);
-        m.classList.remove('aa-en-cours');
-        m.classList.add('aa-fait');
-        const min = Number(m.dataset.minutes || 0);
-        await compter(total, total + min);
-        total += min;
+      let nb = 0;
+      for (let p = 0; p < moments.length; p++) {
+        // Les mails de ce moment de la journée arrivent dans la boîte « avant ».
+        const lot = apres.filter((m) => Number(m.dataset.passage) === p);
+        for (const m of lot) {
+          const i = apres.indexOf(m);
+          avant[i].classList.add('aa-arrive');
+          compte.textContent = String(i + 1);
+          await attendre(450);
+        }
+        // L'agent se déclenche et traite le lot.
+        moments.forEach((x, j) => x.classList.toggle('aa-actif', j === p));
+        agent.classList.add('aa-travaille');
+        etat.textContent = `Au travail, ${moments[p].textContent}`;
+        for (const m of lot) {
+          m.classList.add('aa-en-cours');
+          await attendre(650);
+          m.classList.remove('aa-en-cours');
+          m.classList.add('aa-fait');
+          prets.textContent = String(++nb);
+          const min = Number(m.dataset.minutes || 0);
+          await compter(total, total + min);
+          total += min;
+        }
+        agent.classList.remove('aa-travaille');
+        etat.textContent = 'En veille';
+        await attendre(500);
       }
-      // On rejoue tant que le bloc reste à l'écran.
-      await attendre(5000);
+      pied.classList.add('aa-montre');
+      moments.forEach((x) => x.classList.remove('aa-actif'));
+      etat.textContent = 'Journée traitée';
+      await attendre(6000);
       if (visible) jouer();
       else enCours = false;
     }
 
-    let visible = false;
-    let enCours = false;
     racine.classList.add('aa-anime');
     remettre();
     new IntersectionObserver(
@@ -348,7 +550,7 @@ const enHeures = (min: number) => `${Math.floor(min / 60)} h ${String(min % 60).
           }
         });
       },
-      { threshold: 0.35 },
+      { threshold: 0.25 },
     ).observe(racine);
   }
 </script>
