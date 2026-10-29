@@ -22,10 +22,10 @@ import AvantApres from '../components/bootcamp/AvantApres.astro';
 // Tout ce qui est marqué « à confirmer » attend une décision de Nicolas :
 // on ne remplit jamais un trou par une date, un lieu ou un prix inventé.
 const EVENT = {
-  date: 'Mercredi 9 décembre 2026',
-  dateCourte: 'Mer. 9 déc.',
-  horaires: '13h30 – 18h15',
-  lieu: 'Nice · lieu à confirmer',
+  date: 'Mercredi 9 décembre 2026',
+  dateCourte: 'Mer. 9 déc.',
+  horaires: '13h30 – 18h15',
+  lieu: 'Nice · lieu à confirmer',
   places: 16,
   placesLancement: 8,
   prixLancement: 129,
@@ -209,9 +209,9 @@ const faq = [
       <div class="lp-halo" aria-hidden="true"></div>
       <div class="container lp-hero-inner">
         <div class="lp-hero-texte">
-          <p class="lp-surtitre">Bootcamp IA · {EVENT.dateCourte} · Nice · {EVENT.places} places</p>
+          <p class="lp-surtitre">Bootcamp IA&nbsp;· {EVENT.dateCourte}&nbsp;· Nice&nbsp;· {EVENT.places}&nbsp;places</p>
           <h1>
-            Une après-midi pour que l’IA <span class="lp-neon">travaille enfin pour vous.</span>
+            Une après‑midi pour que l’IA <span class="lp-neon">travaille enfin pour vous.</span>
           </h1>
           <p class="lp-chapo">
             Pour les entrepreneurs qui ne savent pas par où commencer. Vous venez avec une tâche qui vous pèse, vous repartez avec l’outil qui la fait avec vous.
@@ -234,8 +234,8 @@ const faq = [
         <div class="lp-carte" id="inscription">
           <div class="lp-carte-prix">
             <p class="lp-note">Tarif de lancement</p>
-            <p class="lp-prix"><span class="lp-prix-montant">{EVENT.prixLancement} €</span> HT</p>
-            <p class="lp-prix-note">Pour les {EVENT.placesLancement} premières places, puis {EVENT.prix} € HT</p>
+            <p class="lp-prix"><span class="lp-prix-montant">{EVENT.prixLancement}&nbsp;€</span> HT</p>
+            <p class="lp-prix-note">Pour les {EVENT.placesLancement}&nbsp;premières places, puis {EVENT.prix}&nbsp;€ HT</p>
           </div>
           <form id="bootcamp-form" class="lp-form">
             <input type="hidden" name="access_key" value={SITE.web3formsAccessKey} />
@@ -297,7 +297,7 @@ const faq = [
         </div>
         <p class="lp-precision">Des échanges types, inspirés des messages que nous recevons chaque semaine.</p>
         <p class="lp-bascule">
-          Inutile de suivre chaque nouveauté. Il suffit de choisir une tâche, et de la confier à l’IA une première fois avec quelqu’un à côté de vous. <strong>Le 9 décembre, c’est ce que vous faites.</strong>
+          Inutile de suivre chaque nouveauté. Il suffit de choisir une tâche, et de la confier à l’IA une première fois avec quelqu’un à côté de vous. <strong>Le 9 décembre, c’est ce que vous faites.</strong>
         </p>
       </div>
     </section>
@@ -317,7 +317,7 @@ const faq = [
     <section class="lp-section">
       <div class="container">
         <p class="lp-note">Ce que vous construisez</p>
-        <h2>Les trois chantiers de l’après-midi</h2>
+        <h2>Les trois chantiers de l’après‑midi</h2>
         <p class="lp-intro">
           Pas besoin de choisir à l’avance : le jour même, chacun choisit sa tâche et les équipes se forment par piste. Vous construisez pour votre activité, à côté de personnes qui ont le même problème que vous.
         </p>
@@ -339,7 +339,7 @@ const faq = [
       <div class="container lp-demo">
         <div>
           <p class="lp-note">En vrai, à l’écran</p>
-          <h2>Voilà à quoi ressemble votre après-midi</h2>
+          <h2>Voilà à quoi ressemble votre après‑midi</h2>
           <p class="lp-intro">Vous écrivez ce que vous voulez, avec vos mots. L’IA fait le premier jet en quelques secondes. Vous corrigez, vous gardez la recette, et la prochaine fois, c’est immédiat.</p>
           <p class="lp-precision">Exemples de démonstration : noms et montants fictifs.</p>
         </div>
@@ -352,7 +352,7 @@ const faq = [
         <div>
           <p class="lp-note">Le programme</p>
           <h2>Deux heures sur votre propre outil</h2>
-          <p class="lp-intro">Le cœur de l’après-midi, ce sont les deux sprints. Deux animateurs passent d’équipe en équipe : personne ne reste bloqué seul devant son écran.</p>
+          <p class="lp-intro">Le cœur de l’après‑midi, ce sont les deux sprints. Deux animateurs passent d’équipe en équipe : personne ne reste bloqué seul devant son écran.</p>
           <a href="#inscription" class="btn">Réserver ma place</a>
         </div>
         <ol class="lp-deroule lp-verre">
@@ -447,9 +447,9 @@ const faq = [
     <section class="lp-final lp-nuit" data-pli-non>
       <div class="lp-halo" aria-hidden="true"></div>
       <div class="container">
-        <p class="lp-note">{EVENT.date} · {EVENT.horaires} · {EVENT.lieu}</p>
-        <h2>Le 9 décembre, repartez avec <span class="lp-neon">votre premier outil IA.</span></h2>
-        <p>{EVENT.prixLancement} € HT pour les {EVENT.placesLancement} premières places, puis {EVENT.prix} € HT.</p>
+        <p class="lp-note">{EVENT.date}&nbsp;· {EVENT.horaires}&nbsp;· {EVENT.lieu}</p>
+        <h2>Le 9 décembre, repartez avec <span class="lp-neon">votre premier outil IA.</span></h2>
+        <p>{EVENT.prixLancement}&nbsp;€ HT pour les {EVENT.placesLancement}&nbsp;premières places, puis {EVENT.prix}&nbsp;€ HT.</p>
         <a href="#inscription" class="btn">Réserver ma place</a>
         <p class="lp-final-autre">
           Une question avant de vous inscrire ? <a href={withBase('/contact/')}>M’écrire</a>
@@ -467,7 +467,7 @@ const faq = [
 
     {/* Téléphone : le bouton reste sous le pouce, sauf quand le formulaire est à l'écran. */}
     <div class="lp-collant" id="lp-collant">
-      <span><strong>{EVENT.prixLancement} € HT</strong> · {EVENT.places} places</span>
+      <span><strong>{EVENT.prixLancement}&nbsp;€ HT</strong><br />{EVENT.places}&nbsp;places</span>
       <a href="#inscription" class="btn">Réserver ma place</a>
     </div>
   </div>
@@ -615,6 +615,11 @@ const faq = [
 
   .lp :is(h1, h2, h3) {
     color: var(--lp-titre);
+    text-wrap: balance;
+  }
+  /* Pas de mot seul en fin de paragraphe. */
+  .lp :is(p, li, dd) {
+    text-wrap: pretty;
   }
   .lp a:not(.btn) {
     color: var(--lp-lien);
@@ -1415,6 +1420,11 @@ const faq = [
     }
     .lp-collant strong {
       color: var(--lp-titre);
+    }
+    .lp-collant > span {
+      flex: none;
+      white-space: nowrap;
+      line-height: 1.3;
     }
     .lp-collant.lp-cache {
       transform: translateY(110%);

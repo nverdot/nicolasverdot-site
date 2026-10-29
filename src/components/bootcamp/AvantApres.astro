@@ -69,6 +69,10 @@ const enHeures = (min: number) => `${Math.floor(min / 60)} h ${String(min % 60).
 </div>
 
 <style>
+  p,
+  li {
+    text-wrap: pretty;
+  }
   .aa {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);

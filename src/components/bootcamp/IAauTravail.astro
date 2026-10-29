@@ -22,14 +22,14 @@ const scenes: Scene[] = [
   {
     onglet: 'Vendre',
     demande:
-      'Voici mes notes d’appel avec Mme Durand : rénovation de salle de bain, budget autour de 8 000 €, travaux en mars, elle veut du sur-mesure. Rédige une proposition à mon ton, chaleureux et précis.',
+      'Voici mes notes d’appel avec Mme Durand : rénovation de salle de bain, budget autour de 8 000 €, travaux en mars, elle veut du sur-mesure. Rédige une proposition à mon ton, chaleureux et précis.',
     reponse: [
       { t: 'titre', x: 'Proposition : votre nouvelle salle de bain' },
       { t: 'texte', x: 'Bonjour Madame Durand, merci pour notre échange de mardi. Voici ce que je vous propose, au plus près de ce que vous m’avez décrit.' },
       { t: 'puce', x: 'Meuble vasque sur mesure, en chêne clair' },
       { t: 'puce', x: 'Douche à l’italienne, paroi fixe' },
       { t: 'puce', x: 'Travaux en mars, trois semaines' },
-      { t: 'texte', x: 'Budget : 7 900 € TTC, dans votre enveloppe.' },
+      { t: 'texte', x: 'Budget : 7 900 € TTC, dans votre enveloppe.' },
     ],
     resultat: 'Proposition prête à envoyer',
   },
@@ -96,6 +96,10 @@ const scenes: Scene[] = [
 <script type="application/json" data-ia-scenes set:html={JSON.stringify(scenes)} />
 
 <style>
+  p,
+  li {
+    text-wrap: pretty;
+  }
   .ia {
     display: grid;
     gap: 1rem;

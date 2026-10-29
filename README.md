@@ -36,6 +36,16 @@ Dans les paramètres du repo GitHub (**Settings → Secrets and variables → Ac
 
 Ne jamais committer ces identifiants dans le code — ils ne sont utilisés que via ces secrets chiffrés.
 
+## État — 29 octobre 2026 (bootcamp IA, en ligne, non référencée)
+
+Page d'inscription https://www.nicolasverdot.com/bootcamp-ia/ pour le bootcamp IA du **mercredi 9 décembre 2026** (13h30-18h15, Nice), co-animé avec Romain Gal. **En ligne mais non référencée** : `noindex`, hors sitemap, liée depuis aucune page. Nicolas a demandé de publier au fur et à mesure.
+- Page « événement » : `Layout` reçoit `landing` (ni menu, ni pied de page, ni barre d'onglets, ni Compagnon) et `noindex`.
+- Contenu : formulaire d'inscription dès le premier écran (Web3Forms), bandeau des logos clients (preuve sociale réelle), constat en conversations façon messagerie (échanges types, signalés comme tels), avant/après animé avec temps gagné, fenêtre « Claude au travail » animée (3 exemples), programme, portraits, FAQ, bouton collant sur téléphone.
+- Composants : `src/components/bootcamp/` (Conversation, AvantApres, IAauTravail). Infos de l'événement dans le bloc `EVENT` en haut de `src/pages/bootcamp-ia.astro`.
+- Couleurs : beige et bleu du site par défaut ; 4 autres palettes à comparer avec `?palette=2` à `5`. Une fois choisie, garder la bonne et retirer le sélecteur.
+- Analyse (cible, marché niçois, tarif, sujets, billetterie, vente complémentaire) : `docs/bootcamp-ia.md`.
+- À trancher : lieu, prix (129 € / 169 € HT proposé), billetterie (Billetweb recommandé), palette, vrais témoignages.
+
 ## État — 21 octobre 2026 (missions en bref, en ligne)
 
 - `/cas-clients/` : en plus des 9 cas détaillés, **31 missions en bref** reprises de la plaquette séminaires (`~/Documents/Claude/Book séminaires BNV`), en quatre rubriques : séminaires et ateliers, capture graphique, mentoring, engagement solidaire. Chaque fiche : ce que le client voulait, ce que j'ai fait, ce qui en est sorti, photos (agrandissables) et lien vers le cas complet quand il existe. Données dans `src/data/missions.ts`, photos dans `public/cas-clients/missions/`.
