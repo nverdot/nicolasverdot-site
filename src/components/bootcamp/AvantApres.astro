@@ -1,0 +1,350 @@
+---
+/**
+ * Avant / après, animé. À gauche, la boîte de réception qui se remplit à
+ * 19h, les devis qui attendent. À droite, la même boîte avec un assistant IA :
+ * chaque message est trié, la réponse ou le devis est préparé, et un compteur
+ * montre le temps gagné.
+ *
+ * Exemple de démonstration : messages fictifs, durées indicatives données
+ * pour une semaine type (la page le précise). Sans JavaScript ou avec
+ * « réduire les animations » : l'état final est affiché.
+ */
+const messages = [
+  { de: 'Mme Durand', objet: 'Demande de devis salle de bain', type: 'Devis', action: 'Devis préparé', minutes: 45 },
+  { de: 'Comptable', objet: 'Il manque 3 factures', type: 'Admin', action: 'Factures retrouvées et jointes', minutes: 20 },
+  { de: 'M. Petit', objet: 'Relance : vous avez reçu mon message ?', type: 'Client', action: 'Réponse prête', minutes: 10 },
+  { de: 'Société Martin', objet: 'Compte rendu de notre rendez-vous ?', type: 'Client', action: 'Compte rendu rédigé', minutes: 30 },
+  { de: 'Mme Leroy', objet: 'Demande de devis cuisine', type: 'Devis', action: 'Devis préparé', minutes: 45 },
+  { de: 'Fournisseur', objet: 'Nouveaux tarifs 2027', type: 'Admin', action: 'Résumé en 3 lignes', minutes: 15 },
+  { de: 'Site web', objet: 'Question : vous intervenez à Antibes ?', type: 'Client', action: 'Réponse prête', minutes: 5 },
+];
+const totalMinutes = messages.reduce((t, m) => t + m.minutes, 0);
+const enHeures = (min: number) => `${Math.floor(min / 60)} h ${String(min % 60).padStart(2, '0')}`;
+---
+
+<div class="aa" data-aa data-total={totalMinutes}>
+  <div class="aa-cote aa-avant">
+    <div class="aa-tete">
+      <span class="aa-etiquette">Avant</span>
+      <span class="aa-heure">🕖 19:12</span>
+    </div>
+    <p class="aa-titre">Boîte de réception <span class="aa-compte" data-compte>{messages.length}</span></p>
+    <ul class="aa-liste">
+      {messages.map((m) => (
+        <li data-msg-avant>
+          <span class="aa-point" aria-hidden="true"></span>
+          <span class="aa-de">{m.de}</span>
+          <span class="aa-objet">{m.objet}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="aa-pied aa-pied-avant">⚠ 2 devis pas envoyés · encore 2 h de mails ce soir</p>
+  </div>
+
+  <div class="aa-fleche" aria-hidden="true">
+    <span>Votre assistant IA</span>
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+  </div>
+
+  <div class="aa-cote aa-apres">
+    <div class="aa-tete">
+      <span class="aa-etiquette">Après</span>
+      <span class="aa-heure">🕔 17:30</span>
+    </div>
+    <p class="aa-titre">Trié et préparé par votre assistant</p>
+    <ul class="aa-liste">
+      {messages.map((m) => (
+        <li data-msg-apres data-minutes={m.minutes} class="aa-fait">
+          <span class={`aa-type aa-type-${m.type.toLowerCase()}`}>{m.type}</span>
+          <span class="aa-de">{m.de}</span>
+          <span class="aa-action">✓ {m.action}</span>
+        </li>
+      ))}
+    </ul>
+    <div class="aa-gain">
+      <span>Temps gagné sur ces {messages.length} messages</span>
+      <strong data-gain>{enHeures(totalMinutes)}</strong>
+    </div>
+  </div>
+</div>
+
+<style>
+  .aa {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+  .aa-cote {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 1.25rem;
+    border: 1px solid #d9cdbb;
+    box-shadow: 0 18px 40px rgba(18, 32, 51, 0.1);
+  }
+  .aa-avant {
+    background: #fbeee8;
+  }
+  .aa-apres {
+    background: #fffdfa;
+  }
+  .aa-tete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .aa-etiquette {
+    padding: 0.2rem 0.75rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 0.9375rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .aa-avant .aa-etiquette {
+    background: #8f241e;
+    color: #fffdfa;
+  }
+  .aa-apres .aa-etiquette {
+    background: #ffcb00;
+    color: #0b1627;
+  }
+  .aa-heure {
+    font-weight: 700;
+    color: #122033;
+  }
+  .aa-titre {
+    margin: 1rem 0 0.75rem;
+    font-weight: 800;
+    color: #122033;
+  }
+  .aa-compte {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    padding: 0 0.4rem;
+    margin-left: 0.4rem;
+    border-radius: 999px;
+    background: #c1440e;
+    color: #fffdfa;
+    font-size: 0.9375rem;
+  }
+  .aa-liste {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .aa-liste li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 0.6rem;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 10px;
+    background: #fffdfa;
+    border: 1px solid #eadfcf;
+    font-size: 0.9375rem;
+    color: #122033;
+  }
+  .aa-apres .aa-liste li {
+    background: #f6f1e7;
+  }
+  .aa-point {
+    grid-row: span 2;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #c1440e;
+  }
+  .aa-de {
+    font-weight: 700;
+  }
+  .aa-objet,
+  .aa-action {
+    grid-column: 2;
+    color: #4c5158;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .aa-action {
+    color: #2f6b2a;
+    font-weight: 600;
+  }
+  .aa-type {
+    grid-row: span 2;
+    align-self: center;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .aa-type-devis {
+    background: #ffe7a3;
+    color: #5c4300;
+  }
+  .aa-type-client {
+    background: #dfe9ff;
+    color: #102a52;
+  }
+  .aa-type-admin {
+    background: #e7e2d8;
+    color: #3d3929;
+  }
+  .aa-pied {
+    margin: auto 0 0;
+    padding-top: 1rem;
+    font-weight: 700;
+  }
+  .aa-pied-avant {
+    color: #8f241e;
+  }
+  .aa-gain {
+    margin-top: auto;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    font-weight: 700;
+    color: #122033;
+  }
+  .aa-gain strong {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    color: #173b73;
+    white-space: nowrap;
+  }
+  .aa-fleche {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: 0.5rem;
+    color: #173b73;
+    font-weight: 800;
+    text-align: center;
+    max-width: 7rem;
+  }
+  .aa-fleche svg {
+    padding: 10px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #ffcb00;
+    color: #0b1627;
+  }
+
+  /* États animés (posés par le script seulement). */
+  :global(.aa-anime) [data-msg-avant] {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  :global(.aa-anime) [data-msg-avant].aa-arrive {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  :global(.aa-anime) [data-msg-apres]:not(.aa-fait) .aa-action {
+    visibility: hidden;
+  }
+  :global(.aa-anime) [data-msg-apres]:not(.aa-fait) {
+    opacity: 0.45;
+  }
+  :global(.aa-anime) [data-msg-apres].aa-fait {
+    transition: opacity 0.3s ease, background 0.3s ease;
+  }
+  :global(.aa-anime) [data-msg-apres].aa-en-cours {
+    opacity: 1;
+    background: #fff4cc;
+  }
+
+  @media (max-width: 900px) {
+    .aa {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .aa-fleche {
+      max-width: none;
+      grid-auto-flow: column;
+    }
+    .aa-fleche svg {
+      transform: rotate(90deg);
+    }
+  }
+</style>
+
+<script>
+  const racine = document.querySelector<HTMLElement>('[data-aa]');
+  const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (racine && !reduit && 'IntersectionObserver' in window) {
+    const avant = [...racine.querySelectorAll<HTMLElement>('[data-msg-avant]')];
+    const apres = [...racine.querySelectorAll<HTMLElement>('[data-msg-apres]')];
+    const compte = racine.querySelector<HTMLElement>('[data-compte]')!;
+    const gain = racine.querySelector<HTMLElement>('[data-gain]')!;
+    const attendre = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const enHeures = (min: number) => `${Math.floor(min / 60)} h ${String(min % 60).padStart(2, '0')}`;
+
+    function remettre() {
+      avant.forEach((m) => m.classList.remove('aa-arrive'));
+      apres.forEach((m) => m.classList.remove('aa-fait', 'aa-en-cours'));
+      compte.textContent = '0';
+      gain.textContent = enHeures(0);
+    }
+
+    async function compter(de: number, a: number) {
+      const pas = 12;
+      for (let k = 1; k <= pas; k++) {
+        gain.textContent = enHeures(Math.round(de + ((a - de) * k) / pas));
+        await attendre(30);
+      }
+    }
+
+    async function jouer() {
+      remettre();
+      await attendre(400);
+      // Avant : les messages tombent les uns après les autres.
+      for (let i = 0; i < avant.length; i++) {
+        avant[i].classList.add('aa-arrive');
+        compte.textContent = String(i + 1);
+        await attendre(380);
+      }
+      await attendre(500);
+      // Après : l'assistant traite chaque message, le compteur monte.
+      let total = 0;
+      for (const m of apres) {
+        m.classList.add('aa-en-cours');
+        await attendre(550);
+        m.classList.remove('aa-en-cours');
+        m.classList.add('aa-fait');
+        const min = Number(m.dataset.minutes || 0);
+        await compter(total, total + min);
+        total += min;
+      }
+      // On rejoue tant que le bloc reste à l'écran.
+      await attendre(5000);
+      if (visible) jouer();
+      else enCours = false;
+    }
+
+    let visible = false;
+    let enCours = false;
+    racine.classList.add('aa-anime');
+    remettre();
+    new IntersectionObserver(
+      (entrees) => {
+        entrees.forEach((e) => {
+          visible = e.isIntersecting;
+          if (visible && !enCours) {
+            enCours = true;
+            jouer();
+          }
+        });
+      },
+      { threshold: 0.35 },
+    ).observe(racine);
+  }
+</script>

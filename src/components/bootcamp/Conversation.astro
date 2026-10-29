@@ -1,0 +1,228 @@
+---
+/**
+ * Une conversation façon messagerie : les bulles apparaissent une à une quand
+ * la fenêtre arrive à l'écran, avec l'indicateur « en train d'écrire ».
+ * Sans JavaScript, ou avec « réduire les animations », tout est affiché.
+ *
+ * Ce sont des échanges types, pas des témoignages : la page le dit.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Message {
+  /** true : c'est l'animateur qui répond (bulle verte, à droite). */
+  moi?: boolean;
+  texte: string;
+  heure: string;
+}
+
+interface Props {
+  contact: string;
+  /** Initiale et couleur de la pastille du contact. */
+  couleur: string;
+  animateur: string;
+  photo: ImageMetadata;
+  messages: Message[];
+}
+
+const { contact, couleur, animateur, photo, messages } = Astro.props;
+---
+
+<figure class="cv" data-conversation>
+  <div class="cv-tete">
+    <span class="cv-pastille" style={`background:${couleur}`} aria-hidden="true">{contact.charAt(0)}</span>
+    <div>
+      <strong>{contact}</strong>
+      <span>en conversation avec {animateur}</span>
+    </div>
+  </div>
+  <div class="cv-fil">
+    {messages.map((m) => (
+      <div class:list={['cv-ligne', { 'cv-moi': m.moi }]} data-bulle>
+        {m.moi && <Image src={photo} alt="" width={64} height={64} class="cv-avatar" />}
+        <p class="cv-bulle">
+          {m.texte}
+          <time>{m.heure}{m.moi && <span class="cv-lu" aria-hidden="true"> ✓✓</span>}</time>
+        </p>
+      </div>
+    ))}
+    <div class="cv-ecrit" data-ecrit aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+</figure>
+
+<style>
+  .cv {
+    margin: 0;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #efe7dc;
+    border: 1px solid #d9cdbb;
+    box-shadow: 0 18px 40px rgba(18, 32, 51, 0.1);
+  }
+  .cv-tete {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: #173b73;
+    color: #fffdfa;
+  }
+  .cv-tete strong {
+    display: block;
+    font-size: 1rem;
+  }
+  .cv-tete span {
+    font-size: 0.875rem;
+    color: #d8e1ef;
+  }
+  .cv-pastille {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-weight: 800;
+    color: #fffdfa;
+  }
+  .cv-fil {
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+  .cv-ligne {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    max-width: 88%;
+  }
+  .cv-moi {
+    justify-self: end;
+    flex-direction: row-reverse;
+  }
+  .cv :global(.cv-avatar) {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .cv-bulle {
+    margin: 0;
+    padding: 0.5rem 0.75rem 0.35rem;
+    border-radius: 14px 14px 14px 4px;
+    background: #fffdfa;
+    color: #122033;
+    font-size: 1rem;
+    line-height: 1.4;
+    box-shadow: 0 1px 1px rgba(18, 32, 51, 0.08);
+  }
+  .cv-moi .cv-bulle {
+    border-radius: 14px 14px 4px 14px;
+    background: #d9fdd3;
+  }
+  .cv-bulle time {
+    display: block;
+    text-align: right;
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  .cv-lu {
+    color: #2b8fd6;
+  }
+  .cv-ecrit {
+    display: none;
+    width: fit-content;
+    gap: 4px;
+    padding: 0.65rem 0.8rem;
+    border-radius: 14px;
+    background: #fffdfa;
+  }
+  .cv-ecrit.cv-ecrit-moi {
+    justify-self: end;
+    background: #d9fdd3;
+  }
+  .cv-ecrit i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #8a94a3;
+    animation: cv-point 1.2s infinite ease-in-out;
+  }
+  .cv-ecrit i:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .cv-ecrit i:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  @keyframes cv-point {
+    0%, 60%, 100% {
+      transform: translateY(0);
+      opacity: 0.5;
+    }
+    30% {
+      transform: translateY(-4px);
+      opacity: 1;
+    }
+  }
+
+  /* Animée seulement quand le script l'a préparée. */
+  :global(.cv-anime) [data-bulle] {
+    display: none;
+  }
+  :global(.cv-anime) [data-bulle].cv-vue {
+    display: flex;
+    animation: cv-entree 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  @keyframes cv-entree {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.97);
+    }
+  }
+</style>
+
+<script>
+  const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const attendre = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+  async function jouer(fenetre: HTMLElement) {
+    const bulles = [...fenetre.querySelectorAll<HTMLElement>('[data-bulle]')];
+    const ecrit = fenetre.querySelector<HTMLElement>('[data-ecrit]');
+    const fil = fenetre.querySelector('.cv-fil');
+    for (const bulle of bulles) {
+      if (ecrit && fil) {
+        ecrit.classList.toggle('cv-ecrit-moi', bulle.classList.contains('cv-moi'));
+        fil.insertBefore(ecrit, bulle);
+        ecrit.style.display = 'flex';
+        await attendre(900 + Math.min(bulle.textContent?.length ?? 0, 90) * 12);
+        ecrit.style.display = 'none';
+      }
+      bulle.classList.add('cv-vue');
+      await attendre(450);
+    }
+  }
+
+  if (!reduit && 'IntersectionObserver' in window) {
+    const fenetres = document.querySelectorAll<HTMLElement>('[data-conversation]');
+    const obs = new IntersectionObserver(
+      (entrees) => {
+        entrees.forEach((e) => {
+          if (!e.isIntersecting) return;
+          obs.unobserve(e.target);
+          jouer(e.target as HTMLElement);
+        });
+      },
+      { threshold: 0.35 },
+    );
+    fenetres.forEach((f) => {
+      // La fenêtre garde sa hauteur finale (mesurée tout déplié) : la page ne
+      // saute pas pendant l'animation.
+      const fil = f.querySelector<HTMLElement>('.cv-fil');
+      if (fil) fil.style.minHeight = `${fil.offsetHeight}px`;
+      f.classList.add('cv-anime');
+      obs.observe(f);
+    });
+  }
+</script>

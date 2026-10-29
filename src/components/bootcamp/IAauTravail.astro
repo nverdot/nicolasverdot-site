@@ -1,0 +1,401 @@
+---
+/**
+ * « L'IA au travail » : une fenêtre de conversation avec Claude qui se joue
+ * toute seule, pour montrer du concret. La demande s'écrit lettre à lettre,
+ * puis la réponse arrive mot à mot, comme à l'écran. Trois scènes, une par
+ * piste du bootcamp ; les onglets permettent de passer de l'une à l'autre.
+ *
+ * Ce sont des exemples construits pour la démonstration (noms, montants et
+ * dates fictifs), pas des captures de vrais échanges.
+ * Sans JavaScript ou avec « réduire les animations » : la première scène est
+ * affichée en entier, et les onglets restent utilisables.
+ */
+type Ligne = { t: 'titre' | 'texte' | 'puce' | 'case'; x: string };
+interface Scene {
+  onglet: string;
+  demande: string;
+  reponse: Ligne[];
+  resultat: string;
+}
+
+const scenes: Scene[] = [
+  {
+    onglet: 'Vendre',
+    demande:
+      'Voici mes notes d’appel avec Mme Durand : rénovation de salle de bain, budget autour de 8 000 €, travaux en mars, elle veut du sur-mesure. Rédige une proposition à mon ton, chaleureux et précis.',
+    reponse: [
+      { t: 'titre', x: 'Proposition : votre nouvelle salle de bain' },
+      { t: 'texte', x: 'Bonjour Madame Durand, merci pour notre échange de mardi. Voici ce que je vous propose, au plus près de ce que vous m’avez décrit.' },
+      { t: 'puce', x: 'Meuble vasque sur mesure, en chêne clair' },
+      { t: 'puce', x: 'Douche à l’italienne, paroi fixe' },
+      { t: 'puce', x: 'Travaux en mars, trois semaines' },
+      { t: 'texte', x: 'Budget : 7 900 € TTC, dans votre enveloppe.' },
+    ],
+    resultat: 'Proposition prête à envoyer',
+  },
+  {
+    onglet: 'Communiquer',
+    demande:
+      'J’ai dicté trois idées en vrac ce matin dans la voiture. Fais-en trois posts LinkedIn courts, avec mes mots à moi, et propose un jour de publication pour chacun.',
+    reponse: [
+      { t: 'titre', x: 'Vos trois posts de la semaine' },
+      { t: 'puce', x: 'Lundi : « Le client qui m’a appris à dire non. » Une histoire vraie, une leçon, une question.' },
+      { t: 'puce', x: 'Mercredi : les trois erreurs que je vois chez presque tous mes nouveaux clients.' },
+      { t: 'puce', x: 'Vendredi : les coulisses d’un chantier, en cinq photos.' },
+      { t: 'texte', x: 'J’ai gardé vos expressions : « on ne bricole pas », « le diable est dans les détails ».' },
+    ],
+    resultat: '3 posts prêts à publier',
+  },
+  {
+    onglet: 'S’organiser',
+    demande:
+      'Voici la transcription de mon rendez-vous client de ce matin. Fais-moi un compte rendu court, et la liste des actions avec qui fait quoi et pour quand.',
+    reponse: [
+      { t: 'titre', x: 'Compte rendu : rendez-vous avec la société Martin' },
+      { t: 'texte', x: 'Décision : on lance la phase 1 en janvier. La phase 2 sera rediscutée en mars.' },
+      { t: 'case', x: 'Envoyer le devis phase 1 · vous · vendredi' },
+      { t: 'case', x: 'Transmettre les plans · M. Martin · lundi' },
+      { t: 'case', x: 'Caler le point de lancement · vous · avant le 15' },
+    ],
+    resultat: 'Compte rendu et actions prêts',
+  },
+];
+---
+
+<div class="ia" data-ia>
+  <div class="ia-onglets" role="tablist" aria-label="Exemples">
+    {scenes.map((s, i) => (
+      <button type="button" role="tab" class="ia-onglet" aria-selected={i === 0 ? 'true' : 'false'} data-onglet={i}>
+        {s.onglet}
+      </button>
+    ))}
+  </div>
+
+  <div class="ia-fenetre">
+    <div class="ia-barre" aria-hidden="true">
+      <span></span><span></span><span></span>
+      <strong>Claude</strong>
+    </div>
+    <div class="ia-ecran" aria-live="off">
+      <p class="ia-demande" data-demande>{scenes[0].demande}</p>
+      <div class="ia-reponse" data-reponse>
+        <span class="ia-etoile" aria-hidden="true">✳</span>
+        <div data-lignes>
+          {scenes[0].reponse.map((l) => <p class={`ia-${l.t}`}>{l.x}</p>)}
+        </div>
+      </div>
+      <p class="ia-resultat" data-resultat>✓ {scenes[0].resultat}</p>
+    </div>
+    <div class="ia-saisie" aria-hidden="true">
+      <span>Écrivez votre demande…</span>
+      <span class="ia-envoi">↑</span>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" data-ia-scenes set:html={JSON.stringify(scenes)} />
+
+<style>
+  .ia {
+    display: grid;
+    gap: 1rem;
+  }
+  .ia-onglets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .ia-onglet {
+    min-height: 44px;
+    padding: 0 1.1rem;
+    border-radius: 999px;
+    border: 1px solid #cfc3b1;
+    background: #fffdfa;
+    color: #122033;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .ia-onglet[aria-selected='true'] {
+    background: #122033;
+    border-color: #122033;
+    color: #fffdfa;
+  }
+  .ia-fenetre {
+    border-radius: 20px;
+    overflow: hidden;
+    background: #faf9f5;
+    border: 1px solid #d9d3c7;
+    box-shadow: 0 30px 70px rgba(18, 32, 51, 0.18), 0 0 0 6px rgba(255, 203, 0, 0.12);
+  }
+  .ia-barre {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.7rem 1rem;
+    background: #f0ede6;
+    border-bottom: 1px solid #e2ddd2;
+  }
+  .ia-barre span {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #d3cdc1;
+  }
+  .ia-barre strong {
+    margin-left: 0.75rem;
+    font-size: 0.875rem;
+    color: #3d3929;
+  }
+  .ia-ecran {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    padding: 1.25rem;
+    min-height: 25rem;
+  }
+  .ia-demande {
+    justify-self: end;
+    max-width: 85%;
+    margin: 0;
+    padding: 0.75rem 1rem;
+    border-radius: 16px;
+    background: #ece8df;
+    color: #29261b;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+  .ia-reponse {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.75rem;
+    color: #29261b;
+  }
+  .ia-etoile {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: #c1440e;
+  }
+  .ia-reponse.ia-pense .ia-etoile {
+    animation: ia-tourne 1.2s linear infinite;
+  }
+  @keyframes ia-tourne {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .ia-reponse p {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .ia-titre {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.125rem !important;
+  }
+  .ia-puce,
+  .ia-case {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  .ia-puce::before {
+    content: '•';
+    position: absolute;
+    left: 0.4rem;
+    color: #c1440e;
+  }
+  .ia-case::before {
+    content: '☐';
+    position: absolute;
+    left: 0;
+    color: #173b73;
+  }
+  .ia-resultat {
+    justify-self: start;
+    margin: 0;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    background: #ffcb00;
+    color: #0b1627;
+    font-weight: 700;
+    font-size: 0.9375rem;
+  }
+  .ia-resultat.ia-cache {
+    visibility: hidden;
+  }
+  .ia-resultat.ia-apparait {
+    animation: ia-pop 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  @keyframes ia-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+  }
+  .ia-curseur::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 1.05em;
+    margin-left: 2px;
+    vertical-align: -0.15em;
+    background: currentColor;
+    animation: ia-clignote 0.9s steps(1) infinite;
+  }
+  @keyframes ia-clignote {
+    50% {
+      opacity: 0;
+    }
+  }
+  .ia-saisie {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 1rem 1rem;
+    padding: 0.6rem 0.6rem 0.6rem 1rem;
+    border-radius: 14px;
+    border: 1px solid #ddd7cb;
+    background: #fff;
+    color: #8a8577;
+    font-size: 0.9375rem;
+  }
+  .ia-envoi {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: #c1440e;
+    color: #fff;
+    font-weight: 700;
+  }
+  @media (max-width: 719px) {
+    .ia-ecran {
+      min-height: 30rem;
+      padding: 1rem;
+    }
+    .ia-demande {
+      max-width: 95%;
+    }
+  }
+</style>
+
+<script>
+  type Ligne = { t: string; x: string };
+  type Scene = { onglet: string; demande: string; reponse: Ligne[]; resultat: string };
+
+  const racine = document.querySelector<HTMLElement>('[data-ia]');
+  const donnees = document.querySelector('[data-ia-scenes]');
+  if (racine && donnees) {
+    const scenes: Scene[] = JSON.parse(donnees.textContent || '[]');
+    const demande = racine.querySelector<HTMLElement>('[data-demande]')!;
+    const reponse = racine.querySelector<HTMLElement>('[data-reponse]')!;
+    const lignes = racine.querySelector<HTMLElement>('[data-lignes]')!;
+    const resultat = racine.querySelector<HTMLElement>('[data-resultat]')!;
+    const onglets = [...racine.querySelectorAll<HTMLButtonElement>('[data-onglet]')];
+    const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let jeton = 0;
+    let courante = 0;
+    let visible = false;
+    let enCours = false;
+    const attendre = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    function choisir(i: number) {
+      courante = i;
+      onglets.forEach((o, j) => o.setAttribute('aria-selected', String(j === i)));
+    }
+
+    function afficherTout(s: Scene) {
+      demande.textContent = s.demande;
+      lignes.innerHTML = '';
+      s.reponse.forEach((l) => {
+        const p = document.createElement('p');
+        p.className = `ia-${l.t}`;
+        p.textContent = l.x;
+        lignes.appendChild(p);
+      });
+      resultat.textContent = `✓ ${s.resultat}`;
+      resultat.classList.remove('ia-cache');
+    }
+
+    async function jouer(i: number) {
+      const moi = ++jeton;
+      const vivant = () => moi === jeton;
+      choisir(i);
+      const s = scenes[i];
+      enCours = true;
+
+      // 1. La demande s'écrit lettre à lettre.
+      lignes.innerHTML = '';
+      resultat.classList.add('ia-cache');
+      resultat.classList.remove('ia-apparait');
+      demande.textContent = '';
+      demande.classList.add('ia-curseur');
+      for (let k = 1; k <= s.demande.length; k += 2) {
+        if (!vivant()) return;
+        demande.textContent = s.demande.slice(0, k);
+        await attendre(18);
+      }
+      demande.textContent = s.demande;
+      demande.classList.remove('ia-curseur');
+
+      // 2. Claude réfléchit.
+      reponse.classList.add('ia-pense');
+      await attendre(1100);
+      if (!vivant()) return;
+      reponse.classList.remove('ia-pense');
+
+      // 3. La réponse arrive mot à mot.
+      for (const l of s.reponse) {
+        const p = document.createElement('p');
+        p.className = `ia-${l.t} ia-curseur`;
+        lignes.appendChild(p);
+        const mots = l.x.split(' ');
+        for (let k = 1; k <= mots.length; k++) {
+          if (!vivant()) return;
+          p.textContent = mots.slice(0, k).join(' ');
+          await attendre(55);
+        }
+        p.classList.remove('ia-curseur');
+        await attendre(150);
+      }
+
+      // 4. Le résultat.
+      resultat.textContent = `✓ ${s.resultat}`;
+      resultat.classList.remove('ia-cache');
+      resultat.classList.add('ia-apparait');
+      enCours = false;
+      await attendre(4500);
+      if (!vivant()) return;
+      if (visible) jouer((i + 1) % scenes.length);
+    }
+
+    onglets.forEach((o, i) =>
+      o.addEventListener('click', () => {
+        if (reduit) {
+          jeton++;
+          choisir(i);
+          afficherTout(scenes[i]);
+        } else {
+          jouer(i);
+        }
+      }),
+    );
+
+    if (!reduit && 'IntersectionObserver' in window) {
+      new IntersectionObserver(
+        (entrees) => {
+          entrees.forEach((e) => {
+            const etait = visible;
+            visible = e.isIntersecting;
+            // Démarre à l'arrivée à l'écran, reprend si l'animation s'était arrêtée.
+            if (visible && !etait && !enCours) jouer(courante);
+          });
+        },
+        { threshold: 0.4 },
+      ).observe(racine);
+    }
+  }
+</script>
