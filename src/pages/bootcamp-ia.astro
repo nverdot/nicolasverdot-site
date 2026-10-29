@@ -38,10 +38,10 @@ const promesses = [
 
 // Dites comme les entrepreneurs les disent, à la première personne.
 const douleurs = [
-  'J’ai ouvert ChatGPT deux ou trois fois, et puis plus rien.',
-  'Mes devis et mes relances me prennent mes soirées.',
-  'Je sais qu’il faudrait publier sur LinkedIn, je n’ai jamais le temps.',
-  'Tout le monde en parle, moi je ne sais pas par où commencer.',
+  'Je discute avec ChatGPT ou Claude presque tous les jours. Au final, je n’ai rien automatisé.',
+  'Je ne sais pas par où commencer.',
+  'Chaque fois que je passe sur les réseaux, il y a encore une nouveauté.',
+  'J’ai l’impression d’avoir un train de retard.',
 ];
 
 const pistes = [
@@ -149,20 +149,20 @@ const faq = [
   {/* Toute la page vit dans .lp : un habillage sombre et « futuriste »
       (grille, halos, libellés en police machine), indépendant du thème du
       site, pour que l'événement ait sa propre identité. */}
-  <div class="lp">
+  <div class="lp" id="lp">
     <div class="lp-barre">
       <div class="container lp-barre-inner">
-        <span class="lp-marque"><span class="logo-script">by</span> NICOLAS VERDOT <span class="lp-x">×</span> ROMAIN GAL</span>
+        <span class="lp-marque"><span class="logo-script">by</span> NICOLAS VERDOT <span class="lp-x" aria-hidden="true"></span> ROMAIN GAL</span>
         <span class="lp-barre-date">{EVENT.dateCourte} · Nice</span>
         <a href="#inscription" class="btn lp-barre-btn">Réserver ma place</a>
       </div>
     </div>
 
-    <section class="lp-hero" data-pli-non>
+    <section class="lp-hero lp-nuit" data-pli-non>
       <div class="lp-halo" aria-hidden="true"></div>
       <div class="container lp-hero-inner">
         <div class="lp-hero-texte">
-          <p class="lp-note">Bootcamp IA · {EVENT.dateCourte} · Nice · {EVENT.places} places</p>
+          <p class="lp-surtitre">Bootcamp IA · {EVENT.dateCourte} · Nice · {EVENT.places} places</p>
           <h1>
             Une après-midi pour que l’IA <span class="lp-neon">travaille enfin pour vous.</span>
           </h1>
@@ -178,8 +178,8 @@ const faq = [
             <div><dt>Où</dt><dd>{EVENT.lieu}</dd></div>
           </dl>
           <div class="lp-duo" aria-label="Les deux animateurs">
-            <Image src={portraitNicolas} alt="" width={96} height={96} class="lp-duo-photo" />
-            <Image src={portraitRomain} alt="" width={96} height={96} class="lp-duo-photo" />
+            <Image src={portraitNicolas} alt="" width={128} height={128} class="lp-duo-photo" />
+            <Image src={portraitRomain} alt="" width={128} height={128} class="lp-duo-photo" />
             <span>Animé par <strong>Nicolas Verdot</strong> et <strong>Romain Gal</strong></span>
           </div>
         </div>
@@ -237,7 +237,7 @@ const faq = [
           {douleurs.map((d) => <li>« {d} »</li>)}
         </ul>
         <p class="lp-bascule">
-          Dans la plupart des cas, il manque deux choses : savoir quoi confier à l’IA, et quelqu’un à côté de vous la première fois. <strong>Le 9 décembre, vous avez les deux.</strong>
+          Inutile de suivre chaque nouveauté. Il suffit de choisir une tâche, et de la confier à l’IA une première fois avec quelqu’un à côté de vous. <strong>Le 9 décembre, c’est ce que vous faites.</strong>
         </p>
       </div>
     </section>
@@ -306,16 +306,16 @@ const faq = [
         <p class="lp-intro">L’un connaît l’entreprise de l’intérieur et sait ce qui tient dans la durée. L’autre ne se pose aucune limite et vous ouvre le champ des possibles. Pendant les sprints, ils passent d’équipe en équipe : personne ne reste bloqué seul devant son écran.</p>
         <div class="lp-animateurs">
           <article class="lp-verre">
-            <Image src={portraitNicolas} alt="Portrait de Nicolas Verdot" width={240} height={240} class="lp-portrait" />
+            <Image src={portraitNicolas} alt="Portrait de Nicolas Verdot" width={640} height={640} class="lp-portrait" />
             <div>
               <h3>Nicolas Verdot</h3>
               <p class="lp-role">Le terrain de l’entreprise</p>
-              <p>Facilitateur et formateur à Nice depuis 2020, il intervient auprès de PME comme de grands groupes. Entrepreneur lui-même, il s’appuie sur l’IA pour développer sa propre activité. Il sait ce qui tient dans la vraie vie d’une entreprise, et ce qui reste un gadget.</p>
+              <p>Facilitateur et formateur à Nice depuis 2020, il intervient auprès de PME comme de grands groupes. Entrepreneur lui-même, il s’appuie sur l’IA pour développer sa propre activité. Il fait le parallèle entre les deux : ce qu’il teste pour son entreprise, et ce qu’il voit fonctionner, ou non, chez ses clients.</p>
               <p>Pendant le bootcamp, il tient le cadre : le bon problème, les équipes, le rythme des sprints.</p>
             </div>
           </article>
           <article class="lp-verre">
-            <Image src={portraitRomain} alt="Portrait de Romain Gal" width={240} height={240} class="lp-portrait" />
+            <Image src={portraitRomain} alt="Portrait de Romain Gal" width={640} height={640} class="lp-portrait" />
             <div>
               <h3>Romain Gal</h3>
               <p class="lp-role">Le champ des possibles</p>
@@ -360,7 +360,7 @@ const faq = [
       </div>
     </section>
 
-    <section class="lp-final" data-pli-non>
+    <section class="lp-final lp-nuit" data-pli-non>
       <div class="lp-halo" aria-hidden="true"></div>
       <div class="container">
         <p class="lp-note">{EVENT.date} · {EVENT.horaires} · {EVENT.lieu}</p>
@@ -373,7 +373,7 @@ const faq = [
       </div>
     </section>
 
-    <footer class="lp-pied">
+    <footer class="lp-pied lp-nuit">
       <div class="container">
         <a href={withBase('/')}>nicolasverdot.com</a>
         <a href={withBase('/mentions-legales/')}>Mentions légales</a>
@@ -390,6 +390,14 @@ const faq = [
 </Layout>
 
 <script define:vars={{ billetterie: EVENT.billetterie }}>
+  // Comparaison des palettes : ?palette=2 à 5.
+  const palette = new URLSearchParams(location.search).get('palette');
+  if (palette && /^[1-5]$/.test(palette)) {
+    const lp = document.getElementById('lp');
+    lp.dataset.palette = palette;
+    document.body.style.background = getComputedStyle(lp).getPropertyValue('--lp-fond');
+  }
+
   const form = document.getElementById('bootcamp-form');
   const statut = document.getElementById('bootcamp-statut');
   const collant = document.getElementById('lp-collant');
@@ -439,33 +447,93 @@ const faq = [
 
 <style>
   /* ==========================================================================
-     Habillage « futuriste » de la page événement. Couleurs constantes : la
-     page reste sombre quel que soit le thème choisi sur le site. Le jaune de
-     la marque devient la couleur d'action, un cyan électrique l'accompagne.
+     Habillage de la page événement : le beige et le bleu nuit du site, avec
+     des halos de lumière sur les deux temps forts (premier écran et appel
+     final). Couleurs constantes : la page ne bascule pas en mode sombre.
+     Les zones bleues (.lp-nuit) redéfinissent les mêmes variables.
      ========================================================================== */
   :global(body.landing) {
-    background: #05070d;
+    background: #fcf8ef;
   }
   .lp {
-    --lp-fond: #05070d;
-    --lp-fond-2: #0a1020;
-    --lp-texte: #e9eef8;
-    --lp-doux: #a8b3c7;
-    --lp-ligne: rgba(140, 175, 255, 0.16);
-    --lp-ligne-forte: rgba(92, 225, 255, 0.45);
+    --lp-fond: #fcf8ef;
+    --lp-fond-2: #fffdfa;
+    --lp-texte: #122033;
+    --lp-titre: #122033;
+    --lp-doux: #4c5158;
+    --lp-ligne: #cfc3b1;
+    --lp-ligne-forte: #b6a790;
     --lp-jaune: #ffcb00;
-    --lp-cyan: #5ce1ff;
+    --lp-accent: #c1440e;
+    --lp-lien: #173b73;
     --lp-violet: #8b7bff;
-    --lp-verre: rgba(255, 255, 255, 0.045);
+    --lp-verre: #fffdfa;
+    --lp-nuit-1: #173b73;
+    --lp-nuit-2: #102a52;
+    --lp-fort: #8f241e;
     background: var(--lp-fond);
     color: var(--lp-texte);
     overflow-x: clip;
   }
+  .lp-nuit {
+    --lp-texte: #fffdfa;
+    --lp-titre: #ffffff;
+    --lp-doux: #d8e1ef;
+    --lp-ligne: rgba(255, 253, 250, 0.2);
+    --lp-ligne-forte: rgba(255, 253, 250, 0.4);
+    --lp-accent: #ffcb00;
+    --lp-lien: #ffffff;
+    --lp-verre: rgba(255, 255, 255, 0.06);
+    background: linear-gradient(145deg, var(--lp-nuit-1), var(--lp-nuit-2));
+    color: var(--lp-texte);
+  }
+
+  /* Cinq palettes à comparer : ajouter ?palette=2 (à 5) à l'adresse.
+     Sans paramètre, c'est la palette 1, beige et bleu nuit du site. */
+  .lp[data-palette='2'] {
+    --lp-fond: #f7f1e6;
+    --lp-fond-2: #fffcf6;
+    --lp-nuit-1: #0b6283;
+    --lp-nuit-2: #083a55;
+    --lp-accent: #b4521f;
+    --lp-lien: #0b6283;
+    --lp-fort: #083a55;
+  }
+  .lp[data-palette='3'] {
+    --lp-fond: #f5f3fb;
+    --lp-fond-2: #fdfcff;
+    --lp-ligne: #d6d0e6;
+    --lp-nuit-1: #4b2fa0;
+    --lp-nuit-2: #22174f;
+    --lp-accent: #6a4be0;
+    --lp-lien: #4b2fa0;
+    --lp-fort: #22174f;
+  }
+  .lp[data-palette='4'] {
+    --lp-fond: #fbf4ec;
+    --lp-fond-2: #fffaf4;
+    --lp-nuit-1: #7a2b09;
+    --lp-nuit-2: #3b1a10;
+    --lp-accent: #c1440e;
+    --lp-lien: #7a2b09;
+    --lp-fort: #3b1a10;
+  }
+  .lp[data-palette='5'] {
+    --lp-fond: #f2f4ee;
+    --lp-fond-2: #fbfcf8;
+    --lp-ligne: #c8cfc0;
+    --lp-nuit-1: #1f5446;
+    --lp-nuit-2: #10302a;
+    --lp-accent: #24855f;
+    --lp-lien: #1f5446;
+    --lp-fort: #10302a;
+  }
+
   .lp :is(h1, h2, h3) {
-    color: #fff;
+    color: var(--lp-titre);
   }
   .lp a:not(.btn) {
-    color: var(--lp-cyan);
+    color: var(--lp-lien);
   }
   .lp .btn {
     background: var(--lp-jaune);
@@ -487,10 +555,18 @@ const faq = [
     font-size: 1.6rem;
     font-weight: 700;
     line-height: 1.2;
+    color: var(--lp-accent);
+  }
+  .lp-surtitre {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--lp-jaune);
   }
   .lp-neon {
-    background: linear-gradient(90deg, var(--lp-jaune), #ffe680 40%, var(--lp-cyan));
+    background: linear-gradient(90deg, var(--lp-jaune), #ffe680 40%, #9fd8ff);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -498,10 +574,9 @@ const faq = [
 
   /* Carte en verre : fond translucide, filet lumineux. */
   .lp-verre {
-    border: 1px solid transparent;
-    background:
-      linear-gradient(160deg, #111830, #0b1022) padding-box,
-      linear-gradient(160deg, rgba(139, 123, 255, 0.55), rgba(92, 225, 255, 0.12) 50%, rgba(255, 203, 0, 0.35)) border-box;
+    background: var(--lp-verre);
+    border: 1px solid var(--lp-ligne);
+    box-shadow: 0 12px 30px rgba(18, 32, 51, 0.06);
     border-radius: 20px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -513,11 +588,8 @@ const faq = [
     inset: 0;
     pointer-events: none;
     background:
-      radial-gradient(640px 420px at 12% 8%, rgba(139, 123, 255, 0.36), transparent 70%),
-      radial-gradient(560px 420px at 82% 30%, rgba(92, 225, 255, 0.24), transparent 70%),
-      radial-gradient(480px 320px at 70% 85%, rgba(255, 203, 0, 0.16), transparent 70%),
-      radial-gradient(520px 300px at 30% 100%, rgba(255, 120, 200, 0.1), transparent 70%);
-    filter: saturate(1.2);
+      radial-gradient(600px 380px at 15% 10%, rgba(139, 123, 255, 0.28), transparent 70%),
+      radial-gradient(520px 360px at 90% 30%, rgba(92, 225, 255, 0.18), transparent 70%);
   }
 
   /* ---------- Bandeau du haut ---------- */
@@ -525,7 +597,7 @@ const faq = [
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(5, 7, 13, 0.75);
+    background: rgba(255, 253, 250, 0.88);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--lp-ligne);
@@ -541,7 +613,7 @@ const faq = [
     font-weight: 900;
     letter-spacing: 0.06em;
     font-size: var(--text-sm);
-    color: #fff;
+    color: var(--lp-titre);
   }
   .lp-marque .logo-script {
     font-family: var(--font-script);
@@ -549,9 +621,15 @@ const faq = [
     font-size: 1.4em;
     letter-spacing: 0;
   }
+  /* Le petit rond jaune entre les deux noms. */
   .lp-x {
-    color: var(--lp-cyan);
-    margin-inline: 0.15em;
+    display: inline-block;
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    background: var(--lp-jaune);
+    vertical-align: 0.1em;
+    margin-inline: 0.35em;
   }
   .lp-barre-date {
     margin-left: auto;
@@ -612,11 +690,11 @@ const faq = [
     width: 12px;
     height: 12px;
     border-radius: 3px;
-    background: var(--lp-cyan);
-    box-shadow: 0 0 12px var(--lp-cyan);
+    background: var(--lp-accent);
+    box-shadow: 0 0 12px var(--lp-accent);
   }
   .lp-promesses :global(strong) {
-    color: #fff;
+    color: var(--lp-titre);
   }
   .lp-billet {
     display: grid;
@@ -638,13 +716,13 @@ const faq = [
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--lp-cyan);
+    color: var(--lp-accent);
   }
   .lp-billet dd {
     margin: var(--space-1) 0 0;
     font-size: var(--text-lg);
     font-weight: 700;
-    color: #fff;
+    color: var(--lp-titre);
   }
   .lp-duo {
     display: flex;
@@ -653,11 +731,11 @@ const faq = [
     color: var(--lp-doux);
   }
   .lp-duo :global(.lp-duo-photo) {
-    width: 48px;
-    height: 48px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--lp-fond);
+    border: 2px solid var(--lp-nuit-2);
     box-shadow: 0 0 0 1px var(--lp-ligne-forte);
   }
   .lp-duo :global(.lp-duo-photo + .lp-duo-photo) {
@@ -667,25 +745,35 @@ const faq = [
     margin-left: var(--space-3);
   }
   .lp-duo strong {
-    color: #fff;
+    color: var(--lp-titre);
   }
 
   /* ---------- Carte d'inscription ---------- */
+  /* La carte d'inscription reste claire, même posée sur le bleu. */
   .lp-carte {
+    --lp-texte: #122033;
+    --lp-titre: #122033;
+    --lp-doux: #4c5158;
+    --lp-ligne: #cfc3b1;
+    --lp-accent: var(--lp-nuit-1);
+    --lp-lien: var(--lp-nuit-1);
     position: relative;
     border-radius: 24px;
-    border: 1px solid transparent;
-    background:
-      linear-gradient(180deg, #10182e, #080c18) padding-box,
-      linear-gradient(140deg, var(--lp-jaune), var(--lp-violet) 45%, var(--lp-cyan)) border-box;
-    box-shadow: 0 0 0 1px rgba(92, 225, 255, 0.08), 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 60px rgba(92, 225, 255, 0.12);
+    background: #fffdfa;
+    color: var(--lp-texte);
+    box-shadow: 0 30px 80px rgba(5, 12, 30, 0.45), 0 0 60px rgba(255, 203, 0, 0.18);
     overflow: hidden;
     scroll-margin-top: 80px;
   }
   .lp-carte-prix {
     padding: var(--space-6);
-    border-bottom: 1px solid var(--lp-ligne);
-    background: radial-gradient(300px 160px at 0% 0%, rgba(255, 203, 0, 0.18), transparent 70%);
+    background: var(--lp-jaune);
+    color: #0b1627;
+  }
+  .lp-carte-prix .lp-note,
+  .lp-carte-prix .lp-prix,
+  .lp-carte-prix .lp-prix-note {
+    color: #0b1627;
   }
   .lp-carte-prix .lp-note {
     margin-bottom: var(--space-1);
@@ -701,8 +789,7 @@ const faq = [
     font-size: var(--text-4xl);
     font-weight: 800;
     line-height: 1;
-    color: var(--lp-jaune);
-    text-shadow: 0 0 24px rgba(255, 203, 0, 0.45);
+    color: #0b1627;
   }
   .lp-prix-note {
     margin: var(--space-2) 0 0;
@@ -743,8 +830,8 @@ const faq = [
     padding: 0.6rem 0.75rem;
     border: 1px solid var(--lp-ligne);
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.04);
-    color: #fff;
+    background: #fffdfa;
+    color: var(--lp-titre);
     font: inherit;
     transition: border-color var(--duration-hover) ease, box-shadow var(--duration-hover) ease;
   }
@@ -754,8 +841,8 @@ const faq = [
   .lp-champ input:focus,
   .lp-champ textarea:focus {
     outline: none;
-    border-color: var(--lp-cyan);
-    box-shadow: 0 0 0 3px rgba(92, 225, 255, 0.2);
+    border-color: var(--lp-lien);
+    box-shadow: 0 0 0 3px rgba(23, 59, 115, 0.18);
   }
   .lp-envoyer {
     width: 100%;
@@ -775,10 +862,10 @@ const faq = [
     display: none;
   }
   .lp-statut[data-state='ok'] {
-    color: #3dff9a;
+    color: #3f6b2f;
   }
   .lp-statut[data-state='erreur'] {
-    color: #ff8a7a;
+    color: #8f241e;
   }
   .lp-pot {
     display: none;
@@ -794,17 +881,14 @@ const faq = [
     content: '';
     position: absolute;
     top: 0;
-    left: 10%;
-    right: 10%;
+    left: 0;
+    right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(139, 123, 255, 0.5), rgba(92, 225, 255, 0.5), transparent);
+    background: var(--lp-ligne);
   }
   /* Les sections alternées baignent dans une aurore douce. */
   .lp-panneau {
-    background:
-      radial-gradient(700px 360px at 85% 0%, rgba(139, 123, 255, 0.18), transparent 70%),
-      radial-gradient(600px 320px at 0% 100%, rgba(92, 225, 255, 0.12), transparent 70%),
-      var(--lp-fond-2);
+    background: var(--lp-fond-2);
   }
   .lp-section h2,
   .lp-final h2 {
@@ -830,7 +914,7 @@ const faq = [
     font-size: var(--text-2xl);
     font-weight: 700;
     line-height: 1.25;
-    color: #fff;
+    color: var(--lp-titre);
   }
   .lp-douleurs li:nth-child(even) {
     padding-left: var(--space-12);
@@ -844,7 +928,7 @@ const faq = [
     color: var(--lp-doux);
   }
   .lp-bascule strong {
-    color: var(--lp-jaune);
+    color: var(--lp-accent);
   }
 
   .lp-pistes-grille {
@@ -861,7 +945,7 @@ const faq = [
     .lp-piste:hover {
       border-color: var(--lp-ligne-forte);
       transform: translateY(-4px);
-      box-shadow: 0 0 40px rgba(92, 225, 255, 0.12);
+      box-shadow: 0 18px 40px rgba(18, 32, 51, 0.12);
     }
   }
   .lp-piste-num,
@@ -870,7 +954,7 @@ const faq = [
     font-weight: 700;
     font-size: 2.5rem;
     line-height: 1;
-    color: var(--lp-jaune);
+    color: var(--lp-accent);
   }
   .lp-piste h3 {
     margin: var(--space-4) 0 0;
@@ -919,7 +1003,7 @@ const faq = [
   .lp-heure {
     font-family: var(--font-display);
     font-weight: 800;
-    color: var(--lp-cyan);
+    color: var(--lp-accent);
   }
   .lp-etape {
     font-weight: 600;
@@ -930,15 +1014,15 @@ const faq = [
     white-space: nowrap;
   }
   .lp-fort {
-    background: linear-gradient(90deg, rgba(255, 203, 0, 0.16), rgba(255, 203, 0, 0.04));
+    background: linear-gradient(90deg, rgba(255, 203, 0, 0.45), rgba(255, 203, 0, 0.12));
     box-shadow: inset 3px 0 0 var(--lp-jaune);
   }
   .lp-fort .lp-heure {
-    color: var(--lp-jaune);
+    color: var(--lp-fort);
   }
   .lp-fort .lp-etape {
     font-weight: 800;
-    color: #fff;
+    color: var(--lp-titre);
   }
 
   .lp-repartez {
@@ -967,18 +1051,20 @@ const faq = [
   }
   .lp-animateurs article {
     display: grid;
-    grid-template-columns: 120px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-6);
     align-items: start;
     padding: var(--space-6);
   }
   .lp-animateurs :global(.lp-portrait) {
-    width: 120px;
-    height: 120px;
-    border-radius: 18px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-position: center 30%;
+    border-radius: 16px;
     object-fit: cover;
     border: 1px solid var(--lp-ligne-forte);
-    box-shadow: 0 0 30px rgba(92, 225, 255, 0.18);
+    box-shadow: 0 18px 40px rgba(18, 32, 51, 0.16);
   }
   .lp-animateurs h3,
   .lp-pour-qui h3 {
@@ -997,7 +1083,7 @@ const faq = [
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 1.2;
-    color: var(--lp-jaune);
+    color: var(--lp-accent);
   }
   .lp-pour-qui > div {
     padding: var(--space-6);
@@ -1023,11 +1109,11 @@ const faq = [
   }
   .lp-oui li::before {
     content: '✓';
-    color: #3dff9a;
+    color: var(--lp-accent);
   }
   .lp-non li::before {
     content: '✕';
-    color: #ff8a7a;
+    color: var(--lp-doux);
   }
   .lp-non li {
     color: var(--lp-doux);
@@ -1048,14 +1134,14 @@ const faq = [
     display: flex;
     justify-content: space-between;
     gap: var(--space-3);
-    color: #fff;
+    color: var(--lp-titre);
   }
   .lp-faq summary::-webkit-details-marker {
     display: none;
   }
   .lp-faq summary::after {
     content: '+';
-    color: var(--lp-cyan);
+    color: var(--lp-accent);
     transition: transform var(--duration-hover) var(--ease-out);
   }
   .lp-faq details[open] summary::after {
@@ -1105,18 +1191,8 @@ const faq = [
     justify-content: center;
   }
   .lp-pied a {
-    color: #8592a8 !important;
+    color: #c6d0df !important;
     font-size: var(--text-sm);
-  }
-
-  /* Repli du téléphone (Pli.astro) sur fond sombre. */
-  .lp :global(.pli-bouton) {
-    background: var(--lp-verre);
-    color: #fff;
-    box-shadow: inset 0 0 0 1px var(--lp-ligne);
-  }
-  .lp :global(.pli-note) {
-    color: var(--lp-doux);
   }
 
   .lp-collant {
@@ -1170,13 +1246,12 @@ const faq = [
       grid-template-columns: minmax(0, 1fr);
     }
     .lp-animateurs article {
-      grid-template-columns: 88px minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr);
       gap: var(--space-4);
       padding: var(--space-4);
     }
     .lp-animateurs :global(.lp-portrait) {
-      width: 88px;
-      height: 88px;
+      aspect-ratio: 1;
     }
     .lp-deroule li {
       grid-template-columns: 3.75rem minmax(0, 1fr);
@@ -1201,15 +1276,16 @@ const faq = [
       justify-content: space-between;
       gap: var(--space-3);
       padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom));
-      background: rgba(5, 7, 13, 0.88);
+      background: rgba(255, 253, 250, 0.94);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-top: 1px solid var(--lp-ligne-forte);
+      border-top: 1px solid var(--lp-ligne);
+      box-shadow: 0 -8px 24px rgba(18, 32, 51, 0.12);
       color: var(--lp-doux);
       transition: transform var(--duration-standard) var(--ease-out);
     }
     .lp-collant strong {
-      color: var(--lp-jaune);
+      color: var(--lp-titre);
     }
     .lp-collant.lp-cache {
       transform: translateY(110%);
